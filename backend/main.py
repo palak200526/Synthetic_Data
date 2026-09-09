@@ -7,6 +7,11 @@ from backend.services.dataset_loader import (
     get_dataset_metadata,
 )
 
+
+from backend.services.dataset_profiler import (
+    generate_profile,
+)
+
 from backend.utils.validators import (
     validate_file_extension,
     validate_file_size,
@@ -103,3 +108,43 @@ async def upload_dataset(
             status_code=500,
             detail=f"An unexpected error occurred: {error}"
         )
+
+
+@app.get("/profile/{filename}")
+def get_dataset_profile(filename: str):
+
+    try:
+
+        file_path = UPLOAD_DIRECTORY / filename
+
+        if not file_path.exists():
+
+            raise HTTPException(
+                status_code=404,
+                detail="Dataset not found."
+            )
+
+        dataframe = load_dataset(
+            str(file_path)
+        )
+
+        profile = generate_profile(
+            dataframe
+        )
+
+        return {
+            "status": "success",
+            "message": "Dataset profile generated successfully.",
+            "data": profile,
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as error:
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unable to generate profile: {error}"
+        )
+
