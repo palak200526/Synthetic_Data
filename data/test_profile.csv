@@ -1,0 +1,4 @@
+id,name,age,salary,department,is_active
+1,Amit,25,45000,IT,True
+2,Rahul,30,52000,HR,False
+3,Priya,28,48000,IT,True
