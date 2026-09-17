@@ -38,7 +38,8 @@ CREATE TABLE column_configurations (
     is_sensitive BOOLEAN DEFAULT FALSE,
     is_identifier BOOLEAN DEFAULT FALSE,
     action VARCHAR(50),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (dataset_id, column_name)
 );
 
 CREATE TABLE generation_runs (

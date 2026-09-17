@@ -1,0 +1,55 @@
+from backend.config.database import get_db_connection
+
+
+def create_dataset(
+    filename,
+    row_count,
+    column_count
+):
+
+    connection = None
+    cursor = None
+
+    try:
+
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            INSERT INTO datasets (
+                dataset_name,
+                file_name,
+                file_type,
+                row_count,
+                column_count
+            )
+            VALUES (%s, %s, %s, %s, %s)
+            RETURNING dataset_id
+            """,
+            (
+                filename,
+                filename,
+                filename.split(".")[-1].lower(),
+                row_count,
+                column_count,
+            )
+        )
+
+        dataset_id = cursor.fetchone()[0]
+
+        connection.commit()
+
+        return dataset_id
+
+    except Exception:
+        if connection:
+            connection.rollback()
+        raise
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()

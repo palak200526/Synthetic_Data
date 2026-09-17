@@ -231,11 +231,10 @@ if st.session_state.uploaded_filename is not None:
         )
 
 
-        detections = profile_result.get(
-            "sensitive_identifier_detection",
+        detections = profile.get(
+            "sensitive_detection",
             []
         )
-
 
         configurations = []
 
@@ -305,7 +304,6 @@ if st.session_state.uploaded_filename is not None:
                 )
 
 
-            st.write("DEBUG:", configurations)
             # Save button is OUTSIDE the for loop
             if st.button("Save Column Classifications"):
 
