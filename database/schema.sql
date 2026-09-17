@@ -5,9 +5,16 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE processing_sessions (
+    session_id BIGSERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP
+);
+
 CREATE TABLE datasets (
     dataset_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(user_id),
+    session_id BIGINT REFERENCES processing_sessions(session_id),
     dataset_name VARCHAR(255) NOT NULL,
     file_name VARCHAR(255) NOT NULL,
     file_type VARCHAR(20),
@@ -23,12 +30,6 @@ CREATE TABLE dataset_profiles (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE sessions (
-    session_id BIGSERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP
-);
 
 CREATE TABLE column_configurations (
     configuration_id SERIAL PRIMARY KEY,

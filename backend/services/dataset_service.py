@@ -15,6 +15,10 @@ from backend.repositories.dataset_repository import (
     create_dataset,
 )
 
+from backend.repositories.session_repository import (
+    create_processing_session,
+)
+
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
@@ -44,15 +48,19 @@ async def upload_dataset(file):
         file.filename
     )
 
+    session_id = create_processing_session()
+
     dataset_id = create_dataset(
         file.filename,
         len(dataframe),
-        len(dataframe.columns)
+        len(dataframe.columns),
+        session_id
     )
 
     return {
-        "status": "success",
-        "message": "Dataset uploaded successfully.",
-        "dataset_id": dataset_id,
-        "data": metadata
-    }
+    "status": "success",
+    "message": "Dataset uploaded successfully.",
+    "dataset_id": dataset_id,
+    "session_id": session_id,
+    "data": metadata,
+} 
