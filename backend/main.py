@@ -36,6 +36,8 @@ from backend.controllers.id_generation_controller import (
     router as id_generation_router,
 )
 
+from backend.controllers.preprocessing_controller import router as preprocessing_router
+
 app = FastAPI(
     title="Synthetic Data Platform API",
     description="Backend API for the Synthetic Data Platform",
@@ -96,3 +98,4 @@ app.include_router(dashboard_router)
 app.include_router(report_router)
 app.include_router(download_router)
 app.include_router(id_generation_router)
+app.include_router(preprocessing_router)
