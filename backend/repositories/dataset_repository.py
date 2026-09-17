@@ -53,3 +53,36 @@ def create_dataset(
 
         if connection:
             connection.close()
+
+def get_dataset_filename(dataset_id: int):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT file_name
+            FROM datasets
+            WHERE dataset_id = %s
+            """,
+            (dataset_id,),
+        )
+
+        result = cursor.fetchone()
+
+        if result is None:
+            raise ValueError(
+                f"Dataset with ID {dataset_id} does not exist."
+            )
+
+        return result[0]
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
