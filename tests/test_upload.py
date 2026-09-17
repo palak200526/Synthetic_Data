@@ -66,7 +66,7 @@ def test_unsupported_file():
 
     assert response.status_code == 400
 
-    assert "Unsupported file type" in response.json()["detail"]
+    assert "Unsupported file type" in response.json()["message"]
 
 
 def test_dataset_profile():

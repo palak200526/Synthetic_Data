@@ -1,0 +1,1001 @@
+Invoice ID,Branch,City,Customer type,Gender,Product line,Unit price,Quantity,Tax 5%,Sales,Date,Time,Payment,cogs,gross margin percentage,gross income,Rating
+5016c6c6-cdb1-4c21-bb32-6e5e40f36fb9,Alex,Yangon,Member,Female,Health and beauty,74.69,7,26.1415,548.9715,1/5/2019,1:08:00 PM,Ewallet,522.83,4.761904762,26.1415,9.1
+9cea444c-a3dd-493d-a95a-884f054a12d6,Giza,Naypyitaw,Normal,Female,Electronic accessories,15.28,5,3.82,80.22,3/8/2019,10:29:00 AM,Cash,76.4,4.761904762,3.82,9.6
+bbbe665a-a8f3-45b1-ade8-6c7b4f4faf2f,Alex,Yangon,Normal,Female,Home and lifestyle,46.33,7,16.2155,340.5255,3/3/2019,1:23:00 PM,Credit card,324.31,4.761904762,16.2155,7.4
+f86730d0-875e-4563-889b-62831931a450,Alex,Yangon,Member,Female,Health and beauty,58.22,8,23.288,489.048,1/27/2019,8:33:00 PM,Ewallet,465.76,4.761904762,23.288,8.4
+24249d1e-b395-4700-88d2-f3bd1fe918d2,Alex,Yangon,Member,Female,Sports and travel,86.31,7,30.2085,634.3785,2/8/2019,10:37:00 AM,Ewallet,604.17,4.761904762,30.2085,5.3
+22878cfb-9890-4b1b-b760-59faf231fa6d,Giza,Naypyitaw,Member,Female,Electronic accessories,85.39,7,29.8865,627.6165,3/25/2019,6:30:00 PM,Ewallet,597.73,4.761904762,29.8865,4.1
+2e4f598a-2119-4df4-bb70-28c50d9ec526,Alex,Yangon,Member,Female,Electronic accessories,68.84,6,20.652,433.692,2/25/2019,2:36:00 PM,Ewallet,413.04,4.761904762,20.652,5.8
+91aaf649-d14f-4e80-9c45-8af418cfc781,Giza,Naypyitaw,Member,Female,Home and lifestyle,73.56,10,36.78,772.38,2/24/2019,11:38:00 AM,Ewallet,735.6,4.761904762,36.78,8.0
+d99d9ae4-35ec-4572-b7b0-a80679754aaa,Alex,Yangon,Member,Female,Health and beauty,36.26,2,3.626,76.146,1/10/2019,5:15:00 PM,Credit card,72.52,4.761904762,3.626,7.2
+17d37b7b-31a1-4050-9e52-a289e1593092,Cairo,Mandalay,Member,Female,Food and beverages,54.84,3,8.226,172.746,2/20/2019,1:27:00 PM,Credit card,164.52,4.761904762,8.226,5.9
+1981e010-2886-4d4b-aca9-66006b207c65,Cairo,Mandalay,Member,Female,Fashion accessories,14.48,4,2.896,60.816,2/6/2019,6:07:00 PM,Ewallet,57.92,4.761904762,2.896,4.5
+ace0fd33-56da-4636-ac68-12c75e8e3cb9,Cairo,Mandalay,Member,Female,Electronic accessories,25.51,4,5.102,107.142,3/9/2019,5:03:00 PM,Cash,102.04,4.761904762,5.102,6.8
+40543eaa-37c1-4242-a83d-5911f1acf65c,Alex,Yangon,Member,Female,Electronic accessories,46.95,5,11.7375,246.4875,2/12/2019,10:25:00 AM,Ewallet,234.75,4.761904762,11.7375,7.1
+8b2eb238-da56-43e5-b79d-63836b8f5cda,Alex,Yangon,Member,Female,Food and beverages,43.19,10,21.595,453.495,2/7/2019,4:48:00 PM,Ewallet,431.9,4.761904762,21.595,8.2
+5643086d-6622-4990-93e5-60c26004dff1,Alex,Yangon,Member,Female,Health and beauty,71.38,10,35.69,749.49,3/29/2019,7:21:00 PM,Cash,713.8,4.761904762,35.69,5.7
+ca573c6d-17ef-44d6-8ffa-b95ef399c20f,Cairo,Mandalay,Member,Female,Sports and travel,93.72,6,28.116,590.436,1/15/2019,4:19:00 PM,Cash,562.32,4.761904762,28.116,4.5
+71e427ef-02cb-4468-885b-2b157eee2032,Alex,Yangon,Member,Female,Health and beauty,68.93,7,24.1255,506.6355,3/11/2019,11:03:00 AM,Credit card,482.51,4.761904762,24.1255,4.6
+3b219320-eaf5-4843-ae6f-4d0d6be46aff,Alex,Yangon,Member,Female,Sports and travel,72.61,6,21.783,457.443,1/1/2019,10:39:00 AM,Credit card,435.66,4.761904762,21.783,6.9
+47d1f262-b1d3-474b-b79d-f5dd0c2e415a,Alex,Yangon,Member,Female,Food and beverages,54.67,3,8.2005,172.2105,1/21/2019,6:00:00 PM,Credit card,164.01,4.761904762,8.2005,8.6
+08bb7e65-a8ec-4a41-9bf7-fce50477b6d8,Cairo,Mandalay,Member,Female,Home and lifestyle,40.3,2,4.03,84.63,3/11/2019,3:30:00 PM,Ewallet,80.6,4.761904762,4.03,4.4
+c5555e20-1084-4bfd-8ee7-45a726deb381,Giza,Naypyitaw,Member,Female,Electronic accessories,86.04,5,21.51,451.71,2/25/2019,11:24:00 AM,Ewallet,430.2,4.761904762,21.51,4.8
+3ffcf4ed-db7e-48d5-b73b-7ba738f808b4,Cairo,Mandalay,Member,Female,Health and beauty,87.98,3,13.197,277.137,3/5/2019,10:40:00 AM,Ewallet,263.94,4.761904762,13.197,5.1
+93d2d32e-af61-44fd-9c27-7279d3d2f459,Cairo,Mandalay,Member,Female,Home and lifestyle,33.2,2,3.32,69.72,3/15/2019,12:20:00 PM,Credit card,66.4,4.761904762,3.32,4.4
+6bae773c-d781-4128-bdce-78449244ae04,Alex,Yangon,Member,Female,Electronic accessories,34.56,5,8.64,181.44,2/17/2019,11:15:00 AM,Ewallet,172.8,4.761904762,8.64,9.9
+5b3c28f5-9938-47d3-b77d-9a33df729fad,Alex,Yangon,Member,Female,Sports and travel,88.63,3,13.2945,279.1845,3/2/2019,5:36:00 PM,Ewallet,265.89,4.761904762,13.2945,6.0
+e9f2fcab-03ea-4e83-9753-66380cb2564c,Alex,Yangon,Member,Female,Home and lifestyle,52.59,8,21.036,441.756,3/22/2019,7:20:00 PM,Credit card,420.72,4.761904762,21.036,8.5
+b5f7c6d2-de3f-4870-aa38-bea8935b09bf,Cairo,Mandalay,Member,Female,Fashion accessories,33.52,1,1.676,35.196,2/8/2019,3:31:00 PM,Cash,33.52,4.761904762,1.676,6.7
+47d7069a-d2b3-46eb-bd63-4239ff054986,Alex,Yangon,Member,Female,Fashion accessories,87.67,2,8.767,184.107,3/10/2019,12:17:00 PM,Credit card,175.34,4.761904762,8.767,7.7
+48eab5b8-41e6-41a7-afe1-ec2631973c8d,Cairo,Mandalay,Member,Female,Food and beverages,88.36,5,22.09,463.89,1/25/2019,7:48:00 PM,Cash,441.8,4.761904762,22.09,9.6
+05ec5ad2-601c-4cf0-b69a-684c0b2faa49,Alex,Yangon,Member,Female,Health and beauty,24.89,9,11.2005,235.2105,3/15/2019,3:36:00 PM,Cash,224.01,4.761904762,11.2005,7.4
+a09b0797-0287-4456-906a-a8a7c6a380e2,Cairo,Mandalay,Member,Female,Fashion accessories,94.13,5,23.5325,494.1825,2/25/2019,7:39:00 PM,Credit card,470.65,4.761904762,23.5325,4.8
+c98055d1-f21d-4b08-ab39-28932186a41e,Cairo,Mandalay,Member,Female,Sports and travel,78.07,9,35.1315,737.7615,1/28/2019,12:43:00 PM,Cash,702.63,4.761904762,35.1315,4.5
+96eb0928-088d-44cb-959b-9f7cf74c4dc2,Cairo,Mandalay,Member,Female,Sports and travel,83.78,8,33.512,703.752,1/10/2019,2:49:00 PM,Cash,670.24,4.761904762,33.512,5.1
+0a7d0b92-f2b9-49f2-97f7-978113c61fe7,Alex,Yangon,Member,Female,Health and beauty,96.58,2,9.658,202.818,3/15/2019,10:12:00 AM,Credit card,193.16,4.761904762,9.658,5.1
+3fe75244-4b08-4766-bd0e-bf8a9059bdf7,Giza,Naypyitaw,Member,Female,Food and beverages,99.42,4,19.884,417.564,2/6/2019,10:42:00 AM,Ewallet,397.68,4.761904762,19.884,7.5
+ff2936b4-0336-46c6-a807-f1520020ca4a,Giza,Naypyitaw,Member,Female,Sports and travel,68.12,1,3.406,71.526,1/7/2019,12:28:00 PM,Ewallet,68.12,4.761904762,3.406,6.8
+5e490596-fb37-4a67-bc0d-84beb493d2d1,Alex,Yangon,Member,Female,Sports and travel,62.62,5,15.655,328.755,3/10/2019,7:15:00 PM,Ewallet,313.1,4.761904762,15.655,7.0
+91119794-9e94-4828-bf3b-43cfa98f7fb5,Alex,Yangon,Member,Female,Electronic accessories,60.88,9,27.396,575.316,1/15/2019,5:17:00 PM,Ewallet,547.92,4.761904762,27.396,4.7
+be3f6f7f-24d1-4a47-bc4f-a559666c0f09,Giza,Naypyitaw,Member,Female,Health and beauty,54.92,8,21.968,461.328,3/23/2019,1:24:00 PM,Ewallet,439.36,4.761904762,21.968,7.6
+ccae8917-aeea-438f-b655-3bf15392596f,Cairo,Mandalay,Member,Female,Home and lifestyle,30.12,8,12.048,253.008,3/3/2019,1:01:00 PM,Cash,240.96,4.761904762,12.048,7.7
+a81fda0a-fc66-4c5c-b17a-664cb2621164,Cairo,Mandalay,Member,Female,Home and lifestyle,86.72,1,4.336,91.056,1/17/2019,6:45:00 PM,Ewallet,86.72,4.761904762,4.336,7.9
+7c03403e-ee54-41d7-89d6-28cdcaabbbe2,Giza,Naypyitaw,Member,Female,Home and lifestyle,56.11,2,5.611,117.831,2/2/2019,10:11:00 AM,Cash,112.22,4.761904762,5.611,6.3
+9b52c6f6-72ca-4092-823b-ac9991bf2430,Cairo,Mandalay,Member,Female,Sports and travel,69.12,6,20.736,435.456,2/8/2019,1:03:00 PM,Cash,414.72,4.761904762,20.736,5.6
+b1a9dbf7-1cb7-4e73-9474-8e7ddbea383e,Giza,Naypyitaw,Member,Female,Food and beverages,98.7,8,39.48,829.08,3/4/2019,8:39:00 PM,Cash,789.6,4.761904762,39.48,7.6
+c1bfed3f-130c-48b5-aaaa-ba4a7b11fab9,Giza,Naypyitaw,Member,Female,Health and beauty,15.37,2,1.537,32.277,3/16/2019,7:47:00 PM,Cash,30.74,4.761904762,1.537,7.2
+a45e27ed-0842-4f23-ab8a-8e9fd6d7f50d,Cairo,Mandalay,Member,Female,Electronic accessories,93.96,4,18.792,394.632,3/9/2019,6:00:00 PM,Cash,375.84,4.761904762,18.792,9.5
+47ff8e95-4052-465e-a7f4-4fc14a1f17a3,Cairo,Mandalay,Member,Female,Health and beauty,56.69,9,25.5105,535.7205,2/27/2019,5:24:00 PM,Credit card,510.21,4.761904762,25.5105,8.4
+d4ae09e0-b987-4458-a518-021e04a0ac78,Cairo,Mandalay,Member,Female,Food and beverages,20.01,9,9.0045,189.0945,2/6/2019,3:47:00 PM,Ewallet,180.09,4.761904762,9.0045,4.1
+bb5c8da2-570e-4560-8d70-b2d3576dcf74,Cairo,Mandalay,Member,Female,Electronic accessories,18.93,6,5.679,119.259,2/10/2019,12:45:00 PM,Credit card,113.58,4.761904762,5.679,8.1
+3299d153-6120-4689-9f8e-7b1ad56e0c3f,Giza,Naypyitaw,Member,Female,Fashion accessories,82.63,10,41.315,867.615,3/19/2019,5:08:00 PM,Ewallet,826.3,4.761904762,41.315,7.9
+c0b16102-609e-4a07-b7d5-9cf3e4772ad0,Giza,Naypyitaw,Member,Female,Food and beverages,91.4,7,31.99,671.79,2/3/2019,10:19:00 AM,Cash,639.8,4.761904762,31.99,9.5
+c03369eb-5f07-4365-a90e-9afd0b6effbe,Alex,Yangon,Member,Female,Food and beverages,44.59,5,11.1475,234.0975,2/10/2019,3:10:00 PM,Cash,222.95,4.761904762,11.1475,8.5
+6f111fa6-0742-4d93-87c9-f847889d9dd8,Cairo,Mandalay,Member,Female,Fashion accessories,17.87,4,3.574,75.054,3/22/2019,2:42:00 PM,Ewallet,71.48,4.761904762,3.574,6.5
+d2bee786-4d1a-44b4-8e37-df18c70ce98a,Giza,Naypyitaw,Member,Female,Fashion accessories,15.43,1,0.7715,16.2015,1/25/2019,3:46:00 PM,Credit card,15.43,4.761904762,0.7715,6.1
+1aafcce1-fff0-472b-81b0-32a292bdc271,Cairo,Mandalay,Member,Female,Home and lifestyle,16.16,2,1.616,33.936,3/7/2019,11:49:00 AM,Ewallet,32.32,4.761904762,1.616,6.5
+9ebfec0b-61ca-42cc-b4e5-e8f24634859d,Giza,Naypyitaw,Member,Female,Electronic accessories,85.98,8,34.392,722.232,2/28/2019,7:01:00 PM,Cash,687.84,4.761904762,34.392,8.2
+cf2a8621-96db-4c9d-9e46-b4a916d613d4,Alex,Yangon,Member,Female,Home and lifestyle,44.34,2,4.434,93.114,3/27/2019,11:26:00 AM,Cash,88.68,4.761904762,4.434,5.8
+dbe4e74f-9d5a-4c66-a3e9-dd7362b6f69f,Alex,Yangon,Member,Female,Health and beauty,89.6,8,35.84,752.64,2/7/2019,11:28:00 AM,Ewallet,716.8,4.761904762,35.84,6.6
+01fdcb7c-7817-491a-8790-d42a3d2440a0,Alex,Yangon,Member,Female,Home and lifestyle,72.35,10,36.175,759.675,1/20/2019,3:55:00 PM,Cash,723.5,4.761904762,36.175,5.4
+e8922b67-4573-4a95-8721-492a8e1779cf,Giza,Naypyitaw,Member,Female,Electronic accessories,30.61,6,9.183,192.843,3/12/2019,8:36:00 PM,Cash,183.66,4.761904762,9.183,9.3
+3a25c09c-d353-444e-99e7-8f4cebabd257,Giza,Naypyitaw,Member,Female,Sports and travel,24.74,3,3.711,77.931,2/15/2019,5:47:00 PM,Credit card,74.22,4.761904762,3.711,10.0
+8f8ae136-5678-4380-b7f3-927ce872b79e,Giza,Naypyitaw,Member,Female,Home and lifestyle,55.73,6,16.719,351.099,2/24/2019,10:55:00 AM,Ewallet,334.38,4.761904762,16.719,7.0
+8a5d4487-5738-41e9-9bae-3740c88655dd,Cairo,Mandalay,Member,Female,Sports and travel,55.07,9,24.7815,520.4115,2/3/2019,1:40:00 PM,Ewallet,495.63,4.761904762,24.7815,10.0
+310f7b89-4e10-4118-b7f3-2eefba67b614,Alex,Yangon,Member,Female,Sports and travel,15.81,10,7.905,166.005,3/6/2019,12:27:00 PM,Credit card,158.1,4.761904762,7.905,8.6
+bafa31ba-1b58-4631-9803-6196d59eab40,Cairo,Mandalay,Member,Female,Health and beauty,75.74,4,15.148,318.108,2/14/2019,2:35:00 PM,Cash,302.96,4.761904762,15.148,7.6
+a9d882b5-a4fd-4f7a-9748-73a7a3117317,Alex,Yangon,Member,Female,Health and beauty,15.87,10,7.935,166.635,3/13/2019,4:40:00 PM,Cash,158.7,4.761904762,7.935,5.8
+bc912114-823f-44a6-8e97-adef3c349e27,Giza,Naypyitaw,Member,Female,Health and beauty,33.47,2,3.347,70.287,2/10/2019,3:43:00 PM,Ewallet,66.94,4.761904762,3.347,6.7
+e2755ffe-daf6-4c7f-9bac-6d3e82229149,Cairo,Mandalay,Member,Female,Fashion accessories,97.61,6,29.283,614.943,1/7/2019,3:01:00 PM,Ewallet,585.66,4.761904762,29.283,9.9
+a0d5715c-a39e-458b-8333-f5c433d40a1d,Alex,Yangon,Member,Female,Sports and travel,78.77,10,39.385,827.085,1/24/2019,10:04:00 AM,Cash,787.7,4.761904762,39.385,6.4
+02750ba9-15bc-44b4-885e-91b3cf008fb0,Alex,Yangon,Member,Female,Health and beauty,18.33,1,0.9165,19.2465,2/2/2019,6:50:00 PM,Cash,18.33,4.761904762,0.9165,4.3
+6f836da9-b52f-45a8-926d-da9c61ffbec2,Giza,Naypyitaw,Member,Female,Food and beverages,89.48,10,44.74,939.54,1/6/2019,12:46:00 PM,Credit card,894.8,4.761904762,44.74,9.6
+d01b7c78-532a-4fc5-9d7b-4b632249768a,Giza,Naypyitaw,Member,Female,Fashion accessories,62.12,10,31.06,652.26,2/11/2019,4:19:00 PM,Cash,621.2,4.761904762,31.06,5.9
+7cc9fe1e-b23b-427b-ae35-f29573e3b92a,Cairo,Mandalay,Member,Female,Food and beverages,48.52,3,7.278,152.838,3/5/2019,6:17:00 PM,Ewallet,145.56,4.761904762,7.278,4.0
+07f4d470-f820-465e-bea7-3e1e96828b71,Giza,Naypyitaw,Member,Female,Electronic accessories,75.91,6,22.773,478.233,3/9/2019,6:21:00 PM,Cash,455.46,4.761904762,22.773,8.7
+82920c3e-ef5e-446e-a012-895b7a73a54e,Alex,Yangon,Member,Female,Home and lifestyle,74.67,9,33.6015,705.6315,1/22/2019,10:55:00 AM,Ewallet,672.03,4.761904762,33.6015,9.4
+461aebab-e1ef-4e4c-b315-c747244555af,Giza,Naypyitaw,Member,Female,Electronic accessories,41.65,10,20.825,437.325,1/13/2019,5:04:00 PM,Credit card,416.5,4.761904762,20.825,5.4
+6898943d-1fec-42c1-ab0f-0488ebb40399,Giza,Naypyitaw,Member,Female,Fashion accessories,49.04,9,22.068,463.428,1/9/2019,2:20:00 PM,Credit card,441.36,4.761904762,22.068,8.6
+fe8ba410-79c0-4884-8c01-e79e4f69fe02,Alex,Yangon,Member,Female,Fashion accessories,20.01,9,9.0045,189.0945,1/12/2019,3:48:00 PM,Credit card,180.09,4.761904762,9.0045,5.7
+3eff0c54-a321-4741-ad1d-bb60d7797019,Giza,Naypyitaw,Member,Female,Food and beverages,78.31,10,39.155,822.255,3/5/2019,4:24:00 PM,Ewallet,783.1,4.761904762,39.155,6.6
+fdb481d0-6247-4d92-9ef2-db040ee5a05d,Giza,Naypyitaw,Member,Female,Health and beauty,20.38,5,5.095,106.995,1/22/2019,6:56:00 PM,Cash,101.9,4.761904762,5.095,6.0
+f2641433-4c27-472c-9c4a-ca3d07f9186c,Giza,Naypyitaw,Member,Female,Health and beauty,99.19,6,29.757,624.897,1/21/2019,2:42:00 PM,Credit card,595.14,4.761904762,29.757,5.5
+98c089d7-36cc-481c-8458-8969c2f60136,Cairo,Mandalay,Member,Female,Food and beverages,96.68,3,14.502,304.542,1/26/2019,7:56:00 PM,Ewallet,290.04,4.761904762,14.502,6.4
+0fe44af7-b2c9-4f90-8f1a-37296b66c066,Giza,Naypyitaw,Member,Female,Food and beverages,19.25,8,7.7,161.7,1/23/2019,6:37:00 PM,Ewallet,154.0,4.761904762,7.7,6.6
+1c6db2c0-e9be-4d43-aae8-f4514728d48f,Giza,Naypyitaw,Member,Female,Food and beverages,80.36,4,16.072,337.512,2/23/2019,6:45:00 PM,Credit card,321.44,4.761904762,16.072,8.3
+e92f329e-79eb-4d0b-b2bf-314fdf8b9f32,Giza,Naypyitaw,Member,Female,Sports and travel,48.91,5,12.2275,256.7775,3/9/2019,10:17:00 AM,Cash,244.55,4.761904762,12.2275,6.6
+1f38aded-ab37-453a-ab6b-ece01e169a1c,Giza,Naypyitaw,Member,Female,Sports and travel,83.06,7,29.071,610.491,3/5/2019,2:31:00 PM,Ewallet,581.42,4.761904762,29.071,4.0
+c79b028b-60ea-49e5-8833-5997b2e085ce,Giza,Naypyitaw,Member,Female,Fashion accessories,76.52,5,19.13,401.73,3/25/2019,10:23:00 AM,Cash,382.6,4.761904762,19.13,9.9
+43147fce-7eb6-4af7-ac6c-848ae4831480,Alex,Yangon,Member,Female,Food and beverages,49.38,7,17.283,362.943,3/27/2019,8:35:00 PM,Credit card,345.66,4.761904762,17.283,7.3
+6fda001d-f447-4c0d-b92a-84e6cf83277e,Alex,Yangon,Member,Female,Sports and travel,42.47,1,2.1235,44.5935,1/2/2019,4:57:00 PM,Cash,42.47,4.761904762,2.1235,5.7
+bf9a50e9-1da9-4db6-bb96-464b7c75b4c8,Cairo,Mandalay,Member,Female,Health and beauty,76.99,6,23.097,485.037,2/27/2019,5:55:00 PM,Cash,461.94,4.761904762,23.097,6.1
+01c90df3-8520-43b8-9ea1-c11cc9068cae,Giza,Naypyitaw,Member,Female,Home and lifestyle,47.38,4,9.476,198.996,1/23/2019,10:25:00 AM,Cash,189.52,4.761904762,9.476,7.1
+d9231e20-d741-4a37-a603-b6c5151eeb83,Giza,Naypyitaw,Member,Female,Sports and travel,44.86,10,22.43,471.03,1/26/2019,7:54:00 PM,Ewallet,448.6,4.761904762,22.43,8.2
+ced54299-42df-4074-a33b-1c820caf66f0,Alex,Yangon,Member,Female,Sports and travel,21.98,7,7.693,161.553,1/10/2019,4:42:00 PM,Ewallet,153.86,4.761904762,7.693,5.1
+b8f0e3bc-c6c1-49e3-ad08-69b332999d01,Cairo,Mandalay,Member,Female,Health and beauty,64.36,9,28.962,608.202,3/12/2019,12:09:00 PM,Credit card,579.24,4.761904762,28.962,8.6
+407d89e6-dce2-4d95-af12-155d02753159,Giza,Naypyitaw,Member,Female,Health and beauty,89.75,1,4.4875,94.2375,2/6/2019,8:05:00 PM,Credit card,89.75,4.761904762,4.4875,6.6
+02db359c-cbbd-4018-9108-cfd5266c6dce,Alex,Yangon,Member,Female,Electronic accessories,97.16,1,4.858,102.018,3/8/2019,8:38:00 PM,Ewallet,97.16,4.761904762,4.858,7.2
+1e4b50ec-177f-4727-8d88-ef53e4159498,Cairo,Mandalay,Member,Female,Health and beauty,87.87,10,43.935,922.635,3/29/2019,10:25:00 AM,Ewallet,878.7,4.761904762,43.935,5.1
+90734ba7-e907-4292-a74b-1f6ccd06e889,Giza,Naypyitaw,Member,Female,Electronic accessories,12.45,6,3.735,78.435,2/9/2019,1:11:00 PM,Cash,74.7,4.761904762,3.735,4.1
+11f12b28-f320-442a-bed7-a7fc9172d55d,Alex,Yangon,Member,Female,Food and beverages,52.75,3,7.9125,166.1625,3/23/2019,10:16:00 AM,Ewallet,158.25,4.761904762,7.9125,9.3
+fc2e25a5-5a85-441b-be8e-7f4790551ffd,Cairo,Mandalay,Member,Female,Home and lifestyle,82.7,6,24.81,521.01,3/5/2019,6:14:00 PM,Cash,496.2,4.761904762,24.81,7.4
+d1e7626d-7bb4-43a3-a2ba-86d8570b0a78,Giza,Naypyitaw,Member,Female,Fashion accessories,48.71,1,2.4355,51.1455,3/26/2019,7:20:00 PM,Cash,48.71,4.761904762,2.4355,4.1
+973bd15a-180b-471b-97de-6b2f24525c33,Giza,Naypyitaw,Member,Female,Fashion accessories,78.55,9,35.3475,742.2975,3/1/2019,1:22:00 PM,Cash,706.95,4.761904762,35.3475,7.2
+6f45f2e2-3756-4d44-a25a-7269b5317d96,Giza,Naypyitaw,Member,Female,Electronic accessories,23.07,9,10.3815,218.0115,2/1/2019,11:27:00 AM,Cash,207.63,4.761904762,10.3815,4.9
+39d3be7e-34a7-48c7-b617-fc8068fbdb88,Alex,Yangon,Member,Female,Food and beverages,58.26,6,17.478,367.038,3/28/2019,4:44:00 PM,Cash,349.56,4.761904762,17.478,9.9
+14f0c08c-a9a1-471a-977b-3a713b9cbf22,Cairo,Mandalay,Member,Female,Health and beauty,30.35,7,10.6225,223.0725,3/19/2019,6:19:00 PM,Cash,212.45,4.761904762,10.6225,8.0
+39378198-8a9f-4c37-a6c2-8968b1191435,Alex,Yangon,Member,Female,Electronic accessories,88.67,10,44.335,931.035,1/12/2019,2:50:00 PM,Ewallet,886.7,4.761904762,44.335,7.3
+1fef374c-1d7a-4645-aaf5-6002da8877e6,Giza,Naypyitaw,Member,Female,Fashion accessories,27.38,6,8.214,172.494,1/5/2019,8:54:00 PM,Credit card,164.28,4.761904762,8.214,7.9
+fcbf21ca-fc19-4faf-9824-877df99ad22c,Alex,Yangon,Member,Female,Sports and travel,62.13,6,18.639,391.419,3/22/2019,8:19:00 PM,Cash,372.78,4.761904762,18.639,7.4
+4114121b-a747-457d-8c30-fb1eb06d1ba5,Giza,Naypyitaw,Member,Female,Food and beverages,33.98,9,15.291,321.111,3/24/2019,10:43:00 AM,Cash,305.82,4.761904762,15.291,4.2
+51b6d143-590e-45e9-bb25-f8b794caa24c,Giza,Naypyitaw,Member,Female,Electronic accessories,81.97,10,40.985,860.685,3/3/2019,2:30:00 PM,Cash,819.7,4.761904762,40.985,9.2
+d8e6f723-2b87-4bc9-922a-f05c19454ae6,Cairo,Mandalay,Member,Female,Sports and travel,16.49,2,1.649,34.629,2/5/2019,11:32:00 AM,Ewallet,32.98,4.761904762,1.649,4.6
+73299013-1d2e-4649-aede-53831e8f3bdc,Giza,Naypyitaw,Member,Female,Health and beauty,98.21,3,14.7315,309.3615,2/5/2019,10:41:00 AM,Credit card,294.63,4.761904762,14.7315,7.8
+2019e5fe-ad08-4d44-85ac-22a7e5624e35,Cairo,Mandalay,Member,Female,Fashion accessories,72.84,7,25.494,535.374,2/15/2019,12:44:00 PM,Cash,509.88,4.761904762,25.494,8.4
+67137f77-7374-4a23-8f4b-581e144543db,Alex,Yangon,Member,Female,Home and lifestyle,58.07,9,26.1315,548.7615,1/19/2019,8:07:00 PM,Ewallet,522.63,4.761904762,26.1315,4.3
+8384b6bc-d4d7-48b6-83ec-1f985064427c,Giza,Naypyitaw,Member,Female,Home and lifestyle,80.79,9,36.3555,763.4655,2/1/2019,8:31:00 PM,Credit card,727.11,4.761904762,36.3555,9.5
+12222460-df0f-47e8-9f33-dd5a1ddcf5b3,Giza,Naypyitaw,Member,Female,Fashion accessories,27.02,3,4.053,85.113,3/2/2019,1:01:00 PM,Credit card,81.06,4.761904762,4.053,7.1
+2c3184da-fbc5-4526-b9bd-d719ff0bdf76,Cairo,Mandalay,Member,Female,Fashion accessories,21.94,5,5.485,115.185,3/5/2019,12:29:00 PM,Ewallet,109.7,4.761904762,5.485,5.3
+ee16171c-2e1b-4fb6-9bff-5c4de204788b,Cairo,Mandalay,Member,Female,Fashion accessories,51.36,1,2.568,53.928,1/16/2019,3:26:00 PM,Ewallet,51.36,4.761904762,2.568,5.2
+09cb893b-131e-4127-9afe-6f4a1a61e8d6,Alex,Yangon,Member,Female,Food and beverages,10.96,10,5.48,115.08,2/2/2019,8:48:00 PM,Ewallet,109.6,4.761904762,5.48,6.0
+9cbda89e-ab1a-40c9-8e00-0299b0b00a89,Cairo,Mandalay,Member,Female,Home and lifestyle,53.44,2,5.344,112.224,1/20/2019,8:38:00 PM,Ewallet,106.88,4.761904762,5.344,4.1
+9955ce21-b61f-4a1c-bba3-326cf589fef1,Alex,Yangon,Member,Female,Electronic accessories,99.56,8,39.824,836.304,2/14/2019,5:03:00 PM,Credit card,796.48,4.761904762,39.824,5.2
+421c30bf-42da-4a16-a8ab-a3a509f4c9f2,Giza,Naypyitaw,Member,Female,Sports and travel,57.12,7,19.992,419.832,1/12/2019,12:02:00 PM,Credit card,399.84,4.761904762,19.992,6.5
+3995929b-9e5e-4b09-9970-858a81b5f571,Cairo,Mandalay,Member,Female,Sports and travel,99.96,9,44.982,944.622,3/9/2019,5:26:00 PM,Credit card,899.64,4.761904762,44.982,4.2
+dfceda90-79b5-4205-b02d-c468b35ef95b,Giza,Naypyitaw,Member,Female,Home and lifestyle,63.91,8,25.564,536.844,3/13/2019,7:52:00 PM,Credit card,511.28,4.761904762,25.564,4.6
+025d0fb1-b50f-4171-8f17-d9e9c8885b6b,Cairo,Mandalay,Member,Female,Fashion accessories,56.47,8,22.588,474.348,3/9/2019,2:57:00 PM,Ewallet,451.76,4.761904762,22.588,7.3
+f17cd5f2-d387-452f-be1d-eac398df30e8,Alex,Yangon,Member,Female,Home and lifestyle,93.69,7,32.7915,688.6215,3/10/2019,6:44:00 PM,Credit card,655.83,4.761904762,32.7915,4.5
+36a7c224-34d0-4ad7-b25b-3b929c9909e6,Alex,Yangon,Member,Female,Sports and travel,32.25,5,8.0625,169.3125,1/27/2019,1:26:00 PM,Cash,161.25,4.761904762,8.0625,9.0
+c513dc2a-0188-407a-8bfc-d7f0d6c48684,Giza,Naypyitaw,Member,Female,Fashion accessories,31.73,9,14.2785,299.8485,1/8/2019,4:17:00 PM,Credit card,285.57,4.761904762,14.2785,5.9
+58b6e4e1-dd08-41e8-bdbe-b18fb3107b48,Giza,Naypyitaw,Member,Female,Food and beverages,68.54,8,27.416,575.736,1/8/2019,3:57:00 PM,Ewallet,548.32,4.761904762,27.416,8.5
+c936d129-c7a4-4bb2-a359-817add53c25a,Cairo,Mandalay,Member,Female,Sports and travel,90.28,9,40.626,853.146,2/8/2019,11:15:00 AM,Ewallet,812.52,4.761904762,40.626,7.2
+b09c42fd-d590-47f8-8992-fe0f6a38a006,Cairo,Mandalay,Normal,Female,Fashion accessories,39.62,7,13.867,291.207,1/25/2019,1:18:00 PM,Cash,277.34,4.761904762,13.867,7.5
+178223d1-4b60-48a9-bc16-c8f92ab5bf1f,Alex,Yangon,Member,Female,Sports and travel,92.13,6,27.639,580.419,3/6/2019,8:34:00 PM,Cash,552.78,4.761904762,27.639,8.3
+5fd35982-62bb-4e0e-8847-8256f8eec754,Cairo,Mandalay,Normal,Female,Sports and travel,34.84,4,6.968,146.328,2/10/2019,6:36:00 PM,Cash,139.36,4.761904762,6.968,7.4
+e1fd490c-4ece-44ac-9df1-ca46abb0c458,Cairo,Mandalay,Member,Female,Electronic accessories,87.45,6,26.235,550.935,2/17/2019,2:40:00 PM,Credit card,524.7,4.761904762,26.235,8.8
+ae602526-574b-4e91-ac8a-3fd96709db40,Giza,Naypyitaw,Normal,Female,Health and beauty,81.3,6,24.39,512.19,3/8/2019,4:43:00 PM,Ewallet,487.8,4.761904762,24.39,5.3
+ad3bc1ce-3611-4d88-ba90-a0cf27a436c1,Giza,Naypyitaw,Normal,Female,Fashion accessories,90.22,3,13.533,284.193,2/18/2019,7:39:00 PM,Cash,270.66,4.761904762,13.533,6.2
+5f395b1c-ff6f-4592-8a01-6c97d190b4cb,Alex,Yangon,Normal,Female,Electronic accessories,26.31,5,6.5775,138.1275,1/18/2019,8:59:00 PM,Credit card,131.55,4.761904762,6.5775,8.8
+303a2cb1-d5ef-4bd1-8d5f-e00ed0443a0c,Alex,Yangon,Member,Female,Home and lifestyle,34.42,6,10.326,216.846,2/18/2019,3:39:00 PM,Cash,206.52,4.761904762,10.326,9.8
+efce80c0-c34b-47f2-9946-7ec7d2c91eca,Cairo,Mandalay,Normal,Female,Sports and travel,51.91,10,25.955,545.055,2/16/2019,12:21:00 PM,Cash,519.1,4.761904762,25.955,8.2
+4b8a6ecb-12bb-463d-be38-61e265a41413,Alex,Yangon,Normal,Female,Sports and travel,72.5,8,29.0,609.0,3/16/2019,7:25:00 PM,Ewallet,580.0,4.761904762,29.0,9.2
+5316a672-135e-466a-8caf-703720419f9c,Giza,Naypyitaw,Member,Female,Sports and travel,89.8,10,44.9,942.9,1/23/2019,1:00:00 PM,Credit card,898.0,4.761904762,44.9,5.4
+05cb464e-9fb1-4cc7-b138-f1a1e34c2b33,Giza,Naypyitaw,Member,Male,Health and beauty,90.5,10,45.25,950.25,1/25/2019,1:48:00 PM,Cash,905.0,4.761904762,45.25,8.1
+a24775c4-5731-4a0d-b6e6-067f1c63e922,Giza,Naypyitaw,Member,Female,Health and beauty,68.6,10,34.3,720.3,2/5/2019,7:57:00 PM,Cash,686.0,4.761904762,34.3,9.1
+6970c262-e59d-433b-a52a-323ecadfbda6,Giza,Naypyitaw,Member,Female,Food and beverages,30.41,1,1.5205,31.9305,2/22/2019,10:36:00 AM,Credit card,30.41,4.761904762,1.5205,8.4
+8584161c-7be6-412a-856a-e7e465f282a0,Alex,Yangon,Normal,Female,Home and lifestyle,77.95,6,23.385,491.085,1/21/2019,4:37:00 PM,Ewallet,467.7,4.761904762,23.385,8.0
+e5d39a52-488b-4583-bc86-bd39a3c5cb9b,Giza,Naypyitaw,Normal,Female,Health and beauty,46.26,6,13.878,291.438,3/8/2019,5:11:00 PM,Credit card,277.56,4.761904762,13.878,9.5
+d26f6413-ed05-447b-ba93-01acc4d9c104,Alex,Yangon,Member,Female,Fashion accessories,30.14,10,15.07,316.47,2/10/2019,12:28:00 PM,Ewallet,301.4,4.761904762,15.07,9.2
+98748737-b8a4-487b-8999-cee8e352d0f1,Giza,Naypyitaw,Normal,Male,Health and beauty,66.14,4,13.228,277.788,3/19/2019,12:46:00 PM,Credit card,264.56,4.761904762,13.228,5.6
+9d954269-4087-44a4-ac5a-372baa43223d,Cairo,Mandalay,Member,Male,Home and lifestyle,71.86,8,28.744,603.624,3/6/2019,3:07:00 PM,Credit card,574.88,4.761904762,28.744,6.2
+9eda7ad4-0739-49a3-ba35-e52faba4c605,Alex,Yangon,Normal,Male,Health and beauty,32.46,8,12.984,272.664,3/27/2019,1:48:00 PM,Credit card,259.68,4.761904762,12.984,4.9
+4d9a8f98-43dd-4e09-81ff-169fc2fa4b25,Cairo,Mandalay,Member,Female,Fashion accessories,91.54,4,18.308,384.468,3/23/2019,7:20:00 PM,Credit card,366.16,4.761904762,18.308,4.8
+12ed23dd-50df-49e1-a2d0-897f94627174,Giza,Naypyitaw,Member,Male,Sports and travel,34.56,7,12.096,254.016,3/11/2019,4:07:00 PM,Credit card,241.92,4.761904762,12.096,7.3
+000431a4-3cee-4e42-9d80-243dae7455cc,Alex,Yangon,Normal,Male,Fashion accessories,83.24,9,37.458,786.618,1/29/2019,11:56:00 AM,Credit card,749.16,4.761904762,37.458,7.4
+590cf1c4-affb-4392-9495-5a72e2aca022,Giza,Naypyitaw,Normal,Female,Food and beverages,16.48,6,4.944,103.824,2/7/2019,6:23:00 PM,Ewallet,98.88,4.761904762,4.944,9.9
+082033d4-6513-4761-8c54-7ca0d32cebef,Giza,Naypyitaw,Normal,Female,Sports and travel,80.97,8,32.388,680.148,1/28/2019,1:05:00 PM,Cash,647.76,4.761904762,32.388,9.3
+b3068395-887b-430a-bb65-9a83c9120359,Alex,Yangon,Member,Male,Food and beverages,92.29,5,23.0725,484.5225,2/20/2019,3:55:00 PM,Credit card,461.45,4.761904762,23.0725,9.0
+9ec55bb1-24ad-4484-94a4-be00b6076bc3,Cairo,Mandalay,Member,Male,Electronic accessories,72.17,1,3.6085,75.7785,1/4/2019,7:40:00 PM,Cash,72.17,4.761904762,3.6085,6.1
+c81e0c23-d084-42ea-a81f-eb96c144f7ce,Cairo,Mandalay,Normal,Male,Home and lifestyle,50.28,5,12.57,263.97,3/7/2019,1:58:00 PM,Ewallet,251.4,4.761904762,12.57,9.7
+e197316f-b11d-4285-944c-c0c79fcb50a8,Cairo,Mandalay,Member,Male,Health and beauty,97.22,9,43.749,918.729,3/30/2019,2:43:00 PM,Ewallet,874.98,4.761904762,43.749,6.0
+8856bebf-cc93-42ab-b48f-e2cc4d2a7373,Cairo,Mandalay,Normal,Male,Sports and travel,93.39,6,28.017,588.357,3/27/2019,7:18:00 PM,Ewallet,560.34,4.761904762,28.017,10.0
+e2b96b1f-4758-485b-8741-719b53aa2484,Giza,Naypyitaw,Normal,Female,Food and beverages,43.18,8,17.272,362.712,1/19/2019,7:39:00 PM,Credit card,345.44,4.761904762,17.272,8.3
+705ed1bb-f40b-4d7d-a01e-993a44532776,Alex,Yangon,Normal,Male,Sports and travel,63.69,1,3.1845,66.8745,2/25/2019,4:21:00 PM,Cash,63.69,4.761904762,3.1845,6.0
+72ed20ad-d6c6-4d46-a2a5-50379c8e03a6,Alex,Yangon,Normal,Male,Food and beverages,45.79,7,16.0265,336.5565,3/13/2019,7:44:00 PM,Credit card,320.53,4.761904762,16.0265,7.0
+10600904-e545-4eaf-bee9-e5f38d92df8a,Giza,Naypyitaw,Normal,Male,Sports and travel,76.4,2,7.64,160.44,1/30/2019,7:42:00 PM,Ewallet,152.8,4.761904762,7.64,6.5
+a596fa8d-a681-4e82-9e4a-f08d1cc20d5d,Cairo,Mandalay,Normal,Male,Food and beverages,39.9,10,19.95,418.95,2/20/2019,3:24:00 PM,Credit card,399.0,4.761904762,19.95,5.9
+c8a3e641-6541-417a-acae-baebd6118ccf,Cairo,Mandalay,Member,Male,Health and beauty,42.57,8,17.028,357.588,2/25/2019,2:12:00 PM,Ewallet,340.56,4.761904762,17.028,5.6
+0066eb1a-c537-46a4-ba92-b5257063aee1,Giza,Naypyitaw,Normal,Male,Home and lifestyle,95.58,10,47.79,1003.59,1/16/2019,1:32:00 PM,Cash,955.8,4.761904762,47.79,4.8
+20117348-dce3-4b75-9c65-905d03c0489f,Alex,Yangon,Normal,Male,Fashion accessories,98.98,10,49.49,1039.29,2/8/2019,4:20:00 PM,Credit card,989.8,4.761904762,49.49,8.7
+0c2e6d90-4779-4c6a-ba97-ff276a5c2cac,Alex,Yangon,Normal,Male,Food and beverages,51.28,6,15.384,323.064,1/19/2019,4:31:00 PM,Cash,307.68,4.761904762,15.384,6.5
+7a4eca6e-204b-4750-af69-3e9969f1d45d,Alex,Yangon,Member,Male,Sports and travel,69.52,7,24.332,510.972,2/1/2019,3:10:00 PM,Credit card,486.64,4.761904762,24.332,8.5
+44f297f7-e854-4927-ba15-e63da3f020b7,Alex,Yangon,Normal,Male,Health and beauty,70.01,5,17.5025,367.5525,1/3/2019,11:36:00 AM,Ewallet,350.05,4.761904762,17.5025,5.5
+61a4350a-a3fa-4873-b4f4-fd828b7164ed,Cairo,Mandalay,Member,Male,Food and beverages,80.05,5,20.0125,420.2625,1/26/2019,12:45:00 PM,Credit card,400.25,4.761904762,20.0125,9.4
+207c18be-33aa-4e02-8199-949869d629ed,Giza,Naypyitaw,Normal,Male,Electronic accessories,20.85,8,8.34,175.14,3/3/2019,7:17:00 PM,Cash,166.8,4.761904762,8.34,6.3
+d8e0e088-a882-4324-ae76-d3611f23fef4,Cairo,Mandalay,Member,Male,Electronic accessories,52.89,6,15.867,333.207,1/19/2019,5:34:00 PM,Credit card,317.34,4.761904762,15.867,9.8
+f9a7387b-eade-4898-a2b2-64cad24b4b89,Cairo,Mandalay,Normal,Male,Food and beverages,19.79,8,7.916,166.236,1/18/2019,12:04:00 PM,Ewallet,158.32,4.761904762,7.916,8.7
+4dff5541-3008-49fd-85c7-377703819564,Alex,Yangon,Member,Male,Home and lifestyle,33.84,9,15.228,319.788,3/21/2019,4:21:00 PM,Ewallet,304.56,4.761904762,15.228,8.8
+baa86bc5-2922-4fb8-88ba-df3061edb01b,Alex,Yangon,Member,Male,Food and beverages,22.17,8,8.868,186.228,3/3/2019,5:01:00 PM,Credit card,177.36,4.761904762,8.868,9.6
+2e164b7b-57d1-43ba-8c0e-98ac63d8c294,Giza,Naypyitaw,Normal,Female,Fashion accessories,22.51,7,7.8785,165.4485,2/13/2019,10:50:00 AM,Credit card,157.57,4.761904762,7.8785,4.8
+5320ecd8-9fb7-4413-a073-dac1eb5d2eb0,Alex,Yangon,Normal,Male,Food and beverages,73.88,6,22.164,465.444,3/23/2019,7:16:00 PM,Ewallet,443.28,4.761904762,22.164,4.4
+11841b30-995b-4062-8190-887bc4502b88,Giza,Naypyitaw,Member,Male,Health and beauty,86.8,3,13.02,273.42,1/28/2019,4:47:00 PM,Ewallet,260.4,4.761904762,13.02,9.9
+633e806f-9523-4214-8526-ba57d204bfd1,Giza,Naypyitaw,Normal,Male,Fashion accessories,64.26,7,22.491,472.311,2/9/2019,10:00:00 AM,Cash,449.82,4.761904762,22.491,5.7
+0d065911-9d48-4062-880f-78b1868849df,Giza,Naypyitaw,Member,Male,Food and beverages,38.47,8,15.388,323.148,1/23/2019,11:51:00 AM,Cash,307.76,4.761904762,15.388,7.7
+7ce2c59f-8b6b-4697-910e-b5331e6ccaa6,Alex,Yangon,Member,Male,Sports and travel,15.5,10,7.75,162.75,3/23/2019,10:55:00 AM,Ewallet,155.0,4.761904762,7.75,8.0
+7ef916a7-edcb-4971-b8e6-7f2528ab80dc,Giza,Naypyitaw,Normal,Male,Health and beauty,34.31,8,13.724,288.204,1/25/2019,3:00:00 PM,Ewallet,274.48,4.761904762,13.724,5.7
+b4fe4da7-dd0a-4668-b3bb-af00b676cec2,Alex,Yangon,Normal,Female,Sports and travel,12.34,7,4.319,90.699,3/4/2019,11:19:00 AM,Credit card,86.38,4.761904762,4.319,6.7
+db6e26c5-4582-4dbd-bc50-7f0cf5bd5bbc,Cairo,Mandalay,Member,Male,Food and beverages,18.08,3,2.712,56.952,3/5/2019,7:46:00 PM,Ewallet,54.24,4.761904762,2.712,8.0
+c396fcb6-a220-4b47-899c-cd1f6f26c52e,Cairo,Mandalay,Member,Female,Home and lifestyle,94.49,8,37.796,793.716,3/3/2019,7:00:00 PM,Ewallet,755.92,4.761904762,37.796,7.5
+1d7a4610-82d7-47ad-841d-522b0ef09658,Cairo,Mandalay,Member,Male,Home and lifestyle,46.47,4,9.294,195.174,2/8/2019,10:53:00 AM,Cash,185.88,4.761904762,9.294,7.0
+6b2a196f-2504-43c6-8c7e-1c990b49d3f2,Alex,Yangon,Normal,Male,Home and lifestyle,74.07,1,3.7035,77.7735,2/10/2019,12:50:00 PM,Ewallet,74.07,4.761904762,3.7035,9.9
+f01a9445-0d6f-4b7e-b416-ed565bafd5c4,Giza,Naypyitaw,Normal,Female,Home and lifestyle,69.81,4,13.962,293.202,1/28/2019,8:50:00 PM,Credit card,279.24,4.761904762,13.962,5.9
+dbb24fc7-13b7-4cb2-af91-64ef098b82a1,Cairo,Mandalay,Normal,Female,Home and lifestyle,77.04,3,11.556,242.676,2/11/2019,10:39:00 AM,Credit card,231.12,4.761904762,11.556,7.2
+492f30fe-3d7c-4384-a0cc-32f24ac94b29,Cairo,Mandalay,Normal,Female,Fashion accessories,73.52,2,7.352,154.392,1/15/2019,1:41:00 PM,Ewallet,147.04,4.761904762,7.352,4.6
+6577b0db-0c28-4540-b0dc-6a42895a8dc0,Giza,Naypyitaw,Normal,Female,Food and beverages,87.8,9,39.51,829.71,3/16/2019,7:08:00 PM,Cash,790.2,4.761904762,39.51,9.2
+bc1eda8e-aa66-4a94-a522-30967a69786e,Cairo,Mandalay,Normal,Male,Home and lifestyle,25.55,4,5.11,107.31,1/26/2019,8:23:00 PM,Ewallet,102.2,4.761904762,5.11,5.7
+d64ab87a-56fc-4805-b898-15b76deff121,Alex,Yangon,Normal,Male,Electronic accessories,32.71,5,8.1775,171.7275,3/19/2019,11:30:00 AM,Credit card,163.55,4.761904762,8.1775,9.9
+336e80e1-48b5-41be-8d67-b2cebcefedfb,Giza,Naypyitaw,Member,Female,Fashion accessories,74.29,1,3.7145,78.0045,1/13/2019,7:30:00 PM,Cash,74.29,4.761904762,3.7145,5.0
+d2a7e1d3-297b-4432-9b9c-3bfce671b310,Giza,Naypyitaw,Member,Male,Health and beauty,43.7,2,4.37,91.77,3/26/2019,6:03:00 PM,Cash,87.4,4.761904762,4.37,4.9
+618a80e6-2060-42b7-980c-65ce61b1a120,Alex,Yangon,Normal,Female,Home and lifestyle,25.29,1,1.2645,26.5545,3/23/2019,10:13:00 AM,Ewallet,25.29,4.761904762,1.2645,6.1
+0986b68d-5eb7-4839-9180-ccd4af77a86e,Giza,Naypyitaw,Normal,Male,Health and beauty,41.5,4,8.3,174.3,3/12/2019,7:58:00 PM,Credit card,166.0,4.761904762,8.3,8.2
+0db7ee50-4e68-4f3c-af9f-f08ca38c1d41,Giza,Naypyitaw,Member,Female,Food and beverages,71.39,5,17.8475,374.7975,2/17/2019,7:57:00 PM,Credit card,356.95,4.761904762,17.8475,5.5
+d8c8eef5-4505-43dc-ae33-4d931e338b90,Giza,Naypyitaw,Member,Female,Sports and travel,19.15,6,5.745,120.645,1/29/2019,10:01:00 AM,Credit card,114.9,4.761904762,5.745,6.8
+ef6f12de-d414-4d2a-b1a7-cf2aac4c11c5,Cairo,Mandalay,Member,Female,Electronic accessories,57.49,4,11.498,241.458,3/15/2019,11:57:00 AM,Cash,229.96,4.761904762,11.498,6.6
+c1a3a648-38dc-4ad5-9c6f-95bec18079ce,Giza,Naypyitaw,Normal,Male,Electronic accessories,61.41,7,21.4935,451.3635,1/14/2019,10:02:00 AM,Cash,429.87,4.761904762,21.4935,9.8
+a3bbc428-9e81-492b-9d3a-2beb1e7fe414,Cairo,Mandalay,Member,Male,Health and beauty,25.9,10,12.95,271.95,2/6/2019,2:51:00 PM,Ewallet,259.0,4.761904762,12.95,8.7
+c40c4e22-792c-426e-bfed-dcc2ab13ae64,Cairo,Mandalay,Member,Male,Home and lifestyle,17.77,5,4.4425,93.2925,2/15/2019,12:42:00 PM,Credit card,88.85,4.761904762,4.4425,5.4
+77977632-aeeb-4a4c-8a82-9bc16043b6da,Alex,Yangon,Normal,Female,Health and beauty,23.03,9,10.3635,217.6335,1/3/2019,12:02:00 PM,Ewallet,207.27,4.761904762,10.3635,7.9
+8c6a4da2-96b9-47e9-bbcb-ef4f1464b4a5,Giza,Naypyitaw,Member,Female,Electronic accessories,66.65,9,29.9925,629.8425,1/4/2019,6:19:00 PM,Credit card,599.85,4.761904762,29.9925,9.7
+c8d513c4-59fc-4d8c-9f4f-2d4cfbecd2e3,Giza,Naypyitaw,Member,Female,Home and lifestyle,28.53,10,14.265,299.565,3/18/2019,5:38:00 PM,Ewallet,285.3,4.761904762,14.265,7.8
+76fa4b60-0b87-4de1-af03-5a31f86963dc,Cairo,Mandalay,Normal,Female,Fashion accessories,30.37,3,4.5555,95.6655,3/28/2019,1:41:00 PM,Ewallet,91.11,4.761904762,4.5555,5.1
+8371851b-489f-46f2-bbb8-ab1321c2f519,Cairo,Mandalay,Normal,Female,Electronic accessories,99.73,9,44.8785,942.4485,3/2/2019,7:42:00 PM,Credit card,897.57,4.761904762,44.8785,6.5
+85ce1276-1681-419f-ab49-859886b9521d,Alex,Yangon,Normal,Male,Electronic accessories,26.23,9,11.8035,247.8735,1/25/2019,8:24:00 PM,Ewallet,236.07,4.761904762,11.8035,5.9
+152e964b-81cf-41ef-b2a0-c50266875cc8,Giza,Naypyitaw,Normal,Female,Food and beverages,93.26,9,41.967,881.307,1/16/2019,6:08:00 PM,Cash,839.34,4.761904762,41.967,8.8
+8458baba-0bdc-4736-af0b-c4c20c4182c2,Cairo,Mandalay,Normal,Male,Home and lifestyle,92.36,5,23.09,484.89,3/20/2019,7:17:00 PM,Ewallet,461.8,4.761904762,23.09,4.9
+1c41f63a-c958-431b-8d0d-51b6b2751499,Cairo,Mandalay,Normal,Male,Sports and travel,46.42,3,6.963,146.223,1/4/2019,1:24:00 PM,Credit card,139.26,4.761904762,6.963,4.4
+a8d980d6-5063-46be-a2b8-bfdae2382b3e,Cairo,Mandalay,Member,Female,Sports and travel,29.61,7,10.3635,217.6335,3/11/2019,3:53:00 PM,Cash,207.27,4.761904762,10.3635,6.5
+2390c96c-ddc2-475b-91de-f877dd087681,Alex,Yangon,Normal,Male,Home and lifestyle,18.28,1,0.914,19.194,3/22/2019,3:05:00 PM,Credit card,18.28,4.761904762,0.914,8.3
+a8d3b51b-381c-457f-acdc-2cdb5c85e6bd,Cairo,Mandalay,Normal,Female,Sports and travel,24.77,5,6.1925,130.0425,3/24/2019,6:27:00 PM,Cash,123.85,4.761904762,6.1925,8.5
+9b49f0c5-a4eb-4cd8-9123-49d3838f7d6f,Alex,Yangon,Member,Female,Electronic accessories,94.64,3,14.196,298.116,2/21/2019,4:55:00 PM,Cash,283.92,4.761904762,14.196,5.5
+731d07ef-d065-4e1f-b774-84e80fcd9e47,Cairo,Mandalay,Normal,Male,Fashion accessories,94.87,8,37.948,796.908,2/12/2019,12:58:00 PM,Ewallet,758.96,4.761904762,37.948,8.7
+ffdfbeb3-25b0-441d-97be-b52f6d56846d,Cairo,Mandalay,Normal,Female,Food and beverages,57.34,3,8.601,180.621,3/10/2019,6:59:00 PM,Credit card,172.02,4.761904762,8.601,7.9
+1e6a1b7c-880c-4850-8c31-65db8c06239b,Cairo,Mandalay,Normal,Male,Electronic accessories,45.35,6,13.605,285.705,1/31/2019,1:44:00 PM,Ewallet,272.1,4.761904762,13.605,6.1
+c4bb6e25-9f9e-463f-8ad8-9eb0539e62f8,Cairo,Mandalay,Normal,Male,Food and beverages,62.08,7,21.728,456.288,3/6/2019,1:46:00 PM,Ewallet,434.56,4.761904762,21.728,5.4
+8e745656-f904-4af0-8727-4b8a59fabc9b,Giza,Naypyitaw,Normal,Male,Electronic accessories,11.81,5,2.9525,62.0025,2/17/2019,6:06:00 PM,Cash,59.05,4.761904762,2.9525,9.4
+ca2e67a4-d55e-4b89-a430-ed95bf7eaeb6,Giza,Naypyitaw,Member,Female,Fashion accessories,12.54,1,0.627,13.167,2/21/2019,12:38:00 PM,Cash,12.54,4.761904762,0.627,8.2
+1e0f8158-4a16-4c3e-86a1-48c9fbaa7cb9,Alex,Yangon,Normal,Male,Food and beverages,43.25,2,4.325,90.825,3/20/2019,3:56:00 PM,Cash,86.5,4.761904762,4.325,6.2
+9228a87b-4d19-468d-8cf6-045db942cc7b,Giza,Naypyitaw,Member,Female,Sports and travel,87.16,2,8.716,183.036,1/11/2019,2:29:00 PM,Credit card,174.32,4.761904762,8.716,9.7
+c0d7fb10-e081-4179-9330-9eb5dc7c8004,Cairo,Mandalay,Member,Male,Health and beauty,69.37,9,31.2165,655.5465,1/26/2019,7:14:00 PM,Ewallet,624.33,4.761904762,31.2165,4.0
+e46a9c13-c614-48f9-91ae-ffef751d18ea,Giza,Naypyitaw,Member,Male,Electronic accessories,37.06,4,7.412,155.652,1/31/2019,4:24:00 PM,Ewallet,148.24,4.761904762,7.412,9.7
+04832b20-0e53-4dd2-a3a9-322c7b52c3ed,Cairo,Mandalay,Member,Female,Electronic accessories,90.7,6,27.21,571.41,2/26/2019,10:52:00 AM,Cash,544.2,4.761904762,27.21,5.3
+d617ef02-bacf-491c-8892-49e8ac525e49,Alex,Yangon,Normal,Female,Home and lifestyle,63.42,8,25.368,532.728,3/11/2019,12:55:00 PM,Ewallet,507.36,4.761904762,25.368,7.4
+70a14ced-53ce-484e-a81e-f4d6ecb931ef,Cairo,Mandalay,Normal,Female,Fashion accessories,81.37,2,8.137,170.877,1/26/2019,7:28:00 PM,Cash,162.74,4.761904762,8.137,6.5
+4f061325-04a1-44de-9df1-f842eeea5b7f,Cairo,Mandalay,Member,Female,Electronic accessories,10.59,3,1.5885,33.3585,3/12/2019,1:52:00 PM,Credit card,31.77,4.761904762,1.5885,8.7
+ca289c97-c5c3-47fd-b744-f856e62e9846,Cairo,Mandalay,Normal,Female,Health and beauty,84.09,9,37.8405,794.6505,2/11/2019,10:54:00 AM,Cash,756.81,4.761904762,37.8405,8.0
+49d8989c-15f6-4630-87e0-0069d5638c2f,Cairo,Mandalay,Member,Male,Fashion accessories,73.82,4,14.764,310.044,2/21/2019,6:31:00 PM,Cash,295.28,4.761904762,14.764,6.7
+a9d78873-c5d5-45f2-a763-bf6d39050d63,Alex,Yangon,Member,Male,Health and beauty,51.94,10,25.97,545.37,3/9/2019,6:24:00 PM,Ewallet,519.4,4.761904762,25.97,6.5
+ed4727e7-13a1-4dc2-9d7a-35999066a0e2,Alex,Yangon,Normal,Female,Sports and travel,93.14,2,9.314,195.594,1/20/2019,6:09:00 PM,Ewallet,186.28,4.761904762,9.314,4.1
+44908a9e-a97f-4bdf-8fa3-9732bbcba6cf,Giza,Naypyitaw,Normal,Male,Health and beauty,17.41,5,4.3525,91.4025,1/28/2019,3:16:00 PM,Credit card,87.05,4.761904762,4.3525,4.9
+9cae9cdc-f4b0-4f9c-acba-295853e718f7,Giza,Naypyitaw,Member,Female,Fashion accessories,44.22,5,11.055,232.155,3/5/2019,5:07:00 PM,Credit card,221.1,4.761904762,11.055,8.6
+e8aa4912-f968-4131-ba1f-84b4996153b7,Cairo,Mandalay,Member,Female,Electronic accessories,13.22,5,3.305,69.405,3/2/2019,7:26:00 PM,Cash,66.1,4.761904762,3.305,4.3
+45d4797f-dd4f-4369-b497-e2be6d3ebbc9,Alex,Yangon,Normal,Male,Fashion accessories,89.69,1,4.4845,94.1745,1/11/2019,11:20:00 AM,Ewallet,89.69,4.761904762,4.4845,4.9
+03cf1807-2fd9-4da2-b3b0-3683e2f06f08,Alex,Yangon,Normal,Male,Food and beverages,24.94,9,11.223,235.683,1/11/2019,4:49:00 PM,Credit card,224.46,4.761904762,11.223,5.6
+7ef4fb8c-fc23-4b3c-aea8-f0c7d5bf3969,Alex,Yangon,Normal,Male,Health and beauty,59.77,2,5.977,125.517,3/11/2019,12:01:00 PM,Credit card,119.54,4.761904762,5.977,5.8
+1a90ea15-bdd8-42c2-91e6-b97beeace4f8,Giza,Naypyitaw,Member,Male,Fashion accessories,93.2,2,9.32,195.72,2/28/2019,6:37:00 PM,Credit card,186.4,4.761904762,9.32,6.0
+116503ef-b8ad-4444-839d-0b685e53bb42,Alex,Yangon,Member,Male,Home and lifestyle,62.65,4,12.53,263.13,1/5/2019,11:25:00 AM,Cash,250.6,4.761904762,12.53,4.2
+d413e281-9f3c-46e9-bac2-a7d307b26f02,Cairo,Mandalay,Normal,Male,Home and lifestyle,93.87,8,37.548,788.508,2/2/2019,6:42:00 PM,Credit card,750.96,4.761904762,37.548,8.3
+fb8bad7f-2642-4c2d-ab32-e7fea59938ad,Alex,Yangon,Member,Male,Home and lifestyle,47.59,8,19.036,399.756,1/1/2019,2:47:00 PM,Cash,380.72,4.761904762,19.036,5.7
+560ece40-ee1b-4185-b6bc-f0e5f8cdbc4a,Cairo,Mandalay,Member,Female,Electronic accessories,81.4,3,12.21,256.41,2/9/2019,7:43:00 PM,Cash,244.2,4.761904762,12.21,4.8
+aa3dafa9-37ca-45ac-ba42-9e7a65542130,Alex,Yangon,Member,Male,Fashion accessories,17.94,5,4.485,94.185,1/23/2019,2:04:00 PM,Ewallet,89.7,4.761904762,4.485,6.8
+361bba2f-be73-40f7-9a47-6666e8786b7e,Alex,Yangon,Member,Male,Electronic accessories,77.72,4,15.544,326.424,1/7/2019,4:11:00 PM,Credit card,310.88,4.761904762,15.544,8.8
+c98833de-78dc-441b-8f2f-433de1833954,Cairo,Mandalay,Normal,Male,Food and beverages,73.06,7,25.571,536.991,1/14/2019,7:06:00 PM,Credit card,511.42,4.761904762,25.571,4.2
+edc677ab-67da-4c59-9539-2cb643d3d63a,Cairo,Mandalay,Member,Male,Food and beverages,46.55,9,20.9475,439.8975,2/2/2019,3:34:00 PM,Ewallet,418.95,4.761904762,20.9475,6.4
+ec7208c2-aada-4246-a7e6-c647e3faccb0,Giza,Naypyitaw,Member,Male,Fashion accessories,35.19,10,17.595,369.495,3/17/2019,7:06:00 PM,Credit card,351.9,4.761904762,17.595,8.4
+b5d46dd0-6278-41be-908c-61f51cdfd2f9,Giza,Naypyitaw,Normal,Female,Sports and travel,14.39,2,1.439,30.219,3/2/2019,7:44:00 PM,Credit card,28.78,4.761904762,1.439,7.2
+435abcc2-de4e-41ca-9e22-6bd8047314b9,Alex,Yangon,Normal,Male,Home and lifestyle,23.75,4,4.75,99.75,3/16/2019,11:22:00 AM,Cash,95.0,4.761904762,4.75,5.2
+ce736f84-64ae-4065-9405-8f7251bc2ab3,Alex,Yangon,Member,Male,Home and lifestyle,58.9,8,23.56,494.76,1/6/2019,11:23:00 AM,Cash,471.2,4.761904762,23.56,8.9
+87301153-cfbd-441e-8696-bb77b318a8a1,Cairo,Mandalay,Member,Male,Fashion accessories,32.62,4,6.524,137.004,1/29/2019,2:12:00 PM,Cash,130.48,4.761904762,6.524,9.0
+b72a2f74-8494-4b4a-8032-30e83ac34f56,Alex,Yangon,Member,Male,Electronic accessories,66.35,1,3.3175,69.6675,1/31/2019,10:46:00 AM,Credit card,66.35,4.761904762,3.3175,9.7
+2f17763f-3ae9-4ad8-9665-e9e1b547f87d,Alex,Yangon,Member,Male,Home and lifestyle,25.91,6,7.773,163.233,2/5/2019,10:16:00 AM,Ewallet,155.46,4.761904762,7.773,8.7
+b15c352a-5778-406c-8cb8-ff185614cf33,Alex,Yangon,Member,Male,Electronic accessories,32.25,4,6.45,135.45,2/13/2019,12:38:00 PM,Ewallet,129.0,4.761904762,6.45,6.5
+3c3f3196-b5a4-4bdd-964c-f115f8816803,Giza,Naypyitaw,Member,Male,Electronic accessories,65.94,4,13.188,276.948,2/7/2019,1:05:00 PM,Credit card,263.76,4.761904762,13.188,6.9
+11290326-362b-4f41-aa76-1f3d52f3aa35,Alex,Yangon,Normal,Female,Electronic accessories,75.06,9,33.777,709.317,3/19/2019,1:25:00 PM,Ewallet,675.54,4.761904762,33.777,6.2
+d3be942f-6a3c-45b1-a30c-8b00e64d6c4f,Giza,Naypyitaw,Normal,Female,Fashion accessories,16.45,4,3.29,69.09,3/7/2019,2:53:00 PM,Ewallet,65.8,4.761904762,3.29,5.6
+37d5716b-da4e-491a-a035-be84098bcc3f,Cairo,Mandalay,Member,Female,Fashion accessories,38.3,4,7.66,160.86,3/13/2019,7:22:00 PM,Cash,153.2,4.761904762,7.66,5.7
+b5125652-1d82-4bfa-8f74-ff00e08ac190,Alex,Yangon,Member,Female,Sports and travel,22.24,10,11.12,233.52,2/9/2019,11:00:00 AM,Cash,222.4,4.761904762,11.12,4.2
+3f9a7843-5491-4751-b324-2c9dfa74ed09,Cairo,Mandalay,Normal,Male,Sports and travel,54.45,1,2.7225,57.1725,2/26/2019,7:24:00 PM,Ewallet,54.45,4.761904762,2.7225,7.9
+e6e7e4f7-3421-42de-bc45-4f79eead1fca,Alex,Yangon,Member,Female,Sports and travel,98.4,7,34.44,723.24,3/12/2019,12:43:00 PM,Credit card,688.8,4.761904762,34.44,8.7
+658e994a-a9e9-420c-ac80-ea9aee1d484f,Giza,Naypyitaw,Normal,Male,Home and lifestyle,35.47,4,7.094,148.974,3/14/2019,5:22:00 PM,Credit card,141.88,4.761904762,7.094,6.9
+736056aa-58d3-4720-9c8d-0eaeaaf6401b,Cairo,Mandalay,Member,Female,Food and beverages,74.6,10,37.3,783.3,1/8/2019,8:55:00 PM,Cash,746.0,4.761904762,37.3,9.5
+aebf584a-e266-4e6b-bda6-8b9f49650307,Alex,Yangon,Member,Male,Home and lifestyle,70.74,4,14.148,297.108,1/5/2019,4:05:00 PM,Credit card,282.96,4.761904762,14.148,4.4
+3c13220e-1525-4239-955e-15b3a7968dbe,Alex,Yangon,Member,Female,Home and lifestyle,35.54,10,17.77,373.17,1/4/2019,1:34:00 PM,Ewallet,355.4,4.761904762,17.77,7.0
+16d7c79d-168c-4f78-8d8f-805992736d70,Cairo,Mandalay,Normal,Female,Sports and travel,67.43,5,16.8575,354.0075,3/6/2019,6:13:00 PM,Ewallet,337.15,4.761904762,16.8575,6.3
+67b62211-991c-4628-be64-416aa9a94979,Giza,Naypyitaw,Member,Female,Health and beauty,21.12,2,2.112,44.352,1/3/2019,7:17:00 PM,Cash,42.24,4.761904762,2.112,9.7
+11e5e44a-cea6-486f-9f4c-7977286c44d8,Alex,Yangon,Member,Female,Home and lifestyle,21.54,9,9.693,203.553,1/7/2019,11:44:00 AM,Credit card,193.86,4.761904762,9.693,8.8
+1b78ab06-dfb3-45ca-b85a-11aca547785e,Alex,Yangon,Normal,Female,Home and lifestyle,12.03,2,1.203,25.263,1/27/2019,3:51:00 PM,Cash,24.06,4.761904762,1.203,5.1
+11ee0624-125f-46ca-94ff-43d938c199a7,Cairo,Mandalay,Normal,Female,Health and beauty,99.71,6,29.913,628.173,2/26/2019,4:52:00 PM,Ewallet,598.26,4.761904762,29.913,7.9
+5d48b8fa-be7a-4d35-895a-0ebc892d6e88,Cairo,Mandalay,Normal,Male,Fashion accessories,47.97,7,16.7895,352.5795,1/7/2019,8:52:00 PM,Cash,335.79,4.761904762,16.7895,6.2
+527eeb0a-5871-4db1-abef-2ce2c8333bff,Giza,Naypyitaw,Member,Female,Home and lifestyle,21.82,10,10.91,229.11,1/7/2019,5:36:00 PM,Cash,218.2,4.761904762,10.91,7.1
+9350fbac-a57d-4800-b895-042b10a9d835,Giza,Naypyitaw,Normal,Female,Fashion accessories,95.42,4,19.084,400.764,2/2/2019,1:23:00 PM,Ewallet,381.68,4.761904762,19.084,6.4
+905bd243-0dc5-4e54-bca1-2471b26ab905,Giza,Naypyitaw,Member,Male,Fashion accessories,70.99,10,35.495,745.395,3/20/2019,4:28:00 PM,Cash,709.9,4.761904762,35.495,5.7
+6b5ee732-e7c7-4f1e-8904-f18b5d3a6a52,Alex,Yangon,Member,Male,Sports and travel,44.02,10,22.01,462.21,3/20/2019,7:57:00 PM,Credit card,440.2,4.761904762,22.01,9.6
+c478ae98-72a2-40c2-afbf-8af6051a7b7d,Alex,Yangon,Normal,Female,Home and lifestyle,69.96,8,27.984,587.664,2/15/2019,5:01:00 PM,Credit card,559.68,4.761904762,27.984,6.4
+a97e87e2-de57-4f8b-8d6d-801c7d767d85,Giza,Naypyitaw,Normal,Male,Home and lifestyle,37.0,1,1.85,38.85,3/6/2019,1:29:00 PM,Credit card,37.0,4.761904762,1.85,7.9
+089d1c95-a9fb-4c1f-9fbf-7ad2615d6a23,Alex,Yangon,Normal,Female,Sports and travel,15.34,1,0.767,16.107,1/6/2019,11:09:00 AM,Cash,15.34,4.761904762,0.767,6.5
+290256fd-9d9e-4cae-973b-a7965464ed42,Alex,Yangon,Member,Male,Health and beauty,99.83,6,29.949,628.929,3/4/2019,3:02:00 PM,Ewallet,598.98,4.761904762,29.949,8.5
+6ee34ece-d011-4931-9603-aeaa466762b3,Alex,Yangon,Member,Female,Health and beauty,47.67,4,9.534,200.214,3/12/2019,2:21:00 PM,Cash,190.68,4.761904762,9.534,9.1
+26326b11-651e-4b28-9992-8bca67f14720,Cairo,Mandalay,Normal,Male,Health and beauty,66.68,5,16.67,350.07,2/20/2019,6:01:00 PM,Cash,333.4,4.761904762,16.67,7.6
+f928ecdb-54d9-4fc3-94ce-e714908d1be4,Giza,Naypyitaw,Member,Male,Home and lifestyle,74.86,1,3.743,78.603,3/24/2019,2:49:00 PM,Cash,74.86,4.761904762,3.743,6.9
+e88fea2e-5e6b-41b9-9d21-777ecdb9aeb5,Giza,Naypyitaw,Normal,Female,Sports and travel,23.75,9,10.6875,224.4375,1/31/2019,12:02:00 PM,Cash,213.75,4.761904762,10.6875,9.5
+bae1dac8-e430-46a6-8357-da326bdf4100,Cairo,Mandalay,Normal,Female,Food and beverages,48.51,7,16.9785,356.5485,1/25/2019,1:30:00 PM,Credit card,339.57,4.761904762,16.9785,5.2
+a4660259-80ae-4a9a-8a6e-e39a6fe5bce1,Alex,Yangon,Member,Female,Home and lifestyle,94.88,7,33.208,697.368,2/3/2019,2:38:00 PM,Cash,664.16,4.761904762,33.208,4.2
+d73cdcc9-db43-4e07-839e-61ecbff7459d,Cairo,Mandalay,Member,Male,Electronic accessories,40.3,10,20.15,423.15,1/24/2019,5:37:00 PM,Credit card,403.0,4.761904762,20.15,7.0
+8bfbf786-1993-475b-896b-4bef415cec80,Giza,Naypyitaw,Normal,Male,Electronic accessories,27.85,7,9.7475,204.6975,3/14/2019,5:20:00 PM,Ewallet,194.95,4.761904762,9.7475,6.0
+182a86c7-a7fb-42a1-80c6-7606e6dc8964,Alex,Yangon,Member,Female,Electronic accessories,62.48,1,3.124,65.604,2/18/2019,8:29:00 PM,Cash,62.48,4.761904762,3.124,4.7
+b0a3b5ab-7660-48c1-a319-cb00f07378a8,Alex,Yangon,Member,Female,Food and beverages,36.36,2,3.636,76.356,1/21/2019,10:00:00 AM,Cash,72.72,4.761904762,3.636,7.1
+4088cefa-b2ae-48a9-b747-124f26f77c59,Cairo,Mandalay,Normal,Male,Health and beauty,18.11,10,9.055,190.155,3/13/2019,11:46:00 AM,Ewallet,181.1,4.761904762,9.055,5.9
+2515f06e-a95d-498c-9814-a42d06c0ebca,Giza,Naypyitaw,Member,Female,Electronic accessories,51.92,5,12.98,272.58,3/3/2019,1:42:00 PM,Cash,259.6,4.761904762,12.98,7.5
+155becdc-4000-49b0-8180-732abe88ceda,Giza,Naypyitaw,Normal,Male,Electronic accessories,28.84,4,5.768,121.128,3/29/2019,2:44:00 PM,Cash,115.36,4.761904762,5.768,6.4
+18c2421d-821b-4482-8a66-da39ccd27e73,Alex,Yangon,Member,Male,Home and lifestyle,78.38,6,23.514,493.794,1/10/2019,2:16:00 PM,Ewallet,470.28,4.761904762,23.514,5.8
+02b57c32-4e76-4faa-ac1a-3d4e228e61bf,Alex,Yangon,Member,Male,Home and lifestyle,60.01,4,12.002,252.042,1/25/2019,3:54:00 PM,Cash,240.04,4.761904762,12.002,4.5
+af5727da-a8ae-4411-9e63-898b98e84832,Giza,Naypyitaw,Member,Female,Home and lifestyle,88.61,1,4.4305,93.0405,1/19/2019,10:21:00 AM,Cash,88.61,4.761904762,4.4305,7.7
+bd192b64-d574-4c34-add4-21e1761e409c,Giza,Naypyitaw,Normal,Male,Fashion accessories,99.82,2,9.982,209.622,1/2/2019,6:09:00 PM,Credit card,199.64,4.761904762,9.982,6.7
+e0d804db-5c6a-42f9-bc1f-ce4b8131e8c5,Cairo,Mandalay,Member,Male,Health and beauty,39.01,1,1.9505,40.9605,3/12/2019,4:46:00 PM,Credit card,39.01,4.761904762,1.9505,4.7
+7594768c-4483-4c44-8b84-007a6c602223,Giza,Naypyitaw,Normal,Male,Food and beverages,48.61,1,2.4305,51.0405,2/25/2019,3:31:00 PM,Cash,48.61,4.761904762,2.4305,4.4
+efc48eb1-ff8a-4f83-9693-718edaa4a30b,Alex,Yangon,Normal,Female,Electronic accessories,51.19,4,10.238,214.998,3/18/2019,5:15:00 PM,Credit card,204.76,4.761904762,10.238,4.7
+02a29387-e158-47b5-b5d7-ba290d1fe856,Cairo,Mandalay,Normal,Female,Electronic accessories,14.96,8,5.984,125.664,2/23/2019,12:29:00 PM,Cash,119.68,4.761904762,5.984,8.6
+c857bff1-5097-4f01-8742-8e17060aff47,Alex,Yangon,Member,Male,Electronic accessories,72.2,7,25.27,530.67,3/26/2019,8:14:00 PM,Ewallet,505.4,4.761904762,25.27,4.3
+649ef734-954e-447f-b0aa-79cab4cad700,Alex,Yangon,Normal,Female,Sports and travel,40.23,7,14.0805,295.6905,3/30/2019,1:22:00 PM,Cash,281.61,4.761904762,14.0805,9.6
+6beb7b40-001c-4646-86f2-4cb27efc454b,Alex,Yangon,Member,Female,Home and lifestyle,88.79,8,35.516,745.836,2/17/2019,5:09:00 PM,Cash,710.32,4.761904762,35.516,4.1
+aa2540e8-cca1-4fbb-874c-fb8a797b675d,Alex,Yangon,Member,Female,Electronic accessories,26.48,3,3.972,83.412,3/21/2019,10:40:00 AM,Ewallet,79.44,4.761904762,3.972,4.7
+2f5db755-65fb-40e3-b3af-25f96da204d8,Alex,Yangon,Normal,Female,Fashion accessories,81.91,2,8.191,172.011,3/5/2019,5:43:00 PM,Cash,163.82,4.761904762,8.191,7.8
+4af813a6-cee9-455c-b6f3-a248b37322bf,Cairo,Mandalay,Member,Male,Sports and travel,79.93,6,23.979,503.559,1/31/2019,2:04:00 PM,Cash,479.58,4.761904762,23.979,5.5
+d1662154-4f77-4f2d-9f7d-4a8da6e7f77e,Giza,Naypyitaw,Member,Male,Fashion accessories,69.33,2,6.933,145.593,2/5/2019,7:05:00 PM,Ewallet,138.66,4.761904762,6.933,9.7
+3d31b09a-fd32-4a68-916e-07629d9e2d18,Alex,Yangon,Member,Female,Food and beverages,14.23,5,3.5575,74.7075,2/1/2019,10:08:00 AM,Credit card,71.15,4.761904762,3.5575,4.4
+e02ffc94-a2b4-4c87-bb62-1390e756eb29,Alex,Yangon,Member,Female,Health and beauty,15.55,9,6.9975,146.9475,3/7/2019,1:12:00 PM,Cash,139.95,4.761904762,6.9975,5.0
+0a65b8fe-d7bc-42a1-80bd-746b8a64a032,Giza,Naypyitaw,Member,Female,Electronic accessories,78.13,10,39.065,820.365,2/10/2019,8:51:00 PM,Cash,781.3,4.761904762,39.065,4.4
+ae9b7b40-f830-4038-8fd8-00d60ddbcc7f,Giza,Naypyitaw,Member,Male,Food and beverages,99.37,2,9.937,208.677,2/14/2019,5:29:00 PM,Cash,198.74,4.761904762,9.937,5.2
+3fc4d2f3-718b-4a14-be71-2a6eced23466,Giza,Naypyitaw,Member,Female,Food and beverages,21.08,3,3.162,66.402,2/9/2019,10:25:00 AM,Cash,63.24,4.761904762,3.162,7.3
+8f60f67d-02b3-4de7-98a8-99d6ccf27579,Giza,Naypyitaw,Member,Male,Electronic accessories,74.79,5,18.6975,392.6475,1/10/2019,11:34:00 AM,Cash,373.95,4.761904762,18.6975,4.9
+61a78e9f-fc73-4214-b88b-b287e9d450fd,Giza,Naypyitaw,Member,Female,Health and beauty,29.67,7,10.3845,218.0745,3/11/2019,6:58:00 PM,Credit card,207.69,4.761904762,10.3845,8.1
+1a1e573c-8584-489c-a115-184d477fa9b8,Giza,Naypyitaw,Member,Male,Health and beauty,44.07,4,8.814,185.094,2/18/2019,4:28:00 PM,Ewallet,176.28,4.761904762,8.814,8.4
+5047b150-aba4-4bd1-a236-e6a12bd3bbad,Giza,Naypyitaw,Normal,Female,Food and beverages,22.93,9,10.3185,216.6885,2/26/2019,8:26:00 PM,Cash,206.37,4.761904762,10.3185,5.5
+a83af359-8980-42b2-a3b0-b1c6241246e2,Giza,Naypyitaw,Normal,Female,Health and beauty,39.42,1,1.971,41.391,1/18/2019,3:08:00 PM,Cash,39.42,4.761904762,1.971,8.4
+b661b0d4-3154-42b4-adff-6f5aa0c85761,Alex,Yangon,Normal,Male,Health and beauty,15.26,6,4.578,96.138,2/15/2019,6:03:00 PM,Ewallet,91.56,4.761904762,4.578,9.8
+1b8df3b7-d224-4acf-8213-60f19131bbdc,Alex,Yangon,Normal,Female,Fashion accessories,61.77,5,15.4425,324.2925,3/8/2019,1:21:00 PM,Cash,308.85,4.761904762,15.4425,6.7
+2498cc4e-f472-487f-b8d8-34319d694227,Alex,Yangon,Normal,Male,Home and lifestyle,21.52,6,6.456,135.576,1/17/2019,12:48:00 PM,Credit card,129.12,4.761904762,6.456,9.4
+56137c74-1255-4e0b-8297-2f098bf25252,Cairo,Mandalay,Normal,Male,Sports and travel,97.74,4,19.548,410.508,3/12/2019,7:53:00 PM,Ewallet,390.96,4.761904762,19.548,6.4
+632c4011-090e-4282-87e8-21ef146d793d,Alex,Yangon,Member,Male,Food and beverages,99.78,5,24.945,523.845,3/9/2019,7:09:00 PM,Cash,498.9,4.761904762,24.945,5.4
+28b70925-c37a-4518-8380-f24359a87025,Giza,Naypyitaw,Member,Male,Food and beverages,94.26,4,18.852,395.892,3/12/2019,4:30:00 PM,Cash,377.04,4.761904762,18.852,8.6
+4aadc7a4-7999-4420-bea7-c7944054d463,Cairo,Mandalay,Member,Male,Health and beauty,51.13,4,10.226,214.746,1/25/2019,10:11:00 AM,Credit card,204.52,4.761904762,10.226,4.0
+d62892bb-1407-4253-a411-10778c313982,Alex,Yangon,Member,Male,Electronic accessories,36.36,4,7.272,152.712,3/25/2019,1:07:00 PM,Cash,145.44,4.761904762,7.272,7.6
+f6d1cbee-e6aa-4544-a904-cac6574869a5,Cairo,Mandalay,Normal,Male,Home and lifestyle,22.02,9,9.909,208.089,2/7/2019,6:48:00 PM,Cash,198.18,4.761904762,9.909,6.8
+5ec71c3f-6dd6-4e00-9370-36efd7026378,Alex,Yangon,Normal,Male,Food and beverages,32.9,3,4.935,103.635,2/17/2019,5:27:00 PM,Credit card,98.7,4.761904762,4.935,9.1
+a99eb3e4-dcb1-4d1e-b1ef-61fb7ae2d9a5,Alex,Yangon,Normal,Male,Fashion accessories,77.02,5,19.255,404.355,2/3/2019,3:59:00 PM,Cash,385.1,4.761904762,19.255,5.5
+8092bfc7-6976-4618-91aa-b28a2ea7550f,Alex,Yangon,Member,Male,Food and beverages,23.48,2,2.348,49.308,3/14/2019,11:21:00 AM,Credit card,46.96,4.761904762,2.348,7.9
+b448d757-629a-4ac0-990f-7812ba6d579f,Giza,Naypyitaw,Member,Male,Sports and travel,14.7,5,3.675,77.175,3/24/2019,1:48:00 PM,Ewallet,73.5,4.761904762,3.675,8.5
+51041b0d-7e52-4f1b-b95c-4dd3cf851ffb,Alex,Yangon,Member,Female,Electronic accessories,28.45,5,7.1125,149.3625,3/21/2019,10:17:00 AM,Credit card,142.25,4.761904762,7.1125,9.1
+3a2b0420-ac39-46bc-a965-f8ec59965f56,Alex,Yangon,Normal,Male,Fashion accessories,76.4,9,34.38,721.98,3/19/2019,3:49:00 PM,Ewallet,687.6,4.761904762,34.38,7.5
+03c83ecf-6518-4f96-bc51-726e8273e833,Cairo,Mandalay,Normal,Female,Sports and travel,57.95,6,17.385,365.085,2/24/2019,1:02:00 PM,Cash,347.7,4.761904762,17.385,5.2
+dfa29a88-5d82-43bf-9d07-cce3791940e1,Giza,Naypyitaw,Normal,Female,Electronic accessories,47.65,3,7.1475,150.0975,3/28/2019,12:58:00 PM,Credit card,142.95,4.761904762,7.1475,9.5
+c3954c27-f5fc-4c45-8034-6794f051da91,Cairo,Mandalay,Member,Female,Food and beverages,42.82,9,19.269,404.649,2/5/2019,3:26:00 PM,Credit card,385.38,4.761904762,19.269,8.9
+49f751c7-c1dd-47c5-ad0f-0409fac6ac6f,Cairo,Mandalay,Member,Male,Electronic accessories,48.09,3,7.2135,151.4835,2/10/2019,6:23:00 PM,Credit card,144.27,4.761904762,7.2135,7.8
+cc2f370f-3b26-4553-8b44-7b42efb7f95a,Cairo,Mandalay,Member,Female,Health and beauty,55.97,7,19.5895,411.3795,3/5/2019,7:06:00 PM,Ewallet,391.79,4.761904762,19.5895,8.9
+775fcccf-644e-48ce-b2ed-55f7c1fbc393,Cairo,Mandalay,Member,Female,Health and beauty,76.9,7,26.915,565.215,2/15/2019,8:21:00 PM,Cash,538.3,4.761904762,26.915,7.7
+5e1e5add-4b12-4241-8e21-22b1f88a9af7,Giza,Naypyitaw,Normal,Female,Food and beverages,97.03,5,24.2575,509.4075,1/30/2019,4:24:00 PM,Ewallet,485.15,4.761904762,24.2575,9.3
+69c4e373-6655-474a-aa72-1ed1826f5840,Alex,Yangon,Normal,Male,Sports and travel,44.65,3,6.6975,140.6475,2/14/2019,3:04:00 PM,Cash,133.95,4.761904762,6.6975,6.2
+b59abd74-06ac-4fc3-bca8-f9c59de41794,Alex,Yangon,Normal,Female,Fashion accessories,77.93,9,35.0685,736.4385,2/27/2019,4:10:00 PM,Ewallet,701.37,4.761904762,35.0685,7.6
+f50ad48c-1900-4f79-94d9-c6c41b9826f7,Alex,Yangon,Member,Male,Electronic accessories,71.95,1,3.5975,75.5475,2/4/2019,12:14:00 PM,Cash,71.95,4.761904762,3.5975,7.3
+ae7448de-fb50-41ae-979d-854d49dc419c,Giza,Naypyitaw,Member,Female,Home and lifestyle,89.25,8,35.7,749.7,1/20/2019,10:13:00 AM,Cash,714.0,4.761904762,35.7,4.7
+43861a0a-48e7-4290-bafe-2636b523460f,Alex,Yangon,Normal,Male,Electronic accessories,26.02,7,9.107,191.247,3/28/2019,5:38:00 PM,Cash,182.14,4.761904762,9.107,5.1
+5fce2bbd-0f15-4252-b099-0bb082ed110c,Cairo,Mandalay,Normal,Female,Health and beauty,13.5,10,6.75,141.75,2/27/2019,11:06:00 AM,Credit card,135.0,4.761904762,6.75,4.8
+10336d0e-13cd-4d1a-9499-ce26cff04e6c,Giza,Naypyitaw,Member,Female,Fashion accessories,99.3,10,49.65,1042.65,2/15/2019,2:53:00 PM,Credit card,993.0,4.761904762,49.65,6.6
+d169099f-c942-4aff-a45e-2ee7cad2824e,Alex,Yangon,Normal,Male,Electronic accessories,51.69,7,18.0915,379.9215,1/26/2019,6:22:00 PM,Cash,361.83,4.761904762,18.0915,5.5
+5a92cc2b-bbc5-4aac-a7a5-6cf92b874fbf,Cairo,Mandalay,Member,Female,Fashion accessories,54.73,7,19.1555,402.2655,3/14/2019,7:02:00 PM,Credit card,383.11,4.761904762,19.1555,8.5
+98f5c5ef-c965-4239-a42e-a0b65d87e34c,Cairo,Mandalay,Member,Male,Home and lifestyle,27.0,9,12.15,255.15,3/2/2019,2:16:00 PM,Cash,243.0,4.761904762,12.15,4.8
+b0660a8b-6f8f-4d15-9b82-d12f4efdd33e,Giza,Naypyitaw,Normal,Female,Electronic accessories,30.24,1,1.512,31.752,3/4/2019,3:44:00 PM,Cash,30.24,4.761904762,1.512,8.4
+5af51909-6b83-4a32-a2fe-3d4ad8755e34,Cairo,Mandalay,Member,Female,Food and beverages,89.14,4,17.828,374.388,1/7/2019,12:20:00 PM,Credit card,356.56,4.761904762,17.828,7.8
+7b800dd1-6835-4b3f-9567-4b191afc50e7,Giza,Naypyitaw,Normal,Female,Fashion accessories,37.55,10,18.775,394.275,3/8/2019,8:01:00 PM,Credit card,375.5,4.761904762,18.775,9.3
+f5da207c-7524-4bfb-8ec8-9cb6886a3478,Giza,Naypyitaw,Normal,Female,Sports and travel,95.44,10,47.72,1002.12,1/9/2019,1:45:00 PM,Cash,954.4,4.761904762,47.72,5.2
+392ef381-600d-410b-b6c2-cff5e43ee693,Cairo,Mandalay,Normal,Male,Electronic accessories,27.5,3,4.125,86.625,3/1/2019,3:40:00 PM,Ewallet,82.5,4.761904762,4.125,6.5
+dedc7547-705b-4208-b06f-46dfff516e74,Cairo,Mandalay,Normal,Male,Sports and travel,74.97,1,3.7485,78.7185,3/16/2019,4:58:00 PM,Cash,74.97,4.761904762,3.7485,5.6
+f0192f81-39c8-416c-8bb2-cdb0633828e6,Alex,Yangon,Member,Male,Food and beverages,80.96,8,32.384,680.064,2/17/2019,11:12:00 AM,Credit card,647.68,4.761904762,32.384,7.4
+c322a8ed-daed-4765-b5d1-2bd54f13f64a,Giza,Naypyitaw,Normal,Female,Food and beverages,94.47,8,37.788,793.548,2/27/2019,3:12:00 PM,Cash,755.76,4.761904762,37.788,9.1
+8d79f614-9f76-48c7-9e09-95dd4bc6fa4c,Giza,Naypyitaw,Normal,Male,Food and beverages,99.79,2,9.979,209.559,3/7/2019,8:37:00 PM,Ewallet,199.58,4.761904762,9.979,8.0
+70f56932-1de3-47d2-b45f-6e31a4db8db0,Alex,Yangon,Normal,Male,Home and lifestyle,73.22,6,21.966,461.286,1/21/2019,5:44:00 PM,Cash,439.32,4.761904762,21.966,7.2
+cdf4162d-13b8-4816-9367-0cadc2fbd911,Giza,Naypyitaw,Normal,Female,Food and beverages,41.24,4,8.248,173.208,2/19/2019,4:23:00 PM,Cash,164.96,4.761904762,8.248,7.1
+1f9853f9-ae3d-47d0-9404-5d5001149000,Giza,Naypyitaw,Normal,Female,Fashion accessories,81.68,4,16.336,343.056,1/6/2019,12:12:00 PM,Cash,326.72,4.761904762,16.336,9.1
+9fa4a21c-75c2-47ea-b23e-397e5cc5c6aa,Giza,Naypyitaw,Normal,Female,Electronic accessories,51.32,9,23.094,484.974,3/14/2019,7:33:00 PM,Cash,461.88,4.761904762,23.094,5.6
+4afe94e0-0929-4ef4-9944-386c4dc912d2,Alex,Yangon,Member,Male,Home and lifestyle,65.94,4,13.188,276.948,3/24/2019,10:29:00 AM,Cash,263.76,4.761904762,13.188,6.0
+2473f4fe-a1a8-4504-a76e-36fc2f066faa,Giza,Naypyitaw,Normal,Female,Sports and travel,14.36,10,7.18,150.78,1/27/2019,2:28:00 PM,Cash,143.6,4.761904762,7.18,5.4
+beb29af3-ece2-4d8c-bc2b-41c756e6002f,Alex,Yangon,Member,Male,Electronic accessories,21.5,9,9.675,203.175,3/6/2019,12:46:00 PM,Credit card,193.5,4.761904762,9.675,7.8
+315f74ad-80fa-4511-9ec8-45b2c9b0ebb1,Cairo,Mandalay,Member,Female,Electronic accessories,26.26,7,9.191,193.011,2/2/2019,7:40:00 PM,Cash,183.82,4.761904762,9.191,9.9
+9f1dacda-4844-4866-a469-4b9cdbe5c17b,Cairo,Mandalay,Normal,Female,Fashion accessories,60.96,2,6.096,128.016,1/25/2019,7:39:00 PM,Credit card,121.92,4.761904762,6.096,4.9
+c0adc409-cc3d-48cf-9255-612d16667669,Giza,Naypyitaw,Normal,Female,Home and lifestyle,70.11,6,21.033,441.693,3/14/2019,5:54:00 PM,Ewallet,420.66,4.761904762,21.033,5.2
+6a589317-976e-4068-a5de-a80a5ed737e3,Giza,Naypyitaw,Normal,Male,Fashion accessories,42.08,6,12.624,265.104,1/29/2019,12:25:00 PM,Cash,252.48,4.761904762,12.624,8.9
+1e3f81f8-3b76-4d0e-80b8-15795a23772c,Alex,Yangon,Normal,Female,Home and lifestyle,67.09,5,16.7725,352.2225,1/3/2019,4:47:00 PM,Credit card,335.45,4.761904762,16.7725,9.1
+2b286473-65fb-4ce2-9486-29922050bed8,Alex,Yangon,Member,Female,Fashion accessories,96.7,5,24.175,507.675,1/14/2019,12:52:00 PM,Ewallet,483.5,4.761904762,24.175,7.0
+b07adea2-71da-43e5-b0f8-9b09e545464f,Cairo,Mandalay,Member,Female,Home and lifestyle,35.38,9,15.921,334.341,1/5/2019,7:50:00 PM,Credit card,318.42,4.761904762,15.921,9.6
+c0b1386c-83ec-41d9-b938-7db514fef0ee,Giza,Naypyitaw,Normal,Male,Sports and travel,95.49,7,33.4215,701.8515,2/22/2019,6:17:00 PM,Ewallet,668.43,4.761904762,33.4215,8.7
+e313ad7e-2837-4601-af9e-a8e97a53259c,Giza,Naypyitaw,Member,Male,Fashion accessories,96.98,4,19.396,407.316,2/6/2019,5:20:00 PM,Ewallet,387.92,4.761904762,19.396,9.4
+e59e2f12-da8d-461b-bcd0-6668c866847d,Cairo,Mandalay,Normal,Female,Electronic accessories,23.65,4,4.73,99.33,1/30/2019,1:32:00 PM,Credit card,94.6,4.761904762,4.73,4.0
+9629a3f8-85a8-4b4f-ae38-c4d7739293b7,Alex,Yangon,Member,Male,Sports and travel,82.33,4,16.466,345.786,1/11/2019,10:37:00 AM,Credit card,329.32,4.761904762,16.466,7.5
+d883db87-b22e-4de5-b3ee-c4f44f8b3af9,Giza,Naypyitaw,Normal,Female,Electronic accessories,26.61,2,2.661,55.881,3/19/2019,2:35:00 PM,Cash,53.22,4.761904762,2.661,4.2
+2ca00d43-39fb-4249-b161-16a99e7a3962,Cairo,Mandalay,Normal,Female,Food and beverages,99.69,5,24.9225,523.3725,1/14/2019,12:09:00 PM,Cash,498.45,4.761904762,24.9225,9.9
+9f1e4081-a391-4d78-b10e-0f8239ee5501,Giza,Naypyitaw,Member,Female,Food and beverages,74.89,4,14.978,314.538,3/1/2019,3:32:00 PM,Ewallet,299.56,4.761904762,14.978,4.2
+2a5393b2-3795-4b26-876d-2f98e5c97031,Alex,Yangon,Normal,Female,Food and beverages,40.94,5,10.235,214.935,1/6/2019,1:58:00 PM,Ewallet,204.7,4.761904762,10.235,9.9
+acca3fd9-2196-4dc8-9049-b719c130788c,Cairo,Mandalay,Member,Male,Sports and travel,75.82,1,3.791,79.611,1/31/2019,1:19:00 PM,Cash,75.82,4.761904762,3.791,5.8
+9ed86f48-97a3-442b-80ee-a5b80559eb59,Giza,Naypyitaw,Normal,Male,Food and beverages,46.77,6,14.031,294.651,3/11/2019,1:37:00 PM,Cash,280.62,4.761904762,14.031,6.0
+f79c2133-d11b-4154-93f2-536af5e11dea,Alex,Yangon,Normal,Female,Health and beauty,32.32,10,16.16,339.36,2/20/2019,4:49:00 PM,Credit card,323.2,4.761904762,16.16,10.0
+65dd60c8-0f3a-4787-a3c4-b5b3dbfa7ee2,Giza,Naypyitaw,Member,Female,Fashion accessories,54.07,9,24.3315,510.9615,1/27/2019,2:55:00 PM,Ewallet,486.63,4.761904762,24.3315,9.5
+7de57729-b7d0-467c-90f2-eecb8e956a57,Cairo,Mandalay,Normal,Male,Food and beverages,18.22,7,6.377,133.917,3/10/2019,2:04:00 PM,Credit card,127.54,4.761904762,6.377,6.6
+cef13f28-7d80-4f2c-8b6e-cc8b331a4289,Giza,Naypyitaw,Member,Female,Fashion accessories,80.48,3,12.072,253.512,2/15/2019,12:31:00 PM,Cash,241.44,4.761904762,12.072,8.1
+8949ce60-23ce-41ab-a22e-467daf651a21,Cairo,Mandalay,Normal,Female,Fashion accessories,37.95,10,18.975,398.475,1/26/2019,2:51:00 PM,Cash,379.5,4.761904762,18.975,9.7
+dcae9c9e-919f-433a-800c-fe0d87568270,Alex,Yangon,Member,Male,Electronic accessories,76.82,1,3.841,80.661,2/13/2019,6:27:00 PM,Ewallet,76.82,4.761904762,3.841,7.2
+81819093-d7e2-4229-887c-c4663bf477ab,Alex,Yangon,Member,Female,Sports and travel,52.26,10,26.13,548.73,3/9/2019,12:45:00 PM,Credit card,522.6,4.761904762,26.13,6.2
+44ef0a84-289d-437b-98da-559f1197235a,Alex,Yangon,Normal,Female,Health and beauty,79.74,1,3.987,83.727,3/6/2019,10:36:00 AM,Ewallet,79.74,4.761904762,3.987,7.3
+cdc36652-2ccb-4950-941b-d1f65d82f560,Alex,Yangon,Normal,Female,Health and beauty,77.5,5,19.375,406.875,1/24/2019,8:36:00 PM,Ewallet,387.5,4.761904762,19.375,4.3
+f635df30-e9ed-47e4-980b-5ee5913b7652,Alex,Yangon,Normal,Female,Food and beverages,54.27,5,13.5675,284.9175,3/13/2019,2:16:00 PM,Ewallet,271.35,4.761904762,13.5675,4.6
+a84c62ec-65fd-4da1-a1b6-b5d12c684d18,Cairo,Mandalay,Normal,Male,Home and lifestyle,13.59,9,6.1155,128.4255,3/15/2019,10:26:00 AM,Cash,122.31,4.761904762,6.1155,5.8
+6456e653-56a1-4e35-b9ca-8b8a923cc542,Cairo,Mandalay,Member,Female,Health and beauty,41.06,6,12.318,258.678,3/5/2019,1:30:00 PM,Credit card,246.36,4.761904762,12.318,8.3
+0dd3dd19-e12a-49c9-987c-3472f48ebf13,Cairo,Mandalay,Member,Male,Electronic accessories,19.24,9,8.658,181.818,3/4/2019,4:28:00 PM,Cash,173.16,4.761904762,8.658,8.0
+157442b9-2783-4fe0-b532-79d7aa4ed0d4,Giza,Naypyitaw,Normal,Female,Food and beverages,39.43,6,11.829,248.409,3/25/2019,8:18:00 PM,Credit card,236.58,4.761904762,11.829,9.4
+000103bc-c585-4d6e-b290-2eaea44ad867,Giza,Naypyitaw,Normal,Male,Home and lifestyle,46.22,4,9.244,194.124,3/12/2019,8:04:00 PM,Credit card,184.88,4.761904762,9.244,6.2
+249f47ab-d370-4195-a153-d96b2f2f5e13,Giza,Naypyitaw,Member,Male,Home and lifestyle,13.98,1,0.699,14.679,2/4/2019,1:38:00 PM,Ewallet,13.98,4.761904762,0.699,9.8
+4e57db39-a47c-4e13-81c4-b5e10f17c744,Cairo,Mandalay,Normal,Female,Fashion accessories,39.75,5,9.9375,208.6875,2/22/2019,10:43:00 AM,Ewallet,198.75,4.761904762,9.9375,9.6
+02a6e49d-71ac-485c-a4b7-7b1cacf2c642,Giza,Naypyitaw,Member,Female,Fashion accessories,97.79,7,34.2265,718.7565,2/16/2019,5:30:00 PM,Ewallet,684.53,4.761904762,34.2265,4.9
+2f7cd905-f5cd-401e-a4b2-83600fca8489,Alex,Yangon,Member,Male,Sports and travel,67.26,4,13.452,282.492,1/19/2019,3:28:00 PM,Credit card,269.04,4.761904762,13.452,8.0
+4e1dde88-a1b8-4b59-a7fd-08204c37f394,Alex,Yangon,Normal,Male,Food and beverages,13.79,5,3.4475,72.3975,1/11/2019,7:07:00 PM,Credit card,68.95,4.761904762,3.4475,7.8
+969ef69d-cf89-475d-90ec-d69d48b1885a,Cairo,Mandalay,Member,Female,Fashion accessories,68.71,4,13.742,288.582,1/4/2019,7:01:00 PM,Cash,274.84,4.761904762,13.742,4.1
+6ff7e390-b980-43d8-abe4-38dff2489931,Alex,Yangon,Normal,Female,Home and lifestyle,56.53,4,11.306,237.426,3/4/2019,7:48:00 PM,Ewallet,226.12,4.761904762,11.306,5.5
+a4634081-fb8b-40a3-bcdd-b39cd2a81245,Giza,Naypyitaw,Normal,Female,Fashion accessories,23.82,5,5.955,125.055,1/28/2019,7:24:00 PM,Ewallet,119.1,4.761904762,5.955,5.4
+38f18c62-adbb-4631-978d-e31e13317b02,Cairo,Mandalay,Normal,Female,Health and beauty,34.21,10,17.105,359.205,1/2/2019,1:00:00 PM,Cash,342.1,4.761904762,17.105,5.1
+03216ba5-373e-46aa-8285-e46bac18aaa2,Cairo,Mandalay,Normal,Male,Sports and travel,21.87,2,2.187,45.927,1/25/2019,2:29:00 PM,Ewallet,43.74,4.761904762,2.187,6.9
+2b5b8f60-c473-40e3-b6b5-5771a4975733,Alex,Yangon,Member,Male,Health and beauty,20.97,5,5.2425,110.0925,1/4/2019,1:21:00 PM,Cash,104.85,4.761904762,5.2425,7.8
+ac5b62d8-c987-438c-9ddf-4c480ac5213f,Alex,Yangon,Normal,Male,Sports and travel,25.84,3,3.876,81.396,3/10/2019,6:55:00 PM,Ewallet,77.52,4.761904762,3.876,6.6
+a83a5e70-4fca-47e0-b458-8e19866e2947,Alex,Yangon,Normal,Male,Home and lifestyle,50.93,8,20.372,427.812,3/22/2019,7:36:00 PM,Ewallet,407.44,4.761904762,20.372,9.2
+4aebb06f-f14a-4e8b-8606-b05c41b64eab,Cairo,Mandalay,Normal,Male,Health and beauty,96.11,1,4.8055,100.9155,1/25/2019,4:28:00 PM,Ewallet,96.11,4.761904762,4.8055,7.8
+22523e0f-1cee-4845-8858-cf4ac9ea560f,Giza,Naypyitaw,Normal,Female,Home and lifestyle,45.38,4,9.076,190.596,1/8/2019,1:48:00 PM,Credit card,181.52,4.761904762,9.076,8.7
+8ef0bb98-b8ff-4701-beb1-234bff0558be,Giza,Naypyitaw,Member,Female,Health and beauty,81.51,1,4.0755,85.5855,1/22/2019,10:57:00 AM,Ewallet,81.51,4.761904762,4.0755,9.2
+117a63bc-6834-4bd0-bc66-fe892c0dc765,Cairo,Mandalay,Normal,Female,Health and beauty,57.22,2,5.722,120.162,1/12/2019,5:13:00 PM,Ewallet,114.44,4.761904762,5.722,8.3
+46172929-511d-491a-b8b9-eca4f0897f98,Alex,Yangon,Member,Female,Electronic accessories,25.22,7,8.827,185.367,2/4/2019,10:23:00 AM,Cash,176.54,4.761904762,8.827,8.2
+e06606ef-1364-4b21-ad15-3b4fdc18e9f9,Giza,Naypyitaw,Member,Female,Food and beverages,38.6,3,5.79,121.59,3/28/2019,1:57:00 PM,Ewallet,115.8,4.761904762,5.79,7.5
+bf4f7d9e-c3ea-4701-9747-ed4b5e13f88c,Giza,Naypyitaw,Normal,Female,Electronic accessories,84.05,3,12.6075,264.7575,1/23/2019,1:29:00 PM,Cash,252.15,4.761904762,12.6075,9.8
+731f18b9-843c-4482-912e-1b22faed6e93,Giza,Naypyitaw,Member,Female,Fashion accessories,97.21,10,48.605,1020.705,2/8/2019,1:00:00 PM,Credit card,972.1,4.761904762,48.605,8.7
+272ce688-03ad-4412-81fc-bf10aff6e600,Cairo,Mandalay,Member,Male,Fashion accessories,25.42,8,10.168,213.528,3/19/2019,7:42:00 PM,Credit card,203.36,4.761904762,10.168,6.7
+f4b72143-1df8-4e69-b45f-95fb03339026,Giza,Naypyitaw,Normal,Male,Fashion accessories,16.28,1,0.814,17.094,3/9/2019,3:36:00 PM,Cash,16.28,4.761904762,0.814,5.0
+1675f136-1c5e-40a8-97c6-65c4860cd0c8,Cairo,Mandalay,Member,Male,Fashion accessories,40.61,9,18.2745,383.7645,1/2/2019,1:40:00 PM,Cash,365.49,4.761904762,18.2745,7.0
+783cecef-5f74-432a-8288-b22a1de2f906,Alex,Yangon,Member,Male,Health and beauty,53.17,7,18.6095,390.7995,1/21/2019,6:01:00 PM,Cash,372.19,4.761904762,18.6095,8.9
+36894b1e-5471-4b57-ab6f-44d83a72e6b6,Cairo,Mandalay,Member,Female,Food and beverages,20.87,3,3.1305,65.7405,3/20/2019,1:53:00 PM,Credit card,62.61,4.761904762,3.1305,8.0
+5be4beb5-7308-4a5a-981b-35770804c3a6,Cairo,Mandalay,Normal,Male,Sports and travel,67.27,5,16.8175,353.1675,2/27/2019,5:27:00 PM,Cash,336.35,4.761904762,16.8175,6.9
+eea445f1-9ba2-4581-a180-c0c92809fda2,Alex,Yangon,Member,Female,Home and lifestyle,90.65,10,45.325,951.825,3/8/2019,10:53:00 AM,Ewallet,906.5,4.761904762,45.325,7.3
+bc068b1f-6739-45dd-96b2-b79dda953c6a,Cairo,Mandalay,Normal,Male,Fashion accessories,69.08,2,6.908,145.068,1/31/2019,7:48:00 PM,Credit card,138.16,4.761904762,6.908,6.9
+0afc3507-c0ec-4e6f-b748-febaf52d5b5f,Giza,Naypyitaw,Normal,Male,Food and beverages,43.27,2,4.327,90.867,3/8/2019,4:53:00 PM,Ewallet,86.54,4.761904762,4.327,5.7
+e909692b-c40b-4f06-a467-c0875c01e625,Alex,Yangon,Normal,Female,Electronic accessories,23.46,6,7.038,147.798,1/13/2019,7:14:00 PM,Ewallet,140.76,4.761904762,7.038,6.4
+af3cf081-9f1a-477d-9a16-58c340b546d0,Cairo,Mandalay,Normal,Male,Fashion accessories,95.54,7,33.439,702.219,3/9/2019,2:36:00 PM,Credit card,668.78,4.761904762,33.439,9.6
+126bf9b0-607c-4240-b66e-ab8306697175,Cairo,Mandalay,Normal,Female,Fashion accessories,47.44,1,2.372,49.812,2/22/2019,6:19:00 PM,Credit card,47.44,4.761904762,2.372,6.8
+dcdf9384-0908-41d4-81bb-23fdff7f8fbb,Giza,Naypyitaw,Normal,Male,Sports and travel,99.24,9,44.658,937.818,3/19/2019,7:09:00 PM,Ewallet,893.16,4.761904762,44.658,9.0
+21277262-e01e-4ddc-b938-cb0084c27ebc,Giza,Naypyitaw,Member,Male,Sports and travel,82.93,4,16.586,348.306,1/20/2019,4:51:00 PM,Ewallet,331.72,4.761904762,16.586,9.6
+fbc0f1fd-ba8b-41a4-84d4-526181c4128a,Alex,Yangon,Normal,Male,Home and lifestyle,33.99,6,10.197,214.137,3/8/2019,3:37:00 PM,Credit card,203.94,4.761904762,10.197,7.7
+c2478fdc-fdba-43b7-aea9-2c82a7e7e61d,Giza,Naypyitaw,Member,Male,Food and beverages,17.04,4,3.408,71.568,3/8/2019,8:15:00 PM,Ewallet,68.16,4.761904762,3.408,7.0
+5da6ff61-9937-4c9b-8a59-28749940f750,Giza,Naypyitaw,Normal,Female,Electronic accessories,40.86,8,16.344,343.224,2/7/2019,2:38:00 PM,Credit card,326.88,4.761904762,16.344,6.5
+206c55c0-3ccc-4376-96e6-f5f4d86df8cb,Giza,Naypyitaw,Member,Male,Food and beverages,17.44,5,4.36,91.56,1/15/2019,7:25:00 PM,Cash,87.2,4.761904762,4.36,8.1
+009e4510-d121-481b-8525-5b4763265d30,Cairo,Mandalay,Member,Female,Sports and travel,88.43,8,35.372,742.812,3/22/2019,7:35:00 PM,Credit card,707.44,4.761904762,35.372,4.3
+e2b183b3-9558-4d1e-808e-e1d996bb0bd0,Alex,Yangon,Member,Female,Home and lifestyle,89.21,9,40.1445,843.0345,1/15/2019,3:42:00 PM,Credit card,802.89,4.761904762,40.1445,6.5
+e86c6288-0b24-4838-a91a-5f364bf526dc,Giza,Naypyitaw,Normal,Male,Fashion accessories,12.78,1,0.639,13.419,1/8/2019,2:11:00 PM,Ewallet,12.78,4.761904762,0.639,9.5
+7d05ade9-9454-4686-8f7d-6d0e0331ed41,Alex,Yangon,Normal,Female,Sports and travel,19.1,7,6.685,140.385,1/15/2019,10:43:00 AM,Cash,133.7,4.761904762,6.685,9.7
+58c8633f-597b-4556-b11f-982ad9c816e8,Cairo,Mandalay,Member,Female,Health and beauty,19.15,1,0.9575,20.1075,1/28/2019,5:58:00 PM,Credit card,19.15,4.761904762,0.9575,9.5
+040218ca-ebd3-41d8-8886-2b3df5b5760a,Giza,Naypyitaw,Member,Male,Food and beverages,27.66,10,13.83,290.43,2/14/2019,11:26:00 AM,Credit card,276.6,4.761904762,13.83,8.9
+ded10739-cbf0-492b-8bc9-abc3bbc7c245,Giza,Naypyitaw,Normal,Male,Fashion accessories,45.74,3,6.861,144.081,3/10/2019,5:38:00 PM,Credit card,137.22,4.761904762,6.861,6.5
+fb8ec0cc-c7b1-43a9-ad8a-12f9bfd73339,Cairo,Mandalay,Member,Female,Health and beauty,27.07,1,1.3535,28.4235,1/12/2019,8:07:00 PM,Credit card,27.07,4.761904762,1.3535,5.3
+1d4577cc-c38e-4fee-9a56-b30f61d3da19,Cairo,Mandalay,Member,Female,Sports and travel,39.12,1,1.956,41.076,3/26/2019,11:02:00 AM,Credit card,39.12,4.761904762,1.956,9.6
+94a46571-3f6a-44cc-bd34-d917b13dfa43,Cairo,Mandalay,Normal,Female,Electronic accessories,74.71,6,22.413,470.673,1/1/2019,7:07:00 PM,Cash,448.26,4.761904762,22.413,6.7
+d1e9c64b-c91c-4860-a043-e76600558fd6,Cairo,Mandalay,Normal,Male,Electronic accessories,22.01,6,6.603,138.663,1/2/2019,6:50:00 PM,Cash,132.06,4.761904762,6.603,7.6
+02f4f8e3-6889-43f5-8f86-4e1cb2b819a6,Alex,Yangon,Normal,Female,Food and beverages,63.61,5,15.9025,333.9525,3/16/2019,12:43:00 PM,Ewallet,318.05,4.761904762,15.9025,4.8
+99261f4a-6065-4b71-a502-d180473e26d3,Alex,Yangon,Normal,Male,Health and beauty,25.0,1,1.25,26.25,3/3/2019,3:09:00 PM,Ewallet,25.0,4.761904762,1.25,5.5
+af77095f-b812-4e67-aeec-92327ad78c6b,Alex,Yangon,Member,Male,Electronic accessories,20.77,4,4.154,87.234,1/31/2019,1:47:00 PM,Cash,83.08,4.761904762,4.154,4.7
+a5ae32fc-31c7-4960-aec4-8c591b0dcd1a,Cairo,Mandalay,Member,Female,Fashion accessories,29.56,5,7.39,155.19,2/13/2019,4:59:00 PM,Cash,147.8,4.761904762,7.39,6.9
+38d0875d-0343-4d10-a913-47993ff983aa,Cairo,Mandalay,Member,Female,Food and beverages,77.4,9,34.83,731.43,2/15/2019,2:15:00 PM,Credit card,696.6,4.761904762,34.83,4.5
+4d7a3c20-527f-4229-b701-abfc5a99ff35,Cairo,Mandalay,Normal,Male,Electronic accessories,79.39,10,39.695,833.595,2/7/2019,8:24:00 PM,Cash,793.9,4.761904762,39.695,6.2
+25695c3e-fa31-49a7-9b18-142e280514eb,Giza,Naypyitaw,Member,Female,Electronic accessories,46.57,10,23.285,488.985,1/27/2019,1:58:00 PM,Cash,465.7,4.761904762,23.285,7.6
+487e7d1d-ced3-4171-ad0c-67ff418001d9,Giza,Naypyitaw,Normal,Male,Food and beverages,35.89,1,1.7945,37.6845,2/23/2019,4:52:00 PM,Credit card,35.89,4.761904762,1.7945,7.9
+42382438-e3d3-447e-9488-180d05b8030e,Giza,Naypyitaw,Normal,Male,Food and beverages,40.52,5,10.13,212.73,2/3/2019,3:19:00 PM,Cash,202.6,4.761904762,10.13,4.5
+fcafcb20-2a88-4882-b604-ca48f57c8abe,Cairo,Mandalay,Member,Female,Food and beverages,73.05,10,36.525,767.025,3/3/2019,12:25:00 PM,Credit card,730.5,4.761904762,36.525,8.7
+33b9342a-1068-4bab-ad87-3be9cfbc56a1,Giza,Naypyitaw,Normal,Female,Sports and travel,73.95,4,14.79,310.59,2/3/2019,10:02:00 AM,Cash,295.8,4.761904762,14.79,6.1
+60ba691f-a8cf-4675-b039-5a854b7b43c4,Giza,Naypyitaw,Member,Female,Food and beverages,22.62,1,1.131,23.751,3/17/2019,6:58:00 PM,Cash,22.62,4.761904762,1.131,6.4
+30c06c06-b2ee-40ab-be0b-3f534e2a0b69,Alex,Yangon,Member,Male,Food and beverages,51.34,5,12.835,269.535,3/28/2019,3:31:00 PM,Credit card,256.7,4.761904762,12.835,9.1
+f0184306-43da-40b7-b983-e588634830b2,Giza,Naypyitaw,Member,Female,Sports and travel,54.55,10,27.275,572.775,3/2/2019,11:22:00 AM,Credit card,545.5,4.761904762,27.275,7.1
+fd8d27a7-134d-4686-af03-fbc56e39788d,Giza,Naypyitaw,Member,Female,Health and beauty,37.15,7,13.0025,273.0525,2/8/2019,1:12:00 PM,Credit card,260.05,4.761904762,13.0025,7.7
+b77f8005-1870-4793-8278-ae6300a306c9,Cairo,Mandalay,Normal,Male,Sports and travel,37.02,6,11.106,233.226,3/22/2019,6:33:00 PM,Cash,222.12,4.761904762,11.106,4.5
+4b77f8f0-890f-4d28-9273-d5bf315b4201,Giza,Naypyitaw,Normal,Male,Food and beverages,21.58,1,1.079,22.659,2/9/2019,10:02:00 AM,Ewallet,21.58,4.761904762,1.079,7.2
+2b4e085e-e1c7-4baa-93f0-287aecc88229,Giza,Naypyitaw,Member,Female,Electronic accessories,98.84,1,4.942,103.782,2/15/2019,11:21:00 AM,Cash,98.84,4.761904762,4.942,8.4
+f30357d1-454b-48b0-847e-a09692fa6ba6,Giza,Naypyitaw,Member,Female,Home and lifestyle,83.77,6,25.131,527.751,1/23/2019,12:10:00 PM,Ewallet,502.62,4.761904762,25.131,5.4
+742841ab-604d-4ffa-be76-da549297161b,Alex,Yangon,Member,Female,Sports and travel,40.05,4,8.01,168.21,1/25/2019,11:40:00 AM,Cash,160.2,4.761904762,8.01,9.7
+3897eb9b-39da-47d8-b63c-08f79cacbba4,Alex,Yangon,Member,Male,Fashion accessories,43.13,10,21.565,452.865,2/2/2019,6:31:00 PM,Credit card,431.3,4.761904762,21.565,5.5
+7351ff3e-b9ab-4647-a652-94be5601de7a,Cairo,Mandalay,Member,Male,Health and beauty,72.57,8,29.028,609.588,3/30/2019,5:58:00 PM,Cash,580.56,4.761904762,29.028,4.6
+0ec9de35-67cd-4fc5-a33f-387cba976cde,Alex,Yangon,Member,Female,Electronic accessories,64.44,5,16.11,338.31,3/30/2019,5:04:00 PM,Cash,322.2,4.761904762,16.11,6.6
+ae9a34cf-91a0-42e4-bf01-dae3a420c3b2,Alex,Yangon,Normal,Male,Health and beauty,65.18,3,9.777,205.317,2/25/2019,8:35:00 PM,Credit card,195.54,4.761904762,9.777,6.3
+40b85e5d-785e-4ecd-9110-d07f9f41f711,Alex,Yangon,Normal,Female,Sports and travel,33.26,5,8.315,174.615,3/18/2019,4:10:00 PM,Credit card,166.3,4.761904762,8.315,4.2
+35e488cf-b253-47ce-8084-fbe354065515,Giza,Naypyitaw,Normal,Male,Electronic accessories,84.07,4,16.814,353.094,3/7/2019,4:54:00 PM,Ewallet,336.28,4.761904762,16.814,4.4
+7f30e7d8-0a14-4828-89eb-f6c12a86dc9d,Cairo,Mandalay,Normal,Male,Sports and travel,34.37,10,17.185,360.885,3/16/2019,10:11:00 AM,Ewallet,343.7,4.761904762,17.185,6.7
+23f61339-cea5-422e-82c3-60fe174fac1f,Alex,Yangon,Normal,Male,Electronic accessories,38.6,1,1.93,40.53,1/29/2019,11:26:00 AM,Ewallet,38.6,4.761904762,1.93,6.7
+3eb4b147-c90e-45f0-8ed7-70fd3b47c305,Giza,Naypyitaw,Normal,Male,Food and beverages,65.97,8,26.388,554.148,2/2/2019,8:29:00 PM,Cash,527.76,4.761904762,26.388,8.4
+98acde94-4b41-4c2c-808b-a1e15846ab34,Giza,Naypyitaw,Normal,Female,Electronic accessories,32.8,10,16.4,344.4,2/15/2019,12:12:00 PM,Cash,328.0,4.761904762,16.4,6.2
+6ccd5e79-f7df-4b5e-8863-bd33e723e03e,Alex,Yangon,Normal,Male,Sports and travel,37.14,5,9.285,194.985,1/8/2019,1:05:00 PM,Ewallet,185.7,4.761904762,9.285,5.0
+9eb1faed-db55-4378-a3fa-ecef4a4828a8,Cairo,Mandalay,Member,Male,Home and lifestyle,60.38,10,30.19,633.99,2/12/2019,4:19:00 PM,Cash,603.8,4.761904762,30.19,6.0
+bc4553e5-12f9-4655-bfc3-c025caf6ec35,Giza,Naypyitaw,Member,Female,Sports and travel,36.98,10,18.49,388.29,1/1/2019,7:48:00 PM,Credit card,369.8,4.761904762,18.49,7.0
+ad024ef7-f9fc-4004-84e7-f130ef33db11,Cairo,Mandalay,Member,Female,Sports and travel,49.49,4,9.898,207.858,3/21/2019,3:25:00 PM,Ewallet,197.96,4.761904762,9.898,6.6
+5030c91c-ad96-4a7e-bb8e-57f89d4ff1de,Cairo,Mandalay,Normal,Female,Fashion accessories,41.09,10,20.545,431.445,2/28/2019,2:42:00 PM,Cash,410.9,4.761904762,20.545,7.3
+7c23cf02-0348-4268-9c2a-4e5f68415dfc,Alex,Yangon,Normal,Male,Fashion accessories,37.15,4,7.43,156.03,3/23/2019,6:59:00 PM,Ewallet,148.6,4.761904762,7.43,8.3
+42e499c8-6801-4494-bb68-f2d033ce2816,Giza,Naypyitaw,Normal,Male,Home and lifestyle,22.96,1,1.148,24.108,1/30/2019,8:47:00 PM,Cash,22.96,4.761904762,1.148,4.3
+21c1c2a9-d851-4360-8556-ce7b4d2870fb,Cairo,Mandalay,Member,Female,Home and lifestyle,77.68,9,34.956,734.076,2/4/2019,1:21:00 PM,Ewallet,699.12,4.761904762,34.956,9.8
+14687a85-1583-4feb-835d-3d8e62f9fbef,Cairo,Mandalay,Normal,Female,Fashion accessories,34.7,2,3.47,72.87,3/13/2019,7:48:00 PM,Ewallet,69.4,4.761904762,3.47,8.2
+092e2715-b44e-4a21-a09a-f94881234997,Alex,Yangon,Member,Female,Fashion accessories,19.66,10,9.83,206.43,3/15/2019,6:20:00 PM,Credit card,196.6,4.761904762,9.83,7.2
+fea1394d-bc47-4f5e-94c6-40a87eaa7ace,Cairo,Mandalay,Member,Female,Health and beauty,25.32,8,10.128,212.688,3/5/2019,8:24:00 PM,Ewallet,202.56,4.761904762,10.128,8.7
+fbb72a83-1407-4fdd-a6b4-aa7c55e51a0c,Giza,Naypyitaw,Member,Female,Home and lifestyle,12.12,10,6.06,127.26,3/5/2019,1:44:00 PM,Credit card,121.2,4.761904762,6.06,8.4
+2a3f3338-fe07-4ba1-ab04-dbb4443dd4be,Cairo,Mandalay,Normal,Male,Fashion accessories,99.89,2,9.989,209.769,2/26/2019,11:48:00 AM,Ewallet,199.78,4.761904762,9.989,7.1
+3e62596f-522f-431a-93cf-9650a52cb468,Cairo,Mandalay,Normal,Male,Sports and travel,75.92,8,30.368,637.728,3/20/2019,2:14:00 PM,Cash,607.36,4.761904762,30.368,5.5
+e469b9c5-7e48-4aec-8b56-4c968eb845dc,Giza,Naypyitaw,Normal,Female,Electronic accessories,63.22,2,6.322,132.762,1/1/2019,3:51:00 PM,Cash,126.44,4.761904762,6.322,8.5
+21e7a95f-a549-4ff1-bb4f-ec62eb4c5b06,Giza,Naypyitaw,Normal,Female,Food and beverages,90.24,6,27.072,568.512,1/27/2019,11:17:00 AM,Cash,541.44,4.761904762,27.072,6.2
+a54a6f1e-fa35-4ad6-ba18-81018ae43b04,Cairo,Mandalay,Member,Female,Sports and travel,98.13,1,4.9065,103.0365,1/21/2019,5:36:00 PM,Cash,98.13,4.761904762,4.9065,8.9
+2d9100e9-5aab-4db7-9a1d-666a7f7effbc,Alex,Yangon,Member,Female,Sports and travel,51.52,8,20.608,432.768,2/2/2019,3:47:00 PM,Cash,412.16,4.761904762,20.608,9.6
+4f3c4285-9f0c-4328-bc2c-28e05820abfb,Cairo,Mandalay,Member,Male,Sports and travel,73.97,1,3.6985,77.6685,2/3/2019,3:53:00 PM,Credit card,73.97,4.761904762,3.6985,5.4
+4e6f7d80-7412-4980-92dc-ab88e80731a1,Giza,Naypyitaw,Member,Female,Fashion accessories,31.9,1,1.595,33.495,1/5/2019,12:40:00 PM,Ewallet,31.9,4.761904762,1.595,9.1
+23f3e8ea-138e-4a8c-919e-84e5052a2c9d,Giza,Naypyitaw,Normal,Male,Home and lifestyle,69.4,2,6.94,145.74,1/27/2019,7:48:00 PM,Ewallet,138.8,4.761904762,6.94,9.0
+c6a135af-2bc4-49d8-8e8c-a6624a09b3f4,Cairo,Mandalay,Normal,Female,Sports and travel,93.31,2,9.331,195.951,3/25/2019,5:53:00 PM,Cash,186.62,4.761904762,9.331,6.3
+06db89dd-45b5-4e79-96ea-40d284b9879a,Cairo,Mandalay,Normal,Male,Sports and travel,88.45,1,4.4225,92.8725,2/25/2019,4:36:00 PM,Credit card,88.45,4.761904762,4.4225,9.5
+8008f97c-1fdc-43b3-9b67-13fd026113f0,Alex,Yangon,Member,Male,Electronic accessories,24.18,8,9.672,203.112,1/28/2019,8:54:00 PM,Ewallet,193.44,4.761904762,9.672,9.8
+4581e935-d181-483b-9b26-7de5ffe7188f,Cairo,Mandalay,Member,Female,Sports and travel,48.5,3,7.275,152.775,1/8/2019,12:50:00 PM,Cash,145.5,4.761904762,7.275,6.7
+960f584b-6f3d-4c0c-9e5a-6a9a945638fa,Cairo,Mandalay,Normal,Female,Food and beverages,84.05,6,25.215,529.515,1/29/2019,10:48:00 AM,Credit card,504.3,4.761904762,25.215,7.7
+ac7b5254-8263-4c61-8f76-d42677dffe04,Cairo,Mandalay,Member,Male,Health and beauty,61.29,5,15.3225,321.7725,3/29/2019,2:28:00 PM,Cash,306.45,4.761904762,15.3225,7.0
+8a9f8786-51be-4153-96e8-668dc7cc4db3,Giza,Naypyitaw,Member,Female,Home and lifestyle,15.95,6,4.785,100.485,2/9/2019,5:15:00 PM,Credit card,95.7,4.761904762,4.785,5.1
+4c05c26f-db7f-4ad9-b4a2-980d9d0f14b2,Cairo,Mandalay,Member,Female,Sports and travel,90.74,7,31.759,666.939,1/16/2019,6:03:00 PM,Credit card,635.18,4.761904762,31.759,6.2
+e73d89ce-4c4c-4096-bae1-85fa3e0790e6,Alex,Yangon,Normal,Female,Home and lifestyle,42.91,5,10.7275,225.2775,1/5/2019,5:29:00 PM,Ewallet,214.55,4.761904762,10.7275,6.1
+623bc747-7f15-492e-9d3c-4a37acf7b34e,Alex,Yangon,Normal,Female,Fashion accessories,54.28,7,18.998,398.958,1/27/2019,6:05:00 PM,Ewallet,379.96,4.761904762,18.998,9.3
+0006a604-fdb3-4fbd-9247-6b5c0d358ffe,Alex,Yangon,Normal,Male,Electronic accessories,99.55,7,34.8425,731.6925,3/14/2019,12:07:00 PM,Cash,696.85,4.761904762,34.8425,7.6
+8b9e17c7-fb63-4a92-ae9e-a1af73e91233,Giza,Naypyitaw,Member,Male,Sports and travel,58.39,7,20.4365,429.1665,2/23/2019,7:49:00 PM,Credit card,408.73,4.761904762,20.4365,8.2
+88cf6124-2903-49a4-a896-8fb1cfb3243e,Giza,Naypyitaw,Member,Female,Fashion accessories,51.47,1,2.5735,54.0435,3/18/2019,3:52:00 PM,Ewallet,51.47,4.761904762,2.5735,8.5
+1c3f73d6-d66e-4ada-a657-f11bb213fa63,Cairo,Mandalay,Member,Male,Health and beauty,54.86,5,13.715,288.015,3/29/2019,4:48:00 PM,Ewallet,274.3,4.761904762,13.715,9.8
+e1ad45ce-000e-4000-a9f2-591f21c524f3,Giza,Naypyitaw,Member,Male,Home and lifestyle,39.39,5,9.8475,206.7975,1/22/2019,8:46:00 PM,Credit card,196.95,4.761904762,9.8475,8.7
+a8246907-b831-434c-a46d-c529679ba0f1,Alex,Yangon,Normal,Male,Home and lifestyle,34.73,2,3.473,72.933,3/1/2019,6:14:00 PM,Ewallet,69.46,4.761904762,3.473,9.7
+3114950f-f8b0-44bb-bde1-8291c16c4906,Giza,Naypyitaw,Member,Male,Sports and travel,71.92,5,17.98,377.58,1/17/2019,3:05:00 PM,Credit card,359.6,4.761904762,17.98,4.3
+76c63410-3b73-4b20-87d2-9a9e2a6bc105,Cairo,Mandalay,Normal,Female,Electronic accessories,45.71,3,6.8565,143.9865,3/26/2019,10:34:00 AM,Credit card,137.13,4.761904762,6.8565,7.7
+a0fd7735-4204-4776-ba7b-4220a2d15bf4,Giza,Naypyitaw,Member,Female,Home and lifestyle,83.17,6,24.951,523.971,3/20/2019,11:23:00 AM,Cash,499.02,4.761904762,24.951,7.3
+e19c6265-c788-4271-8d9b-8ab3d936007e,Alex,Yangon,Member,Female,Home and lifestyle,37.44,6,11.232,235.872,2/6/2019,1:55:00 PM,Credit card,224.64,4.761904762,11.232,5.9
+1abdeb74-a250-4f61-9302-8f0511975ef7,Giza,Naypyitaw,Normal,Male,Health and beauty,62.87,2,6.287,132.027,1/1/2019,11:43:00 AM,Cash,125.74,4.761904762,6.287,5.0
+dd6717d3-873e-413c-b24e-3ff32e0cb581,Alex,Yangon,Normal,Male,Food and beverages,81.71,6,24.513,514.773,1/27/2019,2:36:00 PM,Credit card,490.26,4.761904762,24.513,8.0
+b702b1b3-1ec3-45d8-b95d-839a8c1b0fff,Alex,Yangon,Member,Female,Sports and travel,91.41,5,22.8525,479.9025,2/25/2019,4:03:00 PM,Ewallet,457.05,4.761904762,22.8525,7.1
+6cf3b6d9-16ee-466b-98fb-0bea9c5de136,Cairo,Mandalay,Normal,Male,Fashion accessories,39.21,4,7.842,164.682,1/16/2019,8:03:00 PM,Credit card,156.84,4.761904762,7.842,9.0
+dd8d2f3c-1929-4f47-936f-e17720d92f3f,Cairo,Mandalay,Member,Male,Fashion accessories,59.86,2,5.986,125.706,1/13/2019,2:55:00 PM,Ewallet,119.72,4.761904762,5.986,6.7
+b0078cd2-8855-4edb-b086-4601a6aa5a65,Cairo,Mandalay,Member,Female,Food and beverages,54.36,10,27.18,570.78,2/7/2019,11:28:00 AM,Credit card,543.6,4.761904762,27.18,6.1
+6e85ef21-c083-4047-b202-08a6cbf22474,Alex,Yangon,Normal,Male,Sports and travel,98.09,9,44.1405,926.9505,2/17/2019,7:41:00 PM,Cash,882.81,4.761904762,44.1405,9.3
+bfe1bfb1-c5ac-41c0-b057-ce2380c493ae,Alex,Yangon,Normal,Male,Health and beauty,25.43,6,7.629,160.209,2/12/2019,7:01:00 PM,Ewallet,152.58,4.761904762,7.629,7.0
+9dbd0339-e1f4-4099-9e7e-b3ed88780753,Alex,Yangon,Member,Male,Fashion accessories,86.68,8,34.672,728.112,1/24/2019,6:04:00 PM,Credit card,693.44,4.761904762,34.672,7.2
+8e812f5b-0622-4ace-81fe-edf91b9c91db,Cairo,Mandalay,Normal,Male,Electronic accessories,22.95,10,11.475,240.975,2/6/2019,7:20:00 PM,Ewallet,229.5,4.761904762,11.475,8.2
+7ab551a3-765c-47d1-8a26-07b5c54bcd43,Giza,Naypyitaw,Normal,Female,Food and beverages,16.31,9,7.3395,154.1295,3/26/2019,10:31:00 AM,Ewallet,146.79,4.761904762,7.3395,8.4
+4ab66191-3c39-4528-90e4-78a96552939a,Alex,Yangon,Normal,Female,Home and lifestyle,28.32,5,7.08,148.68,3/11/2019,1:28:00 PM,Ewallet,141.6,4.761904762,7.08,6.2
+53dbc6d8-46c2-4a9e-81a2-12309b10def9,Giza,Naypyitaw,Normal,Male,Home and lifestyle,16.67,7,5.8345,122.5245,2/7/2019,11:36:00 AM,Ewallet,116.69,4.761904762,5.8345,7.4
+903e0671-5949-4992-851e-99fc33a3eb28,Cairo,Mandalay,Member,Female,Fashion accessories,73.96,1,3.698,77.658,1/5/2019,11:32:00 AM,Credit card,73.96,4.761904762,3.698,5.0
+3a6a8461-1f52-444d-b91b-7e8b8478443c,Alex,Yangon,Normal,Male,Home and lifestyle,97.94,1,4.897,102.837,3/7/2019,11:44:00 AM,Ewallet,97.94,4.761904762,4.897,6.9
+fe5aa980-0b33-4c10-aa96-d4636869de0c,Alex,Yangon,Normal,Female,Fashion accessories,73.05,4,14.61,306.81,2/25/2019,5:16:00 PM,Credit card,292.2,4.761904762,14.61,4.9
+954ff0c9-41b8-44fc-8450-86776accba19,Giza,Naypyitaw,Member,Female,Food and beverages,87.48,6,26.244,551.124,2/1/2019,6:43:00 PM,Ewallet,524.88,4.761904762,26.244,5.1
+7cebe14b-ad7f-4ac5-9561-43a86812125a,Alex,Yangon,Normal,Male,Home and lifestyle,30.68,3,4.602,96.642,1/22/2019,11:00:00 AM,Ewallet,92.04,4.761904762,4.602,9.1
+b0254d40-c6e6-4d8a-ae7d-2ca16159b32e,Giza,Naypyitaw,Member,Male,Health and beauty,75.88,1,3.794,79.674,1/3/2019,10:30:00 AM,Credit card,75.88,4.761904762,3.794,7.1
+60742e48-2c39-46ec-aeb5-049ee3441db6,Cairo,Mandalay,Member,Female,Sports and travel,20.18,4,4.036,84.756,2/13/2019,12:14:00 PM,Credit card,80.72,4.761904762,4.036,5.0
+1c60ac65-dfa8-440b-94e7-742cda68ae7b,Giza,Naypyitaw,Member,Male,Electronic accessories,18.77,6,5.631,118.251,1/28/2019,4:43:00 PM,Credit card,112.62,4.761904762,5.631,5.5
+55e0ae68-7904-436a-8036-cc3b69254d63,Cairo,Mandalay,Normal,Female,Food and beverages,71.2,1,3.56,74.76,1/5/2019,8:40:00 PM,Credit card,71.2,4.761904762,3.56,9.2
+ee4cd00f-9a25-41de-b9dc-23b2258c704b,Cairo,Mandalay,Member,Male,Home and lifestyle,38.81,4,7.762,163.002,3/19/2019,1:40:00 PM,Ewallet,155.24,4.761904762,7.762,4.9
+879fc6be-a2f4-46b1-a386-33806f451cf6,Alex,Yangon,Normal,Female,Fashion accessories,29.42,10,14.71,308.91,1/12/2019,4:23:00 PM,Ewallet,294.2,4.761904762,14.71,8.9
+5b6dec91-b71c-4e6b-8703-4996ba14a513,Alex,Yangon,Normal,Male,Sports and travel,60.95,9,27.4275,575.9775,1/7/2019,12:08:00 PM,Credit card,548.55,4.761904762,27.4275,6.0
+04c62aac-3b48-4b91-ac05-272482fc8f1d,Cairo,Mandalay,Normal,Female,Sports and travel,51.54,5,12.885,270.585,1/26/2019,5:45:00 PM,Cash,257.7,4.761904762,12.885,4.2
+bd955b9d-08ae-4aca-9945-926bf6101191,Alex,Yangon,Normal,Female,Electronic accessories,66.06,6,19.818,416.178,1/23/2019,10:28:00 AM,Cash,396.36,4.761904762,19.818,7.3
+da7d6cbf-ab1b-4745-bbed-62695c5d4ef9,Cairo,Mandalay,Normal,Male,Fashion accessories,57.27,3,8.5905,180.4005,2/9/2019,8:31:00 PM,Ewallet,171.81,4.761904762,8.5905,6.5
+89fc5159-47d5-4ceb-8a2d-35aa3fca1c01,Cairo,Mandalay,Normal,Female,Fashion accessories,54.31,9,24.4395,513.2295,2/22/2019,10:49:00 AM,Cash,488.79,4.761904762,24.4395,8.9
+cbfc0cba-ce48-4b73-be52-a09ac31b909a,Cairo,Mandalay,Normal,Female,Health and beauty,58.24,9,26.208,550.368,2/5/2019,12:34:00 PM,Cash,524.16,4.761904762,26.208,9.7
+288fc41f-b84c-4b88-81ef-00a9e7a627e7,Giza,Naypyitaw,Normal,Male,Electronic accessories,22.21,6,6.663,139.923,3/7/2019,10:23:00 AM,Credit card,133.26,4.761904762,6.663,8.6
+073dc7f0-a771-4b79-9495-6bdfa134992a,Alex,Yangon,Member,Male,Electronic accessories,19.32,7,6.762,142.002,3/25/2019,6:51:00 PM,Cash,135.24,4.761904762,6.762,6.9
+769cb52b-ac81-4721-ac6a-d3f66767508d,Cairo,Mandalay,Normal,Male,Home and lifestyle,37.48,3,5.622,118.062,1/20/2019,1:45:00 PM,Credit card,112.44,4.761904762,5.622,7.7
+5331684e-67a7-4e80-990b-173345444f02,Cairo,Mandalay,Member,Female,Fashion accessories,72.04,2,7.204,151.284,2/4/2019,7:38:00 PM,Cash,144.08,4.761904762,7.204,9.5
+08f16fb1-4dcb-4144-8eeb-def22e4178a2,Giza,Naypyitaw,Member,Female,Food and beverages,98.52,10,49.26,1034.46,1/30/2019,8:23:00 PM,Ewallet,985.2,4.761904762,49.26,4.5
+eaef7581-292b-4238-a788-f5081d010823,Alex,Yangon,Member,Male,Food and beverages,41.66,6,12.498,262.458,1/2/2019,3:24:00 PM,Ewallet,249.96,4.761904762,12.498,5.6
+31957b5e-20ff-44a6-8d35-d756b7bcc523,Alex,Yangon,Member,Female,Home and lifestyle,72.42,3,10.863,228.123,3/29/2019,4:54:00 PM,Ewallet,217.26,4.761904762,10.863,8.2
+c8b47a4e-d131-46f5-89d2-1b16cddb7b96,Cairo,Mandalay,Normal,Male,Electronic accessories,21.58,9,9.711,203.931,3/14/2019,12:32:00 PM,Cash,194.22,4.761904762,9.711,7.3
+82a18674-da89-45a0-b5c8-0337a384ad06,Giza,Naypyitaw,Normal,Male,Food and beverages,89.2,10,44.6,936.6,2/11/2019,3:42:00 PM,Credit card,892.0,4.761904762,44.6,4.4
+7dc25a06-b436-4d94-9415-3630c238671d,Cairo,Mandalay,Normal,Female,Electronic accessories,42.42,8,16.968,356.328,1/30/2019,1:58:00 PM,Ewallet,339.36,4.761904762,16.968,5.7
+6daec214-0cd4-4a6c-9239-2a575794fc8a,Alex,Yangon,Member,Male,Electronic accessories,74.51,6,22.353,469.413,3/20/2019,3:08:00 PM,Ewallet,447.06,4.761904762,22.353,5.0
+e73de0c5-c1aa-46b3-bed0-f9f448196687,Cairo,Mandalay,Normal,Male,Fashion accessories,99.25,2,9.925,208.425,3/20/2019,1:02:00 PM,Cash,198.5,4.761904762,9.925,9.0
+dea23c7e-7cb2-463f-ba3e-94b2e51576ed,Alex,Yangon,Normal,Female,Food and beverages,81.21,10,40.605,852.705,1/17/2019,1:01:00 PM,Credit card,812.1,4.761904762,40.605,6.3
+77173da2-43c3-458a-8e33-7c880467907f,Giza,Naypyitaw,Normal,Female,Sports and travel,49.33,10,24.665,517.965,2/3/2019,4:40:00 PM,Credit card,493.3,4.761904762,24.665,9.4
+d3114f93-0d5e-4ef6-97ba-3eaeb45fded8,Alex,Yangon,Normal,Female,Fashion accessories,65.74,9,29.583,621.243,1/1/2019,1:55:00 PM,Cash,591.66,4.761904762,29.583,7.7
+d3491a9b-186e-4136-83ba-8b99c05c1552,Cairo,Mandalay,Normal,Female,Fashion accessories,79.86,7,27.951,586.971,1/10/2019,10:33:00 AM,Credit card,559.02,4.761904762,27.951,5.5
+4db86166-0bd9-4a48-a999-b5ce551b532f,Giza,Naypyitaw,Normal,Female,Sports and travel,73.98,7,25.893,543.753,3/2/2019,4:42:00 PM,Ewallet,517.86,4.761904762,25.893,4.1
+3b5ae11b-9495-4499-8114-7d076006570a,Cairo,Mandalay,Member,Female,Home and lifestyle,82.04,5,20.51,430.71,2/25/2019,5:16:00 PM,Credit card,410.2,4.761904762,20.51,7.6
+d1eb66a1-ae41-4f4a-bbfb-07ebe1bcd1ea,Cairo,Mandalay,Member,Male,Sports and travel,26.67,10,13.335,280.035,1/29/2019,11:48:00 AM,Cash,266.7,4.761904762,13.335,8.6
+cf41be4d-07a8-4de3-b17b-11a1371c0184,Alex,Yangon,Member,Male,Food and beverages,10.13,7,3.5455,74.4555,3/10/2019,7:35:00 PM,Ewallet,70.91,4.761904762,3.5455,8.3
+0bcb0c4d-f21d-485d-89af-73fd941ebdde,Cairo,Mandalay,Normal,Male,Food and beverages,72.39,2,7.239,152.019,1/13/2019,7:55:00 PM,Credit card,144.78,4.761904762,7.239,8.1
+7fc12c68-5122-4a3f-8ae5-81f23b878b3a,Alex,Yangon,Normal,Male,Sports and travel,85.91,5,21.4775,451.0275,3/22/2019,2:33:00 PM,Credit card,429.55,4.761904762,21.4775,8.6
+35a2f99b-2799-4910-bd38-55492c0efaf5,Cairo,Mandalay,Member,Male,Fashion accessories,81.31,7,28.4585,597.6285,3/1/2019,7:49:00 PM,Ewallet,569.17,4.761904762,28.4585,6.3
+d37f529e-cfa4-4c36-b22c-27aa17ce5e1c,Cairo,Mandalay,Normal,Male,Food and beverages,60.3,4,12.06,253.26,2/20/2019,6:43:00 PM,Cash,241.2,4.761904762,12.06,5.8
+d544b2b7-4892-4bf1-92d1-3fb627d52a0a,Giza,Naypyitaw,Normal,Male,Food and beverages,31.77,4,6.354,133.434,1/14/2019,2:43:00 PM,Ewallet,127.08,4.761904762,6.354,6.2
+06d04f91-4348-4a6a-a237-43e3b44d4b13,Alex,Yangon,Normal,Female,Health and beauty,64.27,4,12.854,269.934,3/26/2019,1:54:00 PM,Cash,257.08,4.761904762,12.854,7.7
+cca242ab-e784-45b9-ba75-3b7764a06d5f,Cairo,Mandalay,Normal,Male,Health and beauty,69.51,2,6.951,145.971,3/1/2019,12:15:00 PM,Ewallet,139.02,4.761904762,6.951,8.1
+23c7d80b-4b98-4bc9-a25d-9e5f1eb6e592,Giza,Naypyitaw,Normal,Male,Food and beverages,27.22,3,4.083,85.743,1/7/2019,12:37:00 PM,Cash,81.66,4.761904762,4.083,7.3
+0e39b101-b6cf-438d-b2fb-15d0a706277a,Alex,Yangon,Member,Female,Health and beauty,77.68,4,15.536,326.256,2/1/2019,7:54:00 PM,Cash,310.72,4.761904762,15.536,8.4
+8b4aa3c9-a4f1-45da-9929-7f30e4c56980,Giza,Naypyitaw,Member,Female,Fashion accessories,92.98,2,9.298,195.258,2/13/2019,3:06:00 PM,Credit card,185.96,4.761904762,9.298,8.0
+d4972146-2ace-434e-8dc0-db8c188c8f5c,Cairo,Mandalay,Member,Female,Fashion accessories,18.08,4,3.616,75.936,1/14/2019,6:03:00 PM,Credit card,72.32,4.761904762,3.616,9.5
+24a7b29c-4c17-4ad8-a47e-dfb8f67f15ef,Cairo,Mandalay,Normal,Male,Sports and travel,63.06,3,9.459,198.639,1/19/2019,3:58:00 PM,Ewallet,189.18,4.761904762,9.459,7.0
+7afaed56-b2a2-4a83-8ae2-c36e11dba258,Alex,Yangon,Normal,Male,Health and beauty,51.71,4,10.342,217.182,3/9/2019,1:53:00 PM,Credit card,206.84,4.761904762,10.342,9.8
+da076565-5e6a-41e7-a513-c5023486d749,Alex,Yangon,Normal,Female,Food and beverages,52.34,3,7.851,164.871,3/27/2019,2:03:00 PM,Cash,157.02,4.761904762,7.851,9.2
+d2f6a5c1-275e-4e3a-b56c-9053aa2841dd,Alex,Yangon,Normal,Female,Sports and travel,43.06,5,10.765,226.065,2/4/2019,4:38:00 PM,Ewallet,215.3,4.761904762,10.765,7.7
+c58f59cc-cf7d-460a-93e4-9cdb9c4beed9,Giza,Naypyitaw,Normal,Male,Fashion accessories,59.61,10,29.805,625.905,3/14/2019,11:07:00 AM,Cash,596.1,4.761904762,29.805,5.3
+e6bb38fc-23c6-4e33-a9a7-75c4b1ac9bb1,Alex,Yangon,Normal,Male,Health and beauty,14.62,5,3.655,76.755,3/4/2019,12:23:00 PM,Cash,73.1,4.761904762,3.655,4.4
+e32eda16-de67-4cb9-9e0b-a0b3c365772f,Giza,Naypyitaw,Member,Male,Health and beauty,46.53,6,13.959,293.139,3/3/2019,10:54:00 AM,Credit card,279.18,4.761904762,13.959,4.3
+12c3445a-f762-4731-acc3-e3a31d268a6d,Giza,Naypyitaw,Member,Female,Home and lifestyle,24.24,7,8.484,178.164,1/27/2019,5:38:00 PM,Ewallet,169.68,4.761904762,8.484,9.4
+543c40d2-b479-4d1a-a070-8f414f58a3d0,Alex,Yangon,Member,Female,Sports and travel,45.58,1,2.279,47.859,2/7/2019,2:13:00 PM,Cash,45.58,4.761904762,2.279,9.8
+f9ce7c24-046b-4493-bb70-d09d3d46fa71,Alex,Yangon,Member,Female,Sports and travel,75.2,3,11.28,236.88,2/5/2019,11:51:00 AM,Ewallet,225.6,4.761904762,11.28,4.8
+db12cef9-ef9c-402a-92ff-c223a2a8e455,Cairo,Mandalay,Member,Male,Sports and travel,96.8,3,14.52,304.92,3/15/2019,1:05:00 PM,Cash,290.4,4.761904762,14.52,5.3
+780f0135-a3a1-47a8-aa27-d41b95b23f26,Cairo,Mandalay,Normal,Male,Health and beauty,14.82,3,2.223,46.683,3/1/2019,11:30:00 AM,Credit card,44.46,4.761904762,2.223,8.7
+24b3823e-14e4-4376-b472-0eb2ca6093f7,Alex,Yangon,Normal,Male,Food and beverages,52.2,3,7.83,164.43,2/15/2019,1:30:00 PM,Credit card,156.6,4.761904762,7.83,9.5
+9ad27003-0b16-4f28-bc54-57ae29096a95,Giza,Naypyitaw,Normal,Female,Sports and travel,46.66,9,20.997,440.937,2/17/2019,7:11:00 PM,Ewallet,419.94,4.761904762,20.997,5.3
+fd6c14a5-e659-4110-8304-0c9a7c77c30f,Giza,Naypyitaw,Normal,Female,Fashion accessories,36.85,5,9.2125,193.4625,1/26/2019,6:53:00 PM,Cash,184.25,4.761904762,9.2125,9.2
+03d13717-a7c0-43b9-8e82-37a527466f49,Alex,Yangon,Member,Female,Home and lifestyle,70.32,2,7.032,147.672,3/24/2019,2:22:00 PM,Ewallet,140.64,4.761904762,7.032,9.6
+a3828548-6eee-4310-89f1-c109a70cbd3f,Giza,Naypyitaw,Normal,Male,Electronic accessories,83.08,1,4.154,87.234,1/23/2019,5:16:00 PM,Ewallet,83.08,4.761904762,4.154,6.4
+69bf5944-e438-456c-bf6e-a97b97952265,Giza,Naypyitaw,Normal,Female,Fashion accessories,64.99,1,3.2495,68.2395,1/26/2019,10:06:00 AM,Credit card,64.99,4.761904762,3.2495,4.5
+6b5c8b6e-2214-41be-982b-7cb5319f57af,Giza,Naypyitaw,Normal,Male,Food and beverages,77.56,10,38.78,814.38,3/14/2019,8:35:00 PM,Ewallet,775.6,4.761904762,38.78,6.9
+644d98ef-4c35-4e00-94ce-e31afa9e7fdf,Cairo,Mandalay,Normal,Female,Sports and travel,54.51,6,16.353,343.413,3/17/2019,1:54:00 PM,Ewallet,327.06,4.761904762,16.353,7.8
+0691b445-4fc3-40a4-98e1-cc8b53290db4,Giza,Naypyitaw,Member,Female,Fashion accessories,51.89,7,18.1615,381.3915,1/8/2019,8:08:00 PM,Cash,363.23,4.761904762,18.1615,4.5
+b95c8469-8e69-4bb4-b494-596053fa61f6,Cairo,Mandalay,Normal,Male,Home and lifestyle,31.75,4,6.35,133.35,2/8/2019,3:26:00 PM,Cash,127.0,4.761904762,6.35,8.6
+cb9ed002-498b-4371-b842-354cb3526ad1,Alex,Yangon,Member,Female,Fashion accessories,53.65,7,18.7775,394.3275,2/10/2019,12:56:00 PM,Ewallet,375.55,4.761904762,18.7775,5.2
+623379a4-be71-423d-9bed-e341aca28e6e,Giza,Naypyitaw,Member,Female,Food and beverages,49.79,4,9.958,209.118,3/28/2019,7:16:00 PM,Credit card,199.16,4.761904762,9.958,6.4
+42a490ec-165c-4324-89bb-440218f05b5b,Alex,Yangon,Normal,Male,Fashion accessories,30.61,1,1.5305,32.1405,1/23/2019,12:20:00 PM,Ewallet,30.61,4.761904762,1.5305,5.2
+99425ab7-c19b-4461-86f1-40d9d21353ad,Cairo,Mandalay,Member,Male,Food and beverages,57.89,2,5.789,121.569,1/17/2019,10:37:00 AM,Ewallet,115.78,4.761904762,5.789,8.9
+9cac1b1a-0791-4fb9-bd1b-dea44e9ceb77,Alex,Yangon,Normal,Female,Electronic accessories,28.96,1,1.448,30.408,2/7/2019,10:18:00 AM,Credit card,28.96,4.761904762,1.448,6.2
+968b2e23-a8a7-43a0-9aaa-558a8a8ef453,Giza,Naypyitaw,Member,Female,Food and beverages,98.97,9,44.5365,935.2665,3/9/2019,11:23:00 AM,Cash,890.73,4.761904762,44.5365,6.7
+7e71cc46-e3d8-4170-8a9c-09818dc977d2,Cairo,Mandalay,Member,Male,Fashion accessories,93.22,3,13.983,293.643,1/24/2019,11:45:00 AM,Cash,279.66,4.761904762,13.983,7.2
+4a3207a0-79e6-4e44-83c6-9fd2bef868a0,Giza,Naypyitaw,Member,Male,Sports and travel,80.93,1,4.0465,84.9765,1/19/2019,4:08:00 PM,Credit card,80.93,4.761904762,4.0465,9.0
+1c31b457-5bde-4fc3-903a-4a8ec2f94584,Alex,Yangon,Member,Male,Food and beverages,67.45,10,33.725,708.225,2/3/2019,11:25:00 AM,Ewallet,674.5,4.761904762,33.725,4.2
+48d381d5-e786-44a3-96ab-3e1dffe4fbb3,Alex,Yangon,Member,Female,Sports and travel,38.72,9,17.424,365.904,3/20/2019,12:24:00 PM,Ewallet,348.48,4.761904762,17.424,4.2
+5fbc52a1-bb8c-47ec-9c49-04db69582cf7,Cairo,Mandalay,Member,Male,Sports and travel,72.6,6,21.78,457.38,1/13/2019,7:51:00 PM,Cash,435.6,4.761904762,21.78,6.9
+d08b6fe5-dbb0-4a0c-b21a-66c45d8e5417,Giza,Naypyitaw,Member,Male,Electronic accessories,87.91,5,21.9775,461.5275,3/14/2019,6:10:00 PM,Ewallet,439.55,4.761904762,21.9775,4.4
+2cbd3790-2380-4003-85c2-1a0b7f26a4af,Alex,Yangon,Member,Male,Food and beverages,98.53,6,29.559,620.739,1/23/2019,11:22:00 AM,Credit card,591.18,4.761904762,29.559,4.0
+483a6c53-4b44-4b71-ae38-a9d9dd0364f6,Giza,Naypyitaw,Member,Female,Fashion accessories,43.46,6,13.038,273.798,2/7/2019,5:55:00 PM,Ewallet,260.76,4.761904762,13.038,8.5
+77e3e77f-cb0b-4d55-bdf1-1a434b4ab4f9,Alex,Yangon,Normal,Female,Food and beverages,71.68,3,10.752,225.792,3/28/2019,3:30:00 PM,Credit card,215.04,4.761904762,10.752,9.2
+cd81eccf-ab4f-4a6d-bccf-437f33ebd5f5,Alex,Yangon,Member,Female,Food and beverages,91.61,1,4.5805,96.1905,3/20/2019,7:44:00 PM,Cash,91.61,4.761904762,4.5805,9.8
+5612b0d9-be83-4664-922c-33a2720126a1,Cairo,Mandalay,Member,Female,Home and lifestyle,94.59,7,33.1065,695.2365,1/17/2019,3:27:00 PM,Credit card,662.13,4.761904762,33.1065,4.9
+47a7cd9a-0262-4cc4-8ba7-d96ce4fb00be,Cairo,Mandalay,Normal,Female,Fashion accessories,83.25,10,41.625,874.125,1/12/2019,11:25:00 AM,Credit card,832.5,4.761904762,41.625,4.4
+136a15dd-e443-400a-b603-38cfeaeaa9ad,Cairo,Mandalay,Member,Male,Fashion accessories,91.35,1,4.5675,95.9175,2/16/2019,3:42:00 PM,Cash,91.35,4.761904762,4.5675,6.8
+6470de75-273b-49df-9b90-f1619751da1c,Cairo,Mandalay,Member,Female,Food and beverages,78.88,2,7.888,165.648,1/26/2019,4:04:00 PM,Cash,157.76,4.761904762,7.888,9.1
+2247e9f7-2384-403b-b106-550bccd83910,Alex,Yangon,Normal,Male,Sports and travel,60.87,2,6.087,127.827,3/9/2019,12:37:00 PM,Ewallet,121.74,4.761904762,6.087,8.7
+56b00743-9041-41cc-b720-501d6aa26c22,Cairo,Mandalay,Member,Male,Health and beauty,82.58,10,41.29,867.09,3/14/2019,2:41:00 PM,Cash,825.8,4.761904762,41.29,5.0
+a0a91e5d-7796-4423-9287-d3fb0735c01f,Alex,Yangon,Member,Male,Home and lifestyle,53.3,3,7.995,167.895,1/25/2019,2:19:00 PM,Ewallet,159.9,4.761904762,7.995,7.5
+f19840e5-28a3-4048-888f-6a5e5eb64b11,Alex,Yangon,Normal,Female,Fashion accessories,12.09,1,0.6045,12.6945,1/26/2019,6:19:00 PM,Credit card,12.09,4.761904762,0.6045,8.2
+50343dea-c33f-4a01-914b-b9fdd955104e,Alex,Yangon,Normal,Male,Sports and travel,64.19,10,32.095,673.995,1/19/2019,2:08:00 PM,Credit card,641.9,4.761904762,32.095,6.7
+1b73743c-ca9b-4be2-973e-6ab63592258f,Alex,Yangon,Normal,Male,Electronic accessories,78.31,3,11.7465,246.6765,3/5/2019,4:38:00 PM,Ewallet,234.93,4.761904762,11.7465,5.4
+ee52bcb6-dfe1-4b50-9326-8d87f0a41a21,Alex,Yangon,Member,Male,Food and beverages,83.77,2,8.377,175.917,1/15/2019,10:54:00 AM,Credit card,167.54,4.761904762,8.377,7.0
+21924a46-8ad1-4c72-8f90-b8a71510ad13,Cairo,Mandalay,Normal,Male,Home and lifestyle,99.7,3,14.955,314.055,3/18/2019,11:29:00 AM,Ewallet,299.1,4.761904762,14.955,4.7
+d02ed415-b5f6-4b20-a230-89a710d34843,Cairo,Mandalay,Member,Male,Food and beverages,79.91,3,11.9865,251.7165,3/20/2019,7:28:00 PM,Credit card,239.73,4.761904762,11.9865,5.0
+afdbc8f2-19b0-4976-ae65-0f521320d3aa,Cairo,Mandalay,Member,Male,Health and beauty,66.47,10,33.235,697.935,1/15/2019,3:01:00 PM,Credit card,664.7,4.761904762,33.235,5.0
+ccb0ebf3-f3a2-421e-8d9d-2573964e9308,Alex,Yangon,Normal,Male,Health and beauty,28.95,7,10.1325,212.7825,3/3/2019,8:31:00 PM,Credit card,202.65,4.761904762,10.1325,6.0
+6c1facba-4189-4909-90fd-3ae5630e9b94,Giza,Naypyitaw,Normal,Female,Electronic accessories,46.2,1,2.31,48.51,3/19/2019,12:16:00 PM,Cash,46.2,4.761904762,2.31,6.3
+51a8d25e-dcde-42c4-8bbb-bba38d7d19ff,Cairo,Mandalay,Member,Female,Food and beverages,17.63,5,4.4075,92.5575,3/8/2019,3:27:00 PM,Cash,88.15,4.761904762,4.4075,8.5
+a1af81de-4fdc-417d-80d9-03ee5581bbdf,Cairo,Mandalay,Normal,Male,Fashion accessories,52.42,3,7.863,165.123,2/27/2019,5:36:00 PM,Ewallet,157.26,4.761904762,7.863,7.5
+6a01dc1e-1761-416c-8d2e-079f5245c789,Cairo,Mandalay,Member,Female,Food and beverages,98.79,3,14.8185,311.1885,2/23/2019,8:00:00 PM,Ewallet,296.37,4.761904762,14.8185,6.4
+ab5d0ef6-2eb6-4e9b-a724-2295ea7214c8,Giza,Naypyitaw,Member,Female,Electronic accessories,88.55,8,35.42,743.82,3/19/2019,3:29:00 PM,Ewallet,708.4,4.761904762,35.42,4.7
+600b8e47-bf41-4209-a94f-2887400a1da8,Cairo,Mandalay,Member,Male,Electronic accessories,55.67,2,5.567,116.907,3/27/2019,3:08:00 PM,Ewallet,111.34,4.761904762,5.567,6.0
+f3af75c9-a839-46e8-bbaa-68cc6053925a,Giza,Naypyitaw,Member,Female,Food and beverages,72.52,8,29.008,609.168,3/30/2019,7:26:00 PM,Credit card,580.16,4.761904762,29.008,4.0
+f4bcd4d9-3d12-4885-b856-ebd60c3da059,Giza,Naypyitaw,Member,Male,Electronic accessories,12.05,5,3.0125,63.2625,2/16/2019,3:53:00 PM,Ewallet,60.25,4.761904762,3.0125,5.5
+1cc4ce50-5adf-45ca-b5b4-922744fc2672,Alex,Yangon,Member,Male,Home and lifestyle,19.36,9,8.712,182.952,1/18/2019,6:43:00 PM,Ewallet,174.24,4.761904762,8.712,8.7
+b0b9229a-2f9b-4afc-ab1f-a31e41b5117a,Giza,Naypyitaw,Normal,Male,Health and beauty,70.21,6,21.063,442.323,3/30/2019,2:58:00 PM,Cash,421.26,4.761904762,21.063,7.4
+574c71ee-6877-4af0-b6d6-b400c6a97a53,Cairo,Mandalay,Member,Male,Fashion accessories,33.63,1,1.6815,35.3115,3/20/2019,7:55:00 PM,Cash,33.63,4.761904762,1.6815,5.6
+77564ddd-df44-446f-a455-f112e9749a12,Giza,Naypyitaw,Member,Female,Sports and travel,15.49,2,1.549,32.529,1/16/2019,3:10:00 PM,Cash,30.98,4.761904762,1.549,6.3
+bbc9174a-dd8f-4020-91b2-5d3064f595ec,Giza,Naypyitaw,Normal,Male,Electronic accessories,24.74,10,12.37,259.77,2/24/2019,4:44:00 PM,Cash,247.4,4.761904762,12.37,7.1
+6cfe59e2-653b-44dd-aa2a-c86e15696485,Cairo,Mandalay,Normal,Male,Electronic accessories,75.66,5,18.915,397.215,1/15/2019,6:22:00 PM,Ewallet,378.3,4.761904762,18.915,7.8
+b89d9aa9-6a03-43b1-adb1-40c7344997c0,Cairo,Mandalay,Normal,Female,Health and beauty,55.81,6,16.743,351.603,1/22/2019,11:52:00 AM,Cash,334.86,4.761904762,16.743,9.9
+8f5893e2-80ee-42a0-9d50-31287c922893,Alex,Yangon,Member,Male,Home and lifestyle,72.78,10,36.39,764.19,2/3/2019,5:24:00 PM,Cash,727.8,4.761904762,36.39,7.3
+c4807381-ac52-49c0-8cdc-03b6dbea328f,Cairo,Mandalay,Member,Male,Sports and travel,37.32,9,16.794,352.674,3/6/2019,3:31:00 PM,Ewallet,335.88,4.761904762,16.794,5.1
+632edf9d-4f44-4f03-85d9-e1f9c471ce53,Cairo,Mandalay,Member,Male,Fashion accessories,60.18,4,12.036,252.756,2/16/2019,6:04:00 PM,Credit card,240.72,4.761904762,12.036,9.4
+82f9eab9-ed22-474a-bdc7-963c460a22c9,Alex,Yangon,Normal,Female,Electronic accessories,15.69,3,2.3535,49.4235,3/14/2019,2:13:00 PM,Credit card,47.07,4.761904762,2.3535,5.8
+76746efb-9ebf-47ef-909c-ba0198c053bb,Giza,Naypyitaw,Normal,Female,Electronic accessories,99.69,1,4.9845,104.6745,2/27/2019,10:23:00 AM,Credit card,99.69,4.761904762,4.9845,8.0
+2e346658-d205-45b8-819f-b7d8de788326,Alex,Yangon,Member,Female,Fashion accessories,88.15,3,13.2225,277.6725,1/18/2019,10:11:00 AM,Ewallet,264.45,4.761904762,13.2225,7.9
+99895d17-41ba-4f87-b156-fe7386d6ca9c,Alex,Yangon,Member,Female,Sports and travel,27.93,5,6.9825,146.6325,1/29/2019,3:48:00 PM,Cash,139.65,4.761904762,6.9825,5.9
+c64d39eb-5d6c-40d1-b6c5-33c38503a47b,Alex,Yangon,Member,Male,Fashion accessories,55.45,1,2.7725,58.2225,2/26/2019,5:46:00 PM,Credit card,55.45,4.761904762,2.7725,4.9
+af17ed65-4e9d-44cf-8528-12efb8ca6537,Cairo,Mandalay,Normal,Female,Sports and travel,42.97,3,6.4455,135.3555,2/3/2019,11:46:00 AM,Cash,128.91,4.761904762,6.4455,9.3
+0ff528ef-819f-4d67-898a-2a33785d6955,Giza,Naypyitaw,Member,Male,Sports and travel,17.14,7,5.999,125.979,1/16/2019,12:07:00 PM,Credit card,119.98,4.761904762,5.999,7.9
+6b35a0f7-587d-42c4-8425-6b0b09b5b800,Cairo,Mandalay,Member,Female,Fashion accessories,58.75,6,17.625,370.125,3/24/2019,6:14:00 PM,Credit card,352.5,4.761904762,17.625,5.9
+d4be9f2b-0322-44e2-bc92-572a139f3046,Giza,Naypyitaw,Member,Female,Food and beverages,87.1,10,43.55,914.55,2/12/2019,2:45:00 PM,Credit card,871.0,4.761904762,43.55,9.9
+a123010c-7823-4978-8efe-121fd8c7f029,Giza,Naypyitaw,Normal,Female,Sports and travel,98.8,2,9.88,207.48,2/21/2019,11:39:00 AM,Cash,197.6,4.761904762,9.88,7.7
+566a3b49-ffaf-4b0f-b8ab-f4581fdfbb5d,Alex,Yangon,Normal,Female,Fashion accessories,48.63,4,9.726,204.246,2/4/2019,3:44:00 PM,Ewallet,194.52,4.761904762,9.726,7.6
+637f7296-7461-41e2-b666-8d4caeaf215e,Cairo,Mandalay,Member,Male,Food and beverages,57.74,3,8.661,181.881,2/20/2019,1:06:00 PM,Ewallet,173.22,4.761904762,8.661,7.7
+1b4baa18-f0c2-42b5-a03c-b90584a357d3,Cairo,Mandalay,Normal,Female,Health and beauty,17.97,4,3.594,75.474,2/23/2019,8:43:00 PM,Ewallet,71.88,4.761904762,3.594,6.4
+95b0dc6d-8620-4e0b-a6dc-ed1244147b99,Giza,Naypyitaw,Member,Female,Health and beauty,47.71,6,14.313,300.573,2/16/2019,2:19:00 PM,Ewallet,286.26,4.761904762,14.313,4.4
+ca080fd4-8c73-46f7-ba38-826a14a981cc,Cairo,Mandalay,Normal,Female,Sports and travel,40.62,2,4.062,85.302,1/17/2019,10:01:00 AM,Credit card,81.24,4.761904762,4.062,4.1
+4e2ed7cc-486c-4930-af01-8fee5cf7d694,Alex,Yangon,Member,Male,Fashion accessories,56.04,10,28.02,588.42,1/14/2019,7:30:00 PM,Ewallet,560.4,4.761904762,28.02,4.4
+19e26dc7-d15c-48a8-af6e-dab033fc6246,Cairo,Mandalay,Member,Male,Food and beverages,93.4,2,9.34,196.14,3/30/2019,4:34:00 PM,Cash,186.8,4.761904762,9.34,5.5
+709f42c3-62da-4001-8194-4a4c6a0d322d,Cairo,Mandalay,Normal,Female,Health and beauty,73.41,3,11.0115,231.2415,3/2/2019,1:10:00 PM,Ewallet,220.23,4.761904762,11.0115,4.0
+2a0fe54c-7eb6-48e2-9aa9-d98fa63df9f7,Giza,Naypyitaw,Normal,Male,Health and beauty,33.64,8,13.456,282.576,2/15/2019,5:10:00 PM,Credit card,269.12,4.761904762,13.456,9.3
+02e36dbf-7596-484b-bf14-901e8e9c864b,Alex,Yangon,Normal,Female,Electronic accessories,45.48,10,22.74,477.54,3/1/2019,10:22:00 AM,Credit card,454.8,4.761904762,22.74,4.8
+c5e259fd-e738-4072-8e52-7d1e545b0c0c,Cairo,Mandalay,Member,Male,Fashion accessories,83.77,2,8.377,175.917,2/24/2019,7:57:00 PM,Cash,167.54,4.761904762,8.377,4.6
+1fd1fb58-11fe-447c-bd20-02a15502dbf4,Cairo,Mandalay,Member,Female,Sports and travel,64.08,7,22.428,470.988,2/19/2019,7:29:00 PM,Credit card,448.56,4.761904762,22.428,7.3
+f9ce6b75-f953-40ad-9233-17d6e66564be,Alex,Yangon,Member,Female,Food and beverages,73.47,4,14.694,308.574,2/23/2019,6:30:00 PM,Cash,293.88,4.761904762,14.694,6.0
+014b24f5-0074-4d5c-a098-b2d874d13677,Giza,Naypyitaw,Normal,Male,Health and beauty,58.95,10,29.475,618.975,2/7/2019,2:27:00 PM,Ewallet,589.5,4.761904762,29.475,8.1
+41455019-b957-4a25-942d-0d6561dfacc0,Alex,Yangon,Member,Male,Food and beverages,48.5,6,14.55,305.55,1/11/2019,1:57:00 PM,Ewallet,291.0,4.761904762,14.55,9.4
+aba00395-15bc-460c-a6c5-69a1e3dd1ab8,Cairo,Mandalay,Member,Female,Electronic accessories,39.48,1,1.974,41.454,2/12/2019,7:43:00 PM,Cash,39.48,4.761904762,1.974,6.5
+c630be59-8333-452f-bd01-1a532ca651a6,Cairo,Mandalay,Normal,Female,Sports and travel,34.81,1,1.7405,36.5505,1/14/2019,10:11:00 AM,Credit card,34.81,4.761904762,1.7405,7.0
+44872270-fdbb-412b-9a8e-dce8fa50b4ee,Giza,Naypyitaw,Normal,Female,Fashion accessories,49.32,6,14.796,310.716,1/9/2019,1:46:00 PM,Ewallet,295.92,4.761904762,14.796,7.1
+7cfed7fc-5b32-4338-b6f6-a00b3bcb17fd,Alex,Yangon,Member,Male,Fashion accessories,21.48,2,2.148,45.108,2/27/2019,12:22:00 PM,Ewallet,42.96,4.761904762,2.148,6.6
+29008892-ad50-4ab3-a8a5-4fdf80aab16a,Cairo,Mandalay,Member,Female,Sports and travel,23.08,6,6.924,145.404,1/24/2019,7:20:00 PM,Ewallet,138.48,4.761904762,6.924,4.9
+2cacdbf8-a210-4fa6-929e-cb15d8c5f53f,Cairo,Mandalay,Member,Female,Home and lifestyle,49.1,2,4.91,103.11,1/8/2019,12:58:00 PM,Credit card,98.2,4.761904762,4.91,6.4
+049dd38f-6bf4-41a5-9904-520a047e40b0,Cairo,Mandalay,Member,Female,Sports and travel,64.83,2,6.483,136.143,1/8/2019,11:59:00 AM,Credit card,129.66,4.761904762,6.483,8.0
+4773bd17-c918-4ad4-858d-f2c2638ce715,Alex,Yangon,Member,Male,Home and lifestyle,63.56,10,31.78,667.38,1/16/2019,5:59:00 PM,Cash,635.6,4.761904762,31.78,4.3
+53d98064-28b1-450d-ac85-a461e26daecb,Giza,Naypyitaw,Member,Male,Sports and travel,72.88,2,7.288,153.048,3/13/2019,12:51:00 PM,Cash,145.76,4.761904762,7.288,6.1
+ae399cc4-bf6d-4f90-84f7-149a8f36bf7f,Alex,Yangon,Normal,Female,Food and beverages,67.1,3,10.065,211.365,2/15/2019,10:36:00 AM,Cash,201.3,4.761904762,10.065,7.5
+916a42de-f19f-4242-a60a-468b53b6adee,Giza,Naypyitaw,Member,Female,Sports and travel,70.19,9,31.5855,663.2955,1/25/2019,1:38:00 PM,Cash,631.71,4.761904762,31.5855,6.7
+ee40d36f-686d-4473-8f5e-22a1169f7872,Giza,Naypyitaw,Member,Male,Food and beverages,55.04,7,19.264,404.544,3/12/2019,7:39:00 PM,Ewallet,385.28,4.761904762,19.264,5.2
+98dcf0d1-1238-4ceb-b712-35bc811c7c6e,Alex,Yangon,Member,Male,Health and beauty,48.63,10,24.315,510.615,3/4/2019,12:44:00 PM,Cash,486.3,4.761904762,24.315,8.8
+62b79710-641d-43b9-ae94-11240e54d5ec,Giza,Naypyitaw,Member,Female,Fashion accessories,73.38,7,25.683,539.343,2/10/2019,1:56:00 PM,Cash,513.66,4.761904762,25.683,9.5
+f6a2fbcf-aece-4fb3-9a18-bf81a7d66460,Giza,Naypyitaw,Normal,Female,Food and beverages,52.6,9,23.67,497.07,1/16/2019,2:42:00 PM,Cash,473.4,4.761904762,23.67,7.6
+6d2135fd-e3de-4da6-b42a-6a9c4e77600f,Alex,Yangon,Member,Female,Home and lifestyle,87.37,5,21.8425,458.6925,1/29/2019,7:45:00 PM,Cash,436.85,4.761904762,21.8425,6.6
+a4d252a3-b4c5-4078-91a5-44824744f9d2,Alex,Yangon,Member,Female,Sports and travel,27.04,4,5.408,113.568,1/1/2019,8:26:00 PM,Ewallet,108.16,4.761904762,5.408,6.9
+b12cbe9e-aa4a-483c-a5a5-ab99aba07e62,Cairo,Mandalay,Normal,Male,Home and lifestyle,62.19,4,12.438,261.198,1/6/2019,7:46:00 PM,Ewallet,248.76,4.761904762,12.438,4.3
+8880a8ab-2ad2-46c7-a7ed-ee191722a69a,Alex,Yangon,Member,Male,Electronic accessories,69.58,9,31.311,657.531,2/19/2019,7:38:00 PM,Credit card,626.22,4.761904762,31.311,7.8
+c2920023-9241-436a-9c6d-81d9ab44b783,Giza,Naypyitaw,Normal,Male,Home and lifestyle,97.5,10,48.75,1023.75,1/12/2019,4:18:00 PM,Ewallet,975.0,4.761904762,48.75,8.0
+272b4106-65c0-4798-a5f3-99d6626d8eda,Giza,Naypyitaw,Normal,Female,Fashion accessories,60.41,8,24.164,507.444,2/7/2019,12:23:00 PM,Ewallet,483.28,4.761904762,24.164,9.6
+fc2a24d4-e4d0-49bd-a9f7-dc7f36a22a16,Cairo,Mandalay,Normal,Male,Food and beverages,32.32,3,4.848,101.808,3/27/2019,7:11:00 PM,Credit card,96.96,4.761904762,4.848,4.3
+0157dbae-55b2-466a-808c-52f6b0aac36b,Cairo,Mandalay,Member,Female,Fashion accessories,19.77,10,9.885,207.585,2/27/2019,6:57:00 PM,Credit card,197.7,4.761904762,9.885,5.0
+7e30c35d-6c0d-41a9-8632-a581b185a760,Cairo,Mandalay,Member,Male,Health and beauty,80.47,9,36.2115,760.4415,1/6/2019,11:18:00 AM,Cash,724.23,4.761904762,36.2115,9.2
+045a19a1-9e68-4dbd-a514-8c4cb12d7c7f,Cairo,Mandalay,Member,Female,Home and lifestyle,88.39,9,39.7755,835.2855,3/2/2019,12:40:00 PM,Cash,795.51,4.761904762,39.7755,6.3
+260a5d65-3a91-4d05-9198-24d23b0aae21,Cairo,Mandalay,Normal,Male,Health and beauty,71.77,7,25.1195,527.5095,3/29/2019,2:06:00 PM,Cash,502.39,4.761904762,25.1195,8.9
+dac3fadb-d2cf-40bb-8707-d5d80aba5d0e,Cairo,Mandalay,Normal,Female,Electronic accessories,43.0,4,8.6,180.6,1/31/2019,8:48:00 PM,Ewallet,172.0,4.761904762,8.6,7.6
+6ea820db-68c7-4d08-a4ad-2ef247d597d0,Giza,Naypyitaw,Member,Male,Food and beverages,68.98,1,3.449,72.429,1/21/2019,8:13:00 PM,Cash,68.98,4.761904762,3.449,4.8
+52876946-1d02-4c8b-a118-27fc60eeb2d9,Giza,Naypyitaw,Normal,Male,Fashion accessories,15.62,8,6.248,131.208,1/20/2019,8:37:00 PM,Ewallet,124.96,4.761904762,6.248,9.1
+776c4d37-8a79-465b-a65b-799451a0609c,Alex,Yangon,Normal,Male,Sports and travel,25.7,3,3.855,80.955,1/17/2019,5:59:00 PM,Ewallet,77.1,4.761904762,3.855,6.1
+2523e92f-9b8b-4e45-8aad-9ab36f4f035e,Alex,Yangon,Member,Male,Food and beverages,80.62,6,24.186,507.906,2/28/2019,8:18:00 PM,Cash,483.72,4.761904762,24.186,9.1
+00ba3ec1-c3b6-44ef-ba2e-9765fead63ba,Giza,Naypyitaw,Member,Female,Home and lifestyle,75.53,4,15.106,317.226,3/19/2019,3:52:00 PM,Ewallet,302.12,4.761904762,15.106,8.3
+c4e9947e-273c-48fe-9ce8-019d5e8372ac,Giza,Naypyitaw,Normal,Female,Electronic accessories,77.63,9,34.9335,733.6035,2/19/2019,3:14:00 PM,Ewallet,698.67,4.761904762,34.9335,7.2
+b5c5975d-82c6-49bf-8f12-7a074c8436d5,Giza,Naypyitaw,Normal,Female,Health and beauty,13.85,9,6.2325,130.8825,2/4/2019,12:50:00 PM,Ewallet,124.65,4.761904762,6.2325,6.0
+f3ee914d-719e-46ab-811e-a67c3c9d3abb,Giza,Naypyitaw,Member,Male,Fashion accessories,98.7,8,39.48,829.08,1/31/2019,10:36:00 AM,Ewallet,789.6,4.761904762,39.48,8.5
+447c7f05-b395-4317-bee4-abb4b17e7035,Alex,Yangon,Normal,Female,Health and beauty,35.68,5,8.92,187.32,2/6/2019,6:33:00 PM,Credit card,178.4,4.761904762,8.92,6.6
+295a2501-46e4-4908-9205-a80251fa9c13,Alex,Yangon,Member,Female,Fashion accessories,71.46,7,25.011,525.231,3/28/2019,4:06:00 PM,Ewallet,500.22,4.761904762,25.011,4.5
+d289a2d1-6901-41ee-a2eb-cfb6bb8d3708,Alex,Yangon,Member,Male,Electronic accessories,11.94,3,1.791,37.611,1/19/2019,12:47:00 PM,Credit card,35.82,4.761904762,1.791,8.1
+f355145f-7bfa-4767-9f28-a74d9df92827,Alex,Yangon,Normal,Male,Fashion accessories,45.38,3,6.807,142.947,2/17/2019,1:34:00 PM,Credit card,136.14,4.761904762,6.807,7.2
+376ffda9-8efc-40ad-9c2c-73527ae0f8f9,Cairo,Mandalay,Member,Female,Fashion accessories,17.48,6,5.244,110.124,1/18/2019,3:04:00 PM,Credit card,104.88,4.761904762,5.244,6.1
+e47d46ed-909a-40fb-bda8-b38b452322fb,Cairo,Mandalay,Normal,Female,Fashion accessories,25.56,7,8.946,187.866,2/2/2019,8:42:00 PM,Cash,178.92,4.761904762,8.946,7.1
+1f643a39-baf5-4f6b-be89-c202e58dd2ea,Giza,Naypyitaw,Member,Female,Sports and travel,90.63,9,40.7835,856.4535,1/18/2019,3:28:00 PM,Cash,815.67,4.761904762,40.7835,5.1
+d3b50bae-7225-4d2a-9387-15a7d13cc94d,Cairo,Mandalay,Normal,Male,Home and lifestyle,44.12,3,6.618,138.978,3/18/2019,1:45:00 PM,Credit card,132.36,4.761904762,6.618,7.9
+fdf5061c-6c72-45cb-b198-40fd23c51a5c,Giza,Naypyitaw,Member,Female,Food and beverages,36.77,7,12.8695,270.2595,1/11/2019,8:10:00 PM,Cash,257.39,4.761904762,12.8695,7.4
+87500c79-7448-4bcf-b8c5-88f8836cfc24,Cairo,Mandalay,Member,Male,Food and beverages,23.34,4,4.668,98.028,2/4/2019,6:53:00 PM,Ewallet,93.36,4.761904762,4.668,7.4
+11431bde-15a5-487e-afdf-e6bdb2e295dd,Giza,Naypyitaw,Member,Female,Health and beauty,28.5,8,11.4,239.4,2/6/2019,2:24:00 PM,Cash,228.0,4.761904762,11.4,6.6
+937fc63d-5df3-4c63-a02f-61a655c75f10,Giza,Naypyitaw,Member,Male,Home and lifestyle,55.57,3,8.3355,175.0455,1/8/2019,11:42:00 AM,Credit card,166.71,4.761904762,8.3355,5.9
+f558f8e9-e4f8-49ba-a898-6a42c7d87c64,Cairo,Mandalay,Normal,Male,Sports and travel,69.74,10,34.87,732.27,3/5/2019,5:49:00 PM,Credit card,697.4,4.761904762,34.87,8.9
+c9a333a6-bf2c-4746-8735-8419799ff2cb,Giza,Naypyitaw,Normal,Male,Fashion accessories,97.26,4,19.452,408.492,3/16/2019,3:33:00 PM,Ewallet,389.04,4.761904762,19.452,6.8
+78925a5b-5a27-488c-a6e3-49e9eb0d878a,Cairo,Mandalay,Member,Female,Home and lifestyle,52.18,7,18.263,383.523,3/9/2019,10:54:00 AM,Cash,365.26,4.761904762,18.263,9.3
+44c2ea76-e6fe-433a-9bca-984bb13ddd2a,Alex,Yangon,Member,Female,Fashion accessories,22.32,4,4.464,93.744,3/1/2019,4:23:00 PM,Credit card,89.28,4.761904762,4.464,4.4
+c5a65494-0978-416b-8148-b54c1da9df5b,Alex,Yangon,Normal,Male,Health and beauty,56.0,3,8.4,176.4,2/28/2019,7:33:00 PM,Ewallet,168.0,4.761904762,8.4,4.8
+c41f13a4-cb0f-44a0-8f00-0fca8749fb00,Alex,Yangon,Member,Male,Fashion accessories,19.7,1,0.985,20.685,2/8/2019,11:39:00 AM,Ewallet,19.7,4.761904762,0.985,9.5
+c99ba925-0e4a-4841-8d29-ecea0d62e87a,Cairo,Mandalay,Normal,Male,Electronic accessories,75.88,7,26.558,557.718,1/24/2019,10:38:00 AM,Ewallet,531.16,4.761904762,26.558,8.9
+cbe08be2-873e-4f62-9fd7-e8094c27ef13,Cairo,Mandalay,Member,Male,Food and beverages,53.72,1,2.686,56.406,3/1/2019,8:03:00 PM,Ewallet,53.72,4.761904762,2.686,6.4
+e6a71233-3715-4616-9c0a-c05814462bb2,Giza,Naypyitaw,Member,Male,Health and beauty,81.95,10,40.975,860.475,3/10/2019,12:39:00 PM,Credit card,819.5,4.761904762,40.975,6.0
+e9bf6616-d7f9-4144-859d-8f41e29ee1f8,Giza,Naypyitaw,Member,Female,Home and lifestyle,81.2,7,28.42,596.82,3/23/2019,3:59:00 PM,Credit card,568.4,4.761904762,28.42,8.1
+86c3e13e-d0bd-4b4e-9e57-704d7887c2a0,Giza,Naypyitaw,Normal,Male,Electronic accessories,58.76,10,29.38,616.98,1/29/2019,2:26:00 PM,Ewallet,587.6,4.761904762,29.38,9.0
+3b27d613-8c09-4587-97c1-692a2f2e094e,Cairo,Mandalay,Member,Male,Electronic accessories,91.56,8,36.624,769.104,1/12/2019,6:22:00 PM,Ewallet,732.48,4.761904762,36.624,6.0
+3685882c-65f7-4a55-ba49-d62b02b6199c,Alex,Yangon,Normal,Male,Home and lifestyle,93.96,9,42.282,887.922,3/20/2019,11:32:00 AM,Cash,845.64,4.761904762,42.282,9.8
+d7c27264-0fa0-4d4f-9547-7a62a2570c3e,Giza,Naypyitaw,Normal,Male,Home and lifestyle,55.61,7,19.4635,408.7335,3/23/2019,12:41:00 PM,Cash,389.27,4.761904762,19.4635,8.5
+20fc7621-a14e-443b-bd53-2cd99755463c,Giza,Naypyitaw,Normal,Male,Food and beverages,84.83,1,4.2415,89.0715,1/14/2019,3:20:00 PM,Ewallet,84.83,4.761904762,4.2415,8.8
+05e90475-dee0-443d-a460-851a0537d5f1,Alex,Yangon,Member,Female,Sports and travel,71.63,2,7.163,150.423,2/12/2019,2:33:00 PM,Ewallet,143.26,4.761904762,7.163,8.8
+11eac713-6693-4c5b-a09c-5752893be29d,Alex,Yangon,Member,Male,Home and lifestyle,37.69,2,3.769,79.149,2/20/2019,3:29:00 PM,Ewallet,75.38,4.761904762,3.769,9.5
+44cc8f80-97f6-4f3b-b9d0-49c1f2fed958,Giza,Naypyitaw,Member,Female,Sports and travel,31.67,8,12.668,266.028,1/2/2019,4:19:00 PM,Credit card,253.36,4.761904762,12.668,5.6
+73d20573-8c99-4774-8351-6f5dbbd27846,Giza,Naypyitaw,Member,Female,Food and beverages,38.42,1,1.921,40.341,2/2/2019,4:33:00 PM,Cash,38.42,4.761904762,1.921,8.6
+788017e6-8780-49c6-8f56-1a5420126f40,Cairo,Mandalay,Member,Male,Fashion accessories,65.23,10,32.615,684.915,1/8/2019,7:07:00 PM,Credit card,652.3,4.761904762,32.615,5.2
+032c9b6e-ef75-463d-9cc9-1064ebf26ffd,Giza,Naypyitaw,Member,Female,Home and lifestyle,10.53,5,2.6325,55.2825,1/30/2019,2:43:00 PM,Credit card,52.65,4.761904762,2.6325,5.8
+f95296a2-c126-477f-8a06-eb0ed67f0d1b,Cairo,Mandalay,Member,Female,Home and lifestyle,12.29,9,5.5305,116.1405,3/26/2019,7:28:00 PM,Credit card,110.61,4.761904762,5.5305,8.0
+cb3e599d-a96a-4821-8afc-22e0d136b684,Giza,Naypyitaw,Member,Male,Health and beauty,81.23,7,28.4305,597.0405,1/15/2019,8:44:00 PM,Cash,568.61,4.761904762,28.4305,9.0
+a89c5c44-5989-4b38-bb19-02e5519210f0,Cairo,Mandalay,Member,Female,Fashion accessories,22.32,4,4.464,93.744,3/14/2019,11:16:00 AM,Ewallet,89.28,4.761904762,4.464,4.1
+fffea917-5bc4-405f-9900-5e750c06378d,Alex,Yangon,Normal,Female,Food and beverages,27.28,5,6.82,143.22,2/3/2019,10:31:00 AM,Credit card,136.4,4.761904762,6.82,8.6
+58aa6bbf-bf52-43d4-8b04-519036c5d98a,Alex,Yangon,Member,Female,Electronic accessories,17.42,10,8.71,182.91,2/22/2019,12:30:00 PM,Ewallet,174.2,4.761904762,8.71,7.0
+ed6a0951-6ec7-446e-9ed1-b79903dc7bbb,Cairo,Mandalay,Normal,Male,Home and lifestyle,73.28,5,18.32,384.72,1/24/2019,3:05:00 PM,Ewallet,366.4,4.761904762,18.32,8.4
+6132ee4d-3894-4160-ae8e-56807645f8c7,Giza,Naypyitaw,Member,Female,Fashion accessories,84.87,3,12.7305,267.3405,1/25/2019,6:30:00 PM,Ewallet,254.61,4.761904762,12.7305,7.4
+a41d1e2b-ec06-4f19-90cc-8bf7010b3692,Alex,Yangon,Normal,Female,Fashion accessories,97.29,8,38.916,817.236,3/9/2019,1:18:00 PM,Credit card,778.32,4.761904762,38.916,6.2
+f314caf3-64f3-4a33-9f4f-9921b98f75bd,Cairo,Mandalay,Member,Female,Electronic accessories,35.74,8,14.296,300.216,2/17/2019,3:28:00 PM,Ewallet,285.92,4.761904762,14.296,4.9
+b092e01a-623f-4a62-af27-25cec9e1be89,Alex,Yangon,Normal,Female,Home and lifestyle,96.52,6,28.956,608.076,1/11/2019,11:52:00 AM,Cash,579.12,4.761904762,28.956,4.5
+dd1ce7cf-e60d-4f77-a352-270342acf358,Alex,Yangon,Member,Male,Food and beverages,18.85,10,9.425,197.925,2/27/2019,6:24:00 PM,Ewallet,188.5,4.761904762,9.425,5.6
+6eaa61f9-fa56-4134-a19d-ebc50328a529,Alex,Yangon,Normal,Female,Food and beverages,55.39,4,11.078,232.638,3/25/2019,3:19:00 PM,Ewallet,221.56,4.761904762,11.078,8.0
+759bca42-d98d-46fa-8508-73224d8a7221,Cairo,Mandalay,Member,Female,Food and beverages,77.2,10,38.6,810.6,2/11/2019,10:38:00 AM,Credit card,772.0,4.761904762,38.6,5.6
+0af67557-c8f8-4dc7-8da2-2b7d217e0230,Cairo,Mandalay,Normal,Male,Electronic accessories,72.13,10,36.065,757.365,1/31/2019,3:12:00 PM,Credit card,721.3,4.761904762,36.065,4.2
+f7a0b5a4-6efc-4a53-ae55-b05897aca705,Alex,Yangon,Member,Female,Fashion accessories,63.88,8,25.552,536.592,1/20/2019,5:48:00 PM,Ewallet,511.04,4.761904762,25.552,9.9
+08ad81ac-58c1-4c2e-8682-ea9a261b4bea,Alex,Yangon,Member,Female,Health and beauty,10.69,5,2.6725,56.1225,3/26/2019,11:07:00 AM,Ewallet,53.45,4.761904762,2.6725,7.6
+474abc85-4ae0-4ce7-a769-da344797e167,Alex,Yangon,Member,Male,Health and beauty,55.5,4,11.1,233.1,1/20/2019,3:48:00 PM,Credit card,222.0,4.761904762,11.1,6.6
+bd77bf55-6ee2-4a69-bec5-1677d06302e0,Cairo,Mandalay,Normal,Female,Home and lifestyle,95.46,8,38.184,801.864,3/5/2019,7:40:00 PM,Ewallet,763.68,4.761904762,38.184,4.7
+c4d32e06-171b-40b4-add7-58d3de9acdd1,Giza,Naypyitaw,Normal,Female,Fashion accessories,76.06,3,11.409,239.589,1/5/2019,8:30:00 PM,Credit card,228.18,4.761904762,11.409,9.8
+3b79c61a-d542-49fe-954d-a4bb4cd3a5f2,Cairo,Mandalay,Normal,Male,Sports and travel,13.69,6,4.107,86.247,2/13/2019,1:59:00 PM,Cash,82.14,4.761904762,4.107,6.3
+9f6891f9-8c2d-4477-9770-c6e1ae9085e2,Cairo,Mandalay,Normal,Female,Electronic accessories,95.64,4,19.128,401.688,3/16/2019,6:51:00 PM,Cash,382.56,4.761904762,19.128,7.9
+55839f2a-691a-4aeb-b965-70a66c116066,Alex,Yangon,Normal,Female,Home and lifestyle,11.43,6,3.429,72.009,1/15/2019,5:24:00 PM,Cash,68.58,4.761904762,3.429,7.7
+359a9b4e-25a7-4923-aef4-f6b0cd45cf5d,Cairo,Mandalay,Member,Female,Sports and travel,95.54,4,19.108,401.268,2/26/2019,11:58:00 AM,Ewallet,382.16,4.761904762,19.108,4.5
+4aad5129-307c-4337-ac6a-64c4c67a4bbb,Giza,Naypyitaw,Member,Female,Health and beauty,85.87,7,30.0545,631.1445,2/27/2019,7:01:00 PM,Credit card,601.09,4.761904762,30.0545,8.0
+0caf6d6b-fe66-47fe-87ba-2415bd91711c,Giza,Naypyitaw,Member,Female,Sports and travel,67.99,7,23.7965,499.7265,2/17/2019,4:50:00 PM,Ewallet,475.93,4.761904762,23.7965,5.7
+ac397669-6ca1-42a8-aacc-0f829f9cdb3d,Giza,Naypyitaw,Normal,Female,Food and beverages,52.42,1,2.621,55.041,2/6/2019,10:22:00 AM,Credit card,52.42,4.761904762,2.621,6.3
+56b1bdc6-071d-4ee4-9290-970003409849,Giza,Naypyitaw,Member,Male,Food and beverages,65.65,2,6.565,137.865,1/17/2019,4:46:00 PM,Cash,131.3,4.761904762,6.565,6.0
+23d4d8cd-2596-4ead-bebe-9c8cf3123c42,Cairo,Mandalay,Normal,Female,Food and beverages,28.86,5,7.215,151.515,1/22/2019,6:08:00 PM,Credit card,144.3,4.761904762,7.215,8.0
+bb2355ab-75f7-43e1-8f9f-07c89034b699,Giza,Naypyitaw,Member,Male,Health and beauty,65.31,7,22.8585,480.0285,3/5/2019,6:02:00 PM,Credit card,457.17,4.761904762,22.8585,4.2
+9bea51dd-dc2b-4ba2-b238-8a0681d43e8e,Cairo,Mandalay,Normal,Male,Sports and travel,93.38,1,4.669,98.049,1/3/2019,1:07:00 PM,Cash,93.38,4.761904762,4.669,9.6
+afca6a82-6c57-44c4-82e4-449a7277f104,Giza,Naypyitaw,Member,Male,Sports and travel,25.25,5,6.3125,132.5625,3/20/2019,5:52:00 PM,Cash,126.25,4.761904762,6.3125,6.1
+d8ec9344-6d35-46e2-957c-06f433a71918,Cairo,Mandalay,Member,Male,Electronic accessories,87.87,9,39.5415,830.3715,1/31/2019,8:32:00 PM,Ewallet,790.83,4.761904762,39.5415,5.6
+bbd5e49e-023d-4ab6-9370-5bc18c4c3a8e,Giza,Naypyitaw,Normal,Male,Health and beauty,21.8,8,8.72,183.12,2/19/2019,7:24:00 PM,Cash,174.4,4.761904762,8.72,8.3
+3a19d45c-1faa-4ac6-a498-598427c9f0cc,Alex,Yangon,Normal,Female,Sports and travel,94.76,4,18.952,397.992,2/11/2019,4:06:00 PM,Ewallet,379.04,4.761904762,18.952,7.8
+2135c5bf-d40f-45e1-845b-8f8291e25a25,Alex,Yangon,Member,Female,Fashion accessories,30.62,1,1.531,32.151,2/5/2019,2:14:00 PM,Credit card,30.62,4.761904762,1.531,4.1
+3cd72b16-4f1e-4f9a-b90f-dc4d931b1d89,Giza,Naypyitaw,Normal,Female,Home and lifestyle,44.01,8,17.604,369.684,3/3/2019,5:36:00 PM,Cash,352.08,4.761904762,17.604,8.8
+7bf4e70f-c6b2-4595-a8a7-9ff0996d060b,Giza,Naypyitaw,Member,Female,Health and beauty,10.16,5,2.54,53.34,2/24/2019,1:08:00 PM,Ewallet,50.8,4.761904762,2.54,4.1
+ddef8fe7-1ae9-494c-ba88-13bf1f9b5a5f,Alex,Yangon,Normal,Male,Electronic accessories,74.58,7,26.103,548.163,2/4/2019,4:09:00 PM,Credit card,522.06,4.761904762,26.103,9.0
+a6289210-98e6-46f2-a5ba-9ac3e3cd1431,Giza,Naypyitaw,Normal,Male,Electronic accessories,71.89,8,28.756,603.876,2/19/2019,11:33:00 AM,Ewallet,575.12,4.761904762,28.756,5.5
+a31b7427-433c-4ae5-9117-4092e18681c7,Giza,Naypyitaw,Normal,Female,Health and beauty,10.99,5,2.7475,57.6975,1/23/2019,10:18:00 AM,Credit card,54.95,4.761904762,2.7475,9.3
+9804744b-83ff-4335-b449-05e881472f02,Giza,Naypyitaw,Member,Male,Health and beauty,60.47,3,9.0705,190.4805,1/14/2019,10:55:00 AM,Credit card,181.41,4.761904762,9.0705,5.6
+d879ebe6-4831-4fea-8e92-d5bd2e898262,Alex,Yangon,Normal,Male,Sports and travel,58.91,7,20.6185,432.9885,1/17/2019,3:15:00 PM,Ewallet,412.37,4.761904762,20.6185,9.7
+fcc899f4-e3bf-4d6a-ab16-8c7472b8c67c,Alex,Yangon,Normal,Male,Fashion accessories,46.41,1,2.3205,48.7305,3/3/2019,8:06:00 PM,Credit card,46.41,4.761904762,2.3205,4.0
+dea81f0b-a88c-4a4a-a1a1-13579ab41f3d,Giza,Naypyitaw,Member,Male,Health and beauty,68.55,4,13.71,287.91,2/15/2019,8:21:00 PM,Credit card,274.2,4.761904762,13.71,9.2
+a1eeee56-983e-4dac-a014-30d4f0f10ca0,Cairo,Mandalay,Normal,Female,Home and lifestyle,97.37,10,48.685,1022.385,1/15/2019,1:48:00 PM,Credit card,973.7,4.761904762,48.685,4.9
+47faffe0-150d-4cac-b9e2-3d58b71afeef,Alex,Yangon,Member,Male,Electronic accessories,92.6,7,32.41,680.61,2/27/2019,12:52:00 PM,Credit card,648.2,4.761904762,32.41,9.3
+39a42e67-f2e1-41f3-be4b-4b44c3a98c35,Alex,Yangon,Normal,Female,Electronic accessories,46.61,2,4.661,97.881,2/26/2019,12:28:00 PM,Credit card,93.22,4.761904762,4.661,6.6
+4407b2f5-63a6-4627-b577-92f0de39eb12,Cairo,Mandalay,Normal,Male,Fashion accessories,27.18,2,2.718,57.078,3/15/2019,4:26:00 PM,Ewallet,54.36,4.761904762,2.718,4.3
+a0a82c2f-7316-4571-b552-3cffed8cf42e,Giza,Naypyitaw,Member,Female,Home and lifestyle,60.87,1,3.0435,63.9135,1/24/2019,1:24:00 PM,Cash,60.87,4.761904762,3.0435,5.5
+673fd461-3ead-45e9-82fd-1c1ca797b8f9,Alex,Yangon,Member,Female,Sports and travel,24.49,10,12.245,257.145,2/22/2019,3:15:00 PM,Cash,244.9,4.761904762,12.245,8.1
+17a4430f-3fa6-4998-bca8-eaccf5d8b88f,Cairo,Mandalay,Normal,Male,Health and beauty,92.78,1,4.639,97.419,3/15/2019,10:50:00 AM,Credit card,92.78,4.761904762,4.639,9.8
+625672e0-e7b4-4a54-b56a-4bcd3a3f196e,Giza,Naypyitaw,Member,Male,Home and lifestyle,86.69,5,21.6725,455.1225,2/11/2019,6:38:00 PM,Ewallet,433.45,4.761904762,21.6725,9.4
+6af2f952-9a15-41ae-9ae1-eb46c722251d,Cairo,Mandalay,Normal,Male,Sports and travel,23.01,6,6.903,144.963,1/12/2019,4:45:00 PM,Ewallet,138.06,4.761904762,6.903,7.9
+bdd9767e-cc65-4d1b-8975-55b00b7345ed,Giza,Naypyitaw,Member,Female,Electronic accessories,30.2,8,12.08,253.68,3/3/2019,7:30:00 PM,Ewallet,241.6,4.761904762,12.08,5.1
+3e51aedf-b923-4d83-a29d-292fccc81e80,Giza,Naypyitaw,Member,Male,Fashion accessories,67.39,7,23.5865,495.3165,3/23/2019,1:23:00 PM,Ewallet,471.73,4.761904762,23.5865,6.9
+b6a4372b-7cdc-44d4-927d-1b9c61e675be,Alex,Yangon,Member,Female,Fashion accessories,48.96,9,22.032,462.672,3/4/2019,11:27:00 AM,Cash,440.64,4.761904762,22.032,8.0
+82111025-61e9-43ab-9479-5def8a958061,Cairo,Mandalay,Member,Female,Electronic accessories,75.59,9,34.0155,714.3255,2/23/2019,11:12:00 AM,Cash,680.31,4.761904762,34.0155,8.0
+934724aa-4ddc-46cd-8d25-9a0458503e16,Alex,Yangon,Normal,Female,Home and lifestyle,77.47,4,15.494,325.374,3/17/2019,4:36:00 PM,Cash,309.88,4.761904762,15.494,4.2
+522baf95-07d4-45b8-93ed-16f5359d9f52,Alex,Yangon,Normal,Female,Sports and travel,93.18,2,9.318,195.678,1/16/2019,6:41:00 PM,Credit card,186.36,4.761904762,9.318,8.5
+c553c5bd-1e83-4f52-b2f3-3ccdad564a04,Alex,Yangon,Normal,Female,Electronic accessories,50.23,4,10.046,210.966,1/8/2019,5:12:00 PM,Cash,200.92,4.761904762,10.046,9.0
+ecca65df-82cb-4574-9ba9-6f20f8252560,Cairo,Mandalay,Normal,Female,Health and beauty,17.75,1,0.8875,18.6375,1/14/2019,10:38:00 AM,Cash,17.75,4.761904762,0.8875,8.6
+9e22628f-5cc7-464a-ad3b-5bd6eda9f9e4,Giza,Naypyitaw,Normal,Female,Fashion accessories,62.18,10,31.09,652.89,1/31/2019,10:33:00 AM,Ewallet,621.8,4.761904762,31.09,6.0
+6fde299b-fcfe-4cc5-9b49-eb94862bd895,Cairo,Mandalay,Normal,Male,Health and beauty,10.75,8,4.3,90.3,3/15/2019,2:38:00 PM,Ewallet,86.0,4.761904762,4.3,6.2
+588d41f5-9986-49fc-9aa1-907debc5290e,Alex,Yangon,Normal,Female,Electronic accessories,40.26,10,20.13,422.73,2/24/2019,6:06:00 PM,Credit card,402.6,4.761904762,20.13,5.0
+3bef1848-7499-437b-b535-2b9f0d968afb,Giza,Naypyitaw,Member,Female,Sports and travel,64.97,5,16.2425,341.0925,2/8/2019,12:52:00 PM,Credit card,324.85,4.761904762,16.2425,6.5
+2fd11fc2-e211-4e5a-a519-917741b6f929,Alex,Yangon,Normal,Male,Electronic accessories,95.15,1,4.7575,99.9075,3/22/2019,2:00:00 PM,Cash,95.15,4.761904762,4.7575,6.0
+f10caba5-dd2b-4cda-87d8-362ab8d12e5e,Alex,Yangon,Member,Female,Electronic accessories,48.62,8,19.448,408.408,1/24/2019,10:57:00 AM,Cash,388.96,4.761904762,19.448,5.0
+7ff2fe2a-bdc6-4847-94d5-4a4dab0f7e66,Cairo,Mandalay,Normal,Female,Food and beverages,53.21,8,21.284,446.964,3/14/2019,4:45:00 PM,Ewallet,425.68,4.761904762,21.284,5.0
+3fe96f34-9040-4b87-bca3-8813991ffa34,Giza,Naypyitaw,Normal,Female,Fashion accessories,45.44,7,15.904,333.984,1/23/2019,11:15:00 AM,Cash,318.08,4.761904762,15.904,9.2
+721b5608-44d9-4f89-85a7-2d26725985cb,Alex,Yangon,Normal,Male,Food and beverages,33.88,8,13.552,284.592,1/19/2019,8:29:00 PM,Ewallet,271.04,4.761904762,13.552,9.6
+f2fdfd0c-10bc-4057-a7d9-9217a5d0147d,Cairo,Mandalay,Member,Male,Health and beauty,96.16,4,19.232,403.872,1/27/2019,8:03:00 PM,Credit card,384.64,4.761904762,19.232,8.4
+bd1e512a-9ecc-4ae6-b6f0-d3e0d105f7ae,Cairo,Mandalay,Member,Male,Food and beverages,47.16,5,11.79,247.59,2/3/2019,2:35:00 PM,Credit card,235.8,4.761904762,11.79,6.0
+4c0b4383-92c2-46c8-a51e-cc8033a93a39,Cairo,Mandalay,Normal,Male,Electronic accessories,52.89,4,10.578,222.138,3/25/2019,4:32:00 PM,Ewallet,211.56,4.761904762,10.578,6.7
+cc1e43a4-5990-45a7-9d3c-07a723d02aad,Alex,Yangon,Member,Female,Home and lifestyle,47.68,2,4.768,100.128,2/24/2019,10:10:00 AM,Credit card,95.36,4.761904762,4.768,4.1
+bd71e232-850a-44e3-86ac-d7e426af5876,Giza,Naypyitaw,Member,Male,Sports and travel,10.17,1,0.5085,10.6785,2/7/2019,2:15:00 PM,Cash,10.17,4.761904762,0.5085,5.9
+b5003c6f-03fb-46bd-b647-94703e0d2be0,Alex,Yangon,Normal,Female,Health and beauty,68.71,3,10.3065,216.4365,3/4/2019,10:05:00 AM,Cash,206.13,4.761904762,10.3065,8.7
+9db5f667-8120-41d7-9215-877c6bd4ca0c,Cairo,Mandalay,Member,Female,Sports and travel,60.08,7,21.028,441.588,2/14/2019,11:36:00 AM,Credit card,420.56,4.761904762,21.028,4.5
+c262b1df-e9a8-4384-97ca-a9af66d4d957,Alex,Yangon,Member,Female,Sports and travel,22.01,4,4.402,92.442,1/29/2019,6:15:00 PM,Credit card,88.04,4.761904762,4.402,6.6
+dd1c00e3-9e48-40e1-a685-c86f79f465c2,Cairo,Mandalay,Member,Female,Health and beauty,72.11,9,32.4495,681.4395,1/28/2019,1:53:00 PM,Credit card,648.99,4.761904762,32.4495,7.7
+d7208b49-a664-4f60-ac22-a9e9e768653c,Alex,Yangon,Member,Male,Fashion accessories,41.28,3,6.192,130.032,3/26/2019,6:37:00 PM,Credit card,123.84,4.761904762,6.192,8.5
+1fdfc484-16b8-40f1-8595-983944cc87fe,Giza,Naypyitaw,Normal,Male,Electronic accessories,64.95,10,32.475,681.975,3/24/2019,6:27:00 PM,Cash,649.5,4.761904762,32.475,5.2
+72e96601-242a-4ce0-94ce-30833688c288,Alex,Yangon,Member,Female,Electronic accessories,74.22,10,37.11,779.31,1/1/2019,2:42:00 PM,Credit card,742.2,4.761904762,37.11,4.3
+968aff7e-ac92-419a-8271-7dba64af095c,Alex,Yangon,Normal,Male,Electronic accessories,10.56,8,4.224,88.704,1/24/2019,5:43:00 PM,Cash,84.48,4.761904762,4.224,7.6
+cc1e4384-a857-4a73-935c-2eeb2cec9352,Cairo,Mandalay,Normal,Male,Health and beauty,62.57,4,12.514,262.794,2/25/2019,6:37:00 PM,Cash,250.28,4.761904762,12.514,9.5
+9a6e5c1d-8483-4c81-a7e5-3f0ae62f26cf,Cairo,Mandalay,Member,Female,Sports and travel,11.85,8,4.74,99.54,1/9/2019,4:34:00 PM,Cash,94.8,4.761904762,4.74,4.1
+5cf12215-d821-41cf-9a31-baaac39373cd,Alex,Yangon,Member,Male,Health and beauty,91.3,1,4.565,95.865,2/14/2019,2:42:00 PM,Ewallet,91.3,4.761904762,4.565,9.2
+d606367b-4770-495f-a072-4917bd6fcd37,Cairo,Mandalay,Member,Female,Home and lifestyle,40.73,7,14.2555,299.3655,3/12/2019,11:01:00 AM,Ewallet,285.11,4.761904762,14.2555,5.4
+4d6b58ca-90f3-4117-b003-86fbbe8cf96d,Alex,Yangon,Normal,Male,Fashion accessories,52.38,1,2.619,54.999,3/26/2019,7:44:00 PM,Cash,52.38,4.761904762,2.619,5.8
+21ed7c86-141a-4f54-8ba7-24b38af2fd74,Alex,Yangon,Member,Male,Fashion accessories,38.54,5,9.635,202.335,1/9/2019,1:34:00 PM,Ewallet,192.7,4.761904762,9.635,5.6
+68ad745f-fcdd-4858-823e-6acf1805f8f3,Cairo,Mandalay,Normal,Male,Sports and travel,44.63,6,13.389,281.169,1/2/2019,8:08:00 PM,Credit card,267.78,4.761904762,13.389,5.1
+9132f038-ae8f-4772-b124-b528afda44b1,Giza,Naypyitaw,Normal,Male,Electronic accessories,55.87,10,27.935,586.635,1/15/2019,3:01:00 PM,Cash,558.7,4.761904762,27.935,5.8
+ddb5a2e5-ebb9-4794-9572-fe550ad776a2,Giza,Naypyitaw,Member,Female,Sports and travel,29.22,6,8.766,184.086,1/1/2019,11:40:00 AM,Ewallet,175.32,4.761904762,8.766,5.0
+6e9b6ad9-3ee9-4223-82d5-91591d5ee91e,Alex,Yangon,Normal,Male,Fashion accessories,51.94,3,7.791,163.611,2/15/2019,3:21:00 PM,Cash,155.82,4.761904762,7.791,7.9
+d9d9c391-1129-4643-acf2-32478f505f68,Cairo,Mandalay,Normal,Male,Electronic accessories,60.3,1,3.015,63.315,2/28/2019,5:38:00 PM,Cash,60.3,4.761904762,3.015,6.0
+1887b4b1-0bf3-42a7-966c-0566a0805ec3,Alex,Yangon,Member,Female,Sports and travel,39.47,2,3.947,82.887,3/2/2019,4:16:00 PM,Credit card,78.94,4.761904762,3.947,5.0
+dcb6bf3f-9494-43c7-bf7a-e06caf84a37d,Giza,Naypyitaw,Member,Female,Food and beverages,14.87,2,1.487,31.227,2/13/2019,6:15:00 PM,Credit card,29.74,4.761904762,1.487,8.9
+1156e8ff-2ccd-4b53-8ac3-b7a9c545aa15,Alex,Yangon,Normal,Male,Fashion accessories,21.32,1,1.066,22.386,1/26/2019,12:43:00 PM,Cash,21.32,4.761904762,1.066,5.9
+84f43da9-d464-427c-bf5c-9b6f8f3bd549,Alex,Yangon,Member,Male,Electronic accessories,93.78,3,14.067,295.407,1/30/2019,11:32:00 AM,Credit card,281.34,4.761904762,14.067,5.9
+67c6da4e-e673-4ddb-9143-57c0708f1904,Alex,Yangon,Member,Male,Electronic accessories,73.26,1,3.663,76.923,1/27/2019,6:08:00 PM,Ewallet,73.26,4.761904762,3.663,9.7
+73f8fb3f-7bb2-4f6d-99b1-8acf9b0de31c,Giza,Naypyitaw,Normal,Female,Sports and travel,22.38,1,1.119,23.499,1/30/2019,5:08:00 PM,Credit card,22.38,4.761904762,1.119,8.6
+f533c257-2d1c-48ac-83fe-d0d5e91ad6fc,Giza,Naypyitaw,Member,Female,Food and beverages,72.88,9,32.796,688.716,1/8/2019,7:38:00 PM,Cash,655.92,4.761904762,32.796,4.0
+151badd1-e281-4964-a565-780756de137e,Alex,Yangon,Normal,Female,Fashion accessories,99.1,6,29.73,624.33,1/19/2019,1:11:00 PM,Cash,594.6,4.761904762,29.73,4.2
+bbf551e9-2a87-4551-a41f-9ef2a0ce80c8,Alex,Yangon,Normal,Male,Fashion accessories,74.1,1,3.705,77.805,1/25/2019,11:05:00 AM,Cash,74.1,4.761904762,3.705,9.2
+c11f4aa8-abad-4ecd-b0a0-0b55f249f376,Alex,Yangon,Normal,Female,Fashion accessories,98.48,2,9.848,206.808,2/19/2019,10:12:00 AM,Ewallet,196.96,4.761904762,9.848,9.2
+62bb6cc3-13ab-4de1-bbb3-89711fe2a755,Giza,Naypyitaw,Normal,Male,Health and beauty,53.19,7,18.6165,390.9465,1/14/2019,3:42:00 PM,Ewallet,372.33,4.761904762,18.6165,5.0
+58e0dff5-5649-4e4a-a8a9-2daee10c444c,Cairo,Mandalay,Normal,Female,Electronic accessories,52.79,10,26.395,554.295,2/25/2019,11:58:00 AM,Ewallet,527.9,4.761904762,26.395,10.0
+680268cf-3f31-4527-82b2-7e51cfe51bcc,Alex,Yangon,Member,Female,Health and beauty,95.95,5,23.9875,503.7375,1/23/2019,2:21:00 PM,Ewallet,479.75,4.761904762,23.9875,8.8
+be246245-147e-450b-a42f-8ca646070edc,Cairo,Mandalay,Normal,Female,Fashion accessories,36.51,9,16.4295,345.0195,2/16/2019,10:52:00 AM,Cash,328.59,4.761904762,16.4295,4.2
+41d3123f-7b29-416b-b621-41d3aba3b183,Cairo,Mandalay,Normal,Male,Food and beverages,21.12,8,8.448,177.408,1/1/2019,7:31:00 PM,Cash,168.96,4.761904762,8.448,6.3
+27e0b2cc-1e3f-4864-b4d7-68431d36c20d,Alex,Yangon,Member,Female,Home and lifestyle,28.31,4,5.662,118.902,3/7/2019,6:35:00 PM,Cash,113.24,4.761904762,5.662,8.2
+d8a0af08-8372-41e2-bff5-6b4627c7a716,Cairo,Mandalay,Normal,Male,Health and beauty,57.59,6,17.277,362.817,2/15/2019,1:51:00 PM,Cash,345.54,4.761904762,17.277,5.1
+899879ad-9310-4538-a708-d3ccfbd47145,Alex,Yangon,Member,Female,Food and beverages,47.63,9,21.4335,450.1035,1/23/2019,12:35:00 PM,Cash,428.67,4.761904762,21.4335,5.0
+a5e69af1-08b5-43d5-ac08-e44fbf5e05cf,Giza,Naypyitaw,Member,Female,Home and lifestyle,86.27,1,4.3135,90.5835,2/20/2019,1:24:00 PM,Ewallet,86.27,4.761904762,4.3135,7.0
+7be8cefd-ed76-4a90-a04b-cb35067685a7,Alex,Yangon,Member,Male,Sports and travel,12.76,2,1.276,26.796,1/8/2019,6:06:00 PM,Ewallet,25.52,4.761904762,1.276,7.8
+700cdf56-46ba-4682-b7a3-e9c420afa812,Cairo,Mandalay,Normal,Female,Home and lifestyle,11.28,9,5.076,106.596,3/17/2019,11:55:00 AM,Credit card,101.52,4.761904762,5.076,4.3
+4170a833-aff8-4be1-a2c0-dae043859017,Cairo,Mandalay,Normal,Female,Home and lifestyle,51.07,7,17.8745,375.3645,1/12/2019,11:42:00 AM,Cash,357.49,4.761904762,17.8745,7.0
+4cee4fd3-4868-4598-ac78-54ccc2cefc77,Alex,Yangon,Member,Female,Electronic accessories,79.59,3,11.9385,250.7085,1/8/2019,2:30:00 PM,Cash,238.77,4.761904762,11.9385,6.6
+23750081-949c-45df-95f0-a82b40033cc0,Giza,Naypyitaw,Member,Male,Health and beauty,33.81,3,5.0715,106.5015,1/26/2019,3:11:00 PM,Ewallet,101.43,4.761904762,5.0715,7.3
+983c507d-1983-475e-9d70-123cec6a3203,Cairo,Mandalay,Member,Male,Sports and travel,90.53,8,36.212,760.452,3/15/2019,2:48:00 PM,Credit card,724.24,4.761904762,36.212,6.5
+146395fa-97fc-4f68-a201-40e52d4f0183,Giza,Naypyitaw,Member,Female,Health and beauty,62.82,2,6.282,131.922,1/17/2019,12:36:00 PM,Ewallet,125.64,4.761904762,6.282,4.9
+9061fa0f-89f7-4d24-85b0-8d786d5636fa,Giza,Naypyitaw,Member,Male,Food and beverages,24.31,3,3.6465,76.5765,1/8/2019,7:09:00 PM,Credit card,72.93,4.761904762,3.6465,4.3
+3d9b0436-14d3-4dcc-894f-f7434d248fd5,Alex,Yangon,Normal,Male,Sports and travel,64.59,4,12.918,271.278,1/6/2019,1:35:00 PM,Ewallet,258.36,4.761904762,12.918,9.3
+4ef30afe-51ce-4699-a744-83e6cb93d7b2,Alex,Yangon,Member,Male,Food and beverages,24.82,7,8.687,182.427,2/16/2019,10:33:00 AM,Credit card,173.74,4.761904762,8.687,7.1
+16c9e05b-e90b-4983-abb5-cee58c9d4806,Giza,Naypyitaw,Normal,Male,Fashion accessories,56.5,1,2.825,59.325,3/13/2019,3:45:00 PM,Ewallet,56.5,4.761904762,2.825,9.6
+ace7b02b-3138-493e-aa36-4001e4f174b2,Cairo,Mandalay,Member,Female,Electronic accessories,21.43,10,10.715,225.015,1/28/2019,11:51:00 AM,Cash,214.3,4.761904762,10.715,6.2
+52fad925-8681-4e0f-a3b9-829b05229bc5,Alex,Yangon,Member,Male,Sports and travel,89.06,6,26.718,561.078,1/18/2019,5:26:00 PM,Cash,534.36,4.761904762,26.718,9.9
+16c70bd2-dedb-4358-bc02-74204184d09b,Alex,Yangon,Member,Male,Home and lifestyle,23.29,4,4.658,97.818,3/19/2019,11:52:00 AM,Credit card,93.16,4.761904762,4.658,5.9
+0d6b209b-23ea-4a01-85ab-743316417c08,Giza,Naypyitaw,Normal,Male,Home and lifestyle,65.26,8,26.104,548.184,3/15/2019,2:04:00 PM,Ewallet,522.08,4.761904762,26.104,6.3
+14f8fcc4-f53e-4450-a126-f8ac02ceac66,Giza,Naypyitaw,Member,Male,Fashion accessories,52.35,1,2.6175,54.9675,2/12/2019,5:49:00 PM,Cash,52.35,4.761904762,2.6175,4.0
+72ce86ee-cf51-405e-9c72-31ecff6fb0d1,Cairo,Mandalay,Member,Male,Electronic accessories,39.75,1,1.9875,41.7375,2/25/2019,8:19:00 PM,Cash,39.75,4.761904762,1.9875,6.1
+0a15189e-288c-42a4-addc-649263cec930,Alex,Yangon,Normal,Female,Electronic accessories,90.02,8,36.008,756.168,3/21/2019,4:08:00 PM,Credit card,720.16,4.761904762,36.008,4.5
+14cb2dae-08b0-4ed0-ae92-711909bea57a,Cairo,Mandalay,Member,Female,Electronic accessories,12.1,8,4.84,101.64,1/19/2019,10:17:00 AM,Ewallet,96.8,4.761904762,4.84,8.6
+5a3c7901-684a-4705-ba2e-253859301c85,Cairo,Mandalay,Member,Female,Food and beverages,33.21,10,16.605,348.705,1/8/2019,2:25:00 PM,Ewallet,332.1,4.761904762,16.605,6.0
+7c3c8f9e-1a26-4cf2-bcd5-ee5e508d905c,Giza,Naypyitaw,Member,Female,Fashion accessories,10.18,8,4.072,85.512,3/30/2019,12:51:00 PM,Credit card,81.44,4.761904762,4.072,9.5
+f7fa0c21-abaf-4312-9828-fbc7ed7f0a88,Cairo,Mandalay,Member,Male,Sports and travel,31.99,10,15.995,335.895,2/20/2019,3:18:00 PM,Credit card,319.9,4.761904762,15.995,9.9
+ab04c58d-cf3b-4d60-9faa-fdcb90bdc379,Alex,Yangon,Member,Female,Home and lifestyle,34.42,6,10.326,216.846,3/30/2019,12:45:00 PM,Ewallet,206.52,4.761904762,10.326,7.5
+aac91c17-ba59-4f39-8fd3-ba4ea660b1c8,Alex,Yangon,Member,Female,Food and beverages,83.34,2,8.334,175.014,3/19/2019,1:37:00 PM,Cash,166.68,4.761904762,8.334,7.6
+8ea48abc-2aa5-48b3-9f16-a596b75e10a4,Alex,Yangon,Normal,Male,Sports and travel,45.58,7,15.953,335.013,1/13/2019,10:03:00 AM,Cash,319.06,4.761904762,15.953,5.0
+55e440fc-e60b-4d60-9a96-642b7f4602ca,Alex,Yangon,Member,Male,Food and beverages,87.9,1,4.395,92.295,2/5/2019,7:42:00 PM,Ewallet,87.9,4.761904762,4.395,6.7
+ffe82527-0a01-4cef-be6c-9efb10770bfc,Alex,Yangon,Member,Female,Electronic accessories,73.47,10,36.735,771.435,3/23/2019,1:14:00 PM,Ewallet,734.7,4.761904762,36.735,9.5
+a0a0941c-4435-4850-83cd-b42786716fc0,Giza,Naypyitaw,Normal,Female,Fashion accessories,12.19,8,4.876,102.396,3/13/2019,12:47:00 PM,Ewallet,97.52,4.761904762,4.876,6.8
+715f51f5-ab4d-4745-81ca-c2f913cfa41b,Alex,Yangon,Member,Male,Sports and travel,76.92,10,38.46,807.66,3/17/2019,7:53:00 PM,Ewallet,769.2,4.761904762,38.46,5.6
+0f73acb2-a5bd-45bf-8945-241ae3f4959b,Giza,Naypyitaw,Normal,Female,Health and beauty,83.66,5,20.915,439.215,2/21/2019,10:26:00 AM,Cash,418.3,4.761904762,20.915,7.2
+97e51961-12c6-4bb1-97bd-f7ad0a6ac990,Cairo,Mandalay,Normal,Female,Electronic accessories,57.91,8,23.164,486.444,2/7/2019,3:06:00 PM,Cash,463.28,4.761904762,23.164,8.1
+31203ce0-9512-4fd5-a200-62c1aea74d4f,Giza,Naypyitaw,Member,Female,Fashion accessories,92.49,5,23.1225,485.5725,3/2/2019,4:35:00 PM,Credit card,462.45,4.761904762,23.1225,8.6
+5683de77-786e-4d83-97de-5ea1550dc399,Cairo,Mandalay,Normal,Male,Electronic accessories,28.38,5,7.095,148.995,3/6/2019,8:57:00 PM,Cash,141.9,4.761904762,7.095,9.4
+f0af105c-182c-4414-9640-e60cdf2ba790,Cairo,Mandalay,Member,Male,Electronic accessories,50.45,6,15.135,317.835,2/6/2019,3:16:00 PM,Credit card,302.7,4.761904762,15.135,8.9
+145d48bf-805e-476b-bdf4-0c9db62993b3,Cairo,Mandalay,Normal,Male,Health and beauty,99.16,8,39.664,832.944,1/28/2019,5:47:00 PM,Credit card,793.28,4.761904762,39.664,4.2
+c814f5fc-2ec6-4b86-90e9-8b3b39073246,Giza,Naypyitaw,Normal,Male,Fashion accessories,60.74,7,21.259,446.439,1/18/2019,4:23:00 PM,Ewallet,425.18,4.761904762,21.259,5.0
+83097082-0536-449e-8971-d8ad7eae2e87,Giza,Naypyitaw,Member,Female,Food and beverages,47.27,6,14.181,297.801,2/5/2019,10:17:00 AM,Cash,283.62,4.761904762,14.181,8.8
+c81da0de-53f8-469d-bbf6-aaadda47b17c,Giza,Naypyitaw,Member,Male,Health and beauty,85.6,7,29.96,629.16,3/2/2019,1:50:00 PM,Cash,599.2,4.761904762,29.96,5.3
+b2ec755c-68bc-41ec-97e3-231c1b300f14,Alex,Yangon,Member,Male,Food and beverages,35.04,9,15.768,331.128,2/9/2019,7:17:00 PM,Ewallet,315.36,4.761904762,15.768,4.6
+e8b504c4-d09d-4964-8a21-42ea0b3c2f42,Giza,Naypyitaw,Member,Female,Electronic accessories,44.84,9,20.178,423.738,1/14/2019,2:00:00 PM,Credit card,403.56,4.761904762,20.178,7.5
+0a8d5386-a614-49db-ae41-4ceba000f04f,Cairo,Mandalay,Normal,Male,Home and lifestyle,45.97,4,9.194,193.074,2/9/2019,12:02:00 PM,Ewallet,183.88,4.761904762,9.194,5.1
+cf37ea60-17ec-4298-9314-db2298a6a4b0,Alex,Yangon,Member,Female,Health and beauty,27.73,5,6.9325,145.5825,3/26/2019,8:21:00 PM,Credit card,138.65,4.761904762,6.9325,4.2
+b61e478f-7965-43ce-97b3-258731d9deae,Alex,Yangon,Normal,Male,Food and beverages,11.53,7,4.0355,84.7455,1/28/2019,5:35:00 PM,Cash,80.71,4.761904762,4.0355,8.1
+10d49238-aa0a-4bd0-83b1-d10afda09115,Giza,Naypyitaw,Normal,Female,Health and beauty,58.32,2,5.832,122.472,2/14/2019,12:42:00 PM,Ewallet,116.64,4.761904762,5.832,6.0
+32cfbf08-b97b-4ba0-9b06-7c3718265310,Giza,Naypyitaw,Member,Female,Home and lifestyle,78.38,4,15.676,329.196,3/24/2019,5:56:00 PM,Cash,313.52,4.761904762,15.676,7.9
+391d6e91-0871-4dcf-84eb-39e82dfad5c9,Giza,Naypyitaw,Normal,Male,Health and beauty,84.61,10,42.305,888.405,2/9/2019,6:58:00 PM,Credit card,846.1,4.761904762,42.305,8.8
+85033ac0-b280-42c3-b85f-b76df4b99190,Cairo,Mandalay,Normal,Female,Health and beauty,82.88,5,20.72,435.12,3/24/2019,2:08:00 PM,Credit card,414.4,4.761904762,20.72,6.6
+0b698193-c85b-4045-9ed9-6575ade15369,Alex,Yangon,Member,Female,Food and beverages,79.54,2,7.954,167.034,3/27/2019,4:30:00 PM,Ewallet,159.08,4.761904762,7.954,6.2
+4b62a605-c151-473b-9ddd-65d79d12558d,Cairo,Mandalay,Normal,Female,Home and lifestyle,49.01,10,24.505,514.605,1/27/2019,10:44:00 AM,Credit card,490.1,4.761904762,24.505,4.2
+0bcaa00c-882e-46a7-93dc-4d6a61aa96f9,Cairo,Mandalay,Member,Female,Food and beverages,29.15,3,4.3725,91.8225,3/27/2019,8:29:00 PM,Credit card,87.45,4.761904762,4.3725,7.3
+8481497e-602b-4fb1-97f0-734b5815ff1b,Giza,Naypyitaw,Normal,Female,Electronic accessories,56.13,4,11.226,235.746,1/19/2019,11:43:00 AM,Ewallet,224.52,4.761904762,11.226,8.6
+0649375e-8055-4010-b06b-60e17f9d87d5,Alex,Yangon,Normal,Female,Home and lifestyle,93.12,8,37.248,782.208,2/7/2019,10:09:00 AM,Cash,744.96,4.761904762,37.248,6.8
+8d36344e-f1bf-4f5f-aafd-03090f8a785b,Alex,Yangon,Member,Male,Fashion accessories,51.34,8,20.536,431.256,1/31/2019,10:00:00 AM,Ewallet,410.72,4.761904762,20.536,7.6
+5ef9d175-002f-446e-ae9c-a980ea07d734,Alex,Yangon,Member,Female,Food and beverages,99.6,3,14.94,313.74,2/25/2019,6:45:00 PM,Cash,298.8,4.761904762,14.94,5.8
+67bdf9bf-36f9-4510-b358-051d5180293e,Giza,Naypyitaw,Normal,Female,Electronic accessories,35.49,6,10.647,223.587,2/2/2019,12:40:00 PM,Cash,212.94,4.761904762,10.647,4.1
+60160419-1d2f-4bd6-a20e-933ab3a6e5a6,Giza,Naypyitaw,Member,Male,Sports and travel,42.85,1,2.1425,44.9925,3/14/2019,3:36:00 PM,Credit card,42.85,4.761904762,2.1425,9.3
+ab1b5403-1168-473b-a59f-938cd800559d,Alex,Yangon,Normal,Female,Fashion accessories,94.67,4,18.934,397.614,3/11/2019,12:04:00 PM,Cash,378.68,4.761904762,18.934,6.8
+5cb2489e-1710-4dbd-9af0-1a0f14640398,Cairo,Mandalay,Normal,Male,Home and lifestyle,68.97,3,10.3455,217.2555,2/22/2019,11:26:00 AM,Ewallet,206.91,4.761904762,10.3455,8.7
+86d13b32-bad4-4fa9-822e-309982e0b843,Cairo,Mandalay,Member,Female,Electronic accessories,26.26,3,3.939,82.719,3/2/2019,12:36:00 PM,Ewallet,78.78,4.761904762,3.939,6.3
+11025d95-9e36-42c7-a6f2-cea7fe6f3a85,Giza,Naypyitaw,Member,Female,Home and lifestyle,35.79,9,16.1055,338.2155,3/10/2019,3:06:00 PM,Credit card,322.11,4.761904762,16.1055,5.1
+0213664c-6a5a-4e60-8a7a-6170f414856a,Cairo,Mandalay,Normal,Female,Home and lifestyle,16.37,6,4.911,103.131,2/8/2019,10:58:00 AM,Cash,98.22,4.761904762,4.911,7.0
+50127367-fb6c-4c12-ba13-30eae5729abe,Giza,Naypyitaw,Member,Female,Home and lifestyle,12.73,2,1.273,26.733,2/22/2019,12:10:00 PM,Credit card,25.46,4.761904762,1.273,5.2
+2fceebb3-c235-4a53-95ef-d406e26f9d28,Giza,Naypyitaw,Normal,Female,Sports and travel,83.14,7,29.099,611.079,1/10/2019,10:31:00 AM,Credit card,581.98,4.761904762,29.099,6.6
+18cc6404-328c-494b-97a5-1b562a36847e,Giza,Naypyitaw,Member,Female,Sports and travel,35.22,6,10.566,221.886,3/14/2019,1:49:00 PM,Ewallet,211.32,4.761904762,10.566,6.5
+e4431ad2-6b08-4b6b-a603-a2e6620b882c,Cairo,Mandalay,Normal,Female,Electronic accessories,13.78,4,2.756,57.876,1/10/2019,11:10:00 AM,Ewallet,55.12,4.761904762,2.756,9.0
+b0ed5d5a-74a6-4136-aefe-f8d6cc9e00bd,Cairo,Mandalay,Member,Male,Sports and travel,88.31,1,4.4155,92.7255,2/15/2019,5:38:00 PM,Credit card,88.31,4.761904762,4.4155,5.2
+5938c51c-8530-4378-9b9f-0f92ff350ca5,Alex,Yangon,Member,Female,Health and beauty,39.62,9,17.829,374.409,1/13/2019,5:54:00 PM,Credit card,356.58,4.761904762,17.829,6.8
+80b728a8-7cb0-4f40-a106-2f1263c487bc,Cairo,Mandalay,Normal,Female,Electronic accessories,88.25,9,39.7125,833.9625,2/15/2019,8:51:00 PM,Credit card,794.25,4.761904762,39.7125,7.6
+bdc16be1-8f51-4df2-81d1-d33bdb91f843,Cairo,Mandalay,Normal,Male,Sports and travel,25.31,2,2.531,53.151,3/2/2019,7:26:00 PM,Ewallet,50.62,4.761904762,2.531,7.2
+ada1b0a6-53dd-4c8d-ba2d-eed873bceba3,Cairo,Mandalay,Normal,Male,Home and lifestyle,99.92,6,29.976,629.496,3/24/2019,1:33:00 PM,Ewallet,599.52,4.761904762,29.976,7.1
+ab5db7ff-34ef-4210-aba7-1658b5e1387c,Giza,Naypyitaw,Member,Female,Fashion accessories,83.35,2,8.335,175.035,2/2/2019,2:05:00 PM,Credit card,166.7,4.761904762,8.335,9.5
+2524b167-d7eb-4b7e-acb2-edae462478e1,Alex,Yangon,Normal,Female,Food and beverages,74.44,10,37.22,781.62,2/27/2019,11:40:00 AM,Ewallet,744.4,4.761904762,37.22,5.1
+9a552db6-5ac7-45b5-8dd4-3d75a6a7bf63,Giza,Naypyitaw,Normal,Male,Health and beauty,64.08,7,22.428,470.988,1/20/2019,12:27:00 PM,Ewallet,448.56,4.761904762,22.428,7.6
+3d76a817-7d2d-4242-ad5d-90351a882ada,Cairo,Mandalay,Normal,Female,Home and lifestyle,63.15,6,18.945,397.845,1/3/2019,8:24:00 PM,Ewallet,378.9,4.761904762,18.945,9.8
+aff2beac-8a75-4b6f-9a7d-48cc45f979ba,Giza,Naypyitaw,Member,Male,Home and lifestyle,85.72,3,12.858,270.018,1/24/2019,8:59:00 PM,Ewallet,257.16,4.761904762,12.858,5.1
+52472ee0-f402-4bb7-ac7e-5c7e7f136242,Giza,Naypyitaw,Normal,Female,Health and beauty,78.89,7,27.6115,579.8415,1/5/2019,7:48:00 PM,Ewallet,552.23,4.761904762,27.6115,7.5
+df88423e-84f4-499c-8c56-02bbee8cd75f,Alex,Yangon,Normal,Female,Sports and travel,89.48,5,22.37,469.77,3/30/2019,10:18:00 AM,Cash,447.4,4.761904762,22.37,7.4
+87d680eb-a6b9-437f-82ce-a7e6281d7dea,Alex,Yangon,Member,Female,Health and beauty,92.09,3,13.8135,290.0835,2/17/2019,4:27:00 PM,Cash,276.27,4.761904762,13.8135,4.2
+58793a03-b8c3-4c91-a4b2-1597c6731839,Giza,Naypyitaw,Normal,Female,Food and beverages,57.29,6,17.187,360.927,3/21/2019,5:04:00 PM,Ewallet,343.74,4.761904762,17.187,5.9
+28933464-bcc7-49a9-9d5b-82d66ae7ec1c,Alex,Yangon,Normal,Male,Food and beverages,66.52,4,13.304,279.384,3/2/2019,6:14:00 PM,Ewallet,266.08,4.761904762,13.304,6.9
+612a41a3-002f-4533-8366-bb999344f3be,Giza,Naypyitaw,Member,Male,Fashion accessories,99.82,9,44.919,943.299,3/27/2019,10:43:00 AM,Cash,898.38,4.761904762,44.919,6.6
+838d9b99-80f8-46db-88e6-412954c4070a,Alex,Yangon,Normal,Female,Home and lifestyle,45.68,10,22.84,479.64,1/19/2019,7:30:00 PM,Ewallet,456.8,4.761904762,22.84,5.7
+864658f6-9443-4e86-a5c1-2c2df9d0988b,Alex,Yangon,Normal,Male,Health and beauty,50.79,5,12.6975,266.6475,2/19/2019,2:53:00 PM,Credit card,253.95,4.761904762,12.6975,5.3
+eb68eacd-fcbe-442b-a74b-759dfe791638,Alex,Yangon,Member,Male,Health and beauty,10.08,7,3.528,74.088,3/28/2019,8:14:00 PM,Cash,70.56,4.761904762,3.528,4.2
+4064ec75-7e63-4b06-9e2a-505fd92b47b9,Alex,Yangon,Normal,Female,Electronic accessories,93.88,7,32.858,690.018,1/5/2019,11:51:00 AM,Credit card,657.16,4.761904762,32.858,7.3
+85448ee6-bd10-4160-b0fc-77f9f586a51f,Giza,Naypyitaw,Member,Male,Electronic accessories,84.25,2,8.425,176.925,3/26/2019,2:13:00 PM,Credit card,168.5,4.761904762,8.425,5.3
+f851a0ca-42b8-4d13-8ec2-04e7f1de5455,Cairo,Mandalay,Member,Male,Fashion accessories,53.78,1,2.689,56.469,2/3/2019,8:13:00 PM,Ewallet,53.78,4.761904762,2.689,4.7
+bf996daf-5433-433e-be45-229a4607d302,Giza,Naypyitaw,Member,Male,Home and lifestyle,35.81,5,8.9525,188.0025,2/6/2019,6:44:00 PM,Ewallet,179.05,4.761904762,8.9525,7.9
+fe97b0c2-d6e2-4e02-8490-a95a471ed99c,Cairo,Mandalay,Normal,Female,Food and beverages,26.43,8,10.572,222.012,2/24/2019,2:26:00 PM,Ewallet,211.44,4.761904762,10.572,8.9
+7447e2e0-89d6-4a9a-9080-c7e5e27868d8,Cairo,Mandalay,Member,Male,Health and beauty,39.91,3,5.9865,125.7165,2/21/2019,12:40:00 PM,Ewallet,119.73,4.761904762,5.9865,9.3
+ba367aef-650d-463b-9eec-93012e4fdfef,Cairo,Mandalay,Member,Female,Home and lifestyle,21.9,3,3.285,68.985,1/9/2019,6:43:00 PM,Ewallet,65.7,4.761904762,3.285,4.7
+c6ea4c52-ea1a-48d1-945b-656fc048e0e6,Cairo,Mandalay,Member,Female,Food and beverages,62.85,4,12.57,263.97,2/25/2019,1:22:00 PM,Ewallet,251.4,4.761904762,12.57,8.7
+4d01fda7-e095-4389-8a07-c20ffd7f797d,Giza,Naypyitaw,Member,Female,Food and beverages,21.04,4,4.208,88.368,1/13/2019,1:58:00 PM,Cash,84.16,4.761904762,4.208,7.6
+c4682cb3-87ec-4343-9104-e03b72b0d838,Cairo,Mandalay,Member,Male,Home and lifestyle,65.91,6,19.773,415.233,2/9/2019,11:45:00 AM,Cash,395.46,4.761904762,19.773,5.7
+82b450b9-5089-48a1-9b39-dda547c12f8d,Alex,Yangon,Normal,Female,Fashion accessories,42.57,7,14.8995,312.8895,1/6/2019,11:51:00 AM,Cash,297.99,4.761904762,14.8995,6.8
+1aae880f-8d35-4472-a357-b2a447193836,Giza,Naypyitaw,Member,Male,Food and beverages,50.49,9,22.7205,477.1305,1/10/2019,5:16:00 PM,Cash,454.41,4.761904762,22.7205,5.4
+7bbc8809-9f91-410b-9564-a3129a91a2aa,Cairo,Mandalay,Normal,Male,Electronic accessories,46.02,6,13.806,289.926,2/7/2019,3:55:00 PM,Cash,276.12,4.761904762,13.806,7.1
+0b0c562b-808e-405d-9c30-0109c16544da,Giza,Naypyitaw,Normal,Female,Home and lifestyle,15.8,10,7.9,165.9,1/9/2019,12:07:00 PM,Cash,158.0,4.761904762,7.9,7.8
+0a50bc6d-2d35-4b94-9935-17ca2b075b72,Alex,Yangon,Member,Female,Food and beverages,98.66,9,44.397,932.337,2/19/2019,3:07:00 PM,Cash,887.94,4.761904762,44.397,8.4
+bd099427-4e58-4454-972e-420924624ec8,Giza,Naypyitaw,Member,Male,Fashion accessories,91.98,1,4.599,96.579,3/18/2019,3:29:00 PM,Cash,91.98,4.761904762,4.599,9.8
+453bc2a2-9b8e-4dc7-9d71-7acd2a997099,Alex,Yangon,Member,Male,Electronic accessories,20.89,2,2.089,43.869,2/5/2019,6:45:00 PM,Cash,41.78,4.761904762,2.089,9.8
+5b31caff-960e-490a-afa5-7d659754ae47,Alex,Yangon,Normal,Female,Fashion accessories,15.5,1,0.775,16.275,3/19/2019,3:23:00 PM,Credit card,15.5,4.761904762,0.775,7.4
+1490fcf5-d0ad-445d-94b1-128aa33bb89c,Giza,Naypyitaw,Member,Male,Electronic accessories,96.82,3,14.523,304.983,3/30/2019,8:37:00 PM,Cash,290.46,4.761904762,14.523,6.7
+466de4a3-1483-48c4-9d32-00ba494fba2e,Cairo,Mandalay,Normal,Male,Food and beverages,33.33,2,3.333,69.993,1/26/2019,2:41:00 PM,Credit card,66.66,4.761904762,3.333,6.4
+779ae916-26a1-48af-889f-1332c137da7e,Cairo,Mandalay,Normal,Female,Electronic accessories,38.27,2,3.827,80.367,3/2/2019,6:18:00 PM,Credit card,76.54,4.761904762,3.827,5.8
+6465d611-944f-4558-94bf-bb22dd543641,Alex,Yangon,Normal,Female,Home and lifestyle,33.3,9,14.985,314.685,3/4/2019,3:27:00 PM,Ewallet,299.7,4.761904762,14.985,7.2
+71a9be6a-9fea-4c7e-9483-0df094044699,Alex,Yangon,Member,Male,Home and lifestyle,81.01,3,12.1515,255.1815,1/13/2019,12:55:00 PM,Credit card,243.03,4.761904762,12.1515,9.3
+7d0288b2-7ee0-4428-bd9e-3d4fa8473b5e,Alex,Yangon,Normal,Female,Health and beauty,15.8,3,2.37,49.77,3/25/2019,6:02:00 PM,Cash,47.4,4.761904762,2.37,9.5
+a7cc26e9-c94c-4d50-93b3-41813ee482e2,Cairo,Mandalay,Member,Female,Electronic accessories,34.49,5,8.6225,181.0725,3/11/2019,7:44:00 PM,Credit card,172.45,4.761904762,8.6225,9.0
+d6604017-f039-4ace-9af2-9469d263d7fe,Cairo,Mandalay,Member,Female,Food and beverages,84.63,10,42.315,888.615,1/1/2019,11:36:00 AM,Credit card,846.3,4.761904762,42.315,9.0
+327da0bf-59a5-46aa-9f5d-90a065e91575,Cairo,Mandalay,Member,Male,Home and lifestyle,36.91,7,12.9185,271.2885,2/10/2019,1:51:00 PM,Ewallet,258.37,4.761904762,12.9185,6.7
+adb82dde-40ad-496f-949c-da30323ea861,Cairo,Mandalay,Normal,Male,Electronic accessories,87.08,7,30.478,640.038,1/26/2019,3:17:00 PM,Cash,609.56,4.761904762,30.478,5.5
+cbb6f429-2518-4d6e-b070-68502d088ec0,Alex,Yangon,Normal,Male,Home and lifestyle,80.08,3,12.012,252.252,2/11/2019,3:29:00 PM,Cash,240.24,4.761904762,12.012,5.4
+e1ab318b-cabe-46cb-8b09-39ef26965e8d,Giza,Naypyitaw,Normal,Male,Fashion accessories,86.13,2,8.613,180.873,2/7/2019,5:59:00 PM,Cash,172.26,4.761904762,8.613,8.2
+71e289d5-3146-4e25-9257-2955b67cf98a,Cairo,Mandalay,Member,Male,Fashion accessories,49.92,2,4.992,104.832,3/6/2019,11:55:00 AM,Credit card,99.84,4.761904762,4.992,7.0
+183476f5-bf5e-41b3-b859-621a3322ddef,Alex,Yangon,Normal,Female,Food and beverages,74.66,4,14.932,313.572,3/4/2019,10:39:00 AM,Cash,298.64,4.761904762,14.932,8.5
+a07b0274-ab13-44d6-8d1d-bd7d533f184d,Cairo,Mandalay,Member,Male,Food and beverages,26.6,6,7.98,167.58,2/26/2019,3:10:00 PM,Ewallet,159.6,4.761904762,7.98,4.9
+fb0661a9-03c3-4132-9437-e1254d3bfb02,Cairo,Mandalay,Normal,Female,Electronic accessories,25.45,1,1.2725,26.7225,3/10/2019,6:10:00 PM,Credit card,25.45,4.761904762,1.2725,5.1
+f8e99a8b-03a0-45d8-bb83-b49499d477f5,Cairo,Mandalay,Normal,Female,Food and beverages,67.77,1,3.3885,71.1585,2/4/2019,8:43:00 PM,Credit card,67.77,4.761904762,3.3885,6.5
+333e10d4-018a-40a5-a6c8-74424f710379,Giza,Naypyitaw,Member,Male,Food and beverages,59.59,4,11.918,250.278,1/19/2019,12:46:00 PM,Cash,238.36,4.761904762,11.918,9.8
+211c0358-adb3-4c41-b40b-109916b50940,Alex,Yangon,Normal,Male,Health and beauty,58.15,4,11.63,244.23,1/23/2019,5:44:00 PM,Cash,232.6,4.761904762,11.63,8.4
+2be57717-7eb2-466c-bdc0-d543ddc0e1f4,Alex,Yangon,Member,Female,Sports and travel,97.48,9,43.866,921.186,3/14/2019,2:19:00 PM,Ewallet,877.32,4.761904762,43.866,7.4
+bc68bee9-da10-40ef-8e7a-3e65e78ec9b4,Giza,Naypyitaw,Normal,Male,Health and beauty,99.96,7,34.986,734.706,1/23/2019,10:33:00 AM,Cash,699.72,4.761904762,34.986,6.1
+1a53b78b-8b28-4b41-8d53-04f938599cd4,Giza,Naypyitaw,Normal,Male,Electronic accessories,96.37,7,33.7295,708.3195,1/9/2019,11:40:00 AM,Cash,674.59,4.761904762,33.7295,6.0
+27d0f98e-ca25-49c5-9075-6bb94a3a30a7,Cairo,Mandalay,Normal,Female,Fashion accessories,63.71,5,15.9275,334.4775,2/7/2019,7:30:00 PM,Ewallet,318.55,4.761904762,15.9275,8.5
+77a13cec-528a-40e4-afcd-dd82d83bb74e,Cairo,Mandalay,Normal,Female,Health and beauty,14.76,2,1.476,30.996,2/18/2019,2:42:00 PM,Ewallet,29.52,4.761904762,1.476,4.3
+e103cc0c-054c-4b92-bbbf-128d8f6ff38e,Cairo,Mandalay,Member,Male,Health and beauty,62.0,8,24.8,520.8,1/3/2019,7:08:00 PM,Credit card,496.0,4.761904762,24.8,6.2
+ed995671-85ee-4d89-82ba-4f7eb5703a03,Giza,Naypyitaw,Member,Male,Electronic accessories,82.34,10,41.17,864.57,3/29/2019,7:12:00 PM,Ewallet,823.4,4.761904762,41.17,4.3
+8fa838b0-0fc5-405c-b0f2-49800dc5627a,Cairo,Mandalay,Member,Male,Health and beauty,75.37,8,30.148,633.108,1/28/2019,3:46:00 PM,Credit card,602.96,4.761904762,30.148,8.4
+1d5e1b6b-5bc7-4da3-834a-d950c4c9d0fa,Alex,Yangon,Normal,Female,Food and beverages,56.56,5,14.14,296.94,3/22/2019,7:06:00 PM,Credit card,282.8,4.761904762,14.14,4.5
+d27873fd-c6dc-4ee0-a312-6c029a68524b,Cairo,Mandalay,Normal,Female,Sports and travel,76.6,10,38.3,804.3,1/24/2019,6:10:00 PM,Ewallet,766.0,4.761904762,38.3,6.0
+67698924-07e6-4dc0-9a8e-63db072195bd,Alex,Yangon,Normal,Male,Electronic accessories,58.03,2,5.803,121.863,3/10/2019,8:46:00 PM,Ewallet,116.06,4.761904762,5.803,8.8
+677ba738-92a1-44bc-afb8-e6cd98f6aa26,Cairo,Mandalay,Normal,Male,Fashion accessories,17.49,10,8.745,183.645,2/22/2019,6:35:00 PM,Ewallet,174.9,4.761904762,8.745,6.6
+b0be8bcb-b26a-4076-826b-5fa5b3197f45,Giza,Naypyitaw,Member,Female,Electronic accessories,60.95,1,3.0475,63.9975,2/18/2019,11:40:00 AM,Ewallet,60.95,4.761904762,3.0475,5.9
+2601da95-890b-4126-8813-77134ad7f2bc,Giza,Naypyitaw,Normal,Male,Health and beauty,40.35,1,2.0175,42.3675,1/29/2019,1:46:00 PM,Ewallet,40.35,4.761904762,2.0175,6.2
+6d0b07c9-d5b8-479c-988e-2640ec0a4d8e,Cairo,Mandalay,Normal,Female,Home and lifestyle,97.38,10,48.69,1022.49,3/2/2019,5:16:00 PM,Ewallet,973.8,4.761904762,48.69,4.4
+0d5bc021-2fcd-4e91-8da3-38aba40f0e19,Alex,Yangon,Member,Male,Food and beverages,31.84,1,1.592,33.432,2/9/2019,1:22:00 PM,Cash,31.84,4.761904762,1.592,7.7
+12c4acf3-dfc1-4502-a2d8-2c85e2b2dc0c,Alex,Yangon,Normal,Male,Home and lifestyle,65.82,1,3.291,69.111,2/22/2019,3:33:00 PM,Cash,65.82,4.761904762,3.291,4.1
+56b9464c-803c-4c93-b15b-1f15c8050ce9,Alex,Yangon,Member,Female,Fashion accessories,88.34,7,30.919,649.299,2/18/2019,1:28:00 PM,Cash,618.38,4.761904762,30.919,6.6

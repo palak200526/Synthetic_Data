@@ -60,3 +60,44 @@ def save_configuration(configuration):
 
         if connection:
             connection.close()
+
+def get_identifier_configurations(dataset_id: int):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                column_name,
+                is_sensitive,
+                is_identifier,
+                action
+            FROM column_configurations
+            WHERE dataset_id = %s
+              AND is_identifier = TRUE
+            """,
+            (dataset_id,),
+        )
+
+        rows = cursor.fetchall()
+
+        return [
+            {
+                "column_name": row[0],
+                "is_sensitive": row[1],
+                "is_identifier": row[2],
+                "action": row[3],
+            }
+            for row in rows
+        ]
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
