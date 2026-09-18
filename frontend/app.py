@@ -433,7 +433,7 @@ if st.session_state.uploaded_filename is not None:
 
         st.dataframe(
             column_information,
-            use_container_width=True
+            width="stretch"
         )
 
 
@@ -451,7 +451,7 @@ if st.session_state.uploaded_filename is not None:
 
         st.dataframe(
             missing_values,
-            use_container_width=True
+            width="content"
         )
 
         # NUMERICAL STATISTICS
@@ -475,7 +475,7 @@ if st.session_state.uploaded_filename is not None:
 
             st.dataframe(
                 statistics_dataframe,
-                use_container_width=True
+                width="content"
             )
 
 
@@ -521,7 +521,7 @@ if st.session_state.uploaded_filename is not None:
 
                 st.dataframe(
                     frequency_dataframe,
-                    use_container_width=True
+                    width="content"
                 )
 
 
