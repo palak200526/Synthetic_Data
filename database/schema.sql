@@ -5,6 +5,14 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE dataset_groups (
+    group_id SERIAL PRIMARY KEY,
+    group_name VARCHAR(255) NOT NULL,
+    domain_type VARCHAR(100),
+    user_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE processing_sessions (
     session_id BIGSERIAL PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -15,12 +23,38 @@ CREATE TABLE datasets (
     dataset_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(user_id),
     session_id BIGINT REFERENCES processing_sessions(session_id),
+    group_id INTEGER REFERENCES dataset_groups(group_id) ON DELETE SET NULL,
     dataset_name VARCHAR(255) NOT NULL,
     file_name VARCHAR(255) NOT NULL,
     file_type VARCHAR(20),
+    domain_type VARCHAR(100),
     row_count INTEGER,
     column_count INTEGER,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE dataset_relationships (
+    relationship_id SERIAL PRIMARY KEY,
+
+    group_id INTEGER NOT NULL
+        REFERENCES dataset_groups(group_id)
+        ON DELETE CASCADE,
+
+    parent_dataset_id INTEGER NOT NULL
+        REFERENCES datasets(dataset_id)
+        ON DELETE CASCADE,
+
+    parent_column VARCHAR(255) NOT NULL,
+
+    child_dataset_id INTEGER NOT NULL
+        REFERENCES datasets(dataset_id)
+        ON DELETE CASCADE,
+
+    child_column VARCHAR(255) NOT NULL,
+
+    relationship_type VARCHAR(50) DEFAULT 'foreign_key',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE dataset_profiles (

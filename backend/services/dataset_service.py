@@ -11,19 +11,24 @@ from backend.utils.validators import (
     validate_file_size,
 )
 
-from backend.repositories.dataset_repository import (
-    create_dataset,
-)
 
 from backend.repositories.session_repository import (
     create_processing_session,
+)
+from backend.repositories.dataset_repository import (
+    create_dataset,
 )
 
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
 
-async def upload_dataset(file):
+async def upload_dataset(
+    file,
+    group_id=None,
+    domain_type=None,
+    session_id=None
+):
 
     validate_filename(file.filename)
     validate_file_extension(file.filename)
@@ -48,19 +53,24 @@ async def upload_dataset(file):
         file.filename
     )
 
-    session_id = create_processing_session()
+    if session_id is None:
+        session_id = create_processing_session()
 
     dataset_id = create_dataset(
         file.filename,
         len(dataframe),
         len(dataframe.columns),
-        session_id
+        session_id,
+        group_id,
+        domain_type
     )
-
+    
     return {
-    "status": "success",
-    "message": "Dataset uploaded successfully.",
-    "dataset_id": dataset_id,
-    "session_id": session_id,
-    "data": metadata,
-} 
+        "status": "success",
+        "message": "Dataset uploaded successfully.",
+        "dataset_id": dataset_id,
+        "session_id": session_id,
+        "group_id": group_id,
+        "domain_type": domain_type,
+        "data": metadata,
+    }

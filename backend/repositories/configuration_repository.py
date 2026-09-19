@@ -97,6 +97,53 @@ def get_identifier_configurations(dataset_id: int):
 
     finally:
         if cursor:
+            cursor.close()  
+
+        if connection:
+            connection.close()
+
+def get_configurations(dataset_id: int):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                configuration_id,
+                dataset_id,
+                column_name,
+                column_type,
+                is_sensitive,
+                is_identifier,
+                action
+            FROM column_configurations
+            WHERE dataset_id = %s
+            ORDER BY configuration_id
+            """,
+            (dataset_id,),
+        )
+
+        rows = cursor.fetchall()
+
+        return [
+            {
+                "configuration_id": row[0],
+                "dataset_id": row[1],
+                "column_name": row[2],
+                "column_type": row[3],
+                "is_sensitive": row[4],
+                "is_identifier": row[5],
+                "action": row[6],
+            }
+            for row in rows
+        ]
+
+    finally:
+        if cursor:
             cursor.close()
 
         if connection:

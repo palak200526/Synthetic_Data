@@ -1,14 +1,15 @@
 from pathlib import Path
-
-from backend.repositories.configuration_repository import (
-    save_configuration,
-)
 from backend.repositories.dataset_repository import (
     get_dataset_filename,
 )
 from backend.services.dataset_loader import load_dataset
 from backend.utils.action_validator import (
     validate_column_configuration,
+)
+
+from backend.repositories.configuration_repository import (
+    save_configuration,
+    get_configurations,
 )
 
 
@@ -77,4 +78,26 @@ def save_column_configurations(request):
         "status": "success",
         "message": "Column configurations saved successfully.",
         "data": saved_configurations,
+    }
+
+def review_column_configurations(dataset_id: int):
+
+    configurations = get_configurations(dataset_id)
+
+    if not configurations:
+        return {
+            "status": "error",
+            "message": (
+                "No column configurations found "
+                f"for dataset {dataset_id}."
+            ),
+            "dataset_id": dataset_id,
+            "data": [],
+        }
+
+    return {
+        "status": "success",
+        "message": "Column configurations retrieved successfully.",
+        "dataset_id": dataset_id,
+        "data": configurations,
     }

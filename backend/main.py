@@ -42,11 +42,48 @@ from backend.controllers.relationship_controller import (
     router as relationship_router,
 )
 
+from backend.controllers.dataset_group_controller import (
+    router as dataset_group_router,
+)
+
 app = FastAPI(
     title="Synthetic Data Platform API",
     description="Backend API for the Synthetic Data Platform",
     version="1.0.0",
 )
+
+from fastapi.openapi.utils import get_openapi
+
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    openapi_schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+    )
+
+    request_schema = openapi_schema["components"]["schemas"].get(
+        "Body_upload_dataset_controller_upload_post"
+    )
+
+    if request_schema:
+        files_schema = request_schema["properties"].get("files")
+
+        if files_schema:
+            files_schema["items"] = {
+                "type": "string",
+                "format": "binary"
+            }
+
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
 
 
 # CORS CONFIGURATION
@@ -88,14 +125,9 @@ def health_check():
     }
 
 
-# ROUTERS
 app.include_router(dataset_router)
 app.include_router(profile_router)
 app.include_router(configuration_router)
-app.include_router(dataset_router)
-app.include_router(profile_router)
-app.include_router(configuration_router)
-
 app.include_router(generation_router)
 app.include_router(evaluation_router)
 app.include_router(dashboard_router)
@@ -104,3 +136,4 @@ app.include_router(download_router)
 app.include_router(id_generation_router)
 app.include_router(preprocessing_router)
 app.include_router(relationship_router)
+app.include_router(dataset_group_router)

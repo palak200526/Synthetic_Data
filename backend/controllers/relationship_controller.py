@@ -14,6 +14,15 @@ from backend.repositories.relationship_repository import (
     save_relationship_analysis,
     get_relationship_analysis,
 )
+from backend.schemas.relationship_schema import (
+    RelationshipAnalysisRequest,
+    DatasetRelationshipRequest,
+)
+
+from backend.services.relationship_analysis_service import (
+    analyze_relationships,
+    create_dataset_relationship,
+)
 
 
 router = APIRouter(
@@ -102,3 +111,9 @@ def get_relationship_analysis_api(dataset_id: int):
         "random_state": analysis["random_state"],
         "created_at": analysis["created_at"],
     }
+
+@router.post("/dataset")
+def create_dataset_relationship_api(
+    request: DatasetRelationshipRequest,
+):
+    return create_dataset_relationship(request)
