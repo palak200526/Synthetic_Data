@@ -21,7 +21,7 @@ def get_column_types(dataframe: pd.DataFrame) -> dict:
     ).columns.tolist()
 
     categorical_columns = dataframe.select_dtypes(
-        include=["object", "category", "bool"]
+        include=["str", "category", "bool"]
     ).columns.tolist()
 
     return {
@@ -45,7 +45,10 @@ def get_column_information(dataframe: pd.DataFrame) -> list:
 
         elif (
             pd.api.types.is_object_dtype(dataframe[column])
-            or pd.api.types.is_categorical_dtype(dataframe[column])
+            or isinstance(
+                dataframe[column].dtype,
+                pd.CategoricalDtype
+            )
             or pd.api.types.is_bool_dtype(dataframe[column])
         ):
             column_type = "categorical"
@@ -129,7 +132,7 @@ def get_categorical_frequencies(
     """
 
     categorical_columns = dataframe.select_dtypes(
-        include=["object", "category", "bool"]
+        include=["str", "category", "bool"]
     ).columns
 
     frequencies = {}

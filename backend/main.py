@@ -1,32 +1,50 @@
-from pathlib import Path
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
-from fastapi import FastAPI, File, UploadFile, HTTPException
-
-from backend.config.database import get_db_connection
-
-from backend.services.sensitive_detector import (
-    detect_sensitive_and_identifier_columns,
+from backend.controllers.dataset_controller import (
+    router as dataset_router
+)
+from backend.controllers.profile_controller import (
+    router as profile_router
+)
+from backend.controllers.configuration_controller import (
+    router as configuration_router
 )
 
-from pydantic import BaseModel
-from typing import List
-
-from backend.services.dataset_loader import (
-    load_dataset,
-    get_dataset_metadata,
+from backend.controllers.generation_controller import (
+    router as generation_router
 )
 
-
-from backend.services.dataset_profiler import (
-    generate_profile,
+from backend.controllers.evaluation_controller import (
+    router as evaluation_router
 )
 
-from backend.utils.validators import (
-    validate_file_extension,
-    validate_file_size,
-    validate_filename,
+from backend.controllers.dashboard_controller import (
+    router as dashboard_router
 )
 
+from backend.controllers.report_controller import (
+    router as report_router
+)
+
+from backend.controllers.download_controller import (
+    router as download_router
+)
+
+from backend.controllers.id_generation_controller import (
+    router as id_generation_router,
+)
+
+from backend.controllers.preprocessing_controller import router as preprocessing_router
+
+from backend.controllers.relationship_controller import (
+    router as relationship_router,
+)
+
+from backend.controllers.dataset_group_controller import (
+    router as dataset_group_router,
+)
 
 app = FastAPI(
     title="Synthetic Data Platform API",
@@ -34,25 +52,63 @@ app = FastAPI(
     version="1.0.0",
 )
 
-
-class ColumnConfiguration(BaseModel):
-    dataset_id: int
-    column_name: str
-    column_type: str
-    is_sensitive: bool
-    is_identifier: bool
-    action: str
+from fastapi.openapi.utils import get_openapi
 
 
-class ColumnConfigurationRequest(BaseModel):
-    configurations: List[ColumnConfiguration]
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
 
-UPLOAD_DIRECTORY = Path("data/uploads")
+    openapi_schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+    )
 
-UPLOAD_DIRECTORY.mkdir(
-    parents=True,
-    exist_ok=True
+    request_schema = openapi_schema["components"]["schemas"].get(
+        "Body_upload_dataset_controller_upload_post"
+    )
+
+    if request_schema:
+        files_schema = request_schema["properties"].get("files")
+
+        if files_schema:
+            files_schema["items"] = {
+                "type": "string",
+                "format": "binary"
+            }
+
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
+
+
+# CORS CONFIGURATION
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
+
+# COMMON ERROR HANDLING
+@app.exception_handler(ValueError)
+async def value_error_handler(
+    request: Request,
+    exc: ValueError
+):
+    return JSONResponse(
+        status_code=400,
+        content={
+            "status": "error",
+            "message": str(exc)
+        }
+    )
 
 
 @app.get("/")
@@ -69,229 +125,15 @@ def health_check():
     }
 
 
-@app.post("/upload")
-async def upload_dataset(
-    file: UploadFile = File(...)
-):
-
-    try:
-
-        # 1. Validate filename
-
-        validate_filename(file.filename)
-
-        # 2. Validate extension
-
-        validate_file_extension(file.filename)
-
-        # 3. Read file
-
-        file_content = await file.read()
-
-        # 4. Validate file size
-
-        validate_file_size(len(file_content))
-
-        # 5. Save uploaded file
-
-        file_path = UPLOAD_DIRECTORY / file.filename
-
-        with open(file_path, "wb") as output_file:
-            output_file.write(file_content)
-
-        # 6. Load dataset
-
-        dataframe = load_dataset(str(file_path))
-
-        # 7. Generate metadata
-
-        metadata = get_dataset_metadata(
-            dataframe,
-            file.filename
-        )
-
-        connection = get_db_connection()
-        cursor = connection.cursor()
-
-        cursor.execute(
-            """
-            INSERT INTO datasets (
-                dataset_name,
-                file_name,
-                file_type,
-                row_count,
-                column_count
-            )
-            VALUES (%s, %s, %s, %s, %s)
-            RETURNING dataset_id
-            """,
-            (
-                file.filename,
-                file.filename,
-                file.filename.split(".")[-1].lower(),
-                len(dataframe),
-                len(dataframe.columns),
-            )
-        )
-
-        dataset_id = cursor.fetchone()[0]
-
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-
-        return {
-            "status": "success",
-            "message": "Dataset uploaded successfully.",
-            "dataset_id": dataset_id,
-            "data": metadata
-        }
-
-    except ValueError as error:
-
-        raise HTTPException(
-            status_code=400,
-            detail=str(error)
-        )
-
-    except Exception as error:
-
-        raise HTTPException(
-            status_code=500,
-            detail=f"An unexpected error occurred: {error}"
-        )
-
-
-@app.get("/profile/{filename}")
-def get_dataset_profile(filename: str):
-
-    try:
-
-        file_path = UPLOAD_DIRECTORY / filename
-
-        if not file_path.exists():
-
-            raise HTTPException(
-                status_code=404,
-                detail="Dataset not found."
-            )
-
-        dataframe = load_dataset(
-            str(file_path)
-        )
-
-        profile = generate_profile(
-            dataframe
-        )
-        detections = detect_sensitive_and_identifier_columns(
-            dataframe
-        )
-
-        return {
-            "status": "success",
-            "message": "Dataset profile generated successfully.",
-            "data": profile,
-            "sensitive_identifier_detection": detections,
-        }
-
-    except HTTPException:
-        raise
-
-    except Exception as error:
-
-        raise HTTPException(
-            status_code=500,
-            detail=f"Unable to generate profile: {error}"
-        )
-
-
-@app.post("/column-configurations")
-def save_column_configurations(
-    request: ColumnConfigurationRequest
-):
-    connection = None
-    cursor = None
-
-    try:
-        connection = get_db_connection()
-        cursor = connection.cursor()
-
-        for configuration in request.configurations:
-            cursor.execute(
-                """
-                INSERT INTO column_configurations (
-                    dataset_id,
-                    column_name,
-                    column_type,
-                    is_sensitive,
-                    is_identifier,
-                    action
-                )
-                VALUES (%s, %s, %s, %s, %s, %s)
-
-                ON CONFLICT (dataset_id, column_name)
-                DO UPDATE SET
-                    column_type = EXCLUDED.column_type,
-                    is_sensitive = EXCLUDED.is_sensitive,
-                    is_identifier = EXCLUDED.is_identifier,
-                    action = EXCLUDED.action
-                """,
-                (
-                    configuration.dataset_id,
-                    configuration.column_name,
-                    configuration.column_type,
-                    configuration.is_sensitive,
-                    configuration.is_identifier,
-                    configuration.action,
-                )
-            )
-
-        connection.commit()
-
-        return {
-            "status": "success",
-            "message": "Column configurations saved successfully."
-        }
-
-    except Exception as error:
-
-        if connection is not None:
-            connection.rollback()
-
-        raise HTTPException(
-            status_code=500,
-            detail=f"Unable to save column configurations: {error}"
-        )
-
-    finally:
-
-        if cursor is not None:
-            cursor.close()
-
-        if connection is not None:
-            connection.close()
-
-
-@app.get("/health/database")
-def database_health_check():
-    connection = None
-
-    try:
-        connection = get_db_connection()
-
-        return {
-            "status": "healthy",
-            "database": "PostgreSQL",
-            "connection": "successful"
-        }
-
-    except Exception as error:
-        raise HTTPException(
-            status_code=500,
-            detail=str(error)
-        )
-
-    finally:
-        if connection is not None:
-            connection.close()
+app.include_router(dataset_router)
+app.include_router(profile_router)
+app.include_router(configuration_router)
+app.include_router(generation_router)
+app.include_router(evaluation_router)
+app.include_router(dashboard_router)
+app.include_router(report_router)
+app.include_router(download_router)
+app.include_router(id_generation_router)
+app.include_router(preprocessing_router)
+app.include_router(relationship_router)
+app.include_router(dataset_group_router)
