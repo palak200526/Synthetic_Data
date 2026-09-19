@@ -6,10 +6,15 @@ from backend.services.sensitive_detector import (
     detect_sensitive_and_identifier_columns,
 )
 
+from backend.services.domain_preset_service import (
+    get_domain_preset,
+)
+
 from backend.repositories.dataset_repository import (
     get_dataset_id_by_filename,
     get_dataset_profile,
     save_dataset_profile,
+    get_dataset_domain_type,
 )
 
 
@@ -46,24 +51,58 @@ def get_profile(filename: str):
             dataframe
         )
 
-        # 4. Detect sensitive and identifier columns
+        # 4. Get dataset domain
+        domain_type = get_dataset_domain_type(
+            dataset_id
+        )
+
+        # 5. Detect sensitive and identifier columns
         sensitive_detection = (
             detect_sensitive_and_identifier_columns(
                 dataframe
             )
         )
 
+        # 6. Apply domain-specific presets
+        for column_result in sensitive_detection:
+
+            column_name = column_result["column_name"]
+
+            preset = get_domain_preset(
+                column_name,
+                domain_type,
+            )
+
+            if preset:
+                column_result["preset_applied"] = True
+
+                column_result["suggested_type"] = (
+                    preset["suggested_type"]
+                )
+
+                column_result["is_sensitive"] = (
+                    preset["is_sensitive"]
+                )
+
+                column_result["is_identifier"] = (
+                    preset["is_identifier"]
+                )
+
+            else:
+                # Fall back to existing US-005 detection
+                column_result["preset_applied"] = False
+
         profile["sensitive_detection"] = (
             sensitive_detection
         )
 
-        # 5. Save newly generated profile
+        # 7. Save newly generated profile
         saved_profile = save_dataset_profile(
             dataset_id,
             profile,
         )
 
-        # 6. Return newly generated profile
+        # 8. Return newly generated profile
         return {
             "status": "success",
             "message": "Dataset profile generated successfully.",

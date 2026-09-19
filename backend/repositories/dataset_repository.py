@@ -97,6 +97,35 @@ def get_dataset_filename(dataset_id: int):
         if connection:
             connection.close()
 
+
+def get_dataset_domain_type(dataset_id: int):
+    connection = get_db_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT domain_type
+            FROM datasets
+            WHERE dataset_id = %s
+            """,
+            (dataset_id,),
+        )
+
+        result = cursor.fetchone()
+
+        if not result:
+            raise ValueError(
+                f"Dataset {dataset_id} not found."
+            )
+
+        return result[0]
+
+    finally:
+        cursor.close()
+        connection.close()
+
 def save_dataset_profile(dataset_id: int, profile_data: dict):
     connection = None
     cursor = None
