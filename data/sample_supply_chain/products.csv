@@ -1,0 +1,201 @@
+product_id,product_name,category,unit_of_measure,standard_cost,primary_source_country,status
+PROD0001,Standard Industrial Sensor,Electronics,Box,5635.25,India,Discontinued
+PROD0002,Industrial Industrial Sensor,Electronics,Kg,7022.79,India,Active
+PROD0003,Premium Industrial Sensor,Electronics,Kg,16065.72,Vietnam,Active
+PROD0004,Heavy Duty Industrial Sensor,Electronics,Unit,2954.32,India,Active
+PROD0005,Standard Temperature Controller,Electronics,Set,24066.36,India,Active
+PROD0006,Industrial Temperature Controller,Electronics,Unit,14946.56,India,Active
+PROD0007,Premium Temperature Controller,Electronics,Pack,15186.72,Japan,Active
+PROD0008,Heavy Duty Temperature Controller,Electronics,Pack,22495.66,India,Active
+PROD0009,Standard PLC Module,Electronics,Unit,17742.93,India,Active
+PROD0010,Industrial PLC Module,Electronics,Kg,10827.93,India,Active
+PROD0011,Premium PLC Module,Electronics,Unit,18016.28,India,Active
+PROD0012,Heavy Duty PLC Module,Electronics,Pack,8208.48,India,Active
+PROD0013,Standard Power Supply,Electronics,Box,10557.52,Vietnam,Active
+PROD0014,Industrial Power Supply,Electronics,Set,14262.1,Vietnam,Active
+PROD0015,Premium Power Supply,Electronics,Kg,7229.89,Vietnam,Active
+PROD0016,Heavy Duty Power Supply,Electronics,Pack,11089.31,India,Discontinued
+PROD0017,Standard Relay Module,Electronics,Box,16498.56,India,Active
+PROD0018,Industrial Relay Module,Electronics,Unit,20475.11,India,Active
+PROD0019,Premium Relay Module,Electronics,Box,20179.55,India,Active
+PROD0020,Heavy Duty Relay Module,Electronics,Unit,6181.48,Vietnam,Active
+PROD0021,Standard Control Panel,Electronics,Pack,10407.87,Japan,Active
+PROD0022,Industrial Control Panel,Electronics,Pack,12399.88,India,Active
+PROD0023,Premium Control Panel,Electronics,Unit,22325.08,India,Discontinued
+PROD0024,Heavy Duty Control Panel,Electronics,Box,4463.1,Japan,Discontinued
+PROD0025,Standard Circuit Breaker,Electronics,Unit,13970.55,India,Discontinued
+PROD0026,Industrial Circuit Breaker,Electronics,Box,20051.3,Japan,Active
+PROD0027,Premium Circuit Breaker,Electronics,Pack,15347.3,Japan,Discontinued
+PROD0028,Heavy Duty Circuit Breaker,Electronics,Set,11192.17,India,Discontinued
+PROD0029,Standard Proximity Sensor,Electronics,Pack,6539.05,India,Active
+PROD0030,Industrial Proximity Sensor,Electronics,Set,12156.16,India,Active
+PROD0031,Premium Proximity Sensor,Electronics,Pack,2010.89,India,Active
+PROD0032,Heavy Duty Proximity Sensor,Electronics,Kg,8449.32,Japan,Active
+PROD0033,Standard Brake Assembly,Automotive,Box,3838.7,Vietnam,Active
+PROD0034,Industrial Brake Assembly,Automotive,Box,1680.58,Vietnam,Active
+PROD0035,Premium Brake Assembly,Automotive,Set,11690.83,India,Active
+PROD0036,Heavy Duty Brake Assembly,Automotive,Pack,9785.76,Japan,Active
+PROD0037,Standard Oil Filter,Automotive,Set,9559.1,India,Active
+PROD0038,Industrial Oil Filter,Automotive,Kg,18856.6,Vietnam,Active
+PROD0039,Premium Oil Filter,Automotive,Pack,5547.99,Vietnam,Discontinued
+PROD0040,Heavy Duty Oil Filter,Automotive,Unit,9770.32,Vietnam,Active
+PROD0041,Standard Air Filter,Automotive,Pack,22994.98,Japan,Active
+PROD0042,Industrial Air Filter,Automotive,Pack,14829.97,India,Active
+PROD0043,Premium Air Filter,Automotive,Pack,3461.63,Vietnam,Active
+PROD0044,Heavy Duty Air Filter,Automotive,Unit,6563.1,India,Active
+PROD0045,Standard Bearing Set,Automotive,Pack,8225.0,Vietnam,Active
+PROD0046,Industrial Bearing Set,Automotive,Pack,6366.61,India,Discontinued
+PROD0047,Premium Bearing Set,Automotive,Unit,18745.68,India,Active
+PROD0048,Heavy Duty Bearing Set,Automotive,Box,16281.59,India,Active
+PROD0049,Standard Drive Belt,Automotive,Box,5048.07,India,Active
+PROD0050,Industrial Drive Belt,Automotive,Box,3225.43,India,Active
+PROD0051,Premium Drive Belt,Automotive,Pack,17510.67,India,Active
+PROD0052,Heavy Duty Drive Belt,Automotive,Set,15212.61,India,Active
+PROD0053,Standard Clutch Plate,Automotive,Kg,2773.82,India,Active
+PROD0054,Industrial Clutch Plate,Automotive,Set,16959.49,Vietnam,Discontinued
+PROD0055,Premium Clutch Plate,Automotive,Box,1973.83,India,Active
+PROD0056,Heavy Duty Clutch Plate,Automotive,Kg,21269.31,Japan,Active
+PROD0057,Standard Shock Absorber,Automotive,Set,19583.27,India,Discontinued
+PROD0058,Industrial Shock Absorber,Automotive,Kg,1798.4,India,Active
+PROD0059,Premium Shock Absorber,Automotive,Pack,20572.49,India,Discontinued
+PROD0060,Heavy Duty Shock Absorber,Automotive,Kg,15918.78,Vietnam,Active
+PROD0061,Standard Fuel Pump,Automotive,Pack,4469.33,Japan,Active
+PROD0062,Industrial Fuel Pump,Automotive,Set,20220.32,Japan,Discontinued
+PROD0063,Premium Fuel Pump,Automotive,Pack,10934.52,Japan,Active
+PROD0064,Heavy Duty Fuel Pump,Automotive,Kg,21304.69,India,Active
+PROD0065,Standard Corrugated Box,Packaging,Pack,6157.08,Vietnam,Discontinued
+PROD0066,Industrial Corrugated Box,Packaging,Kg,795.2,India,Active
+PROD0067,Premium Corrugated Box,Packaging,Pack,5366.03,India,Active
+PROD0068,Heavy Duty Corrugated Box,Packaging,Kg,22017.57,India,Active
+PROD0069,Standard Stretch Film,Packaging,Set,23705.72,India,Active
+PROD0070,Industrial Stretch Film,Packaging,Pack,12255.36,India,Discontinued
+PROD0071,Premium Stretch Film,Packaging,Pack,11248.51,India,Active
+PROD0072,Heavy Duty Stretch Film,Packaging,Kg,5602.18,India,Active
+PROD0073,Standard PET Container,Packaging,Set,9275.99,Japan,Active
+PROD0074,Industrial PET Container,Packaging,Pack,24916.06,Japan,Active
+PROD0075,Premium PET Container,Packaging,Kg,17595.15,India,Active
+PROD0076,Heavy Duty PET Container,Packaging,Kg,5825.01,India,Active
+PROD0077,Standard HDPE Drum,Packaging,Unit,18592.6,India,Active
+PROD0078,Industrial HDPE Drum,Packaging,Box,18486.03,India,Active
+PROD0079,Premium HDPE Drum,Packaging,Unit,20829.1,India,Active
+PROD0080,Heavy Duty HDPE Drum,Packaging,Kg,4551.68,India,Active
+PROD0081,Standard Pallet Wrap,Packaging,Kg,1214.25,India,Active
+PROD0082,Industrial Pallet Wrap,Packaging,Box,15975.71,Vietnam,Active
+PROD0083,Premium Pallet Wrap,Packaging,Unit,14385.68,Vietnam,Discontinued
+PROD0084,Heavy Duty Pallet Wrap,Packaging,Pack,8570.39,India,Active
+PROD0085,Standard Thermal Label,Packaging,Pack,2923.05,India,Discontinued
+PROD0086,Industrial Thermal Label,Packaging,Pack,1926.13,India,Active
+PROD0087,Premium Thermal Label,Packaging,Box,20293.66,India,Active
+PROD0088,Heavy Duty Thermal Label,Packaging,Box,3031.81,Vietnam,Active
+PROD0089,Standard Packaging Tape,Packaging,Set,9559.02,Vietnam,Active
+PROD0090,Industrial Packaging Tape,Packaging,Set,24751.58,India,Active
+PROD0091,Premium Packaging Tape,Packaging,Set,24005.91,India,Active
+PROD0092,Heavy Duty Packaging Tape,Packaging,Box,6674.98,India,Active
+PROD0093,Standard Aluminium Sheet,Raw Materials,Box,4411.43,India,Active
+PROD0094,Industrial Aluminium Sheet,Raw Materials,Unit,10260.26,Japan,Discontinued
+PROD0095,Premium Aluminium Sheet,Raw Materials,Kg,893.39,India,Active
+PROD0096,Heavy Duty Aluminium Sheet,Raw Materials,Pack,1853.8,India,Active
+PROD0097,Standard Copper Wire,Raw Materials,Set,16556.68,India,Discontinued
+PROD0098,Industrial Copper Wire,Raw Materials,Unit,13650.49,India,Active
+PROD0099,Premium Copper Wire,Raw Materials,Box,1859.53,India,Active
+PROD0100,Heavy Duty Copper Wire,Raw Materials,Set,18744.03,Japan,Active
+PROD0101,Standard Steel Coil,Raw Materials,Pack,3178.89,India,Discontinued
+PROD0102,Industrial Steel Coil,Raw Materials,Kg,12551.77,Vietnam,Discontinued
+PROD0103,Premium Steel Coil,Raw Materials,Unit,14983.07,Vietnam,Active
+PROD0104,Heavy Duty Steel Coil,Raw Materials,Set,6319.17,India,Active
+PROD0105,Standard Polymer Resin,Raw Materials,Set,14711.1,India,Active
+PROD0106,Industrial Polymer Resin,Raw Materials,Set,1082.57,India,Discontinued
+PROD0107,Premium Polymer Resin,Raw Materials,Set,16315.62,India,Active
+PROD0108,Heavy Duty Polymer Resin,Raw Materials,Set,10942.25,Vietnam,Active
+PROD0109,Standard Industrial Rubber,Raw Materials,Pack,8751.19,India,Active
+PROD0110,Industrial Industrial Rubber,Raw Materials,Unit,21454.71,India,Discontinued
+PROD0111,Premium Industrial Rubber,Raw Materials,Pack,7262.39,Vietnam,Active
+PROD0112,Heavy Duty Industrial Rubber,Raw Materials,Pack,2274.45,India,Active
+PROD0113,Standard Stainless Steel Rod,Raw Materials,Unit,24257.0,Vietnam,Active
+PROD0114,Industrial Stainless Steel Rod,Raw Materials,Set,11592.45,India,Active
+PROD0115,Premium Stainless Steel Rod,Raw Materials,Set,9095.54,Vietnam,Discontinued
+PROD0116,Heavy Duty Stainless Steel Rod,Raw Materials,Unit,5152.67,Japan,Active
+PROD0117,Standard Gear Assembly,Mechanical,Kg,10997.85,Vietnam,Active
+PROD0118,Industrial Gear Assembly,Mechanical,Unit,24330.82,Japan,Active
+PROD0119,Premium Gear Assembly,Mechanical,Box,7823.89,India,Discontinued
+PROD0120,Heavy Duty Gear Assembly,Mechanical,Unit,5679.54,India,Discontinued
+PROD0121,Standard Shaft Coupling,Mechanical,Unit,16220.93,India,Discontinued
+PROD0122,Industrial Shaft Coupling,Mechanical,Kg,12761.09,India,Discontinued
+PROD0123,Premium Shaft Coupling,Mechanical,Pack,24507.7,India,Discontinued
+PROD0124,Heavy Duty Shaft Coupling,Mechanical,Set,3684.48,India,Active
+PROD0125,Standard Hydraulic Valve,Mechanical,Unit,6964.09,Vietnam,Active
+PROD0126,Industrial Hydraulic Valve,Mechanical,Set,6737.94,India,Active
+PROD0127,Premium Hydraulic Valve,Mechanical,Kg,20949.9,Japan,Discontinued
+PROD0128,Heavy Duty Hydraulic Valve,Mechanical,Box,11207.96,Vietnam,Active
+PROD0129,Standard Pump Assembly,Mechanical,Kg,13833.78,Japan,Discontinued
+PROD0130,Industrial Pump Assembly,Mechanical,Pack,23326.68,India,Active
+PROD0131,Premium Pump Assembly,Mechanical,Set,9623.63,Vietnam,Active
+PROD0132,Heavy Duty Pump Assembly,Mechanical,Kg,18638.05,Vietnam,Discontinued
+PROD0133,Standard Conveyor Roller,Mechanical,Box,12423.59,India,Active
+PROD0134,Industrial Conveyor Roller,Mechanical,Set,24136.61,India,Active
+PROD0135,Premium Conveyor Roller,Mechanical,Pack,2564.82,Vietnam,Active
+PROD0136,Heavy Duty Conveyor Roller,Mechanical,Box,10296.67,India,Active
+PROD0137,Standard Industrial Fan,Mechanical,Pack,19555.61,India,Active
+PROD0138,Industrial Industrial Fan,Mechanical,Set,17342.2,India,Active
+PROD0139,Premium Industrial Fan,Mechanical,Set,9549.83,India,Discontinued
+PROD0140,Heavy Duty Industrial Fan,Mechanical,Set,974.61,India,Active
+PROD0141,Standard Cleaning Solvent,Chemicals,Kg,24935.85,India,Discontinued
+PROD0142,Industrial Cleaning Solvent,Chemicals,Unit,19028.41,India,Discontinued
+PROD0143,Premium Cleaning Solvent,Chemicals,Box,17374.51,India,Active
+PROD0144,Heavy Duty Cleaning Solvent,Chemicals,Kg,19919.9,India,Active
+PROD0145,Standard Adhesive Resin,Chemicals,Kg,10812.71,India,Discontinued
+PROD0146,Industrial Adhesive Resin,Chemicals,Set,17070.47,India,Active
+PROD0147,Premium Adhesive Resin,Chemicals,Box,2047.89,Vietnam,Active
+PROD0148,Heavy Duty Adhesive Resin,Chemicals,Pack,22827.7,India,Active
+PROD0149,Standard Industrial Lubricant,Chemicals,Pack,15976.58,Vietnam,Active
+PROD0150,Industrial Industrial Lubricant,Chemicals,Unit,22480.8,Vietnam,Active
+PROD0151,Premium Industrial Lubricant,Chemicals,Set,4016.75,Vietnam,Active
+PROD0152,Heavy Duty Industrial Lubricant,Chemicals,Set,7534.92,Vietnam,Active
+PROD0153,Standard Water Treatment Chemical,Chemicals,Pack,21144.97,India,Discontinued
+PROD0154,Industrial Water Treatment Chemical,Chemicals,Pack,2737.8,Vietnam,Active
+PROD0155,Premium Water Treatment Chemical,Chemicals,Set,7453.14,India,Active
+PROD0156,Heavy Duty Water Treatment Chemical,Chemicals,Pack,6920.05,Japan,Active
+PROD0157,Standard Coating Compound,Chemicals,Set,18649.69,India,Active
+PROD0158,Industrial Coating Compound,Chemicals,Set,20064.14,India,Active
+PROD0159,Premium Coating Compound,Chemicals,Set,6325.62,India,Active
+PROD0160,Heavy Duty Coating Compound,Chemicals,Unit,7778.61,Vietnam,Active
+PROD0161,Standard Safety Helmet,Safety,Set,9172.34,India,Active
+PROD0162,Industrial Safety Helmet,Safety,Kg,8221.84,Vietnam,Active
+PROD0163,Premium Safety Helmet,Safety,Box,3373.42,Japan,Active
+PROD0164,Heavy Duty Safety Helmet,Safety,Set,12584.73,India,Active
+PROD0165,Standard Protective Gloves,Safety,Kg,22858.1,Vietnam,Active
+PROD0166,Industrial Protective Gloves,Safety,Kg,20121.47,Vietnam,Active
+PROD0167,Premium Protective Gloves,Safety,Box,18873.46,India,Discontinued
+PROD0168,Heavy Duty Protective Gloves,Safety,Set,9195.11,Vietnam,Active
+PROD0169,Standard Safety Shoes,Safety,Kg,13451.38,Vietnam,Active
+PROD0170,Industrial Safety Shoes,Safety,Kg,14647.24,India,Active
+PROD0171,Premium Safety Shoes,Safety,Box,11829.2,Japan,Active
+PROD0172,Heavy Duty Safety Shoes,Safety,Set,5596.47,India,Discontinued
+PROD0173,Standard Reflective Vest,Safety,Kg,16259.05,India,Active
+PROD0174,Industrial Reflective Vest,Safety,Unit,23660.84,India,Discontinued
+PROD0175,Premium Reflective Vest,Safety,Unit,2502.02,Japan,Active
+PROD0176,Heavy Duty Reflective Vest,Safety,Pack,11384.8,Japan,Discontinued
+PROD0177,Standard Face Shield,Safety,Set,18577.34,India,Discontinued
+PROD0178,Industrial Face Shield,Safety,Unit,20855.63,Japan,Discontinued
+PROD0179,Premium Face Shield,Safety,Kg,895.29,India,Active
+PROD0180,Heavy Duty Face Shield,Safety,Pack,11161.82,India,Active
+PROD0181,Standard Safety Goggles,Safety,Unit,24524.72,India,Active
+PROD0182,Industrial Safety Goggles,Safety,Unit,10001.64,India,Active
+PROD0183,Premium Safety Goggles,Safety,Pack,2364.5,India,Active
+PROD0184,Heavy Duty Safety Goggles,Safety,Unit,19686.92,India,Active
+PROD0185,Standard Barcode Scanner,IT & Office,Set,5193.72,Japan,Active
+PROD0186,Industrial Barcode Scanner,IT & Office,Set,5461.51,India,Active
+PROD0187,Premium Barcode Scanner,IT & Office,Box,19733.0,Japan,Active
+PROD0188,Heavy Duty Barcode Scanner,IT & Office,Kg,21471.48,India,Active
+PROD0189,Standard Thermal Printer,IT & Office,Set,6326.3,India,Active
+PROD0190,Industrial Thermal Printer,IT & Office,Unit,3364.54,India,Active
+PROD0191,Premium Thermal Printer,IT & Office,Set,8148.38,India,Active
+PROD0192,Heavy Duty Thermal Printer,IT & Office,Unit,3238.82,Vietnam,Active
+PROD0193,Standard RFID Reader,IT & Office,Unit,11948.05,India,Active
+PROD0194,Industrial RFID Reader,IT & Office,Pack,12635.66,Japan,Active
+PROD0195,Premium RFID Reader,IT & Office,Set,7596.63,India,Active
+PROD0196,Heavy Duty RFID Reader,IT & Office,Pack,21194.68,Vietnam,Active
+PROD0197,Standard Workstation,IT & Office,Pack,17833.04,Vietnam,Active
+PROD0198,Industrial Workstation,IT & Office,Unit,8107.03,India,Active
+PROD0199,Premium Workstation,IT & Office,Box,6933.4,Japan,Active
+PROD0200,Heavy Duty Workstation,IT & Office,Pack,24866.12,Japan,Active
