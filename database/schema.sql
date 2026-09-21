@@ -5,15 +5,56 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE dataset_groups (
+    group_id SERIAL PRIMARY KEY,
+    group_name VARCHAR(255) NOT NULL,
+    domain_type VARCHAR(100),
+    user_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE processing_sessions (
+    session_id BIGSERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP
+);
+
 CREATE TABLE datasets (
     dataset_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(user_id),
+    session_id BIGINT REFERENCES processing_sessions(session_id),
+    group_id INTEGER REFERENCES dataset_groups(group_id) ON DELETE SET NULL,
     dataset_name VARCHAR(255) NOT NULL,
     file_name VARCHAR(255) NOT NULL,
     file_type VARCHAR(20),
+    domain_type VARCHAR(100),
     row_count INTEGER,
     column_count INTEGER,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE dataset_relationships (
+    relationship_id SERIAL PRIMARY KEY,
+
+    group_id INTEGER NOT NULL
+        REFERENCES dataset_groups(group_id)
+        ON DELETE CASCADE,
+
+    parent_dataset_id INTEGER NOT NULL
+        REFERENCES datasets(dataset_id)
+        ON DELETE CASCADE,
+
+    parent_column VARCHAR(255) NOT NULL,
+
+    child_dataset_id INTEGER NOT NULL
+        REFERENCES datasets(dataset_id)
+        ON DELETE CASCADE,
+
+    child_column VARCHAR(255) NOT NULL,
+
+    relationship_type VARCHAR(50) DEFAULT 'foreign_key',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE dataset_profiles (
@@ -23,12 +64,37 @@ CREATE TABLE dataset_profiles (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE sessions (
-    session_id BIGSERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP
+CREATE TABLE domain_column_presets (
+    preset_id SERIAL PRIMARY KEY,
+    domain_type VARCHAR(100) NOT NULL,
+    column_pattern VARCHAR(100) NOT NULL,
+    suggested_type VARCHAR(50),
+    is_sensitive BOOLEAN DEFAULT FALSE,
+    is_identifier BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO domain_column_presets
+    (domain_type, column_pattern, suggested_type, is_sensitive, is_identifier)
+VALUES
+    ('supply_chain', 'supplier_id', 'identifier', FALSE, TRUE),
+    ('supply_chain', 'supplier_name', 'string', FALSE, FALSE),
+    ('supply_chain', 'product_id', 'identifier', FALSE, TRUE),
+    ('supply_chain', 'raw_material_id', 'identifier', FALSE, TRUE),
+    ('supply_chain', 'po_id', 'identifier', FALSE, TRUE),
+    ('supply_chain', 'order_id', 'identifier', FALSE, TRUE),
+    ('supply_chain', 'unit_price', 'numeric', FALSE, FALSE),
+    ('supply_chain', 'unit_cost', 'numeric', FALSE, FALSE),
+    ('supply_chain', 'order_quantity', 'numeric', FALSE, FALSE),
+    ('supply_chain', 'quantity', 'numeric', FALSE, FALSE),
+    ('supply_chain', 'order_date', 'date', FALSE, FALSE),
+    ('supply_chain', 'delivery_date', 'date', FALSE, FALSE),
+    ('supply_chain', 'delivery_date_planned', 'date', FALSE, FALSE),
+    ('supply_chain', 'delivery_date_actual', 'date', FALSE, FALSE),
+    ('supply_chain', 'country', 'categorical', FALSE, FALSE),
+    ('supply_chain', 'city', 'categorical', FALSE, FALSE),
+    ('supply_chain', 'category', 'categorical', FALSE, FALSE),
+    ('supply_chain', 'status', 'categorical', FALSE, FALSE);
 
 CREATE TABLE column_configurations (
     configuration_id SERIAL PRIMARY KEY,
@@ -38,7 +104,8 @@ CREATE TABLE column_configurations (
     is_sensitive BOOLEAN DEFAULT FALSE,
     is_identifier BOOLEAN DEFAULT FALSE,
     action VARCHAR(50),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (dataset_id, column_name)
 );
 
 CREATE TABLE generation_runs (

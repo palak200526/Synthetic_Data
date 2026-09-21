@@ -1,0 +1,501 @@
+customer_id,customer_name,customer_segment,city,state,country,industry
+CUST00001,Aditya Solutions 001,Enterprise,Delhi,Delhi,India,Electronics
+CUST00002,Anaya Trading 002,SMB,Jaipur,Rajasthan,India,Automotive
+CUST00003,Riya Enterprises 003,Retail,Jaipur,Rajasthan,India,Safety
+CUST00004,Anaya Industries 004,Enterprise,Lucknow,Uttar Pradesh,India,Electronics
+CUST00005,Anaya Trading 005,SMB,Mumbai,Maharashtra,India,Electronics
+CUST00006,Ishaan Industries 006,Retail,Bengaluru,Karnataka,India,Automotive
+CUST00007,Aarav Enterprises 007,Enterprise,Hyderabad,Telangana,India,Industrial
+CUST00008,Aditya Systems 008,SMB,Delhi,Delhi,India,Automotive
+CUST00009,Meera Enterprises 009,Enterprise,Mumbai,Maharashtra,India,IT
+CUST00010,Ishaan Trading 010,SMB,Indore,Madhya Pradesh,India,Electronics
+CUST00011,Kabir Solutions 011,Enterprise,Lucknow,Uttar Pradesh,India,Automotive
+CUST00012,Aarav Industries 012,Enterprise,Jaipur,Rajasthan,India,Packaging
+CUST00013,Anaya Systems 013,Retail,Pune,Maharashtra,India,Automotive
+CUST00014,Vivaan Solutions 014,SMB,Chennai,Tamil Nadu,India,Automotive
+CUST00015,Vivaan Systems 015,SMB,Jaipur,Rajasthan,India,Industrial
+CUST00016,Meera Trading 016,SMB,Jaipur,Rajasthan,India,IT
+CUST00017,Aarav Retail 017,Enterprise,Delhi,Delhi,India,Safety
+CUST00018,Riya Industries 018,SMB,Indore,Madhya Pradesh,India,Packaging
+CUST00019,Aarav Systems 019,Retail,Kolkata,West Bengal,India,Industrial
+CUST00020,Vivaan Systems 020,Enterprise,Jaipur,Rajasthan,India,Automotive
+CUST00021,Kabir Enterprises 021,Retail,Indore,Madhya Pradesh,India,Automotive
+CUST00022,Meera Solutions 022,SMB,Kochi,Kerala,India,Packaging
+CUST00023,Ishaan Enterprises 023,Retail,Hyderabad,Telangana,India,Packaging
+CUST00024,Anaya Systems 024,Retail,Lucknow,Uttar Pradesh,India,Safety
+CUST00025,Aditya Solutions 025,Retail,Chennai,Tamil Nadu,India,Electronics
+CUST00026,Meera Solutions 026,SMB,Ahmedabad,Gujarat,India,IT
+CUST00027,Ishaan Retail 027,SMB,Chennai,Tamil Nadu,India,Safety
+CUST00028,Aarav Trading 028,Enterprise,Ahmedabad,Gujarat,India,Electronics
+CUST00029,Ishaan Trading 029,SMB,Ahmedabad,Gujarat,India,Automotive
+CUST00030,Anaya Enterprises 030,SMB,Kolkata,West Bengal,India,Electronics
+CUST00031,Meera Enterprises 031,Enterprise,Pune,Maharashtra,India,Industrial
+CUST00032,Riya Trading 032,SMB,Pune,Maharashtra,India,Electronics
+CUST00033,Aarav Retail 033,SMB,Chennai,Tamil Nadu,India,IT
+CUST00034,Anaya Retail 034,SMB,Mumbai,Maharashtra,India,Industrial
+CUST00035,Aditya Systems 035,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUST00036,Anaya Enterprises 036,SMB,Chennai,Tamil Nadu,India,Industrial
+CUST00037,Ishaan Industries 037,SMB,Delhi,Delhi,India,IT
+CUST00038,Riya Systems 038,Enterprise,Delhi,Delhi,India,Packaging
+CUST00039,Riya Enterprises 039,SMB,Delhi,Delhi,India,Electronics
+CUST00040,Vivaan Trading 040,Retail,Chennai,Tamil Nadu,India,Packaging
+CUST00041,Ishaan Enterprises 041,Enterprise,Pune,Maharashtra,India,Industrial
+CUST00042,Vivaan Enterprises 042,SMB,Lucknow,Uttar Pradesh,India,Packaging
+CUST00043,Anaya Solutions 043,Retail,Kolkata,West Bengal,India,Industrial
+CUST00044,Kabir Solutions 044,Retail,Delhi,Delhi,India,Electronics
+CUST00045,Anaya Retail 045,SMB,Delhi,Delhi,India,Electronics
+CUST00046,Riya Retail 046,SMB,Bengaluru,Karnataka,India,Safety
+CUST00047,Anaya Enterprises 047,Enterprise,Hyderabad,Telangana,India,Automotive
+CUST00048,Ishaan Systems 048,SMB,Pune,Maharashtra,India,Automotive
+CUST00049,Meera Retail 049,Enterprise,Jaipur,Rajasthan,India,Electronics
+CUST00050,Meera Trading 050,Enterprise,Delhi,Delhi,India,IT
+CUST00051,Vivaan Trading 051,Enterprise,Lucknow,Uttar Pradesh,India,Industrial
+CUST00052,Aditya Solutions 052,Enterprise,Chennai,Tamil Nadu,India,Automotive
+CUST00053,Anaya Industries 053,SMB,Mumbai,Maharashtra,India,Safety
+CUST00054,Vivaan Enterprises 054,SMB,Delhi,Delhi,India,Safety
+CUST00055,Meera Trading 055,SMB,Delhi,Delhi,India,Industrial
+CUST00056,Meera Retail 056,Retail,Mumbai,Maharashtra,India,Packaging
+CUST00057,Riya Industries 057,Retail,Mumbai,Maharashtra,India,Safety
+CUST00058,Aarav Enterprises 058,SMB,Delhi,Delhi,India,Packaging
+CUST00059,Aditya Retail 059,Enterprise,Mumbai,Maharashtra,India,Electronics
+CUST00060,Aarav Industries 060,SMB,Indore,Madhya Pradesh,India,IT
+CUST00061,Riya Enterprises 061,SMB,Bengaluru,Karnataka,India,Industrial
+CUST00062,Kabir Industries 062,SMB,Lucknow,Uttar Pradesh,India,Electronics
+CUST00063,Aarav Retail 063,Retail,Mumbai,Maharashtra,India,IT
+CUST00064,Meera Industries 064,SMB,Hyderabad,Telangana,India,Automotive
+CUST00065,Meera Systems 065,Retail,Hyderabad,Telangana,India,Packaging
+CUST00066,Kabir Industries 066,SMB,Kochi,Kerala,India,Packaging
+CUST00067,Anaya Industries 067,Retail,Hyderabad,Telangana,India,Safety
+CUST00068,Aditya Retail 068,Enterprise,Lucknow,Uttar Pradesh,India,Packaging
+CUST00069,Riya Retail 069,Retail,Kochi,Kerala,India,Electronics
+CUST00070,Kabir Trading 070,Retail,Ahmedabad,Gujarat,India,Safety
+CUST00071,Anaya Enterprises 071,SMB,Pune,Maharashtra,India,Industrial
+CUST00072,Anaya Retail 072,SMB,Kochi,Kerala,India,IT
+CUST00073,Anaya Enterprises 073,Enterprise,Pune,Maharashtra,India,Safety
+CUST00074,Vivaan Industries 074,SMB,Kochi,Kerala,India,Industrial
+CUST00075,Meera Systems 075,SMB,Ahmedabad,Gujarat,India,Electronics
+CUST00076,Aditya Systems 076,SMB,Hyderabad,Telangana,India,Industrial
+CUST00077,Aditya Industries 077,Retail,Pune,Maharashtra,India,Automotive
+CUST00078,Vivaan Systems 078,SMB,Jaipur,Rajasthan,India,Industrial
+CUST00079,Aarav Trading 079,SMB,Jaipur,Rajasthan,India,IT
+CUST00080,Aarav Retail 080,Enterprise,Lucknow,Uttar Pradesh,India,Electronics
+CUST00081,Vivaan Trading 081,SMB,Indore,Madhya Pradesh,India,Safety
+CUST00082,Kabir Industries 082,SMB,Indore,Madhya Pradesh,India,Industrial
+CUST00083,Meera Retail 083,SMB,Indore,Madhya Pradesh,India,Automotive
+CUST00084,Riya Systems 084,SMB,Delhi,Delhi,India,Safety
+CUST00085,Aditya Industries 085,Retail,Hyderabad,Telangana,India,Industrial
+CUST00086,Anaya Systems 086,SMB,Indore,Madhya Pradesh,India,Industrial
+CUST00087,Kabir Industries 087,Enterprise,Bengaluru,Karnataka,India,Automotive
+CUST00088,Anaya Retail 088,Enterprise,Lucknow,Uttar Pradesh,India,Electronics
+CUST00089,Riya Trading 089,Retail,Kochi,Kerala,India,Automotive
+CUST00090,Aditya Retail 090,Retail,Lucknow,Uttar Pradesh,India,Electronics
+CUST00091,Aditya Enterprises 091,SMB,Bengaluru,Karnataka,India,Safety
+CUST00092,Meera Trading 092,SMB,Indore,Madhya Pradesh,India,Automotive
+CUST00093,Anaya Industries 093,SMB,Kolkata,West Bengal,India,Safety
+CUST00094,Kabir Trading 094,SMB,Bengaluru,Karnataka,India,Electronics
+CUST00095,Riya Solutions 095,Enterprise,Hyderabad,Telangana,India,Electronics
+CUST00096,Anaya Systems 096,Retail,Pune,Maharashtra,India,Industrial
+CUST00097,Aditya Systems 097,SMB,Hyderabad,Telangana,India,Packaging
+CUST00098,Meera Trading 098,Retail,Delhi,Delhi,India,Automotive
+CUST00099,Vivaan Retail 099,SMB,Hyderabad,Telangana,India,Packaging
+CUST00100,Ishaan Retail 100,Retail,Hyderabad,Telangana,India,Automotive
+CUST00101,Ishaan Systems 101,SMB,Kolkata,West Bengal,India,Industrial
+CUST00102,Kabir Trading 102,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUST00103,Anaya Solutions 103,SMB,Jaipur,Rajasthan,India,Automotive
+CUST00104,Anaya Systems 104,SMB,Chennai,Tamil Nadu,India,Electronics
+CUST00105,Anaya Trading 105,SMB,Mumbai,Maharashtra,India,Packaging
+CUST00106,Meera Solutions 106,Enterprise,Mumbai,Maharashtra,India,Safety
+CUST00107,Ishaan Trading 107,SMB,Ahmedabad,Gujarat,India,Packaging
+CUST00108,Aditya Systems 108,Enterprise,Pune,Maharashtra,India,Industrial
+CUST00109,Kabir Trading 109,Retail,Delhi,Delhi,India,Automotive
+CUST00110,Riya Systems 110,SMB,Lucknow,Uttar Pradesh,India,Electronics
+CUST00111,Kabir Solutions 111,Retail,Lucknow,Uttar Pradesh,India,Packaging
+CUST00112,Anaya Retail 112,Enterprise,Indore,Madhya Pradesh,India,Safety
+CUST00113,Anaya Trading 113,Retail,Pune,Maharashtra,India,IT
+CUST00114,Aarav Retail 114,Enterprise,Hyderabad,Telangana,India,Automotive
+CUST00115,Kabir Trading 115,SMB,Chennai,Tamil Nadu,India,IT
+CUST00116,Aarav Enterprises 116,Retail,Kochi,Kerala,India,Industrial
+CUST00117,Kabir Retail 117,SMB,Kochi,Kerala,India,Safety
+CUST00118,Aarav Trading 118,Enterprise,Chennai,Tamil Nadu,India,Automotive
+CUST00119,Aditya Industries 119,SMB,Indore,Madhya Pradesh,India,Safety
+CUST00120,Aditya Retail 120,Enterprise,Indore,Madhya Pradesh,India,IT
+CUST00121,Aditya Systems 121,Enterprise,Kochi,Kerala,India,Safety
+CUST00122,Anaya Enterprises 122,Enterprise,Kochi,Kerala,India,Industrial
+CUST00123,Meera Systems 123,SMB,Kolkata,West Bengal,India,Industrial
+CUST00124,Meera Systems 124,Enterprise,Bengaluru,Karnataka,India,Automotive
+CUST00125,Meera Retail 125,Enterprise,Jaipur,Rajasthan,India,Electronics
+CUST00126,Aditya Industries 126,Retail,Delhi,Delhi,India,Electronics
+CUST00127,Anaya Solutions 127,Retail,Kochi,Kerala,India,Automotive
+CUST00128,Anaya Solutions 128,Enterprise,Ahmedabad,Gujarat,India,Automotive
+CUST00129,Kabir Systems 129,SMB,Ahmedabad,Gujarat,India,Electronics
+CUST00130,Aditya Systems 130,SMB,Jaipur,Rajasthan,India,Industrial
+CUST00131,Vivaan Systems 131,Enterprise,Kolkata,West Bengal,India,Electronics
+CUST00132,Anaya Solutions 132,Retail,Hyderabad,Telangana,India,Industrial
+CUST00133,Aditya Industries 133,SMB,Lucknow,Uttar Pradesh,India,Packaging
+CUST00134,Anaya Solutions 134,Retail,Ahmedabad,Gujarat,India,Electronics
+CUST00135,Riya Retail 135,SMB,Pune,Maharashtra,India,Packaging
+CUST00136,Riya Enterprises 136,Enterprise,Pune,Maharashtra,India,IT
+CUST00137,Vivaan Industries 137,Retail,Mumbai,Maharashtra,India,Packaging
+CUST00138,Vivaan Trading 138,SMB,Ahmedabad,Gujarat,India,Safety
+CUST00139,Aarav Solutions 139,Retail,Kochi,Kerala,India,Automotive
+CUST00140,Aarav Enterprises 140,SMB,Jaipur,Rajasthan,India,Electronics
+CUST00141,Anaya Industries 141,SMB,Mumbai,Maharashtra,India,Electronics
+CUST00142,Meera Trading 142,Retail,Hyderabad,Telangana,India,Packaging
+CUST00143,Riya Enterprises 143,Enterprise,Pune,Maharashtra,India,IT
+CUST00144,Vivaan Enterprises 144,SMB,Indore,Madhya Pradesh,India,Automotive
+CUST00145,Anaya Trading 145,SMB,Kolkata,West Bengal,India,Safety
+CUST00146,Riya Industries 146,SMB,Mumbai,Maharashtra,India,Electronics
+CUST00147,Meera Solutions 147,Retail,Pune,Maharashtra,India,Industrial
+CUST00148,Kabir Industries 148,SMB,Chennai,Tamil Nadu,India,Industrial
+CUST00149,Anaya Industries 149,Enterprise,Jaipur,Rajasthan,India,Safety
+CUST00150,Aditya Trading 150,Retail,Mumbai,Maharashtra,India,IT
+CUST00151,Meera Solutions 151,SMB,Pune,Maharashtra,India,Safety
+CUST00152,Riya Trading 152,Retail,Indore,Madhya Pradesh,India,Industrial
+CUST00153,Vivaan Enterprises 153,SMB,Pune,Maharashtra,India,Industrial
+CUST00154,Meera Industries 154,Enterprise,Ahmedabad,Gujarat,India,Safety
+CUST00155,Meera Trading 155,SMB,Kolkata,West Bengal,India,IT
+CUST00156,Riya Systems 156,Enterprise,Kochi,Kerala,India,Industrial
+CUST00157,Kabir Industries 157,Retail,Pune,Maharashtra,India,Electronics
+CUST00158,Riya Enterprises 158,Enterprise,Hyderabad,Telangana,India,Packaging
+CUST00159,Vivaan Solutions 159,SMB,Indore,Madhya Pradesh,India,Packaging
+CUST00160,Aditya Solutions 160,SMB,Kolkata,West Bengal,India,Packaging
+CUST00161,Riya Solutions 161,SMB,Bengaluru,Karnataka,India,Safety
+CUST00162,Anaya Retail 162,SMB,Delhi,Delhi,India,IT
+CUST00163,Vivaan Trading 163,Retail,Delhi,Delhi,India,IT
+CUST00164,Ishaan Solutions 164,Enterprise,Kolkata,West Bengal,India,IT
+CUST00165,Anaya Trading 165,SMB,Hyderabad,Telangana,India,Industrial
+CUST00166,Riya Industries 166,Retail,Lucknow,Uttar Pradesh,India,Automotive
+CUST00167,Aditya Solutions 167,SMB,Mumbai,Maharashtra,India,Automotive
+CUST00168,Aditya Trading 168,Retail,Kolkata,West Bengal,India,Industrial
+CUST00169,Riya Enterprises 169,SMB,Lucknow,Uttar Pradesh,India,IT
+CUST00170,Aarav Retail 170,SMB,Hyderabad,Telangana,India,Safety
+CUST00171,Anaya Trading 171,Enterprise,Hyderabad,Telangana,India,Automotive
+CUST00172,Kabir Retail 172,Retail,Mumbai,Maharashtra,India,Electronics
+CUST00173,Kabir Retail 173,Retail,Jaipur,Rajasthan,India,Electronics
+CUST00174,Kabir Retail 174,SMB,Indore,Madhya Pradesh,India,IT
+CUST00175,Kabir Trading 175,SMB,Delhi,Delhi,India,IT
+CUST00176,Vivaan Solutions 176,SMB,Pune,Maharashtra,India,Packaging
+CUST00177,Kabir Systems 177,SMB,Delhi,Delhi,India,Industrial
+CUST00178,Aarav Solutions 178,Enterprise,Bengaluru,Karnataka,India,Industrial
+CUST00179,Aditya Industries 179,Enterprise,Pune,Maharashtra,India,Automotive
+CUST00180,Anaya Retail 180,Enterprise,Kochi,Kerala,India,IT
+CUST00181,Kabir Retail 181,Retail,Chennai,Tamil Nadu,India,Electronics
+CUST00182,Kabir Systems 182,SMB,Hyderabad,Telangana,India,Industrial
+CUST00183,Meera Industries 183,SMB,Pune,Maharashtra,India,Safety
+CUST00184,Kabir Industries 184,SMB,Indore,Madhya Pradesh,India,IT
+CUST00185,Meera Enterprises 185,Retail,Lucknow,Uttar Pradesh,India,Industrial
+CUST00186,Meera Enterprises 186,Enterprise,Kolkata,West Bengal,India,Safety
+CUST00187,Meera Solutions 187,Retail,Kochi,Kerala,India,Automotive
+CUST00188,Anaya Industries 188,Enterprise,Chennai,Tamil Nadu,India,IT
+CUST00189,Aditya Retail 189,Retail,Hyderabad,Telangana,India,Packaging
+CUST00190,Meera Systems 190,Retail,Delhi,Delhi,India,Automotive
+CUST00191,Riya Systems 191,Enterprise,Kolkata,West Bengal,India,Electronics
+CUST00192,Vivaan Enterprises 192,Enterprise,Lucknow,Uttar Pradesh,India,Safety
+CUST00193,Aarav Trading 193,Enterprise,Kochi,Kerala,India,IT
+CUST00194,Kabir Systems 194,Enterprise,Chennai,Tamil Nadu,India,Electronics
+CUST00195,Ishaan Trading 195,Retail,Pune,Maharashtra,India,Safety
+CUST00196,Vivaan Enterprises 196,Enterprise,Pune,Maharashtra,India,IT
+CUST00197,Aarav Industries 197,SMB,Pune,Maharashtra,India,Automotive
+CUST00198,Aarav Industries 198,SMB,Ahmedabad,Gujarat,India,Automotive
+CUST00199,Ishaan Solutions 199,SMB,Ahmedabad,Gujarat,India,Automotive
+CUST00200,Anaya Trading 200,Retail,Indore,Madhya Pradesh,India,Safety
+CUST00201,Riya Retail 201,SMB,Kolkata,West Bengal,India,Safety
+CUST00202,Riya Enterprises 202,SMB,Jaipur,Rajasthan,India,Electronics
+CUST00203,Aditya Industries 203,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUST00204,Vivaan Enterprises 204,SMB,Kolkata,West Bengal,India,IT
+CUST00205,Meera Systems 205,SMB,Jaipur,Rajasthan,India,Packaging
+CUST00206,Riya Retail 206,Enterprise,Indore,Madhya Pradesh,India,Automotive
+CUST00207,Kabir Systems 207,Enterprise,Pune,Maharashtra,India,IT
+CUST00208,Meera Enterprises 208,Enterprise,Ahmedabad,Gujarat,India,Safety
+CUST00209,Anaya Trading 209,SMB,Delhi,Delhi,India,Packaging
+CUST00210,Aditya Systems 210,SMB,Lucknow,Uttar Pradesh,India,Automotive
+CUST00211,Aarav Industries 211,Retail,Chennai,Tamil Nadu,India,IT
+CUST00212,Aditya Industries 212,SMB,Kochi,Kerala,India,IT
+CUST00213,Vivaan Enterprises 213,SMB,Mumbai,Maharashtra,India,Industrial
+CUST00214,Ishaan Industries 214,SMB,Mumbai,Maharashtra,India,Safety
+CUST00215,Anaya Retail 215,Retail,Hyderabad,Telangana,India,Industrial
+CUST00216,Meera Systems 216,Enterprise,Pune,Maharashtra,India,Electronics
+CUST00217,Riya Retail 217,SMB,Indore,Madhya Pradesh,India,Industrial
+CUST00218,Riya Trading 218,SMB,Indore,Madhya Pradesh,India,Automotive
+CUST00219,Vivaan Industries 219,Enterprise,Mumbai,Maharashtra,India,Electronics
+CUST00220,Aarav Solutions 220,Retail,Lucknow,Uttar Pradesh,India,Safety
+CUST00221,Vivaan Solutions 221,SMB,Bengaluru,Karnataka,India,Electronics
+CUST00222,Aarav Enterprises 222,Retail,Kochi,Kerala,India,Safety
+CUST00223,Aditya Solutions 223,SMB,Mumbai,Maharashtra,India,Automotive
+CUST00224,Anaya Industries 224,SMB,Hyderabad,Telangana,India,Safety
+CUST00225,Aarav Solutions 225,Retail,Delhi,Delhi,India,Electronics
+CUST00226,Riya Systems 226,SMB,Chennai,Tamil Nadu,India,Industrial
+CUST00227,Riya Trading 227,SMB,Pune,Maharashtra,India,Safety
+CUST00228,Aarav Solutions 228,Retail,Indore,Madhya Pradesh,India,Electronics
+CUST00229,Aditya Systems 229,SMB,Delhi,Delhi,India,Safety
+CUST00230,Ishaan Solutions 230,SMB,Pune,Maharashtra,India,Industrial
+CUST00231,Anaya Trading 231,Retail,Kochi,Kerala,India,Packaging
+CUST00232,Riya Industries 232,Retail,Kochi,Kerala,India,Electronics
+CUST00233,Ishaan Systems 233,SMB,Mumbai,Maharashtra,India,Automotive
+CUST00234,Riya Industries 234,Retail,Indore,Madhya Pradesh,India,Industrial
+CUST00235,Riya Solutions 235,SMB,Kolkata,West Bengal,India,Safety
+CUST00236,Aditya Industries 236,SMB,Chennai,Tamil Nadu,India,Electronics
+CUST00237,Anaya Retail 237,SMB,Kochi,Kerala,India,Safety
+CUST00238,Kabir Trading 238,Retail,Bengaluru,Karnataka,India,Packaging
+CUST00239,Aarav Systems 239,Enterprise,Indore,Madhya Pradesh,India,Industrial
+CUST00240,Kabir Systems 240,Retail,Ahmedabad,Gujarat,India,Safety
+CUST00241,Kabir Trading 241,Retail,Kolkata,West Bengal,India,Automotive
+CUST00242,Riya Trading 242,Retail,Indore,Madhya Pradesh,India,Industrial
+CUST00243,Ishaan Industries 243,Enterprise,Jaipur,Rajasthan,India,IT
+CUST00244,Aditya Trading 244,Retail,Ahmedabad,Gujarat,India,Automotive
+CUST00245,Aditya Retail 245,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUST00246,Aarav Solutions 246,SMB,Kolkata,West Bengal,India,Automotive
+CUST00247,Meera Industries 247,Retail,Kolkata,West Bengal,India,Packaging
+CUST00248,Aditya Solutions 248,Retail,Delhi,Delhi,India,Safety
+CUST00249,Aarav Trading 249,SMB,Indore,Madhya Pradesh,India,Safety
+CUST00250,Ishaan Solutions 250,SMB,Bengaluru,Karnataka,India,Automotive
+CUST00251,Ishaan Solutions 251,SMB,Hyderabad,Telangana,India,Industrial
+CUST00252,Meera Enterprises 252,Retail,Delhi,Delhi,India,Industrial
+CUST00253,Anaya Industries 253,SMB,Ahmedabad,Gujarat,India,Automotive
+CUST00254,Ishaan Systems 254,SMB,Jaipur,Rajasthan,India,Packaging
+CUST00255,Vivaan Systems 255,Retail,Mumbai,Maharashtra,India,Packaging
+CUST00256,Kabir Industries 256,Retail,Pune,Maharashtra,India,Industrial
+CUST00257,Kabir Solutions 257,SMB,Hyderabad,Telangana,India,Safety
+CUST00258,Aditya Solutions 258,Retail,Pune,Maharashtra,India,Packaging
+CUST00259,Ishaan Industries 259,SMB,Ahmedabad,Gujarat,India,Industrial
+CUST00260,Vivaan Enterprises 260,SMB,Pune,Maharashtra,India,Electronics
+CUST00261,Ishaan Industries 261,Enterprise,Mumbai,Maharashtra,India,Safety
+CUST00262,Anaya Enterprises 262,SMB,Delhi,Delhi,India,IT
+CUST00263,Kabir Solutions 263,Retail,Delhi,Delhi,India,Industrial
+CUST00264,Kabir Industries 264,SMB,Hyderabad,Telangana,India,IT
+CUST00265,Aditya Solutions 265,Enterprise,Mumbai,Maharashtra,India,Electronics
+CUST00266,Aditya Enterprises 266,SMB,Pune,Maharashtra,India,Electronics
+CUST00267,Meera Systems 267,Enterprise,Indore,Madhya Pradesh,India,Packaging
+CUST00268,Aarav Trading 268,SMB,Delhi,Delhi,India,Safety
+CUST00269,Aditya Retail 269,Enterprise,Hyderabad,Telangana,India,Automotive
+CUST00270,Riya Industries 270,SMB,Ahmedabad,Gujarat,India,Electronics
+CUST00271,Aditya Industries 271,Enterprise,Ahmedabad,Gujarat,India,Industrial
+CUST00272,Riya Industries 272,Retail,Indore,Madhya Pradesh,India,Packaging
+CUST00273,Meera Systems 273,Retail,Delhi,Delhi,India,Automotive
+CUST00274,Kabir Enterprises 274,Enterprise,Chennai,Tamil Nadu,India,IT
+CUST00275,Anaya Industries 275,SMB,Indore,Madhya Pradesh,India,Packaging
+CUST00276,Vivaan Systems 276,Retail,Kolkata,West Bengal,India,Packaging
+CUST00277,Ishaan Trading 277,SMB,Ahmedabad,Gujarat,India,Industrial
+CUST00278,Aarav Systems 278,SMB,Chennai,Tamil Nadu,India,Industrial
+CUST00279,Ishaan Systems 279,SMB,Bengaluru,Karnataka,India,Packaging
+CUST00280,Anaya Enterprises 280,Retail,Bengaluru,Karnataka,India,Packaging
+CUST00281,Meera Solutions 281,Retail,Ahmedabad,Gujarat,India,IT
+CUST00282,Ishaan Solutions 282,Enterprise,Ahmedabad,Gujarat,India,IT
+CUST00283,Riya Enterprises 283,SMB,Chennai,Tamil Nadu,India,Automotive
+CUST00284,Ishaan Systems 284,SMB,Indore,Madhya Pradesh,India,Industrial
+CUST00285,Aditya Trading 285,Retail,Indore,Madhya Pradesh,India,Automotive
+CUST00286,Meera Enterprises 286,SMB,Ahmedabad,Gujarat,India,Automotive
+CUST00287,Aarav Systems 287,Retail,Delhi,Delhi,India,Industrial
+CUST00288,Kabir Industries 288,Retail,Hyderabad,Telangana,India,Safety
+CUST00289,Riya Retail 289,Retail,Chennai,Tamil Nadu,India,IT
+CUST00290,Riya Systems 290,Retail,Ahmedabad,Gujarat,India,Packaging
+CUST00291,Riya Systems 291,SMB,Chennai,Tamil Nadu,India,Safety
+CUST00292,Ishaan Solutions 292,Enterprise,Kochi,Kerala,India,Electronics
+CUST00293,Anaya Enterprises 293,Retail,Kochi,Kerala,India,Packaging
+CUST00294,Aarav Solutions 294,Enterprise,Kochi,Kerala,India,Packaging
+CUST00295,Kabir Retail 295,Retail,Ahmedabad,Gujarat,India,Electronics
+CUST00296,Kabir Retail 296,SMB,Mumbai,Maharashtra,India,Safety
+CUST00297,Aarav Systems 297,SMB,Bengaluru,Karnataka,India,Automotive
+CUST00298,Kabir Retail 298,Retail,Kochi,Kerala,India,Safety
+CUST00299,Anaya Systems 299,Retail,Hyderabad,Telangana,India,Packaging
+CUST00300,Aarav Retail 300,SMB,Indore,Madhya Pradesh,India,Electronics
+CUST00301,Meera Retail 301,SMB,Pune,Maharashtra,India,Packaging
+CUST00302,Ishaan Industries 302,SMB,Pune,Maharashtra,India,IT
+CUST00303,Aarav Enterprises 303,Retail,Kochi,Kerala,India,Electronics
+CUST00304,Aditya Solutions 304,Enterprise,Indore,Madhya Pradesh,India,Automotive
+CUST00305,Riya Industries 305,Enterprise,Hyderabad,Telangana,India,Industrial
+CUST00306,Anaya Systems 306,SMB,Lucknow,Uttar Pradesh,India,IT
+CUST00307,Riya Trading 307,SMB,Bengaluru,Karnataka,India,Packaging
+CUST00308,Vivaan Systems 308,Retail,Bengaluru,Karnataka,India,Electronics
+CUST00309,Aditya Retail 309,SMB,Pune,Maharashtra,India,Safety
+CUST00310,Anaya Retail 310,SMB,Mumbai,Maharashtra,India,Automotive
+CUST00311,Anaya Retail 311,SMB,Kolkata,West Bengal,India,IT
+CUST00312,Aditya Systems 312,SMB,Ahmedabad,Gujarat,India,IT
+CUST00313,Ishaan Trading 313,Enterprise,Mumbai,Maharashtra,India,Automotive
+CUST00314,Ishaan Enterprises 314,SMB,Jaipur,Rajasthan,India,Electronics
+CUST00315,Meera Industries 315,Retail,Chennai,Tamil Nadu,India,IT
+CUST00316,Riya Enterprises 316,Enterprise,Pune,Maharashtra,India,Industrial
+CUST00317,Anaya Enterprises 317,Retail,Indore,Madhya Pradesh,India,Packaging
+CUST00318,Riya Systems 318,SMB,Indore,Madhya Pradesh,India,Electronics
+CUST00319,Aditya Trading 319,Enterprise,Ahmedabad,Gujarat,India,Electronics
+CUST00320,Kabir Retail 320,Enterprise,Ahmedabad,Gujarat,India,Packaging
+CUST00321,Vivaan Retail 321,Retail,Ahmedabad,Gujarat,India,IT
+CUST00322,Kabir Enterprises 322,Retail,Hyderabad,Telangana,India,IT
+CUST00323,Aditya Trading 323,SMB,Kochi,Kerala,India,Electronics
+CUST00324,Meera Industries 324,SMB,Delhi,Delhi,India,Safety
+CUST00325,Kabir Trading 325,Enterprise,Pune,Maharashtra,India,Safety
+CUST00326,Aarav Trading 326,SMB,Lucknow,Uttar Pradesh,India,Electronics
+CUST00327,Meera Retail 327,Enterprise,Lucknow,Uttar Pradesh,India,Automotive
+CUST00328,Ishaan Industries 328,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUST00329,Anaya Enterprises 329,Enterprise,Mumbai,Maharashtra,India,Packaging
+CUST00330,Aditya Retail 330,Retail,Kochi,Kerala,India,IT
+CUST00331,Meera Trading 331,Enterprise,Kochi,Kerala,India,Electronics
+CUST00332,Riya Enterprises 332,Retail,Delhi,Delhi,India,Safety
+CUST00333,Aarav Enterprises 333,SMB,Jaipur,Rajasthan,India,Electronics
+CUST00334,Anaya Systems 334,Enterprise,Indore,Madhya Pradesh,India,Automotive
+CUST00335,Riya Trading 335,SMB,Hyderabad,Telangana,India,Electronics
+CUST00336,Aditya Solutions 336,Enterprise,Indore,Madhya Pradesh,India,IT
+CUST00337,Vivaan Retail 337,SMB,Bengaluru,Karnataka,India,Industrial
+CUST00338,Ishaan Trading 338,SMB,Hyderabad,Telangana,India,Automotive
+CUST00339,Vivaan Industries 339,Retail,Lucknow,Uttar Pradesh,India,Packaging
+CUST00340,Aarav Systems 340,SMB,Lucknow,Uttar Pradesh,India,Packaging
+CUST00341,Vivaan Solutions 341,Retail,Bengaluru,Karnataka,India,Automotive
+CUST00342,Anaya Retail 342,SMB,Indore,Madhya Pradesh,India,Safety
+CUST00343,Riya Industries 343,Retail,Hyderabad,Telangana,India,IT
+CUST00344,Aditya Systems 344,Retail,Indore,Madhya Pradesh,India,Industrial
+CUST00345,Vivaan Systems 345,SMB,Kolkata,West Bengal,India,Packaging
+CUST00346,Meera Retail 346,SMB,Mumbai,Maharashtra,India,Electronics
+CUST00347,Kabir Solutions 347,Enterprise,Indore,Madhya Pradesh,India,Packaging
+CUST00348,Kabir Retail 348,Retail,Pune,Maharashtra,India,Safety
+CUST00349,Meera Retail 349,SMB,Pune,Maharashtra,India,Electronics
+CUST00350,Aarav Systems 350,SMB,Kochi,Kerala,India,Automotive
+CUST00351,Aditya Retail 351,Enterprise,Lucknow,Uttar Pradesh,India,Safety
+CUST00352,Meera Solutions 352,Retail,Bengaluru,Karnataka,India,Packaging
+CUST00353,Riya Systems 353,SMB,Kolkata,West Bengal,India,Industrial
+CUST00354,Aarav Enterprises 354,Enterprise,Pune,Maharashtra,India,Safety
+CUST00355,Kabir Trading 355,Enterprise,Indore,Madhya Pradesh,India,IT
+CUST00356,Ishaan Solutions 356,Retail,Chennai,Tamil Nadu,India,IT
+CUST00357,Ishaan Retail 357,Enterprise,Pune,Maharashtra,India,Packaging
+CUST00358,Aarav Industries 358,Retail,Hyderabad,Telangana,India,Automotive
+CUST00359,Aditya Systems 359,SMB,Mumbai,Maharashtra,India,Safety
+CUST00360,Kabir Solutions 360,SMB,Bengaluru,Karnataka,India,Automotive
+CUST00361,Anaya Systems 361,SMB,Kochi,Kerala,India,Electronics
+CUST00362,Ishaan Solutions 362,SMB,Delhi,Delhi,India,Industrial
+CUST00363,Riya Systems 363,Retail,Mumbai,Maharashtra,India,Packaging
+CUST00364,Riya Enterprises 364,SMB,Mumbai,Maharashtra,India,IT
+CUST00365,Ishaan Enterprises 365,SMB,Kolkata,West Bengal,India,Safety
+CUST00366,Aditya Retail 366,Retail,Kochi,Kerala,India,Safety
+CUST00367,Vivaan Industries 367,Enterprise,Jaipur,Rajasthan,India,Automotive
+CUST00368,Aditya Trading 368,Enterprise,Jaipur,Rajasthan,India,Electronics
+CUST00369,Vivaan Retail 369,Enterprise,Hyderabad,Telangana,India,Industrial
+CUST00370,Vivaan Solutions 370,SMB,Mumbai,Maharashtra,India,Automotive
+CUST00371,Vivaan Retail 371,SMB,Mumbai,Maharashtra,India,Safety
+CUST00372,Ishaan Retail 372,Enterprise,Delhi,Delhi,India,Safety
+CUST00373,Riya Systems 373,Retail,Kochi,Kerala,India,IT
+CUST00374,Vivaan Systems 374,Retail,Ahmedabad,Gujarat,India,Industrial
+CUST00375,Meera Industries 375,Enterprise,Bengaluru,Karnataka,India,Safety
+CUST00376,Vivaan Systems 376,Retail,Indore,Madhya Pradesh,India,Industrial
+CUST00377,Meera Solutions 377,Enterprise,Bengaluru,Karnataka,India,IT
+CUST00378,Anaya Systems 378,SMB,Jaipur,Rajasthan,India,Industrial
+CUST00379,Aarav Industries 379,Enterprise,Delhi,Delhi,India,Automotive
+CUST00380,Anaya Systems 380,Retail,Pune,Maharashtra,India,Electronics
+CUST00381,Aarav Trading 381,Enterprise,Kolkata,West Bengal,India,Automotive
+CUST00382,Ishaan Industries 382,Retail,Chennai,Tamil Nadu,India,IT
+CUST00383,Ishaan Industries 383,Enterprise,Jaipur,Rajasthan,India,Industrial
+CUST00384,Ishaan Industries 384,Retail,Mumbai,Maharashtra,India,Safety
+CUST00385,Anaya Systems 385,SMB,Pune,Maharashtra,India,Packaging
+CUST00386,Meera Solutions 386,SMB,Hyderabad,Telangana,India,Safety
+CUST00387,Ishaan Enterprises 387,SMB,Ahmedabad,Gujarat,India,Electronics
+CUST00388,Aditya Trading 388,SMB,Lucknow,Uttar Pradesh,India,Electronics
+CUST00389,Kabir Trading 389,Retail,Bengaluru,Karnataka,India,Electronics
+CUST00390,Meera Retail 390,Retail,Kochi,Kerala,India,Automotive
+CUST00391,Ishaan Trading 391,Enterprise,Lucknow,Uttar Pradesh,India,IT
+CUST00392,Meera Trading 392,SMB,Ahmedabad,Gujarat,India,Electronics
+CUST00393,Ishaan Trading 393,Enterprise,Hyderabad,Telangana,India,Electronics
+CUST00394,Kabir Systems 394,SMB,Bengaluru,Karnataka,India,Electronics
+CUST00395,Aditya Retail 395,SMB,Delhi,Delhi,India,IT
+CUST00396,Meera Industries 396,SMB,Chennai,Tamil Nadu,India,Industrial
+CUST00397,Aditya Trading 397,SMB,Ahmedabad,Gujarat,India,IT
+CUST00398,Aarav Enterprises 398,Retail,Bengaluru,Karnataka,India,Electronics
+CUST00399,Kabir Trading 399,Retail,Pune,Maharashtra,India,IT
+CUST00400,Aditya Systems 400,SMB,Chennai,Tamil Nadu,India,Packaging
+CUST00401,Anaya Solutions 401,Enterprise,Delhi,Delhi,India,Safety
+CUST00402,Meera Retail 402,Retail,Ahmedabad,Gujarat,India,Industrial
+CUST00403,Kabir Industries 403,Retail,Chennai,Tamil Nadu,India,Industrial
+CUST00404,Meera Solutions 404,Retail,Hyderabad,Telangana,India,Industrial
+CUST00405,Kabir Industries 405,Enterprise,Lucknow,Uttar Pradesh,India,Safety
+CUST00406,Riya Industries 406,Enterprise,Jaipur,Rajasthan,India,Safety
+CUST00407,Kabir Systems 407,SMB,Bengaluru,Karnataka,India,IT
+CUST00408,Meera Systems 408,Enterprise,Bengaluru,Karnataka,India,Electronics
+CUST00409,Aditya Systems 409,Retail,Hyderabad,Telangana,India,IT
+CUST00410,Vivaan Systems 410,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUST00411,Meera Enterprises 411,SMB,Mumbai,Maharashtra,India,Packaging
+CUST00412,Aarav Enterprises 412,Enterprise,Pune,Maharashtra,India,IT
+CUST00413,Aditya Solutions 413,Enterprise,Indore,Madhya Pradesh,India,Safety
+CUST00414,Aditya Retail 414,SMB,Kolkata,West Bengal,India,Packaging
+CUST00415,Vivaan Solutions 415,Enterprise,Kolkata,West Bengal,India,Electronics
+CUST00416,Vivaan Trading 416,SMB,Jaipur,Rajasthan,India,Industrial
+CUST00417,Aarav Trading 417,SMB,Indore,Madhya Pradesh,India,Industrial
+CUST00418,Anaya Solutions 418,SMB,Jaipur,Rajasthan,India,Packaging
+CUST00419,Kabir Solutions 419,SMB,Lucknow,Uttar Pradesh,India,Packaging
+CUST00420,Aditya Industries 420,SMB,Delhi,Delhi,India,Electronics
+CUST00421,Meera Enterprises 421,Retail,Chennai,Tamil Nadu,India,Packaging
+CUST00422,Vivaan Solutions 422,SMB,Jaipur,Rajasthan,India,IT
+CUST00423,Aarav Trading 423,Enterprise,Pune,Maharashtra,India,Automotive
+CUST00424,Ishaan Trading 424,Retail,Indore,Madhya Pradesh,India,Electronics
+CUST00425,Riya Industries 425,Enterprise,Ahmedabad,Gujarat,India,Industrial
+CUST00426,Ishaan Trading 426,Retail,Hyderabad,Telangana,India,IT
+CUST00427,Vivaan Trading 427,SMB,Ahmedabad,Gujarat,India,Safety
+CUST00428,Riya Trading 428,Retail,Ahmedabad,Gujarat,India,Safety
+CUST00429,Vivaan Solutions 429,Retail,Pune,Maharashtra,India,Automotive
+CUST00430,Aarav Trading 430,SMB,Jaipur,Rajasthan,India,Automotive
+CUST00431,Aarav Industries 431,Retail,Kochi,Kerala,India,IT
+CUST00432,Kabir Industries 432,SMB,Mumbai,Maharashtra,India,Industrial
+CUST00433,Riya Systems 433,SMB,Hyderabad,Telangana,India,Electronics
+CUST00434,Riya Systems 434,Enterprise,Ahmedabad,Gujarat,India,Electronics
+CUST00435,Vivaan Trading 435,SMB,Bengaluru,Karnataka,India,Safety
+CUST00436,Anaya Solutions 436,Enterprise,Hyderabad,Telangana,India,Electronics
+CUST00437,Aarav Retail 437,SMB,Chennai,Tamil Nadu,India,Automotive
+CUST00438,Ishaan Systems 438,SMB,Lucknow,Uttar Pradesh,India,Safety
+CUST00439,Riya Enterprises 439,SMB,Hyderabad,Telangana,India,Automotive
+CUST00440,Vivaan Retail 440,SMB,Indore,Madhya Pradesh,India,Packaging
+CUST00441,Riya Solutions 441,SMB,Kochi,Kerala,India,Automotive
+CUST00442,Ishaan Industries 442,SMB,Hyderabad,Telangana,India,Packaging
+CUST00443,Aditya Enterprises 443,SMB,Pune,Maharashtra,India,Electronics
+CUST00444,Anaya Trading 444,Retail,Indore,Madhya Pradesh,India,Automotive
+CUST00445,Aditya Systems 445,Enterprise,Pune,Maharashtra,India,Electronics
+CUST00446,Meera Retail 446,SMB,Pune,Maharashtra,India,Packaging
+CUST00447,Anaya Industries 447,Retail,Hyderabad,Telangana,India,IT
+CUST00448,Anaya Enterprises 448,Enterprise,Jaipur,Rajasthan,India,Packaging
+CUST00449,Riya Industries 449,SMB,Ahmedabad,Gujarat,India,Electronics
+CUST00450,Meera Solutions 450,SMB,Kolkata,West Bengal,India,Packaging
+CUST00451,Aarav Systems 451,SMB,Lucknow,Uttar Pradesh,India,IT
+CUST00452,Anaya Enterprises 452,Retail,Indore,Madhya Pradesh,India,Safety
+CUST00453,Kabir Retail 453,SMB,Jaipur,Rajasthan,India,IT
+CUST00454,Aditya Systems 454,Enterprise,Mumbai,Maharashtra,India,Industrial
+CUST00455,Riya Enterprises 455,SMB,Indore,Madhya Pradesh,India,Electronics
+CUST00456,Meera Solutions 456,Enterprise,Ahmedabad,Gujarat,India,Automotive
+CUST00457,Kabir Retail 457,Retail,Bengaluru,Karnataka,India,Industrial
+CUST00458,Kabir Systems 458,Enterprise,Mumbai,Maharashtra,India,Industrial
+CUST00459,Riya Systems 459,SMB,Indore,Madhya Pradesh,India,Electronics
+CUST00460,Aditya Enterprises 460,Enterprise,Kochi,Kerala,India,Automotive
+CUST00461,Aditya Systems 461,Retail,Indore,Madhya Pradesh,India,Packaging
+CUST00462,Riya Industries 462,SMB,Pune,Maharashtra,India,Automotive
+CUST00463,Riya Trading 463,SMB,Delhi,Delhi,India,Electronics
+CUST00464,Vivaan Systems 464,Retail,Pune,Maharashtra,India,Packaging
+CUST00465,Aditya Enterprises 465,Retail,Chennai,Tamil Nadu,India,Safety
+CUST00466,Aditya Systems 466,Retail,Chennai,Tamil Nadu,India,Electronics
+CUST00467,Anaya Retail 467,Retail,Delhi,Delhi,India,Packaging
+CUST00468,Anaya Trading 468,SMB,Mumbai,Maharashtra,India,IT
+CUST00469,Vivaan Systems 469,Retail,Pune,Maharashtra,India,Industrial
+CUST00470,Vivaan Enterprises 470,SMB,Indore,Madhya Pradesh,India,Packaging
+CUST00471,Anaya Industries 471,SMB,Mumbai,Maharashtra,India,Packaging
+CUST00472,Vivaan Retail 472,SMB,Bengaluru,Karnataka,India,Packaging
+CUST00473,Aditya Enterprises 473,Retail,Chennai,Tamil Nadu,India,Electronics
+CUST00474,Aarav Solutions 474,Retail,Indore,Madhya Pradesh,India,Automotive
+CUST00475,Vivaan Systems 475,Retail,Ahmedabad,Gujarat,India,Electronics
+CUST00476,Riya Enterprises 476,SMB,Mumbai,Maharashtra,India,Safety
+CUST00477,Aditya Systems 477,SMB,Chennai,Tamil Nadu,India,Automotive
+CUST00478,Aditya Retail 478,SMB,Mumbai,Maharashtra,India,IT
+CUST00479,Meera Solutions 479,SMB,Ahmedabad,Gujarat,India,Industrial
+CUST00480,Aditya Retail 480,SMB,Lucknow,Uttar Pradesh,India,Automotive
+CUST00481,Meera Industries 481,SMB,Bengaluru,Karnataka,India,Electronics
+CUST00482,Riya Solutions 482,SMB,Pune,Maharashtra,India,Safety
+CUST00483,Anaya Retail 483,SMB,Bengaluru,Karnataka,India,IT
+CUST00484,Anaya Industries 484,SMB,Delhi,Delhi,India,IT
+CUST00485,Riya Enterprises 485,SMB,Delhi,Delhi,India,Automotive
+CUST00486,Riya Retail 486,SMB,Chennai,Tamil Nadu,India,Industrial
+CUST00487,Vivaan Systems 487,SMB,Hyderabad,Telangana,India,Industrial
+CUST00488,Anaya Systems 488,Enterprise,Lucknow,Uttar Pradesh,India,Industrial
+CUST00489,Anaya Retail 489,SMB,Hyderabad,Telangana,India,IT
+CUST00490,Aditya Trading 490,Retail,Jaipur,Rajasthan,India,Automotive
+CUST00491,Ishaan Enterprises 491,Enterprise,Jaipur,Rajasthan,India,Packaging
+CUST00492,Ishaan Industries 492,SMB,Bengaluru,Karnataka,India,Packaging
+CUST00493,Ishaan Solutions 493,SMB,Delhi,Delhi,India,Industrial
+CUST00494,Aarav Retail 494,SMB,Indore,Madhya Pradesh,India,Safety
+CUST00495,Anaya Enterprises 495,Enterprise,Ahmedabad,Gujarat,India,Safety
+CUST00496,Kabir Trading 496,SMB,Pune,Maharashtra,India,Packaging
+CUST00497,Vivaan Solutions 497,SMB,Kolkata,West Bengal,India,Electronics
+CUST00498,Ishaan Enterprises 498,Enterprise,Mumbai,Maharashtra,India,Safety
+CUST00499,Riya Enterprises 499,Retail,Kolkata,West Bengal,India,IT
+CUST00500,Meera Systems 500,SMB,Kochi,Kerala,India,Industrial

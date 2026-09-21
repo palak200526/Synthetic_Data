@@ -1,0 +1,101 @@
+supplier_id,supplier_name,supplier_type,city,state,country,status
+SUP0001,Apex Components 01,Manufacturer,Mumbai,Maharashtra,India,Active
+SUP0002,Bharat Industrial Supplies 02,Distributor,Pune,Maharashtra,India,Active
+SUP0003,Nova Manufacturing 03,Wholesaler,Nashik,Maharashtra,India,Active
+SUP0004,Prime Source Solutions 04,Manufacturer,Ahmedabad,Gujarat,India,Active
+SUP0005,Vertex Engineering 05,Distributor,Vadodara,Gujarat,India,Active
+SUP0006,Shakti Components 06,Wholesaler,Surat,Gujarat,India,Active
+SUP0007,Trinity Industrial 07,Manufacturer,Delhi,Delhi,India,Active
+SUP0008,Sapphire Supply Co 08,Distributor,Noida,Uttar Pradesh,India,Active
+SUP0009,Orbit Materials 09,Wholesaler,Gurugram,Haryana,India,Active
+SUP0010,Precision Parts India 10,Manufacturer,Bengaluru,Karnataka,India,On Hold
+SUP0011,Metro Industrial Goods 11,Distributor,Chennai,Tamil Nadu,India,Active
+SUP0012,Eastern Components 12,Wholesaler,Hyderabad,Telangana,India,Active
+SUP0013,Western Supply Solutions 13,Manufacturer,Kolkata,West Bengal,India,Active
+SUP0014,Reliable Manufacturing 14,Distributor,Jaipur,Rajasthan,India,Active
+SUP0015,Pioneer Industrial 15,Wholesaler,Indore,Madhya Pradesh,India,Active
+SUP0016,Sterling Components 16,Manufacturer,Mumbai,Maharashtra,India,Active
+SUP0017,Dynamic Materials 17,Distributor,Pune,Maharashtra,India,Active
+SUP0018,Evergreen Supplies 18,Wholesaler,Nashik,Maharashtra,India,Active
+SUP0019,Zenith Engineering 19,Manufacturer,Ahmedabad,Gujarat,India,Active
+SUP0020,BluePeak Industries 20,Distributor,Vadodara,Gujarat,India,On Hold
+SUP0021,Apex Components 21,Wholesaler,Surat,Gujarat,India,Active
+SUP0022,Bharat Industrial Supplies 22,Manufacturer,Delhi,Delhi,India,Active
+SUP0023,Nova Manufacturing 23,Distributor,Noida,Uttar Pradesh,India,Active
+SUP0024,Prime Source Solutions 24,Wholesaler,Gurugram,Haryana,India,Active
+SUP0025,Vertex Engineering 25,Manufacturer,Bengaluru,Karnataka,India,Active
+SUP0026,Shakti Components 26,Distributor,Chennai,Tamil Nadu,India,Active
+SUP0027,Trinity Industrial 27,Wholesaler,Hyderabad,Telangana,India,Active
+SUP0028,Sapphire Supply Co 28,Manufacturer,Kolkata,West Bengal,India,Active
+SUP0029,Orbit Materials 29,Distributor,Jaipur,Rajasthan,India,Active
+SUP0030,Precision Parts India 30,Wholesaler,Indore,Madhya Pradesh,India,On Hold
+SUP0031,Metro Industrial Goods 31,Manufacturer,Mumbai,Maharashtra,India,Active
+SUP0032,Eastern Components 32,Distributor,Pune,Maharashtra,India,Active
+SUP0033,Western Supply Solutions 33,Wholesaler,Nashik,Maharashtra,India,Active
+SUP0034,Reliable Manufacturing 34,Manufacturer,Ahmedabad,Gujarat,India,Active
+SUP0035,Pioneer Industrial 35,Distributor,Vadodara,Gujarat,India,Active
+SUP0036,Sterling Components 36,Wholesaler,Surat,Gujarat,India,Active
+SUP0037,Dynamic Materials 37,Manufacturer,Delhi,Delhi,India,Active
+SUP0038,Evergreen Supplies 38,Distributor,Noida,Uttar Pradesh,India,Active
+SUP0039,Zenith Engineering 39,Wholesaler,Gurugram,Haryana,India,Active
+SUP0040,BluePeak Industries 40,Manufacturer,Bengaluru,Karnataka,India,On Hold
+SUP0041,Apex Components 41,Distributor,Chennai,Tamil Nadu,India,Active
+SUP0042,Bharat Industrial Supplies 42,Wholesaler,Hyderabad,Telangana,India,Active
+SUP0043,Nova Manufacturing 43,Manufacturer,Kolkata,West Bengal,India,Active
+SUP0044,Prime Source Solutions 44,Distributor,Jaipur,Rajasthan,India,Active
+SUP0045,Vertex Engineering 45,Wholesaler,Indore,Madhya Pradesh,India,Active
+SUP0046,Shakti Components 46,Manufacturer,Mumbai,Maharashtra,India,Active
+SUP0047,Trinity Industrial 47,Distributor,Pune,Maharashtra,India,Active
+SUP0048,Sapphire Supply Co 48,Wholesaler,Nashik,Maharashtra,India,Active
+SUP0049,Orbit Materials 49,Manufacturer,Ahmedabad,Gujarat,India,Active
+SUP0050,Precision Parts India 50,Distributor,Vadodara,Gujarat,India,On Hold
+SUP0051,Metro Industrial Goods 51,Wholesaler,Surat,Gujarat,India,Active
+SUP0052,Eastern Components 52,Manufacturer,Delhi,Delhi,India,Active
+SUP0053,Western Supply Solutions 53,Distributor,Noida,Uttar Pradesh,India,Active
+SUP0054,Reliable Manufacturing 54,Wholesaler,Gurugram,Haryana,India,Active
+SUP0055,Pioneer Industrial 55,Manufacturer,Bengaluru,Karnataka,India,Active
+SUP0056,Sterling Components 56,Distributor,Chennai,Tamil Nadu,India,Active
+SUP0057,Dynamic Materials 57,Wholesaler,Hyderabad,Telangana,India,Active
+SUP0058,Evergreen Supplies 58,Manufacturer,Kolkata,West Bengal,India,Active
+SUP0059,Zenith Engineering 59,Distributor,Jaipur,Rajasthan,India,Active
+SUP0060,BluePeak Industries 60,Wholesaler,Indore,Madhya Pradesh,India,On Hold
+SUP0061,Apex Components 61,Manufacturer,Mumbai,Maharashtra,India,Active
+SUP0062,Bharat Industrial Supplies 62,Distributor,Pune,Maharashtra,India,Active
+SUP0063,Nova Manufacturing 63,Wholesaler,Nashik,Maharashtra,India,Active
+SUP0064,Prime Source Solutions 64,Manufacturer,Ahmedabad,Gujarat,India,Active
+SUP0065,Vertex Engineering 65,Distributor,Vadodara,Gujarat,India,Active
+SUP0066,Shakti Components 66,Wholesaler,Surat,Gujarat,India,Active
+SUP0067,Trinity Industrial 67,Manufacturer,Delhi,Delhi,India,Active
+SUP0068,Sapphire Supply Co 68,Distributor,Noida,Uttar Pradesh,India,Active
+SUP0069,Orbit Materials 69,Wholesaler,Gurugram,Haryana,India,Active
+SUP0070,Precision Parts India 70,Manufacturer,Bengaluru,Karnataka,India,On Hold
+SUP0071,Metro Industrial Goods 71,Distributor,Chennai,Tamil Nadu,India,Active
+SUP0072,Eastern Components 72,Wholesaler,Hyderabad,Telangana,India,Active
+SUP0073,Western Supply Solutions 73,Manufacturer,Kolkata,West Bengal,India,Active
+SUP0074,Reliable Manufacturing 74,Distributor,Jaipur,Rajasthan,India,Active
+SUP0075,Pioneer Industrial 75,Wholesaler,Indore,Madhya Pradesh,India,Active
+SUP0076,Sterling Components 76,Manufacturer,Mumbai,Maharashtra,India,Active
+SUP0077,Dynamic Materials 77,Distributor,Pune,Maharashtra,India,Active
+SUP0078,Evergreen Supplies 78,Wholesaler,Nashik,Maharashtra,India,Active
+SUP0079,Zenith Engineering 79,Manufacturer,Ahmedabad,Gujarat,India,Active
+SUP0080,BluePeak Industries 80,Distributor,Vadodara,Gujarat,India,On Hold
+SUP0081,Apex Components 81,Wholesaler,Surat,Gujarat,India,Active
+SUP0082,Bharat Industrial Supplies 82,Manufacturer,Delhi,Delhi,India,Active
+SUP0083,Nova Manufacturing 83,Distributor,Noida,Uttar Pradesh,India,Active
+SUP0084,Prime Source Solutions 84,Wholesaler,Gurugram,Haryana,India,Active
+SUP0085,Vertex Engineering 85,Manufacturer,Bengaluru,Karnataka,India,Active
+SUP0086,Shakti Components 86,Distributor,Chennai,Tamil Nadu,India,Active
+SUP0087,Trinity Industrial 87,Wholesaler,Hyderabad,Telangana,India,Active
+SUP0088,Sapphire Supply Co 88,Manufacturer,Kolkata,West Bengal,India,Active
+SUP0089,Orbit Materials 89,Distributor,Jaipur,Rajasthan,India,Active
+SUP0090,Precision Parts India 90,Wholesaler,Indore,Madhya Pradesh,India,On Hold
+SUP0091,Metro Industrial Goods 91,Manufacturer,Mumbai,Maharashtra,India,Active
+SUP0092,Eastern Components 92,Distributor,Pune,Maharashtra,India,Active
+SUP0093,Western Supply Solutions 93,Wholesaler,Nashik,Maharashtra,India,Active
+SUP0094,Reliable Manufacturing 94,Manufacturer,Ahmedabad,Gujarat,India,Active
+SUP0095,Pioneer Industrial 95,Distributor,Vadodara,Gujarat,India,Active
+SUP0096,Sterling Components 96,Wholesaler,Surat,Gujarat,India,Active
+SUP0097,Dynamic Materials 97,Manufacturer,Delhi,Delhi,India,Active
+SUP0098,Evergreen Supplies 98,Distributor,Noida,Uttar Pradesh,India,Active
+SUP0099,Zenith Engineering 99,Wholesaler,Gurugram,Haryana,India,Active
+SUP0100,BluePeak Industries 100,Manufacturer,Bengaluru,Karnataka,India,On Hold

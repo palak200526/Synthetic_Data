@@ -1,0 +1,16 @@
+check,result
+supplier_master.supplier_id unique,PASS
+products.product_id unique,PASS
+purchase_orders.po_id unique,PASS
+shipments.shipment_id unique,PASS
+inventory.inventory_id unique,PASS
+purchase_orders.supplier_id -> supplier_master.supplier_id,PASS
+inventory.supplier_id -> supplier_master.supplier_id,PASS
+purchase_orders.product_id -> products.product_id,PASS
+inventory.product_id -> products.product_id,PASS
+shipments.po_id -> purchase_orders.po_id,PASS
+purchase_orders has supplier references,PASS
+inventory has supplier references,PASS
+purchase_orders has product references,PASS
+inventory has product references,PASS
+shipments has purchase order references,PASS
