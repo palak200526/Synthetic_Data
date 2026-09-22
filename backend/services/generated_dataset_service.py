@@ -16,10 +16,10 @@ from backend.services.dataset_loader import load_dataset
 
 UPLOAD_DIRECTORY = Path("data/uploads")
 
-
 def save_generated_dataset(
     dataframe: pd.DataFrame,
     dataset_id: int,
+    model_name: str,
 ):
     GENERATED_DIRECTORY.mkdir(
         parents=True,
@@ -27,7 +27,7 @@ def save_generated_dataset(
     )
 
     output_filename = (
-        f"synthetic_dataset_{dataset_id}.csv"
+        f"synthetic_dataset_{dataset_id}_{model_name}.csv"
     )
 
     output_path = GENERATED_DIRECTORY / output_filename

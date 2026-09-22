@@ -3,6 +3,7 @@ ALLOWED_ACTIONS = {
     "remove",
     "mask",
     "generalize",
+    "new_id",
 }
 
 

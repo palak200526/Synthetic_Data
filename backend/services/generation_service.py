@@ -7,6 +7,15 @@ from backend.services.generated_dataset_service import (
     save_generated_dataset,
 )
 
+from backend.services.id_generation_service import generate_new_ids
+
+from backend.generation.generator_factory import get_generator
+
+from backend.services.business_rule_detector import (
+    detect_arithmetic_relationships,
+    apply_business_rules,
+)
+
 
 SUPPORTED_MODELS = {
     "gaussian_copula",
@@ -23,9 +32,7 @@ def _generate_gaussian_copula(
 
     rng = np.random.default_rng(random_state)
 
-    # -----------------------------------------
     # 1. Determine columns based on configuration
-    # -----------------------------------------
     remove_columns = {
         config["column_name"]
         for config in configurations
@@ -42,12 +49,13 @@ def _generate_gaussian_copula(
             "No columns available for synthetic generation."
         )
 
-    # -----------------------------------------
     # 2. Separate numerical and categorical data
-    # -----------------------------------------
-    numerical_columns = working_dataframe.select_dtypes(
-        include=np.number
-    ).columns.tolist()
+    numerical_columns = (
+        working_dataframe
+        .select_dtypes(include=np.number)
+        .columns
+        .tolist()
+    )
 
     categorical_columns = [
         column
@@ -59,23 +67,23 @@ def _generate_gaussian_copula(
         index=range(len(dataframe))
     )
 
-    # -----------------------------------------
     # 3. Generate numerical columns
-    # -----------------------------------------
     if numerical_columns:
 
         numerical_data = working_dataframe[
             numerical_columns
         ].copy()
 
-        # Rank -> uniform -> Gaussian transformation
+        # Rank -> Uniform -> Gaussian transformation
         gaussian_data = pd.DataFrame(
             index=numerical_data.index
         )
 
         for column in numerical_columns:
 
-            values = numerical_data[column].to_numpy()
+            values = numerical_data[
+                column
+            ].to_numpy()
 
             ranks = pd.Series(values).rank(
                 method="average"
@@ -89,19 +97,29 @@ def _generate_gaussian_copula(
                 uniform_values
             )
 
-            gaussian_data[column] = gaussian_values
+            gaussian_data[column] = (
+                gaussian_values
+            )
 
         # Correlation structure
-        correlation_matrix = gaussian_data.corr().fillna(0)
+        correlation_matrix = (
+            gaussian_data
+            .corr()
+            .fillna(0)
+        )
 
         correlation_matrix = (
             correlation_matrix
-            + np.eye(len(correlation_matrix)) * 1e-6
+            + np.eye(
+                len(correlation_matrix)
+            ) * 1e-6
         )
 
         # Make matrix positive definite
-        eigenvalues, eigenvectors = np.linalg.eigh(
-            correlation_matrix
+        eigenvalues, eigenvectors = (
+            np.linalg.eigh(
+                correlation_matrix
+            )
         )
 
         eigenvalues = np.maximum(
@@ -116,10 +134,14 @@ def _generate_gaussian_copula(
         )
 
         # Generate correlated Gaussian samples
-        generated_gaussian = rng.multivariate_normal(
-            mean=np.zeros(len(numerical_columns)),
-            cov=correlation_matrix,
-            size=len(dataframe),
+        generated_gaussian = (
+            rng.multivariate_normal(
+                mean=np.zeros(
+                    len(numerical_columns)
+                ),
+                cov=correlation_matrix,
+                size=len(dataframe),
+            )
         )
 
         # Transform back to original distributions
@@ -127,9 +149,11 @@ def _generate_gaussian_copula(
             numerical_columns
         ):
 
-            original_values = numerical_data[
-                column
-            ].dropna().to_numpy()
+            original_values = (
+                numerical_data[column]
+                .dropna()
+                .to_numpy()
+            )
 
             uniform_values = norm.cdf(
                 generated_gaussian[:, index]
@@ -144,47 +168,176 @@ def _generate_gaussian_copula(
                 synthetic_values
             )
 
-    # -----------------------------------------
     # 4. Generate categorical columns
-    # -----------------------------------------
     for column in categorical_columns:
 
         value_counts = (
             working_dataframe[column]
-            .value_counts(normalize=True)
+            .value_counts(
+                normalize=True
+            )
         )
 
-        categories = value_counts.index.tolist()
-        probabilities = value_counts.values
-
-        synthetic_dataframe[column] = rng.choice(
-            categories,
-            size=len(dataframe),
-            p=probabilities,
+        categories = (
+            value_counts.index.tolist()
         )
 
-    # -----------------------------------------
+        probabilities = (
+            value_counts.values
+        )
+
+        synthetic_dataframe[column] = (
+            rng.choice(
+                categories,
+                size=len(dataframe),
+                p=probabilities,
+            )
+        )
+
     # 5. Restore original column order
-    # -----------------------------------------
-    synthetic_dataframe = synthetic_dataframe[
-        working_dataframe.columns
-    ]
+    synthetic_dataframe = (
+        synthetic_dataframe[
+            working_dataframe.columns
+        ]
+    )
 
-    # -----------------------------------------
     # 6. Restore integer columns
-    # -----------------------------------------
     for column in numerical_columns:
 
         if pd.api.types.is_integer_dtype(
             dataframe[column]
         ):
+
             synthetic_dataframe[column] = (
                 np.rint(
-                    synthetic_dataframe[column]
+                    synthetic_dataframe[
+                        column
+                    ]
                 ).astype(int)
             )
 
     return synthetic_dataframe
+
+
+def _apply_column_actions(
+    synthetic_dataframe: pd.DataFrame,
+    configurations: list,
+) -> pd.DataFrame:
+    """
+    Enforce configured column actions
+    on generated data.
+    """
+
+    result = synthetic_dataframe.copy()
+
+    for config in configurations:
+
+        column_name = config["column_name"]
+        action = config["action"]
+
+        # If the configured column is not
+        # present, there is nothing to enforce.
+        if column_name not in result.columns:
+            continue
+
+        if action == "keep":
+
+            # Keep generated column unchanged.
+            continue
+
+        elif action == "remove":
+
+            result = result.drop(
+                columns=[column_name],
+                errors="ignore",
+            )
+
+        elif action == "mask":
+
+            result[column_name] = (
+                result[column_name]
+                .astype(str)
+                .apply(
+                    lambda value:
+                    "*" * len(value)
+                    if value
+                    else value
+                )
+            )
+
+        elif action == "generalize":
+
+            if pd.api.types.is_numeric_dtype(
+                result[column_name]
+            ):
+
+                result[column_name] = (
+                    result[column_name]
+                    .round(0)
+                )
+
+            else:
+
+                result[column_name] = (
+                    result[column_name]
+                    .astype(str)
+                    .str[:3]
+                )
+
+        elif action == "new_id":
+
+            result = generate_new_ids(
+                result,
+                column_name,
+            )
+
+        elif action == "derived":
+            rule = config.get("rule")
+
+            if not rule:
+                continue
+
+            operation = rule.get("operation")
+            operands = rule.get("operands", [])
+
+            if len(operands) < 2:
+                continue
+
+            left = operands[0]
+            right = operands[1]
+
+            if left not in result.columns or right not in result.columns:
+                continue
+
+            if operation == "add":
+                result[column_name] = (
+                    result[left] + result[right]
+                )
+
+            elif operation == "subtract":
+                result[column_name] = (
+                    result[left] - result[right]
+                )
+
+            elif operation == "multiply":
+                result[column_name] = (
+                    result[left] * result[right]
+                )
+
+            elif operation == "divide":
+                non_zero = result[right] != 0
+
+                result.loc[non_zero, column_name] = (
+                    result.loc[non_zero, left]
+                    / result.loc[non_zero, right]
+                )
+        else:
+            raise ValueError(
+                f"Unsupported column action '{action}' "
+                f"for column '{column_name}'"
+            )
+
+    return result
 
 
 def generate_synthetic_dataset(
@@ -193,39 +346,67 @@ def generate_synthetic_dataset(
     parameters: dict | None = None,
 ):
 
-    # -----------------------------------------
+    # --------------------------------------------------
     # 1. Validate model
-    # -----------------------------------------
+    # --------------------------------------------------
+
     if not model_name:
         raise ValueError(
             "Model name is required."
         )
 
-    model_name = model_name.strip().lower()
+    model_name = (
+        model_name
+        .strip()
+        .lower()
+    )
 
     if model_name not in SUPPORTED_MODELS:
+
         raise ValueError(
             f"Unsupported model: {model_name}. "
-            f"Supported models are: "
+            f"Supported models: "
             f"{', '.join(sorted(SUPPORTED_MODELS))}."
         )
 
     parameters = parameters or {}
 
-    # -----------------------------------------
+    # --------------------------------------------------
     # 2. Prepare dataset
-    # -----------------------------------------
-    preparation = prepare_dataset_for_generation(
-        dataset_id
+    # --------------------------------------------------
+
+    preparation = (
+        prepare_dataset_for_generation(
+            dataset_id
+        )
     )
 
-    dataframe = preparation["dataframe"]
-    filename = preparation["filename"]
-    configurations = preparation["configurations"]
+    dataframe = preparation[
+        "dataframe"
+    ]
 
-    # -----------------------------------------
-    # 3. Generation
-    # -----------------------------------------
+    filename = preparation[
+        "filename"
+    ]
+
+    configurations = preparation[
+        "configurations"
+    ]
+
+    # --------------------------------------------------
+    # 3. Detect generalized business rules
+    # --------------------------------------------------
+
+    business_rules = (
+        detect_arithmetic_relationships(
+            dataframe
+        )
+    )
+
+    # --------------------------------------------------
+    # 4. Generate synthetic data
+    # --------------------------------------------------
+
     if model_name == "gaussian_copula":
 
         random_state = parameters.get(
@@ -243,22 +424,79 @@ def generate_synthetic_dataset(
 
     else:
 
-        raise NotImplementedError(
-            f"{model_name} generation algorithm "
-            "is not implemented yet."
+        # Remove columns configured with "remove"
+        remove_columns = {
+            config["column_name"]
+            for config in configurations
+            if config["action"] == "remove"
+        }
+
+        generation_dataframe = (
+            dataframe.drop(
+                columns=list(remove_columns),
+                errors="ignore",
+            ).copy()
         )
 
-    # -----------------------------------------
-    # 4. Save generated dataset
-    # -----------------------------------------
-    generated_dataset = save_generated_dataset(
-        synthetic_dataframe,
-        dataset_id,
+        # Create requested generator
+        generator = get_generator(
+            model_name,
+            **parameters,
+        )
+
+        # Train generator
+        generator.fit(
+            generation_dataframe
+        )
+
+        # Generate same number of rows
+        # as source dataset
+        synthetic_dataframe = (
+            generator.generate(
+                num_rows=len(dataframe)
+            )
+        )
+
+    # --------------------------------------------------
+    # 5. Apply generalized business rules
+    # --------------------------------------------------
+
+    synthetic_dataframe = (
+        apply_business_rules(
+            synthetic_dataframe,
+            business_rules,
+        )
     )
 
-    # -----------------------------------------
-    # 5. Return API response
-    # -----------------------------------------
+    # --------------------------------------------------
+    # 6. Enforce column actions
+    # --------------------------------------------------
+
+    synthetic_dataframe = (
+        _apply_column_actions(
+            synthetic_dataframe=(
+                synthetic_dataframe
+            ),
+            configurations=configurations,
+        )
+    )
+
+    # --------------------------------------------------
+    # 7. Save generated dataset
+    # --------------------------------------------------
+
+    generated_dataset = (
+        save_generated_dataset(
+            synthetic_dataframe,
+            dataset_id,
+            model_name,
+        )
+    )
+
+    # --------------------------------------------------
+    # 8. Return API response
+    # --------------------------------------------------
+
     return {
         "status": "success",
         "message": (
@@ -270,6 +508,11 @@ def generate_synthetic_dataset(
             "parameters": parameters,
             "source_filename": filename,
             "configurations": configurations,
-            "generated_dataset": generated_dataset,
+            "generated_dataset": (
+                generated_dataset
+            ),
+            "business_rules": (
+                business_rules
+            ),
         },
     }
