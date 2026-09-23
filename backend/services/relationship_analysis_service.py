@@ -11,6 +11,7 @@ from backend.repositories.relationship_repository import (
     save_relationship_analysis,
     get_relationship_analysis,
     save_dataset_relationship,
+    get_dataset_relationships,
 )
 
 UPLOAD_DIRECTORY = Path("data/uploads")
@@ -105,4 +106,33 @@ def create_dataset_relationship(request):
             "relationship_type": request.relationship_type,
             "created_at": result["created_at"],
         },
+    }
+
+def identify_related_tables(group_id: int):
+    if not group_id:
+        raise ValueError("Group ID is required.")
+
+    relationships = get_dataset_relationships(group_id)
+
+    if not relationships:
+        return {
+            "group_id": group_id,
+            "dataset_ids": [],
+            "relationships": [],
+        }
+
+    dataset_ids = set()
+
+    for relationship in relationships:
+        dataset_ids.add(
+            relationship["parent_dataset_id"]
+        )
+        dataset_ids.add(
+            relationship["child_dataset_id"]
+        )
+
+    return {
+        "group_id": group_id,
+        "dataset_ids": sorted(dataset_ids),
+        "relationships": relationships,
     }

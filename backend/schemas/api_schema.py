@@ -25,3 +25,8 @@ class ReportResponse(BaseModel):
 class DownloadResponse(BaseModel):
     status: str
     message: str
+
+class MultiTableGenerationRequest(BaseModel):
+    group_id: int
+    model_name: str
+    parameters: Optional[dict] = None

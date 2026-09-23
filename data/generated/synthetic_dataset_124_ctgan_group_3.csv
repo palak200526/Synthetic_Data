@@ -1,0 +1,6 @@
+supplier_id,supplier_name,category,city,country,status
+SUPPLIER0001,Delta Supplies,Raw Materials,Bangalore,India,Active
+SUPPLIER0002,Delta Supplies,Raw Materials,Bangalore,India,Active
+SUPPLIER0003,Gamma Industrial,Raw Materials,Delhi,India,Active
+SUPPLIER0004,Beta Logistics,Packaging,Delhi,India,Active
+SUPPLIER0005,Gamma Industrial,Packaging,Bangalore,India,Active

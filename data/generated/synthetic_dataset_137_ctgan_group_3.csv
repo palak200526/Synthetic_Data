@@ -1,0 +1,201 @@
+product_id,product_name,category,unit_of_measure,standard_cost,primary_source_country,status
+PROD0001,Premium Shaft Coupling,Packaging,Kg,20503.260253507688,India,Active
+PROD0002,Industrial Reflective Vest,Raw Materials,Unit,7389.380349551298,Vietnam,Active
+PROD0003,Heavy Duty PET Container,Automotive,Kg,9597.001540605374,India,Active
+PROD0004,Heavy Duty Gear Assembly,Packaging,Kg,3123.29565240635,India,Active
+PROD0005,Heavy Duty Industrial Rubber,Packaging,Kg,20268.57353761539,India,Active
+PROD0006,Heavy Duty Copper Wire,Packaging,Unit,5648.402437937218,Vietnam,Active
+PROD0007,Industrial Copper Wire,Automotive,Kg,20409.368957644816,India,Active
+PROD0008,Premium Stainless Steel Rod,Automotive,Kg,960.144036595174,India,Active
+PROD0009,Heavy Duty Pallet Wrap,Packaging,Kg,22928.083837376373,India,Active
+PROD0010,Heavy Duty Polymer Resin,Packaging,Kg,20155.676857620827,Vietnam,Active
+PROD0011,Industrial Industrial Rubber,Packaging,Unit,1141.7406155943916,Vietnam,Active
+PROD0012,Premium Conveyor Roller,Packaging,Unit,21073.05007853058,India,Active
+PROD0013,Premium Stainless Steel Rod,Packaging,Kg,22858.29010530964,India,Active
+PROD0014,Premium Polymer Resin,Packaging,Unit,21161.710242432102,India,Active
+PROD0015,Heavy Duty Thermal Label,Automotive,Kg,19878.06270595649,India,Active
+PROD0016,Heavy Duty Cleaning Solvent,Raw Materials,Unit,19962.315288783742,Vietnam,Active
+PROD0017,Standard Shaft Coupling,Packaging,Unit,14988.149026590012,India,Active
+PROD0018,Heavy Duty HDPE Drum,Packaging,Kg,20014.015570453896,India,Active
+PROD0019,Standard Industrial Rubber,Packaging,Kg,9211.493983501203,India,Active
+PROD0020,Standard Steel Coil,Packaging,Kg,24007.448727099076,Vietnam,Active
+PROD0021,Industrial Aluminium Sheet,Automotive,Kg,3291.67986697944,India,Active
+PROD0022,Standard Industrial Rubber,Packaging,Kg,17578.29568288436,India,Active
+PROD0023,Heavy Duty Stainless Steel Rod,Packaging,Kg,9487.030036616095,India,Active
+PROD0024,Heavy Duty Polymer Resin,Automotive,Kg,5474.133761699533,India,Active
+PROD0025,Heavy Duty Gear Assembly,Packaging,Kg,18665.181149780747,India,Active
+PROD0026,Heavy Duty Gear Assembly,Packaging,Kg,13929.487707625649,India,Active
+PROD0027,Standard Aluminium Sheet,Automotive,Kg,1273.0546745091413,India,Active
+PROD0028,Industrial Hydraulic Valve,Packaging,Kg,22883.229210722144,India,Active
+PROD0029,Standard Copper Wire,Packaging,Kg,21557.74902701276,India,Active
+PROD0030,Premium Stretch Film,Automotive,Kg,9475.312799528294,India,Active
+PROD0031,Heavy Duty Gear Assembly,Automotive,Kg,23960.861653646007,India,Active
+PROD0032,Standard Adhesive Resin,Packaging,Unit,6301.364804334264,Vietnam,Active
+PROD0033,Standard Polymer Resin,Packaging,Kg,20152.101395149824,India,Active
+PROD0034,Premium Steel Coil,Automotive,Kg,7165.450123780715,India,Active
+PROD0035,Heavy Duty Industrial Fan,Packaging,Unit,20900.35439435382,Vietnam,Active
+PROD0036,Industrial Polymer Resin,Packaging,Kg,10541.872104662265,India,Active
+PROD0037,Premium Aluminium Sheet,Automotive,Unit,5492.902618004678,India,Active
+PROD0038,Industrial Safety Helmet,Raw Materials,Kg,20049.957614553317,Vietnam,Active
+PROD0039,Standard Reflective Vest,Raw Materials,Unit,21291.386196247637,Vietnam,Active
+PROD0040,Industrial PET Container,Automotive,Kg,21008.91699954779,India,Discontinued
+PROD0041,Heavy Duty Stainless Steel Rod,Packaging,Kg,1821.1805615930757,India,Active
+PROD0042,Industrial Adhesive Resin,Packaging,Unit,7740.100728575043,Vietnam,Active
+PROD0043,Heavy Duty Stretch Film,Automotive,Kg,24935.85,India,Active
+PROD0044,Industrial Stainless Steel Rod,Packaging,Kg,11178.831298692206,India,Active
+PROD0045,Premium Copper Wire,Packaging,Kg,14111.9711540646,India,Active
+PROD0046,Premium Pump Assembly,Packaging,Kg,7615.481003962059,India,Active
+PROD0047,Standard Pump Assembly,Automotive,Unit,24694.336445038083,Vietnam,Active
+PROD0048,Standard Industrial Lubricant,Packaging,Unit,866.0424612925958,Vietnam,Active
+PROD0049,Heavy Duty Polymer Resin,Packaging,Unit,10253.568972187377,Vietnam,Active
+PROD0050,Heavy Duty Gear Assembly,Packaging,Kg,6910.136156437156,Vietnam,Active
+PROD0051,Heavy Duty Safety Helmet,Raw Materials,Unit,7609.981401473521,Vietnam,Active
+PROD0052,Industrial Copper Wire,Automotive,Unit,5559.048634326779,India,Active
+PROD0053,Standard Hydraulic Valve,Packaging,Unit,9264.81966789933,India,Active
+PROD0054,Premium Stretch Film,Packaging,Kg,10187.33404895213,India,Active
+PROD0055,Premium Polymer Resin,Automotive,Kg,18626.106566504022,India,Active
+PROD0056,Heavy Duty Aluminium Sheet,Automotive,Kg,17708.68644449266,India,Active
+PROD0057,Industrial Packaging Tape,Packaging,Kg,21450.922881324954,India,Active
+PROD0058,Industrial Stainless Steel Rod,Packaging,Unit,2135.379454107619,Vietnam,Active
+PROD0059,Industrial Coating Compound,Packaging,Unit,15985.753329744419,Vietnam,Active
+PROD0060,Heavy Duty Stainless Steel Rod,Packaging,Kg,19624.80997468085,India,Active
+PROD0061,Premium Pump Assembly,Packaging,Unit,5158.561911422487,India,Active
+PROD0062,Standard Copper Wire,Automotive,Kg,15893.141736131958,India,Active
+PROD0063,Heavy Duty Gear Assembly,Packaging,Unit,24848.100937846266,India,Active
+PROD0064,Standard Shaft Coupling,Packaging,Kg,12584.59293213425,India,Active
+PROD0065,Industrial Hydraulic Valve,Packaging,Kg,14535.557001933239,India,Active
+PROD0066,Heavy Duty Conveyor Roller,Packaging,Unit,795.2,Vietnam,Active
+PROD0067,Standard Face Shield,Raw Materials,Unit,10060.682534687872,Vietnam,Active
+PROD0068,Premium Aluminium Sheet,Packaging,Kg,17531.570040955485,India,Active
+PROD0069,Standard HDPE Drum,Automotive,Kg,11154.907066344827,India,Active
+PROD0070,Premium Industrial Lubricant,Packaging,Unit,10287.366468000013,Vietnam,Active
+PROD0071,Heavy Duty Cleaning Solvent,Packaging,Unit,7767.580283141748,India,Active
+PROD0072,Industrial Water Treatment Chemical,Packaging,Unit,18853.72969129168,India,Active
+PROD0073,Standard Packaging Tape,Automotive,Kg,4365.322876559042,India,Active
+PROD0074,Heavy Duty Stainless Steel Rod,Automotive,Unit,20082.71034292623,India,Active
+PROD0075,Industrial Cleaning Solvent,Packaging,Unit,17310.162165999605,Vietnam,Active
+PROD0076,Industrial Hydraulic Valve,Packaging,Unit,1767.4985061961042,India,Active
+PROD0077,Standard HDPE Drum,Packaging,Kg,5276.043541946058,India,Active
+PROD0078,Heavy Duty Packaging Tape,Packaging,Kg,6378.762843558878,India,Active
+PROD0079,Standard Pump Assembly,Packaging,Kg,24368.192308578902,Vietnam,Active
+PROD0080,Industrial Industrial Fan,Packaging,Unit,24147.875870033968,India,Active
+PROD0081,Premium Aluminium Sheet,Packaging,Kg,6317.946037356903,India,Active
+PROD0082,Standard Steel Coil,Packaging,Unit,3051.93655581847,India,Active
+PROD0083,Heavy Duty Aluminium Sheet,Automotive,Unit,3930.662607024091,India,Active
+PROD0084,Premium Industrial Rubber,Automotive,Unit,18888.907901879917,Vietnam,Active
+PROD0085,Industrial Steel Coil,Automotive,Unit,6709.00440348596,India,Active
+PROD0086,Premium Industrial Rubber,Packaging,Kg,24935.85,Vietnam,Active
+PROD0087,Premium Industrial Rubber,Packaging,Kg,6211.671046918332,India,Active
+PROD0088,Heavy Duty HDPE Drum,Automotive,Kg,11042.660839530768,India,Active
+PROD0089,Heavy Duty Conveyor Roller,Packaging,Unit,2750.702522259654,India,Active
+PROD0090,Heavy Duty Workstation,Raw Materials,Unit,18787.23854961348,Vietnam,Active
+PROD0091,Heavy Duty Industrial Rubber,Automotive,Kg,2935.470552073851,India,Active
+PROD0092,Heavy Duty Hydraulic Valve,Packaging,Unit,9288.590715300317,Vietnam,Active
+PROD0093,Standard Industrial Lubricant,Packaging,Kg,13572.75257421581,India,Active
+PROD0094,Heavy Duty Aluminium Sheet,Automotive,Kg,18473.389086640414,India,Active
+PROD0095,Heavy Duty Adhesive Resin,Packaging,Unit,11134.83771972816,India,Active
+PROD0096,Industrial Pallet Wrap,Packaging,Kg,1901.308153062204,India,Active
+PROD0097,Heavy Duty Industrial Fan,Raw Materials,Unit,16203.636959231135,Vietnam,Active
+PROD0098,Industrial Gear Assembly,Packaging,Unit,19492.607458264843,India,Active
+PROD0099,Industrial Gear Assembly,Automotive,Unit,11253.260099776848,India,Active
+PROD0100,Heavy Duty Steel Coil,Packaging,Unit,11164.38373089763,India,Active
+PROD0101,Industrial Coating Compound,Packaging,Kg,18873.099341816043,Vietnam,Active
+PROD0102,Industrial Shaft Coupling,Packaging,Unit,9758.811106429732,India,Active
+PROD0103,Standard Industrial Lubricant,Raw Materials,Unit,9196.11043964119,Vietnam,Active
+PROD0104,Premium Industrial Rubber,Packaging,Unit,7121.898368061109,Vietnam,Active
+PROD0105,Standard Adhesive Resin,Packaging,Unit,7784.988570510045,India,Active
+PROD0106,Premium Stainless Steel Rod,Packaging,Kg,20109.48319388908,India,Active
+PROD0107,Heavy Duty Reflective Vest,Raw Materials,Unit,18505.32635542134,Vietnam,Active
+PROD0108,Industrial Aluminium Sheet,Packaging,Kg,12420.159475285933,India,Active
+PROD0109,Industrial Industrial Lubricant,Packaging,Unit,834.0136213158365,Vietnam,Active
+PROD0110,Industrial Industrial Rubber,Automotive,Kg,18942.586816973395,India,Active
+PROD0111,Industrial Pump Assembly,Packaging,Unit,21207.4745686616,Vietnam,Active
+PROD0112,Heavy Duty Conveyor Roller,Packaging,Unit,18626.162571441942,India,Active
+PROD0113,Industrial Pallet Wrap,Automotive,Kg,2338.9436242312913,India,Active
+PROD0114,Industrial Shaft Coupling,Packaging,Kg,6581.581554679639,India,Active
+PROD0115,Heavy Duty Stainless Steel Rod,Packaging,Unit,12553.926928146468,India,Active
+PROD0116,Industrial Pump Assembly,Packaging,Unit,11558.357026071388,India,Active
+PROD0117,Heavy Duty Reflective Vest,Raw Materials,Set,22472.586775021147,Vietnam,Active
+PROD0118,Industrial Copper Wire,Automotive,Unit,11262.77957185884,India,Active
+PROD0119,Industrial Adhesive Resin,Packaging,Unit,3263.321602198106,Vietnam,Active
+PROD0120,Heavy Duty Polymer Resin,Packaging,Unit,22419.253394002357,India,Active
+PROD0121,Premium Pallet Wrap,Automotive,Kg,3020.930424108103,India,Active
+PROD0122,Standard Gear Assembly,Packaging,Unit,24087.60493755288,India,Active
+PROD0123,Premium Cleaning Solvent,Raw Materials,Unit,9607.866896668487,Vietnam,Active
+PROD0124,Standard Industrial Fan,Packaging,Kg,910.4655033535663,India,Active
+PROD0125,Industrial Industrial Rubber,Packaging,Kg,5608.903479876666,India,Active
+PROD0126,Premium Adhesive Resin,Packaging,Unit,11516.092403402863,India,Active
+PROD0127,Industrial Pump Assembly,Packaging,Kg,11095.681872227877,Vietnam,Active
+PROD0128,Premium Polymer Resin,Packaging,Kg,21161.040784261666,India,Active
+PROD0129,Industrial Barcode Scanner,Raw Materials,Unit,9272.808887332812,Vietnam,Active
+PROD0130,Industrial Reflective Vest,Raw Materials,Set,21082.05872377552,India,Active
+PROD0131,Premium Cleaning Solvent,Packaging,Unit,11532.368546478498,India,Active
+PROD0132,Heavy Duty Polymer Resin,Automotive,Unit,7242.153791808678,India,Active
+PROD0133,Industrial Shaft Coupling,Packaging,Kg,20076.501177460454,Vietnam,Active
+PROD0134,Industrial Hydraulic Valve,Packaging,Unit,2232.855142001952,India,Active
+PROD0135,Industrial Industrial Rubber,Packaging,Kg,6347.843445798842,India,Active
+PROD0136,Heavy Duty Pump Assembly,Raw Materials,Kg,4554.240639185974,Vietnam,Active
+PROD0137,Premium Industrial Lubricant,Packaging,Unit,16169.591285573475,Vietnam,Active
+PROD0138,Standard Pump Assembly,Packaging,Unit,15140.658030798073,India,Active
+PROD0139,Premium Industrial Rubber,Automotive,Unit,12104.157830123166,India,Active
+PROD0140,Industrial Safety Helmet,Raw Materials,Unit,3020.355817628288,Vietnam,Active
+PROD0141,Premium Gear Assembly,Packaging,Kg,17758.229687016126,Vietnam,Active
+PROD0142,Standard Industrial Fan,Packaging,Kg,3424.349322304812,Vietnam,Active
+PROD0143,Heavy Duty Aluminium Sheet,Automotive,Kg,21207.565516373143,India,Active
+PROD0144,Standard Cleaning Solvent,Packaging,Unit,15969.072466559588,Vietnam,Active
+PROD0145,Premium Conveyor Roller,Raw Materials,Unit,6809.628889941477,Vietnam,Active
+PROD0146,Industrial Shaft Coupling,Packaging,Unit,11725.897453701606,India,Active
+PROD0147,Premium Cleaning Solvent,Packaging,Unit,15336.651741411562,Vietnam,Active
+PROD0148,Premium Stainless Steel Rod,Packaging,Kg,18655.02565159085,India,Active
+PROD0149,Standard Industrial Rubber,Automotive,Kg,22780.869428309263,India,Active
+PROD0150,Standard Stainless Steel Rod,Packaging,Kg,8337.826961453111,India,Active
+PROD0151,Standard Polymer Resin,Packaging,Kg,5801.031404423776,Vietnam,Active
+PROD0152,Standard Steel Coil,Packaging,Kg,19500.77369233934,Vietnam,Active
+PROD0153,Heavy Duty Pump Assembly,Packaging,Unit,19660.98961030858,Vietnam,Active
+PROD0154,Industrial Industrial Rubber,Packaging,Kg,20596.540763413985,India,Active
+PROD0155,Premium HDPE Drum,Automotive,Kg,20415.38689902249,India,Active
+PROD0156,Standard Copper Wire,Automotive,Unit,12354.100085251623,India,Active
+PROD0157,Industrial Stainless Steel Rod,Automotive,Kg,20034.028667629023,India,Active
+PROD0158,Heavy Duty Copper Wire,Packaging,Kg,2329.1865196764593,India,Active
+PROD0159,Heavy Duty Aluminium Sheet,Automotive,Kg,12582.38421771255,India,Active
+PROD0160,Industrial Conveyor Roller,Packaging,Unit,18623.202827851936,Vietnam,Active
+PROD0161,Premium Hydraulic Valve,Packaging,Kg,24856.696805295447,Vietnam,Active
+PROD0162,Industrial Packaging Tape,Automotive,Kg,12326.776191192246,India,Active
+PROD0163,Standard Thermal Label,Automotive,Kg,15958.938905658293,India,Discontinued
+PROD0164,Premium Industrial Rubber,Packaging,Kg,15956.952224051085,Vietnam,Active
+PROD0165,Premium HDPE Drum,Automotive,Kg,8586.738330665028,India,Active
+PROD0166,Industrial Conveyor Roller,Packaging,Kg,3334.316423669932,India,Active
+PROD0167,Heavy Duty Stainless Steel Rod,Packaging,Unit,6190.283563564062,India,Active
+PROD0168,Industrial Industrial Fan,Packaging,Unit,1751.8907676713593,India,Active
+PROD0169,Industrial Water Treatment Chemical,Raw Materials,Unit,5376.974614944933,India,Active
+PROD0170,Heavy Duty Aluminium Sheet,Packaging,Unit,24091.12906065343,India,Active
+PROD0171,Heavy Duty Industrial Rubber,Packaging,Kg,12403.622953921442,India,Active
+PROD0172,Industrial Aluminium Sheet,Packaging,Kg,20179.55594257148,India,Active
+PROD0173,Premium Shock Absorber,Automotive,Kg,7402.331217925135,India,Active
+PROD0174,Premium Adhesive Resin,Packaging,Unit,10834.99606324338,India,Active
+PROD0175,Standard Copper Wire,Packaging,Kg,967.7595273452563,India,Active
+PROD0176,Standard Pallet Wrap,Packaging,Kg,4558.821238833951,India,Active
+PROD0177,Premium HDPE Drum,Automotive,Kg,20030.688381045085,India,Active
+PROD0178,Heavy Duty Thermal Label,Packaging,Kg,3865.8695310589555,India,Active
+PROD0179,Premium Polymer Resin,Packaging,Unit,24470.98903772705,India,Active
+PROD0180,Heavy Duty Industrial Rubber,Packaging,Unit,3100.559125101315,India,Active
+PROD0181,Standard Industrial Rubber,Packaging,Kg,21555.354781944217,India,Active
+PROD0182,Heavy Duty Gear Assembly,Packaging,Unit,2029.391586151418,India,Active
+PROD0183,Industrial Packaging Tape,Automotive,Unit,18777.83947950621,India,Active
+PROD0184,Standard Water Treatment Chemical,Raw Materials,Unit,851.764317321072,Vietnam,Active
+PROD0185,Premium Gear Assembly,Packaging,Unit,18809.335931757094,India,Active
+PROD0186,Premium Industrial Fan,Packaging,Unit,24783.57818013439,Vietnam,Active
+PROD0187,Industrial Safety Helmet,Raw Materials,Unit,1602.3886030078013,Vietnam,Active
+PROD0188,Standard Thermal Label,Automotive,Kg,18559.397402189556,India,Active
+PROD0189,Standard Conveyor Roller,Packaging,Kg,16300.159746773872,India,Active
+PROD0190,Standard Steel Coil,Packaging,Kg,4473.024469467355,India,Active
+PROD0191,Standard Safety Goggles,Raw Materials,Unit,19535.036655351392,Vietnam,Active
+PROD0192,Heavy Duty Polymer Resin,Automotive,Kg,20942.612834429063,India,Active
+PROD0193,Heavy Duty Conveyor Roller,Packaging,Unit,12743.34691752852,Vietnam,Active
+PROD0194,Standard Stainless Steel Rod,Packaging,Unit,9286.732747041631,Vietnam,Active
+PROD0195,Standard Steel Coil,Automotive,Kg,3342.435664305792,India,Active
+PROD0196,Premium Shock Absorber,Automotive,Kg,20294.3777742834,India,Active
+PROD0197,Standard Polymer Resin,Packaging,Kg,23689.04209896582,India,Active
+PROD0198,Heavy Duty Adhesive Resin,Raw Materials,Unit,4475.529188969022,Vietnam,Active
+PROD0199,Premium Pallet Wrap,Packaging,Kg,22038.412528831173,India,Active
+PROD0200,Heavy Duty Industrial Rubber,Automotive,Unit,11921.861493969463,India,Active

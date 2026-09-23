@@ -46,6 +46,10 @@ from backend.controllers.dataset_group_controller import (
     router as dataset_group_router,
 )
 
+from backend.controllers.multi_table_generation_controller import (
+    router as multi_table_generation_router
+)
+
 app = FastAPI(
     title="Synthetic Data Platform API",
     description="Backend API for the Synthetic Data Platform",
@@ -129,6 +133,7 @@ app.include_router(dataset_router)
 app.include_router(profile_router)
 app.include_router(configuration_router)
 app.include_router(generation_router)
+app.include_router(multi_table_generation_router)
 app.include_router(evaluation_router)
 app.include_router(dashboard_router)
 app.include_router(report_router)

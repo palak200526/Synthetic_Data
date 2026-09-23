@@ -1,0 +1,6 @@
+supplier_id,supplier_name,category,city,country,status
+PROD0001,Delta Supplies,Mechanical,Mumbai,India,Active
+PROD0002,Gamma Industrial,Raw Materials,Chennai,India,Active
+PROD0003,Epsilon Manufacturing,Raw Materials,Bangalore,India,Inactive
+PROD0004,Delta Supplies,Electronics,Chennai,India,Inactive
+PROD0005,Alpha Components,Packaging,Delhi,India,Active
