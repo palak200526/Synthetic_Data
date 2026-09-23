@@ -16,6 +16,13 @@ from backend.services.business_rule_detector import (
     apply_business_rules,
 )
 
+from backend.repositories.generation_repository import (
+    create_generation_run,
+    save_model_configuration,
+    save_generated_result,
+    update_generation_run_status,
+)
+
 
 SUPPORTED_MODELS = {
     "gaussian_copula",
@@ -344,8 +351,7 @@ def generate_synthetic_dataset(
     dataset_id: int,
     model_name: str,
     parameters: dict | None = None,
-):
-
+):    
     # --------------------------------------------------
     # 1. Validate model
     # --------------------------------------------------
@@ -370,6 +376,17 @@ def generate_synthetic_dataset(
         )
 
     parameters = parameters or {}
+
+    run_id = create_generation_run(
+        dataset_id=dataset_id,
+        model_name=model_name,
+    )
+    
+    save_model_configuration(
+        run_id=run_id,
+        model_name=model_name,
+        parameters=parameters,
+    )
 
     # --------------------------------------------------
     # 2. Prepare dataset
@@ -492,6 +509,18 @@ def generate_synthetic_dataset(
             model_name,
         )
     )
+    result_id = save_generated_result(
+        run_id=run_id,
+        file_name=generated_dataset["file_name"],
+        file_path=generated_dataset["file_path"],
+        row_count=generated_dataset["row_count"],
+        column_count=generated_dataset["column_count"],
+    )
+
+    update_generation_run_status(
+        run_id=run_id,
+        status="completed",
+    )
 
     # --------------------------------------------------
     # 8. Return API response
@@ -503,6 +532,8 @@ def generate_synthetic_dataset(
             "Synthetic dataset generated successfully."
         ),
         "data": {
+            "run_id": run_id,
+            "result_id": result_id,
             "dataset_id": dataset_id,
             "model_name": model_name,
             "parameters": parameters,

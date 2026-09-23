@@ -1,0 +1,501 @@
+customer_id,customer_name,customer_segment,city,state,country,industry
+37b29d63-26ad-46f9-a68b-6b2f92669575,******************,Retail,Indore,Telangana,India,Automotive
+c6afa931-2635-478a-ad55-3a57e571dfdc,****************,Enterprise,Mumbai,Maharashtra,India,Automotive
+2949bd33-532f-4127-b6ce-301c488db4a9,*********************,SMB,Indore,Telangana,India,Safety
+59d4deba-b792-4f27-b9f2-018bd8ea8214,*********************,SMB,Lucknow,Uttar Pradesh,India,Automotive
+36567848-876a-41da-a72d-d7c71bb0c490,********************,Enterprise,Indore,Telangana,India,Industrial
+fac42e2a-27fe-492e-9ccb-b5f44205416a,*****************,Enterprise,Hyderabad,Karnataka,India,Industrial
+d66c1c65-4f86-450b-9a9e-1f4d8f5811d1,*********************,SMB,Chennai,Tamil Nadu,India,Automotive
+0f51c17a-292c-42fd-b747-066631ea10e0,****************,SMB,Hyderabad,Karnataka,India,Packaging
+4232e57c-8eb2-4843-8563-931cf2681946,*********************,SMB,Bengaluru,Maharashtra,India,Packaging
+3f67e975-ee16-4cd2-a0e1-ee0991524a84,*****************,Enterprise,Mumbai,Uttar Pradesh,India,IT
+bfba5c98-c9fd-4ca9-bb3d-c4b87ebb7af6,*****************,SMB,Hyderabad,Karnataka,India,Automotive
+ee87bcb2-8f6b-4b98-ab4a-c795ef8eb594,*********************,Enterprise,Chennai,Madhya Pradesh,India,Packaging
+0cd858d6-fdb8-4f94-8548-fe88cdc25ace,*********************,SMB,Kochi,Kerala,India,Electronics
+c935b1ef-9ba2-4fc9-a361-90bca85f9ea0,******************,Retail,Indore,Telangana,India,Automotive
+1550f663-0327-4730-a195-fd5abbf22478,*******************,Enterprise,Hyderabad,Karnataka,India,Packaging
+e7e8f5c4-dcef-477e-85c9-99ce15bc9137,****************,SMB,Lucknow,Uttar Pradesh,India,Automotive
+bd1550e5-812f-4197-bd96-b735435fee31,*****************,Retail,Chennai,Tamil Nadu,India,Automotive
+c849c36e-130a-4768-b75c-b8ffc513b8a9,*****************,SMB,Jaipur,Rajasthan,India,Safety
+f74d0783-3180-4905-80b2-d04671e687bd,******************,SMB,Pune,Madhya Pradesh,India,Safety
+60a842bf-9fbb-409b-9280-6bf250424ed0,****************,Retail,Hyderabad,Karnataka,India,Automotive
+a9ff7e77-49df-463a-a9e7-728a7e37cb57,*******************,SMB,Pune,Madhya Pradesh,India,Safety
+2e0de13f-ff02-4ec2-a25c-6eef3562da6d,*********************,SMB,Indore,Telangana,India,Safety
+b550e78a-1bf5-4e9d-933f-2720b38d167d,********************,Retail,Indore,Telangana,India,Electronics
+f159ac31-a692-4580-85a9-028d767b7855,********************,Retail,Lucknow,Uttar Pradesh,India,Safety
+7f6f4c6c-93dd-4d95-89f6-b192c94f630a,*********************,Enterprise,Kochi,West Bengal,India,Industrial
+69fe5cad-80b0-44aa-bad4-bf81ffda9880,*********************,SMB,Bengaluru,Karnataka,India,Industrial
+1285280d-6043-4e43-8c49-aa6bc44e53cd,*********************,SMB,Indore,Telangana,India,Packaging
+a1af1fde-7bb8-48c9-89d6-5b0043f4e217,****************,SMB,Chennai,West Bengal,India,Industrial
+3f2ea1e3-f686-4f0e-91f0-b78ac58979be,**********************,Enterprise,Mumbai,Maharashtra,India,Automotive
+5e036b8c-fc41-492c-a429-38242e3522d7,********************,SMB,Kochi,Kerala,India,Safety
+802148ea-5c5b-484a-a6c3-a48d2f54d626,******************,SMB,Kochi,Kerala,India,IT
+d8fdbf65-ba4e-4a73-9470-2ef208ddf562,********************,Retail,Pune,Madhya Pradesh,India,Automotive
+d0ab219d-25ae-45fc-aed1-f6399a2edd89,****************,Enterprise,Indore,Telangana,India,Safety
+01f527be-5120-4a44-86bf-5f19361e5293,********************,SMB,Jaipur,Rajasthan,India,Industrial
+fdc47441-0584-4c36-b6cb-6ad85605941e,*****************,Enterprise,Kochi,Kerala,India,Safety
+d17805bf-9031-4023-806d-7137da9af99f,*******************,Enterprise,Kolkata,West Bengal,India,Industrial
+3dd03e09-7785-4bfe-abce-9f4d095ad3e9,******************,Enterprise,Ahmedabad,Gujarat,India,Electronics
+723f37fe-b1b0-4df2-9012-70b2b29c7041,*****************,Enterprise,Bengaluru,Maharashtra,India,Electronics
+1e736db1-3f5a-4f85-a7f3-20f3149cb9f2,*********************,Retail,Indore,Telangana,India,Automotive
+c123d022-2de5-4dac-a030-f7cead4c5f2c,********************,SMB,Pune,Madhya Pradesh,India,Industrial
+56bb71bc-2d5b-403b-9daa-267ba330e081,****************,SMB,Ahmedabad,Gujarat,India,Industrial
+26b4c366-53b2-4827-a812-72d4dc5e8546,*********************,Retail,Lucknow,Uttar Pradesh,India,Safety
+3600c40d-c09c-4e4e-83fa-d0bc07c1bdf2,*****************,SMB,Kolkata,West Bengal,India,Industrial
+6a474a83-c3a9-4cf9-9629-a6693fda70f2,**********************,SMB,Indore,Telangana,India,Industrial
+0d5a4b56-64c2-4306-8edd-2859972c9222,********************,SMB,Indore,Telangana,India,Safety
+374d751d-b652-483f-b0ef-1bc0f763023f,*****************,SMB,Kolkata,West Bengal,India,Industrial
+5b014670-6826-4764-8f23-062236f6aeaf,********************,SMB,Hyderabad,Karnataka,India,Industrial
+d55a93eb-eced-4480-a9d9-e2d2c8b3ccdc,******************,SMB,Indore,Telangana,India,Industrial
+5ad97361-704c-4035-bbcd-9568e0dd780d,******************,SMB,Indore,Telangana,India,Safety
+62e1e41c-868f-48a6-a03e-be8be800ced2,********************,SMB,Bengaluru,Karnataka,India,Automotive
+c1b18f95-c3a5-4c86-a4dd-583a931fbcb9,*****************,Retail,Pune,Madhya Pradesh,India,Industrial
+0ad7ac65-e5b9-4ea7-8f39-44aa079b7828,********************,SMB,Delhi,Delhi,India,IT
+f53569d5-dfca-4485-b1b5-0aad1619988e,*********************,Retail,Bengaluru,Maharashtra,India,Industrial
+8b94026c-0c50-43e3-9e61-cbee181c811c,********************,Enterprise,Chennai,Madhya Pradesh,India,Industrial
+572f7bab-72e7-4c1d-b22c-bbf8f69a0fb7,*****************,Enterprise,Kolkata,West Bengal,India,IT
+3123f38e-784f-4d4f-81f5-a82a15e50d6e,********************,Retail,Indore,Telangana,India,Industrial
+ead1aae1-1225-472c-b7ec-8becf7ff5abc,********************,Enterprise,Mumbai,Uttar Pradesh,India,Safety
+91743e17-010c-4b56-ad32-14f5cc789fb6,*****************,SMB,Hyderabad,Karnataka,India,Industrial
+700840ae-d733-40e7-9d38-6faa5657078f,********************,Enterprise,Kolkata,West Bengal,India,IT
+e6e2af2e-7109-49a9-9fcc-2f16375758e1,*********************,SMB,Pune,Madhya Pradesh,India,Industrial
+363ea69d-578b-47a5-a751-c50e8834f89a,****************,SMB,Indore,Telangana,India,Industrial
+3e413bcc-20ed-4899-a5f5-6e488d1475d4,*******************,Enterprise,Delhi,Delhi,India,Industrial
+f079844d-867e-4685-8fd6-8dca321aa0d6,*****************,Retail,Mumbai,Uttar Pradesh,India,Industrial
+fcb93c6b-91ed-4ab2-828f-17c817e3e62c,*********************,SMB,Mumbai,Maharashtra,India,Automotive
+d36b5ad2-0ae3-43d7-b06c-5c66d560ce33,*********************,SMB,Bengaluru,Maharashtra,India,Automotive
+29d70f27-8fe4-44f2-ac7e-2d9eb579a718,*****************,SMB,Lucknow,Uttar Pradesh,India,IT
+3e414473-a9df-4ea8-9375-e0ae1bcd9cf7,*******************,SMB,Kolkata,West Bengal,India,Safety
+5b582152-8ee5-4710-bba5-11ebb5aa2599,******************,SMB,Hyderabad,Karnataka,India,Automotive
+f8664eb1-37a6-4600-9fab-879a57471892,****************,Retail,Bengaluru,Maharashtra,India,Automotive
+4aadcb2d-f4d2-43ed-8a4e-085fc913661f,****************,SMB,Delhi,Delhi,India,IT
+1466ae89-75dc-48ac-9a2a-d8ee36eb28f5,****************,Enterprise,Lucknow,Rajasthan,India,IT
+09f21acb-83e5-429e-b5a9-5a6156642201,****************,Enterprise,Pune,Telangana,India,IT
+0e229334-4a55-4d0e-b38c-dcd2c6c688f5,****************,SMB,Bengaluru,Karnataka,India,Electronics
+9d1bad16-b029-4af8-b1f7-10a9a90a04df,********************,SMB,Delhi,Rajasthan,India,Automotive
+2a76f82d-13a5-44d4-b258-92145449ac5d,*******************,Enterprise,Hyderabad,Karnataka,India,Industrial
+73787dd0-be2c-403c-9306-7410032150c6,****************,SMB,Jaipur,Rajasthan,India,IT
+c99ffaf7-6ebf-4f36-933d-7d794ecb9257,**********************,Retail,Indore,Telangana,India,Automotive
+c943e337-116a-4c53-95b1-3b3bfc4fe8da,********************,SMB,Chennai,Tamil Nadu,India,IT
+92e998c7-6848-4718-8e18-8c09f8e5a2b5,*****************,SMB,Delhi,Delhi,India,Automotive
+ab43f6c1-100d-4b85-af3f-d4feb0248fc6,****************,SMB,Hyderabad,Telangana,India,Safety
+e94b9b30-6e43-4dcf-9171-19c5f861b928,******************,SMB,Jaipur,Rajasthan,India,Automotive
+5b58eb3c-248c-4c95-b4f1-1d54e3e3d326,*****************,Enterprise,Hyderabad,Karnataka,India,Safety
+ed3c5c6a-92b8-49dd-985a-5d07ae0c74a7,*******************,Retail,Lucknow,Uttar Pradesh,India,Industrial
+9c5395b6-ab6a-44f6-9ec7-eef907a4fe13,****************,SMB,Hyderabad,Karnataka,India,IT
+f3a1b2be-9aad-42e8-98e3-ffd692e17fa1,*******************,Enterprise,Kochi,Kerala,India,Automotive
+6eca44cf-f76a-4eff-8e4f-a7b3c997514a,******************,SMB,Delhi,Delhi,India,Electronics
+87c493e8-bdee-41db-8f3d-15722f4f74d3,*****************,Retail,Mumbai,Uttar Pradesh,India,Electronics
+39d342be-b8fd-4a52-a3b9-792367bb15ba,*********************,SMB,Lucknow,Uttar Pradesh,India,Industrial
+a2b796d8-79b5-43de-bb0f-8dc8029f8eb9,*****************,Retail,Lucknow,Uttar Pradesh,India,Electronics
+db8d8bf0-a1b1-4ef9-a6ad-083a1ba611f0,****************,Retail,Jaipur,Rajasthan,India,Safety
+a6da9441-4215-4dfd-a7e7-5dbdc950df5e,********************,SMB,Jaipur,Rajasthan,India,Safety
+c65531c3-fb74-4882-ad08-e728401b249f,*****************,Enterprise,Indore,Telangana,India,Industrial
+0d1fb6ea-8f6c-4f4f-962e-d06f94aac43c,****************,Enterprise,Pune,Telangana,India,IT
+4a95dce3-1acd-4b58-8e48-3cbe6c96b0e6,***************,SMB,Hyderabad,Karnataka,India,IT
+bdf7c5f9-fe98-4271-8ece-ea206d2e4ebe,******************,Enterprise,Pune,Telangana,India,IT
+d41d891e-c224-4a64-b382-17cb9e6cea0d,********************,SMB,Mumbai,Maharashtra,India,Automotive
+5afaf399-b2ff-44c1-84a3-1ead531e63e9,********************,SMB,Indore,Telangana,India,Safety
+5ea3a430-df34-44ee-b020-a7585d4c40bc,****************,Retail,Indore,Karnataka,India,Electronics
+abef6f28-77c8-47ca-b29f-0cf1f523c82e,**********************,SMB,Hyderabad,Karnataka,India,Automotive
+90e5e086-4afb-4ff5-97b1-e656aa85e0f0,****************,Retail,Mumbai,Uttar Pradesh,India,Industrial
+ae039d80-3e67-4f27-861c-0ecca88cb722,*******************,SMB,Hyderabad,Karnataka,India,IT
+3aa02c24-17e1-4c74-8112-936ffcd3628d,*****************,SMB,Jaipur,Rajasthan,India,Automotive
+1dfb1872-e89c-475d-aefb-732e75b348c5,********************,SMB,Hyderabad,Karnataka,India,Safety
+6079ae20-13ea-4535-8df2-6f2e61d5c97d,*****************,SMB,Indore,Telangana,India,Safety
+1aaaea7b-f50c-4b7f-b8b9-8e909c4f8243,*******************,SMB,Hyderabad,Telangana,India,Automotive
+a49c8900-e941-4e69-9a6b-dc9ec566bc52,*******************,SMB,Kochi,Kerala,India,Safety
+4c73cf56-edaa-4565-bd69-eafa7a05d3e4,****************,SMB,Ahmedabad,Gujarat,India,IT
+370b1760-dbdb-468f-89b4-5bd32f5698c5,*****************,Enterprise,Ahmedabad,Gujarat,India,Automotive
+8820423b-4d95-4d03-9bea-25930be9ca40,******************,SMB,Kochi,Gujarat,India,Industrial
+f6b5f83c-7bad-4558-b615-f300fee4ea92,********************,SMB,Mumbai,Maharashtra,India,IT
+e690deba-98df-498a-a83f-b02cfd87d919,****************,SMB,Chennai,Tamil Nadu,India,Electronics
+40776e4f-d718-4534-b1ae-7396bcf5e9c2,*********************,SMB,Ahmedabad,Gujarat,India,Safety
+2b70f1c8-cc78-4fd2-b054-f5647fe733c8,*******************,SMB,Bengaluru,Karnataka,India,Automotive
+ee67dda6-2db1-4a53-921f-faf79f9065e0,***************,Enterprise,Pune,Telangana,India,Industrial
+99a890a6-93e6-4f6c-a9ac-87c8236570e7,*********************,Retail,Delhi,Rajasthan,India,Safety
+d8d547eb-dbf3-4f29-b9e1-9c78926d45d4,****************,Enterprise,Indore,Telangana,India,Safety
+3d8ddda5-2ad2-4288-b508-6a359b1899d2,****************,SMB,Kochi,Gujarat,India,Industrial
+85c98a6a-86d5-4b88-a063-c28405db111d,******************,SMB,Pune,Madhya Pradesh,India,Industrial
+3c71a4af-f863-47df-9d2b-f83b1f9b5c35,**********************,SMB,Chennai,Tamil Nadu,India,Safety
+37b27b68-5950-4713-bd7c-3f97b30d8945,****************,Enterprise,Lucknow,Uttar Pradesh,India,Safety
+d0d789e4-72a3-4e1a-920a-91743b627bcd,****************,SMB,Bengaluru,Maharashtra,India,Industrial
+c448b00d-5ec0-4a98-95f9-5033468d71af,****************,SMB,Kochi,Kerala,India,Industrial
+60c4f344-7fd4-4c9e-a9b5-5d3aac5dd4dc,*****************,SMB,Indore,Telangana,India,IT
+5d13ac61-b3b4-414b-a58e-befcf748afd5,**********************,SMB,Kochi,Kerala,India,Safety
+d209926d-5eee-4173-af45-dd63a1f790b5,******************,SMB,Indore,Telangana,India,Automotive
+50701c31-5181-4fcb-9777-454ea830ab4e,*********************,SMB,Jaipur,Rajasthan,India,Industrial
+ca7e4c05-adb8-45e0-a774-7df5819eb751,*****************,SMB,Kolkata,West Bengal,India,Industrial
+16966477-a0b4-4eb4-a055-91f909b2d17e,*****************,Enterprise,Kolkata,West Bengal,India,Industrial
+48529717-5ae1-445b-9b3f-1681faa9fbf2,********************,Enterprise,Ahmedabad,Gujarat,India,Automotive
+29a9fc56-ce52-4c00-88b6-b7de997a630b,*****************,SMB,Lucknow,Uttar Pradesh,India,Electronics
+e026485c-a49c-4280-bf44-90e40087bc31,*****************,SMB,Hyderabad,Karnataka,India,Safety
+897dcde2-2188-4a3a-bc59-99123865b232,********************,SMB,Kolkata,West Bengal,India,Safety
+16f3ae02-0658-458b-a67a-c4fa9592dccc,****************,Retail,Lucknow,Uttar Pradesh,India,IT
+2a138ce6-613d-4b11-8be1-228c338a0419,********************,Retail,Kochi,Kerala,India,Automotive
+247e8224-bf43-4658-99b3-c7cf62cb070b,****************,Retail,Kolkata,West Bengal,India,Industrial
+26ab2ce1-e898-4b33-a543-061b7607a98d,*********************,Retail,Chennai,Tamil Nadu,India,IT
+b016e5f4-5ec5-4fb8-9b28-87b2ea3a8fe8,****************,SMB,Mumbai,Maharashtra,India,Industrial
+26eef945-89ad-4548-92f9-ddb8a73e4676,********************,SMB,Jaipur,Rajasthan,India,Industrial
+5c833758-d1e9-4de1-9b79-c2f2df99dc18,********************,Enterprise,Jaipur,Rajasthan,India,Automotive
+4645018b-6254-44dc-9db3-b03f09099528,********************,SMB,Pune,Madhya Pradesh,India,Safety
+fef88e89-d65f-430d-b3cb-08892c7fe791,***************,Retail,Bengaluru,Maharashtra,India,Automotive
+f56e723b-f913-404a-bb40-d30b09ffe976,*********************,Retail,Chennai,Tamil Nadu,India,Industrial
+47390c8d-493f-480b-bddb-73330a862c3e,*****************,Enterprise,Jaipur,Uttar Pradesh,India,Industrial
+a9caf3ab-4ae0-43b0-a1ca-dee22590a80d,*****************,Retail,Jaipur,Uttar Pradesh,India,Packaging
+4bbd0af1-50b5-4198-82e8-eabc361f1f3e,*********************,Retail,Jaipur,Rajasthan,India,IT
+7aaf1a22-7f38-4499-8987-12b08502c863,*****************,Retail,Mumbai,Maharashtra,India,Automotive
+9c01bdc5-ac6a-448d-b948-75bf1a16219c,******************,SMB,Pune,Madhya Pradesh,India,IT
+6711ba45-7710-44e6-8097-fec8368038e6,********************,SMB,Lucknow,Uttar Pradesh,India,Industrial
+448cef93-9a70-4284-80e3-0869c6a6acd8,*********************,SMB,Delhi,Delhi,India,IT
+c3ed558a-cff7-4d91-9b0d-4e14abe04e2a,*********************,SMB,Mumbai,Maharashtra,India,IT
+809643ba-a38a-43c4-a99d-6da318b49f95,*******************,Enterprise,Bengaluru,Maharashtra,India,IT
+ae592a9c-bef2-4b25-8732-6d3d4f229a35,****************,Enterprise,Mumbai,Uttar Pradesh,India,IT
+e94c13d8-516e-45b5-8a39-6d48ecdacbe2,*****************,SMB,Indore,Karnataka,India,Packaging
+93fdf6eb-e866-41da-815f-69dab823058f,*****************,Retail,Hyderabad,Karnataka,India,IT
+efd6aec0-f27b-41d3-a194-f3ab5cb31072,*******************,Enterprise,Mumbai,Uttar Pradesh,India,Electronics
+37eed874-8191-4b5a-9272-3b899ed8da9d,*******************,SMB,Pune,Madhya Pradesh,India,Safety
+c845256f-2165-403c-b073-3d99c18cd4c0,*****************,Retail,Pune,Tamil Nadu,India,Industrial
+eda18f1a-39a3-48a4-afc4-f09a2d3d5333,******************,SMB,Hyderabad,Karnataka,India,Safety
+c4ea80ce-edbc-491c-9230-be57b1b94497,*********************,Enterprise,Ahmedabad,Gujarat,India,IT
+c6dacfa8-001d-4510-b80c-5d3989bb71e7,********************,Enterprise,Chennai,Madhya Pradesh,India,IT
+570cefb8-feda-4272-9b92-4f651e0e0edd,*********************,Enterprise,Indore,Karnataka,India,Industrial
+a7fe67e0-0172-4365-827d-4f0d22cc7896,***************,SMB,Kochi,Kerala,India,IT
+d6479e1f-a3cb-40a1-94bb-cc838ed4a683,********************,SMB,Kochi,Kerala,India,Packaging
+8ff78083-771b-417c-971c-5ac041bcd6a0,*****************,Enterprise,Pune,Telangana,India,Packaging
+c645e4a2-7347-4cf6-bf1e-20999f070715,*****************,Retail,Lucknow,Uttar Pradesh,India,Industrial
+303b9d17-5272-4065-bb99-410f8cee6976,*****************,SMB,Chennai,Tamil Nadu,India,IT
+e443bd28-33a2-4ae4-a1da-fd0a13792329,*****************,SMB,Jaipur,Rajasthan,India,Safety
+9a320297-7278-47fe-9d0a-cd49b93ac98c,******************,SMB,Hyderabad,Karnataka,India,Automotive
+694fe33b-52dc-413c-ab49-69e3b7ae1b36,*********************,SMB,Pune,Madhya Pradesh,India,IT
+9009908c-703a-4d79-9a03-85e8d7fcee21,*****************,SMB,Chennai,Tamil Nadu,India,IT
+e5d1f57f-4b4c-49bb-9186-0f9a7da0b42e,*********************,SMB,Bengaluru,Maharashtra,India,IT
+97db29d1-4a8e-48b6-8c9d-4f6110b9b0b3,******************,Enterprise,Pune,Madhya Pradesh,India,IT
+2aade4f9-c90e-4587-991c-4c39ade1406b,********************,SMB,Hyderabad,Karnataka,India,Industrial
+b343d0c6-a55e-4ff6-a18d-1904feb9f379,*****************,SMB,Mumbai,Uttar Pradesh,India,Safety
+87dc38a0-19fc-4f61-bcd1-c9c5adfa887b,*********************,Retail,Ahmedabad,Gujarat,India,Automotive
+5c2e854d-391b-4ec8-867d-1dabb13bf4e8,******************,Enterprise,Kochi,Kerala,India,Safety
+b9af7b65-3d9f-4a00-b787-aa374162a808,******************,Retail,Kolkata,West Bengal,India,Safety
+d7b6d79d-9363-4ac1-ba0b-5c32975cedc4,***************,SMB,Bengaluru,Karnataka,India,Packaging
+2111b997-738e-46c3-99cf-8bca0da822a1,********************,SMB,Pune,Madhya Pradesh,India,Industrial
+1e264a8c-a18a-4b50-a4e4-390f09c6f76f,********************,SMB,Kolkata,West Bengal,India,IT
+54581f1b-fa74-4f96-a7b1-db53334047c1,****************,SMB,Chennai,Madhya Pradesh,India,Packaging
+be6672be-d07c-4ac0-b232-d24b12acce59,**********************,SMB,Mumbai,Maharashtra,India,Industrial
+0a1312b3-e2af-449e-b8e1-98b8fe0cab7a,****************,Retail,Hyderabad,Karnataka,India,Safety
+ae38ddda-3087-4aa5-a084-feb686e87688,*****************,SMB,Pune,Madhya Pradesh,India,Electronics
+acb844cd-e8bb-4ec6-a048-979e3ca5a520,********************,SMB,Indore,Telangana,India,IT
+c94f5e90-fcbe-43b7-9cad-7e83c74d0d22,*********************,Retail,Ahmedabad,Gujarat,India,Electronics
+bfd4e52d-6dd8-489b-8115-c3a29c0cba64,*********************,Enterprise,Hyderabad,Karnataka,India,Automotive
+4b47205e-b358-4bf2-98de-28307583afdd,********************,SMB,Mumbai,Maharashtra,India,Safety
+240f8a92-e2c4-4650-919f-d3fc03742a49,*****************,Retail,Mumbai,Uttar Pradesh,India,Automotive
+f58a1b91-95f0-432f-8b78-34fc233e61ee,******************,Retail,Kolkata,West Bengal,India,Automotive
+8de5c7a4-239f-471d-add0-0f856e10f0f3,******************,SMB,Hyderabad,Karnataka,India,Industrial
+8ee04622-7228-47f3-9cbc-1cb4e8dc6f63,*****************,Retail,Bengaluru,Maharashtra,India,Safety
+0a36c77c-abb8-4023-b115-a6a0d54d1f28,*****************,SMB,Kolkata,Kerala,India,Safety
+25fc054a-36c4-4186-84d0-94937a1abdb1,*********************,SMB,Indore,Telangana,India,Automotive
+8a2c99ab-4fdd-4130-8f85-c09d2ef5fc76,*******************,SMB,Pune,Madhya Pradesh,India,Industrial
+cc27d8f1-b98e-4937-8d11-2b2442f9df4d,********************,Enterprise,Kolkata,West Bengal,India,Industrial
+c14cb4ef-c7ea-41a3-8d17-67eacc3f1558,*********************,Enterprise,Pune,Telangana,India,Industrial
+cb929112-ce12-40c4-98dc-2bf66e697a7d,********************,SMB,Mumbai,Uttar Pradesh,India,Automotive
+b961e580-e47f-4fb5-b08a-14b4ae029012,********************,SMB,Bengaluru,Maharashtra,India,Automotive
+5ba09562-558f-4782-a811-c2139e6bd4d6,*****************,Retail,Pune,Madhya Pradesh,India,Automotive
+269ada79-6709-4f85-920e-6c57820f69b7,*****************,Retail,Pune,Madhya Pradesh,India,Safety
+7ecac2d7-b486-4639-81cc-64274931e680,******************,Retail,Jaipur,Rajasthan,India,Automotive
+d3b44343-9349-4ef3-b488-a2d21107626a,*****************,Retail,Hyderabad,Karnataka,India,Automotive
+a48183ff-70a1-4e35-9202-36c7662a5229,******************,SMB,Kolkata,West Bengal,India,IT
+fe8f18e6-55ce-4803-b0e3-d83d999345af,*****************,Retail,Hyderabad,Telangana,India,Electronics
+d82f73f3-6eea-4d23-8ddc-a0b25e7a2292,*********************,Retail,Kochi,Kerala,India,Automotive
+d648da85-aa61-4e73-8c40-a972a4b57fd6,*******************,Retail,Mumbai,Uttar Pradesh,India,Safety
+12cf4e96-e050-4489-a03a-8aa7c1391822,*******************,Enterprise,Lucknow,Uttar Pradesh,India,Safety
+33a0bc16-45fb-4ab7-91c5-38b2cdf0a8b8,********************,SMB,Indore,Telangana,India,Automotive
+7e4c450d-ecd6-4ada-a70c-d6154af02a3c,*****************,Retail,Kolkata,West Bengal,India,IT
+0d26ca5b-527f-483c-9bbc-522f785cba80,*******************,SMB,Pune,Madhya Pradesh,India,Industrial
+b42cc2f9-dd3e-4b36-a43a-a28ca61a24b0,**********************,SMB,Chennai,Tamil Nadu,India,Industrial
+25ed0c49-e68f-4ace-9bfa-679e86957953,*****************,Enterprise,Indore,Telangana,India,Safety
+1a62e1ff-fc6b-42ab-9489-cdce97562118,****************,Retail,Bengaluru,Karnataka,India,IT
+df781774-cd2c-4388-b899-488d92a8893a,*****************,Retail,Lucknow,Uttar Pradesh,India,Safety
+1e67401e-ca0e-47ae-acd5-c1c6d04809f1,*****************,SMB,Pune,Madhya Pradesh,India,IT
+5d5ed181-737a-4144-be96-36f7a4202f48,*****************,SMB,Hyderabad,Karnataka,India,Industrial
+fcc6a68c-d21f-46f8-bcb5-9f1d63813602,*********************,SMB,Kochi,Kerala,India,Safety
+509387a3-fab6-4c80-81ed-bae7e0adec51,******************,SMB,Kolkata,West Bengal,India,Safety
+9358f259-9f8d-4ad5-9b69-7c4efe0d1cc9,*****************,SMB,Mumbai,Maharashtra,India,Automotive
+5147238a-d15e-4c78-aa51-8cdf08e94107,***************,Retail,Hyderabad,Karnataka,India,Safety
+90768a92-130a-42a2-a7f8-1fa66f7b39d2,********************,Retail,Pune,Madhya Pradesh,India,Industrial
+73e75fd5-d0df-4420-8778-b0b44e57931b,*******************,SMB,Mumbai,Maharashtra,India,IT
+6e6e0501-ce77-4301-8849-3ed2916125cf,******************,Enterprise,Kochi,Kerala,India,Industrial
+fcfa35c4-eed5-4786-ba7e-2ac33da8fd9d,**********************,SMB,Chennai,West Bengal,India,Industrial
+aa510adf-9c94-4b4f-b99a-5b90339c6ae5,********************,Retail,Chennai,Tamil Nadu,India,Automotive
+18a26e8b-5f49-4009-bfc5-dc4be5f69a0b,******************,SMB,Mumbai,Uttar Pradesh,India,Packaging
+1eab203e-2bcc-4c30-b2c7-2cc359b71575,*****************,Retail,Chennai,Tamil Nadu,India,Safety
+dcb4b942-b39a-4c48-a05c-f00ef4a99a60,********************,SMB,Jaipur,Rajasthan,India,Automotive
+eff5b49c-e980-45b5-9d7c-2646a19dad80,*********************,Retail,Pune,Madhya Pradesh,India,Safety
+ddad58ef-8009-4b37-925e-33b6ae21ec3e,**********************,Retail,Kolkata,West Bengal,India,Industrial
+f9537dbd-41ba-4719-84c7-204994558dfe,*********************,Enterprise,Indore,Karnataka,India,IT
+0325a3c5-f06f-46ec-9262-161b9d303141,****************,SMB,Indore,Telangana,India,Packaging
+a34718e0-7893-4cda-8b56-adcc1b97e378,*********************,Enterprise,Jaipur,Rajasthan,India,Safety
+8b054d67-7d90-463a-be1d-1b24f728268b,****************,Retail,Indore,Telangana,India,Automotive
+7bcb56c0-a762-427a-803f-93a1597968a7,********************,Enterprise,Chennai,Tamil Nadu,India,Electronics
+bfa8cba7-ba90-4dc5-9069-d6350ad13c70,********************,Retail,Hyderabad,Karnataka,India,Industrial
+7ecde018-ecf2-4eb3-bb0a-ef92b9d57ab2,*****************,Retail,Mumbai,Uttar Pradesh,India,Automotive
+beb3aaef-09d2-4b6d-ac0e-10e874ddd19f,******************,SMB,Lucknow,Uttar Pradesh,India,Industrial
+1be371cf-5215-466b-8afb-33910211d30e,*****************,SMB,Indore,Telangana,India,Industrial
+e6f8f45f-3833-481b-817c-da10caf0fe57,*****************,SMB,Hyderabad,Karnataka,India,Industrial
+d840638f-ddcd-4033-b9e6-9e053d6c6579,*****************,Enterprise,Indore,Telangana,India,Industrial
+435b8c6b-8fbc-425e-b9e1-beba1eeb6e47,*******************,Retail,Hyderabad,Karnataka,India,Automotive
+a05811c3-57bf-4e33-a4fe-16a0f0cb2697,*********************,Enterprise,Indore,Telangana,India,Safety
+b9980a9d-5bec-4192-a159-560f7ce3bd78,*****************,Retail,Indore,Telangana,India,Packaging
+8f22a02c-4ec3-4695-bb17-0db35740152a,******************,SMB,Kochi,Kerala,India,IT
+b678c160-548e-42dd-8350-e13b912139d6,****************,Enterprise,Bengaluru,Maharashtra,India,Safety
+df4207b3-9b62-4fba-9e6f-a7e886aece62,******************,Retail,Lucknow,Uttar Pradesh,India,Automotive
+2cbc4700-80d0-48cf-b719-6c47b917bac0,******************,SMB,Delhi,Delhi,India,Industrial
+9c7f7183-35b0-434c-a01e-a4d8b9732bad,**********************,Enterprise,Pune,Telangana,India,Industrial
+1eae23fc-ffb8-4a71-83fa-8c64b5fb6495,*****************,Enterprise,Pune,Telangana,India,Automotive
+216455cd-f11e-4951-a1fb-0402a381c152,*********************,SMB,Lucknow,Uttar Pradesh,India,Automotive
+1f53849f-17fd-4ad0-aa11-a3c6cc4eb54f,*********************,Retail,Hyderabad,Karnataka,India,Automotive
+704efead-659c-4493-ad4b-7b4eadd0814e,********************,SMB,Chennai,West Bengal,India,Safety
+8aa2e27d-df62-40c5-9323-a67c675f9bdd,********************,SMB,Kochi,Kerala,India,Industrial
+22f16151-76b2-4c83-b0d7-62def0e64a65,********************,Enterprise,Pune,Madhya Pradesh,India,Safety
+3fd14857-6271-412f-8a91-e9347e4de918,****************,Retail,Indore,Madhya Pradesh,India,Packaging
+0605c3c3-fdf1-4ef7-b7b8-530e2d26c896,*********************,Retail,Bengaluru,Karnataka,India,Safety
+ed5e41fa-31af-4800-a2eb-cc959a968de8,*******************,SMB,Mumbai,Maharashtra,India,Automotive
+32bc0254-c5b2-4fb0-bba5-9635672f9262,****************,Retail,Chennai,Tamil Nadu,India,Automotive
+efb363d6-7d1e-4127-acb5-9ce330f9c00b,*****************,SMB,Kolkata,West Bengal,India,Industrial
+08196ef3-61df-428e-bd8e-594d8e57c4ac,********************,Retail,Pune,Madhya Pradesh,India,Industrial
+bb0f9632-2e82-4039-8352-5525059da4d0,*****************,Retail,Indore,Telangana,India,Automotive
+987a7a33-3816-476a-a2a4-f2eb7e33f21a,******************,SMB,Delhi,Delhi,India,IT
+3f20a1af-8598-41e6-afe1-f723c0d25d30,********************,SMB,Mumbai,Maharashtra,India,Industrial
+cd172422-4338-434d-9235-780581c253e6,******************,SMB,Hyderabad,Karnataka,India,IT
+2d042feb-6dc7-4383-a656-22fdc169a0b8,******************,Retail,Pune,Madhya Pradesh,India,Industrial
+3d800615-a2c2-41f9-8fe2-a09302a58b3c,*****************,Retail,Indore,Telangana,India,Industrial
+65d2d2fe-5e96-43d6-afde-dfc727f7d3d3,*********************,Retail,Bengaluru,Karnataka,India,Industrial
+d3e6be2f-2c8d-4f79-ad25-1e457f19705f,****************,SMB,Hyderabad,Karnataka,India,Packaging
+6a3b53fb-6015-41e6-8752-f40c601d22b1,*****************,Retail,Kochi,Kerala,India,Automotive
+10eafbd7-32b3-47a8-8033-22f426fb4972,****************,Retail,Indore,Telangana,India,IT
+aa20dbc0-1248-436e-bb73-2731691ea24d,*********************,SMB,Mumbai,Maharashtra,India,Automotive
+0f614b11-386a-4082-923a-9f06a103293e,********************,Retail,Jaipur,Rajasthan,India,Safety
+a0d2b478-ec17-42f0-b9e3-e3562ccf641d,*********************,SMB,Delhi,Delhi,India,Safety
+6c16ea45-4fa4-4983-8ef7-128482cbabb0,******************,SMB,Kolkata,West Bengal,India,Packaging
+5f0ed39b-2413-4dc8-8a4a-a5cf572e77f7,******************,SMB,Hyderabad,Telangana,India,Automotive
+ccff4e04-434d-490e-be63-77a796459a73,**********************,Retail,Pune,Madhya Pradesh,India,Safety
+a88138a9-0d64-4d47-80e1-12ae222f0ffa,*****************,Retail,Bengaluru,Maharashtra,India,Safety
+0e550c1e-1a73-4c6c-9310-7e1ccc53380e,****************,SMB,Mumbai,Uttar Pradesh,India,IT
+b82c4ddd-fb1c-44f2-be37-99df528180aa,********************,Enterprise,Chennai,Madhya Pradesh,India,Industrial
+8c7945ea-988c-4373-bf83-3ea42b24df58,*******************,SMB,Jaipur,Rajasthan,India,Electronics
+261fb75e-d454-4a09-a472-8a62b5ec56e1,*******************,Enterprise,Kolkata,West Bengal,India,Industrial
+1ca0abff-3e1c-4700-9449-6e4fb9aa7f53,********************,SMB,Jaipur,Rajasthan,India,IT
+97b2f52e-67d7-40c2-bd27-d97224bfdc73,*********************,Enterprise,Hyderabad,Karnataka,India,Safety
+c5b1bc61-9425-494d-a8d1-8784fad13988,**********************,SMB,Delhi,Delhi,India,IT
+aae668a8-07c1-4cac-a96a-f7bf11e777e9,******************,Enterprise,Indore,Telangana,India,Industrial
+deb2ff4f-3830-479d-a24d-e907bdd4e56d,******************,Retail,Indore,Telangana,India,Industrial
+68b73dd5-7504-4899-a4c6-abee3fffc0a5,****************,SMB,Jaipur,Rajasthan,India,Automotive
+92d8d5e6-e922-40a7-88d6-d68da7ee1af9,*******************,Retail,Jaipur,Rajasthan,India,IT
+042e44d6-a12e-44c3-9e58-f1579216356b,*****************,Retail,Bengaluru,Maharashtra,India,Industrial
+7677dfc0-3605-4c20-a59e-f23e32b42671,********************,SMB,Indore,Telangana,India,IT
+55c6256b-4ffe-41e7-8ef5-7236f103033a,*****************,SMB,Chennai,Tamil Nadu,India,Industrial
+380238b2-358d-478f-a03e-adc7245c9426,********************,Enterprise,Indore,Telangana,India,Safety
+3abf3fb4-6abd-42f6-bad8-9a3994f9e857,*******************,Retail,Bengaluru,Maharashtra,India,Safety
+e91b7d4d-d248-44dd-bc8a-f82ca2298668,********************,Retail,Kochi,Kerala,India,Industrial
+36b5da0a-a661-4cc2-9bc4-d1c12a2f2c5b,*******************,Retail,Delhi,Delhi,India,Automotive
+59ed9fe2-543e-4d4e-a997-6cc005cfc62f,****************,SMB,Pune,Madhya Pradesh,India,Industrial
+0f9bfd70-a8cd-4d5e-aed4-6084a77386fd,*******************,Retail,Kolkata,West Bengal,India,Industrial
+6502e53e-f8f0-4f7f-9c10-7b52ac04f881,*********************,Enterprise,Indore,Karnataka,India,Industrial
+551f6d44-41fc-4477-9b93-762183cfc04b,*******************,SMB,Kochi,Kerala,India,Automotive
+0f8e5643-1272-4c52-ae6e-b09d7c0a73bb,********************,Retail,Bengaluru,Karnataka,India,Packaging
+db84e438-d2e8-4bec-81a0-ddca148ef2a2,********************,SMB,Hyderabad,Karnataka,India,IT
+394e523b-a03e-4601-859c-c111c7ce0059,**********************,Enterprise,Indore,Telangana,India,Automotive
+4ecc2d0c-ec4d-4964-9fdd-2eb4111473b5,*****************,SMB,Chennai,Tamil Nadu,India,IT
+c73ab8f9-d86c-4e40-ad63-2f38e0f80e72,*******************,Retail,Chennai,Tamil Nadu,India,Safety
+db44a761-0a37-41ba-b52c-9be2b4ef6234,********************,Enterprise,Pune,Madhya Pradesh,India,Industrial
+7df395d3-6b59-480d-8b3c-245322ebdc5d,*****************,SMB,Kolkata,Tamil Nadu,India,Safety
+65528c67-2f7b-4808-b91e-64f8051b0fb0,*********************,SMB,Chennai,Tamil Nadu,India,Safety
+5d1496a3-9bf5-46ec-8cce-eef7879652ea,*****************,Retail,Kolkata,Kerala,India,Safety
+146f1996-64ee-4219-9643-089b586a2bf9,*********************,Retail,Chennai,Tamil Nadu,India,Automotive
+dd718418-499d-428d-9575-1050723ddef7,******************,SMB,Hyderabad,Karnataka,India,Industrial
+834d52b2-c6e0-4962-a2cd-bb6e85df5adb,***************,SMB,Kolkata,West Bengal,India,IT
+8032dd8c-2c85-423a-a169-95b7d2276471,****************,SMB,Kochi,Gujarat,India,Automotive
+fc649462-c397-47fb-9d0e-9f87cfbcfec3,*****************,Enterprise,Hyderabad,Karnataka,India,Safety
+e02b9f02-8bce-460e-832a-cc4e5e4028d9,****************,SMB,Bengaluru,Maharashtra,India,Safety
+82041f80-9b17-48f3-89c0-4c2f90de70c9,*********************,SMB,Kochi,Kerala,India,Industrial
+af9da862-0b83-47d6-a720-e6785a41e0e3,*******************,Retail,Indore,Telangana,India,IT
+6688b922-4a8b-4811-adb4-c3ce10c76567,*******************,Retail,Pune,Madhya Pradesh,India,IT
+13ee4740-9369-4449-b4ac-f96409cbd029,****************,Enterprise,Hyderabad,Karnataka,India,Packaging
+930f286e-15bc-4e90-a08d-d6314dab1eff,********************,Enterprise,Kochi,Kerala,India,Automotive
+241d100d-1721-435c-bbf5-c3bca43e121d,*******************,SMB,Ahmedabad,Gujarat,India,Safety
+a0e50a0a-832d-4c04-8ebb-3f3116301ff4,**********************,Enterprise,Lucknow,Uttar Pradesh,India,IT
+25627257-90d5-46c8-b2a4-71ef3bbf5a93,*********************,SMB,Hyderabad,Karnataka,India,Electronics
+c69cd207-28d9-4d59-b87f-3645cfb66203,*********************,Enterprise,Jaipur,Rajasthan,India,Automotive
+052217af-fcfa-4659-8faa-76542b915694,***************,SMB,Jaipur,Rajasthan,India,Electronics
+78aff38f-0425-4133-b963-80e5920d8ac5,*****************,Retail,Kochi,Kerala,India,Safety
+37b009b6-9428-41b3-9c3b-8cff0ee0c70c,********************,SMB,Delhi,Delhi,India,Packaging
+8784c5a8-e4dd-4f6a-af56-e58f01481232,******************,Retail,Jaipur,Rajasthan,India,Safety
+98479d6a-1c8f-4c24-a91d-e8230592dfcf,**********************,Retail,Lucknow,Uttar Pradesh,India,Packaging
+9a67f35c-2569-46d6-8422-e51163f8ae5b,******************,SMB,Hyderabad,Karnataka,India,Packaging
+db37b0e5-f76a-4572-a23c-ccbaf52c6f10,********************,Retail,Ahmedabad,Gujarat,India,Packaging
+ed823dda-ffc6-489e-b56d-c9079b3f1863,*****************,Retail,Pune,Madhya Pradesh,India,Industrial
+86104ef1-2e42-4089-a3b4-e39baa588e01,**********************,Enterprise,Mumbai,Uttar Pradesh,India,Safety
+eadb3ad1-21a1-4154-ada0-c41ecaf3bbfa,**********************,SMB,Lucknow,Uttar Pradesh,India,Electronics
+e6fb5b8b-2c10-4129-871b-2c5b86de12e5,*******************,Retail,Kochi,Kerala,India,Safety
+68b3f3ef-be7a-4d3b-9ddd-7d844ec0bde0,*****************,Enterprise,Jaipur,Uttar Pradesh,India,Electronics
+e3020086-859e-4d3f-adae-5da6818358a3,*****************,Retail,Lucknow,Rajasthan,India,Automotive
+602ad5c5-badb-47e6-a2fc-38cc878eb8a8,********************,SMB,Bengaluru,Maharashtra,India,Safety
+6730f388-e268-4428-9246-450ca6292de5,*****************,Enterprise,Hyderabad,Karnataka,India,Industrial
+83b9cb5a-3104-4892-8b91-2496706ad5b7,*****************,Enterprise,Indore,Karnataka,India,Packaging
+9f01a991-4a0c-4d0f-ab1e-ae24362c33aa,*********************,Enterprise,Chennai,Tamil Nadu,India,Industrial
+bfbc0311-3a7b-4667-8816-f8380b2dec64,****************,SMB,Hyderabad,Karnataka,India,IT
+43a1a2ee-9cf0-4c09-be3d-148962dca320,*****************,Enterprise,Chennai,Tamil Nadu,India,Safety
+7d85c66c-485d-440f-9391-ccedd432821d,*******************,Enterprise,Kochi,Kerala,India,Industrial
+8f60ca70-90f8-4328-bdef-c71514acb10f,*****************,SMB,Chennai,Tamil Nadu,India,Automotive
+eb575433-8ab8-478f-954b-44c47b53780e,********************,Retail,Lucknow,Uttar Pradesh,India,Industrial
+3fd00b68-006f-4342-aa19-eb73f9624d8a,*********************,SMB,Hyderabad,Karnataka,India,IT
+4632a3bf-f53c-469d-bc79-124dc4b52594,***************,Enterprise,Kolkata,Tamil Nadu,India,Automotive
+bc9069ac-ed66-4d30-be26-55268c88859c,****************,Enterprise,Indore,Telangana,India,Industrial
+550e0314-acf1-456e-bbca-a0c65eedc30d,*****************,Enterprise,Mumbai,Uttar Pradesh,India,Industrial
+d388b0b4-bd99-4cfb-86bf-04c96717a8bc,*******************,Enterprise,Jaipur,Rajasthan,India,Electronics
+a6981c6f-e7e0-4f88-bada-c4e79a1c2223,****************,Retail,Indore,Telangana,India,Safety
+63095fae-b010-4465-a112-8513dc5429bf,*********************,Enterprise,Hyderabad,Karnataka,India,Industrial
+13b11786-f886-4b1d-a185-09e34e51db8c,********************,Retail,Indore,Telangana,India,IT
+5ba607e7-191b-4196-8b8d-fd032a14c64a,******************,SMB,Kolkata,West Bengal,India,Electronics
+b707b280-3ceb-4fbb-9737-69ac2ed812dd,****************,SMB,Lucknow,Rajasthan,India,Industrial
+09704074-41ab-467f-8f5f-14852bb88171,*****************,Enterprise,Pune,Madhya Pradesh,India,Automotive
+ada2cd72-dbe3-4f06-b054-c5621775a741,******************,SMB,Hyderabad,Karnataka,India,Industrial
+9f62458b-ee43-458c-9e35-1039d59ffba9,******************,SMB,Pune,Madhya Pradesh,India,IT
+dcc725b5-9372-4ee8-8709-86c49cb81cb5,****************,Enterprise,Bengaluru,Maharashtra,India,IT
+dde4ad4c-0e3f-44d9-889b-7334ece59cfd,*******************,Enterprise,Hyderabad,Telangana,India,Automotive
+5128a817-223c-4420-a80e-8c3c2874d18c,****************,Enterprise,Hyderabad,Karnataka,India,IT
+215aa853-4dd6-4bc8-9df1-d286ffcc3856,********************,Retail,Indore,Telangana,India,Safety
+d27731f0-26c1-4c0d-a349-97bb89798a99,*******************,Enterprise,Indore,Telangana,India,Safety
+6318e8d1-e98e-4c95-b498-b96402baaf46,******************,SMB,Hyderabad,Karnataka,India,Industrial
+98199ba5-73da-4f12-9620-b86a4e592441,****************,SMB,Jaipur,Rajasthan,India,IT
+d1f9dfdb-2ad3-463f-be63-800d653bf3c2,******************,SMB,Kochi,Kerala,India,Automotive
+6342b31e-4729-4a72-bd12-3aece2203488,********************,SMB,Bengaluru,Maharashtra,India,Industrial
+55746df2-366c-4352-ad15-0d286496eea8,****************,Enterprise,Hyderabad,Karnataka,India,Industrial
+75ce0525-73a1-4d81-972f-d31a2599dfbc,*******************,Retail,Hyderabad,Karnataka,India,Safety
+5e0e304a-c07e-4ab2-882c-876dac0acb93,*****************,SMB,Mumbai,Maharashtra,India,Industrial
+ce24567b-4bcb-4722-81a1-7fb3772c225c,*********************,Retail,Jaipur,Uttar Pradesh,India,Electronics
+c1670ccb-9518-439a-b50d-585d4e18b916,****************,SMB,Hyderabad,Karnataka,India,Automotive
+83ad133b-9e8e-4f6f-ac54-1f0e792c0ff3,*********************,Retail,Indore,Telangana,India,Safety
+045fc4b6-a6cc-4272-9ceb-c32233493b7f,********************,Retail,Pune,Madhya Pradesh,India,Industrial
+412ad745-95d2-4111-9c97-87735e24a12d,*******************,Enterprise,Lucknow,Uttar Pradesh,India,Automotive
+bc2ce545-3b44-4a7c-92f1-202282f6942c,**********************,SMB,Pune,Madhya Pradesh,India,IT
+2eee420c-44b5-4b60-8fbb-60941e0e584a,*********************,Retail,Chennai,Tamil Nadu,India,Electronics
+7269e68a-80dc-40db-abd7-c5f0177e9ecd,*********************,Retail,Kolkata,West Bengal,India,Electronics
+58c6354d-dc3c-4010-b9ec-c1c7ad127f4f,****************,SMB,Bengaluru,Maharashtra,India,Electronics
+2b54648a-0065-4c09-8b02-4d0a272075c1,*****************,SMB,Bengaluru,Karnataka,India,Industrial
+23cfe1e6-53de-42b5-a9d1-222dadae4b23,****************,Enterprise,Indore,Telangana,India,Safety
+457cb6a8-57a7-4228-b048-46de03bb8afb,*****************,Enterprise,Hyderabad,Karnataka,India,Safety
+0ec10b58-8ebe-4004-85cf-aa89671f1985,**********************,SMB,Mumbai,Maharashtra,India,Industrial
+07e92537-8711-420f-a0ef-6fcb19eb7ee3,**********************,Enterprise,Jaipur,Rajasthan,India,Safety
+63fc6813-d673-429c-aa2b-c4ad486c6134,*****************,Enterprise,Jaipur,Rajasthan,India,Automotive
+4602ae6e-917c-4ebd-ae76-4db8cb4de24a,*******************,Retail,Bengaluru,Maharashtra,India,Safety
+f75b9682-db57-426c-bfa1-008b497eb658,****************,Retail,Kochi,Kerala,India,Electronics
+1184aee0-71eb-4bcb-b053-cc5872d2870c,********************,Retail,Chennai,Tamil Nadu,India,IT
+049315a2-a520-4ed9-a597-0217870b250b,******************,SMB,Bengaluru,Maharashtra,India,Automotive
+fdea4465-0a2c-44b2-8481-a00ba598de8e,*****************,Enterprise,Hyderabad,Karnataka,India,Safety
+4596e9c3-b6fd-49c2-a1c5-94d42c4703d3,*****************,Retail,Mumbai,Maharashtra,India,IT
+d9cfd919-7ac2-485c-9153-7dad17c46301,*********************,Retail,Indore,Telangana,India,Industrial
+71a5a2a2-a8a6-4054-b447-119dcc880065,******************,Enterprise,Hyderabad,Maharashtra,India,IT
+ce6b4875-5c50-4396-9349-07cca80be0ff,****************,SMB,Pune,Madhya Pradesh,India,Industrial
+cc1251e1-62e2-48d7-a4c5-addc06443a3b,****************,SMB,Hyderabad,Karnataka,India,Automotive
+a1a0d636-4083-48c7-ba89-8f039414b8a7,*******************,Enterprise,Indore,Telangana,India,Safety
+c89ca802-9c2b-4124-807a-7dd31a78a2c3,*****************,SMB,Hyderabad,Karnataka,India,Safety
+88f1e130-31f5-4137-87f6-e117d0531427,*******************,Enterprise,Kolkata,West Bengal,India,Safety
+9e6478f0-f42b-431f-920b-202486307c04,******************,Retail,Bengaluru,Maharashtra,India,Safety
+b5bc4825-9f80-4f36-a531-366cd01dd244,********************,Retail,Bengaluru,Maharashtra,India,IT
+a91ce892-1760-4e25-99c3-4ca0dc4c1dda,****************,Enterprise,Kolkata,West Bengal,India,Safety
+ec418b0c-abef-4451-8e2f-171361115ca7,********************,Retail,Hyderabad,Karnataka,India,Electronics
+ad0ed831-f3db-45df-8ecf-3cf9c21a16ce,*****************,SMB,Chennai,West Bengal,India,Industrial
+56fa790c-0a65-4a93-8380-875119f6d18e,********************,SMB,Mumbai,Maharashtra,India,Industrial
+98a33c9f-b798-4551-a9b2-81b466fd35d4,*******************,SMB,Kolkata,West Bengal,India,Packaging
+98fcb997-1db6-4a05-bd5d-95822f26f6b1,*****************,Enterprise,Delhi,Delhi,India,Electronics
+25fad986-5e7c-470e-9245-aaa81d78303b,*********************,SMB,Mumbai,Maharashtra,India,Safety
+4bef965f-080b-42bf-afa0-bdae2fbe2a36,********************,Enterprise,Mumbai,Uttar Pradesh,India,Industrial
+b28cbbfa-b225-4f2b-a18f-3800b44f57ed,*********************,SMB,Indore,Karnataka,India,Packaging
+400c3618-27cb-4210-a575-40fa6a97ef33,*********************,Enterprise,Mumbai,Uttar Pradesh,India,Packaging
+5192ab3f-5752-4843-ab94-beb087f7e11a,*********************,Enterprise,Bengaluru,Maharashtra,India,Safety
+d00665eb-393a-4818-927b-69f3cdb8222f,********************,SMB,Indore,Telangana,India,IT
+5f0a69c0-3d4b-4e7a-b37d-0366cff71ff9,******************,SMB,Pune,Madhya Pradesh,India,Safety
+1eff7496-fab8-470b-8023-c53a1875ff47,*****************,Enterprise,Hyderabad,Karnataka,India,Safety
+85d9969a-5cf7-4eaa-91dc-852c3fcdd472,********************,SMB,Hyderabad,Karnataka,India,Automotive
+38394b23-af86-41fb-a213-5c758d619c14,******************,Retail,Indore,Telangana,India,Industrial
+d2e83d8c-f008-464a-a979-9aff611d4b93,******************,SMB,Mumbai,Maharashtra,India,Industrial
+920c701a-98c8-4d28-ab35-c241b9ac2a91,*****************,SMB,Pune,Madhya Pradesh,India,Industrial
+03d38030-7afb-4007-87c4-c379c4eb3a3a,*******************,SMB,Delhi,Delhi,India,Electronics
+66049ae4-4179-4383-9aff-e24fafa7c319,****************,SMB,Bengaluru,Karnataka,India,Safety
+8e01fb1c-a842-4fc7-84d1-ad98d9317507,*****************,SMB,Mumbai,Uttar Pradesh,India,Automotive
+523e5288-cb4b-4bc4-aa95-57b2da9d2eef,********************,Enterprise,Indore,Karnataka,India,Automotive
+903b809f-fcc1-4a5c-a9e4-fb93b0be0d35,*****************,Retail,Pune,Madhya Pradesh,India,Automotive
+d3d8ef82-48d2-456f-8b80-e177eac55c65,*********************,Enterprise,Indore,Telangana,India,Industrial
+680818c0-1b8e-4903-b68e-486f8c535c21,*********************,Retail,Lucknow,Uttar Pradesh,India,Industrial
+eb37c043-c4b7-48a0-b952-5fb4d32c5e84,*********************,SMB,Ahmedabad,Gujarat,India,Safety
+c02f1ad8-61b3-42eb-99e4-c9def722521b,*****************,Retail,Jaipur,Rajasthan,India,Automotive
+290ec6dc-a23b-419e-8a27-8ac9fe933ab5,********************,Retail,Kolkata,West Bengal,India,Packaging
+faaa5829-8f08-4f1f-bce7-b731d677946a,****************,Enterprise,Kolkata,West Bengal,India,Industrial
+c701e7a5-b601-48b0-9f35-b65baeff7ae1,****************,SMB,Kochi,Kerala,India,IT
+a1e15e16-7de4-4f35-aa8a-51f3626766fd,*********************,Retail,Ahmedabad,Gujarat,India,IT
+fa543246-d4c8-4d40-aaba-72e8807f0060,****************,Retail,Delhi,Delhi,India,Automotive
+dd2d16a6-107e-4a16-bc2d-5208057148f0,*********************,SMB,Jaipur,Rajasthan,India,Safety
+6c5b794b-d365-451e-9a02-888764801c70,*********************,SMB,Chennai,Tamil Nadu,India,IT
+c358038a-f413-4c60-ba8f-d69b22efaad6,******************,Retail,Mumbai,Maharashtra,India,Automotive
+9141ff15-b696-4baa-9175-08e04dc37ebc,*********************,Enterprise,Chennai,Madhya Pradesh,India,Industrial
+b1f50d53-16c7-4889-bcf3-3f6a2a835328,*****************,Retail,Jaipur,Rajasthan,India,Electronics
+99c388cf-4fa6-4df5-9bce-b1be13b15806,********************,SMB,Mumbai,Uttar Pradesh,India,Safety
+af97689a-e702-46cf-b981-7d32c47b2d20,******************,Enterprise,Bengaluru,Maharashtra,India,IT
+e947cec1-ef95-447a-96f7-335276b76b93,****************,Retail,Hyderabad,Karnataka,India,Industrial
+8f89de3a-a511-4b2f-8974-70bec0e25323,****************,Retail,Chennai,Tamil Nadu,India,Industrial
+c6063059-31b2-4e43-9044-183f34d856df,********************,Retail,Bengaluru,Karnataka,India,Automotive
+1b8fae04-55f3-4a00-b395-ef709566ca3d,********************,Enterprise,Hyderabad,Karnataka,India,IT
+b1075e8d-6b42-45ac-85e1-1ac6fa8a882a,*********************,Retail,Bengaluru,Maharashtra,India,Electronics
+f4b7044b-4ccc-4477-bc35-daaadb106c92,*********************,Retail,Pune,Madhya Pradesh,India,Industrial
+0f92e870-db9f-41bb-a152-86f809789366,******************,Retail,Mumbai,Uttar Pradesh,India,Industrial
+85e44001-96cb-4526-896d-451cbeaea96a,*********************,SMB,Kolkata,West Bengal,India,Automotive
+0de52a95-13b4-45c3-a83f-a01523ff26e7,******************,Retail,Pune,Madhya Pradesh,India,Industrial
+68291fa5-d4d4-4a00-9e9e-344c3d6480fc,******************,Retail,Bengaluru,Maharashtra,India,Automotive
+4fc139ca-7f06-4d9d-b176-c1edcd93610a,*****************,Retail,Bengaluru,Maharashtra,India,Industrial
+9abd5eb7-5930-4639-8121-e9e29e399129,********************,SMB,Pune,Madhya Pradesh,India,Automotive
+ea615168-2e61-4b8b-ac20-78ed9874e8ac,*****************,SMB,Chennai,Tamil Nadu,India,Safety
+136b5f69-df20-4ac3-af4c-3d72c00a3e98,********************,Retail,Kochi,Kerala,India,Industrial
+c8baf0b6-bd2e-4ae2-8638-b2888e05fef5,*********************,Retail,Jaipur,Rajasthan,India,Automotive
+ee9158b5-5747-47cb-b9be-4699bbd51a1e,*********************,Retail,Chennai,Tamil Nadu,India,IT
+98daea85-c565-4476-95d3-44d762eec3d1,****************,SMB,Hyderabad,Karnataka,India,IT
+ce892fe1-eecc-4d28-a09b-eb9d6c874136,****************,Retail,Pune,Madhya Pradesh,India,IT
+912337fd-7baa-409d-bb40-434d466c601a,*******************,SMB,Indore,Telangana,India,Safety
+dbf27d61-ba96-424d-89b7-8a9e7941c017,********************,Enterprise,Lucknow,Uttar Pradesh,India,Electronics
+ddd9cc4c-be84-48f1-b38e-bb1e2445829f,*********************,SMB,Indore,Telangana,India,Automotive
+61a1b9ed-0576-4bbb-838a-95481d7dd598,*********************,SMB,Pune,Madhya Pradesh,India,Electronics
+aac1c86c-710e-43e6-957e-5c661ff238c1,*****************,SMB,Indore,Telangana,India,Safety
+0fc55b21-384e-420f-8b3c-069c5eff60ac,********************,Retail,Chennai,Tamil Nadu,India,IT
+5f023878-a51b-4e4c-b585-8a35e8de7fae,****************,SMB,Pune,Madhya Pradesh,India,Industrial
+389cb4a6-779d-4a5d-861b-a8cc3225cad9,********************,SMB,Hyderabad,Karnataka,India,Safety
+62994e97-2164-4f27-a1d4-f1fae1a9349b,******************,Retail,Hyderabad,Karnataka,India,Safety
+32f09993-729e-4e0e-8027-1159ee1da327,*****************,SMB,Pune,Madhya Pradesh,India,Packaging
+a1209926-c661-4ee9-ad68-9c17829e1254,******************,Enterprise,Indore,Karnataka,India,IT
+5ad4a97f-eee2-40dc-a1cd-8b9096d49fc3,*****************,SMB,Kolkata,West Bengal,India,Safety
+9f164a2f-3589-459a-b0c5-eee35b06ab61,*********************,SMB,Kochi,Kerala,India,Packaging
+e033dffc-9bdd-460e-a52a-e078f416c0a6,*****************,Retail,Chennai,West Bengal,India,Packaging
+f51308a7-d5e2-4952-aaa9-22d630950c4a,******************,SMB,Kolkata,West Bengal,India,Industrial
+e2749a7e-69c0-49a7-b52e-bf35b2cab64c,*********************,Retail,Kochi,Kerala,India,Automotive
+1df1ad18-570c-4f2d-99c2-5c339be114e2,*****************,Retail,Kolkata,West Bengal,India,Industrial
+da9a36b6-2205-4214-ba2c-c5a3c6e9a86b,*******************,SMB,Hyderabad,Karnataka,India,Safety
+3bfa96cb-088f-4418-b0b9-a64a147369ed,******************,SMB,Pune,Madhya Pradesh,India,Safety
+6d8a68d8-d0a9-498f-b13b-64e1cfbe1d27,*********************,Enterprise,Indore,Telangana,India,Safety
+165cdcb3-b4e9-4b6f-9f87-dcfd5caadc22,********************,Retail,Bengaluru,Maharashtra,India,IT
+bdf27612-ce75-4600-858c-5fceb00d4edc,******************,SMB,Pune,Tamil Nadu,India,Safety
+bdabb178-90c6-45ff-8f28-7c50425fb141,*******************,SMB,Mumbai,Maharashtra,India,Safety
+2dfc438d-7f2e-4da9-b290-55ac5cbdb1ff,****************,SMB,Hyderabad,Karnataka,India,Packaging
+d80cd42a-d5cc-4a98-bcea-811cf487fb98,******************,Enterprise,Pune,Madhya Pradesh,India,Safety
+9d36ca5b-e2c9-4928-9806-7e956628cc0a,*****************,SMB,Jaipur,Rajasthan,India,IT
+cb5f3ade-a3d1-4cd8-bc64-9fc056952555,*********************,Retail,Indore,Karnataka,India,Electronics
+91f8a3d9-66cb-482a-b507-234a743622f8,******************,Enterprise,Chennai,Madhya Pradesh,India,IT
+06e755b1-2fb7-4c24-943e-2d1ffdc05234,*******************,SMB,Mumbai,Maharashtra,India,Industrial
+16346cd0-1460-4713-bf54-59547fbd54ef,********************,SMB,Jaipur,Rajasthan,India,Safety
+9a578176-314a-4b9f-ae2f-af9240715e90,*****************,Retail,Hyderabad,Karnataka,India,Safety
+85486f95-6584-427f-b46d-8a04ce23f6e0,********************,Enterprise,Ahmedabad,Gujarat,India,Electronics
+2b825ccb-f164-483a-bf04-00d1643a3a2b,******************,SMB,Hyderabad,Karnataka,India,Automotive
+4d0a3fd7-7001-4d35-9fdb-c848764091b4,*********************,SMB,Lucknow,Uttar Pradesh,India,Automotive
+d31e9306-34ff-4a71-af73-841ba9368524,*****************,Retail,Hyderabad,Karnataka,India,Industrial
+91aee26d-c9ce-44ef-beba-5c693d21c3c2,*****************,Retail,Indore,Telangana,India,Safety
+73b9c7c4-321a-4f4c-8fac-1b98c87e0f3c,*****************,SMB,Hyderabad,Karnataka,India,Electronics
+2816831c-fc3d-4f81-bd8e-bc0072350b5b,*******************,Enterprise,Mumbai,Uttar Pradesh,India,Industrial
+c9ee76d1-8e94-48dc-9a15-33da07a30dc4,*****************,Retail,Indore,Telangana,India,Safety
+d01a5b75-f09c-4a80-970b-58e6bebc7d76,**********************,SMB,Hyderabad,Telangana,India,Automotive
+cec63fe1-76b1-43bd-9eca-e4adca7c1f67,******************,Retail,Mumbai,Maharashtra,India,Packaging
