@@ -274,7 +274,7 @@ def test_generation_api_enforces_column_actions():
     assert actions["warehouse"] == "keep"
     assert actions["quantity_on_hand"] == "keep"
     assert actions["quantity_reserved"] == "keep"
-    assert actions["quantity_available"] == "keep"
+    assert actions["quantity_available"] == "derived"
     assert actions["reorder_point"] == "keep"
     assert actions["inventory_status"] == "keep"
 
@@ -283,6 +283,20 @@ def test_generation_api_enforces_column_actions():
     assert generated_dataset["row_count"] == 500
     assert generated_dataset["column_count"] == 9
 
+    derived_config = next(
+        config
+        for config in configurations
+        if config["column_name"] == "quantity_available"
+    )
+
+    assert derived_config["action"] == "derived"
+
+    assert derived_config["rule"]["operation"] == "subtract"
+
+    assert derived_config["rule"]["operands"] == [
+        "quantity_on_hand",
+        "quantity_reserved",
+    ]
     print("\nGeneration API column-action enforcement: PASSED")
 
 
@@ -319,4 +333,65 @@ def test_invalid_column_action_is_rejected():
 
     raise AssertionError(
         "Invalid column action was silently accepted."
+    )
+
+def test_generation_api_recalculates_derived_column():
+    """
+    Verify that the generation pipeline recalculates
+    a configured derived column from generated source fields.
+    """
+
+    from fastapi.testclient import TestClient
+    from backend.main import app
+
+    client = TestClient(app)
+
+    response = client.post(
+        "/generation",
+        json={
+            "dataset_id": 143,
+            "model_name": "gaussian_copula",
+            "parameters": {
+                "random_state": 42
+            }
+        },
+    )
+
+    assert response.status_code == 200
+
+    result = response.json()
+
+    assert result["status"] == "success"
+
+    data = result["data"]
+
+    # API must return business rules
+    assert "business_rules" in data
+
+    business_rules = data["business_rules"]
+
+    # Verify that the expected derived relationship exists
+    matching_rules = [
+        rule
+        for rule in business_rules
+        if rule["target"] == "quantity_on_hand"
+        and rule["operation"] == "add"
+        and rule["operands"] == [
+            "quantity_reserved",
+            "quantity_available",
+        ]
+    ]
+
+    assert matching_rules
+
+    # Generated dataset must exist
+    assert "generated_dataset" in data
+
+    generated_dataset = data["generated_dataset"]
+
+    assert generated_dataset["row_count"] == 500
+    assert generated_dataset["column_count"] == 9
+
+    print(
+        "\nGeneration API derived-column recalculation: PASSED"
     )

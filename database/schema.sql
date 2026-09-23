@@ -152,3 +152,5 @@ CREATE TABLE reports (
     generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
