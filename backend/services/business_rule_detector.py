@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 def detect_arithmetic_relationships(
@@ -50,15 +51,21 @@ def detect_arithmetic_relationships(
                 right_values = dataframe[right]
                 target_values = dataframe[target]
 
+                # ------------------------------------------
                 # A + B = C
+                # ------------------------------------------
+
                 predicted = (
                     left_values + right_values
                 )
 
-                accuracy = (
-                    predicted.eq(target_values)
-                    .mean()
-                )
+                accuracy = np.isclose(
+                    predicted,
+                    target_values,
+                    rtol=1e-5,
+                    atol=1e-2,
+                    equal_nan=False,
+                ).mean()
 
                 if accuracy >= threshold:
                     rules.append({
@@ -68,15 +75,21 @@ def detect_arithmetic_relationships(
                         "accuracy": float(accuracy),
                     })
 
+                # ------------------------------------------
                 # A - B = C
+                # ------------------------------------------
+
                 predicted = (
                     left_values - right_values
                 )
 
-                accuracy = (
-                    predicted.eq(target_values)
-                    .mean()
-                )
+                accuracy = np.isclose(
+                    predicted,
+                    target_values,
+                    rtol=1e-5,
+                    atol=1e-2,
+                    equal_nan=False,
+                ).mean()
 
                 if accuracy >= threshold:
                     rules.append({
@@ -86,15 +99,21 @@ def detect_arithmetic_relationships(
                         "accuracy": float(accuracy),
                     })
 
+                # ------------------------------------------
                 # B - A = C
+                # ------------------------------------------
+
                 predicted = (
                     right_values - left_values
                 )
 
-                accuracy = (
-                    predicted.eq(target_values)
-                    .mean()
-                )
+                accuracy = np.isclose(
+                    predicted,
+                    target_values,
+                    rtol=1e-5,
+                    atol=1e-2,
+                    equal_nan=False,
+                ).mean()
 
                 if accuracy >= threshold:
                     rules.append({
@@ -104,15 +123,21 @@ def detect_arithmetic_relationships(
                         "accuracy": float(accuracy),
                     })
 
+                # ------------------------------------------
                 # A * B = C
+                # ------------------------------------------
+
                 predicted = (
                     left_values * right_values
                 )
 
-                accuracy = (
-                    predicted.eq(target_values)
-                    .mean()
-                )
+                accuracy = np.isclose(
+                    predicted,
+                    target_values,
+                    rtol=1e-5,
+                    atol=1e-2,
+                    equal_nan=False,
+                ).mean()
 
                 if accuracy >= threshold:
                     rules.append({
@@ -122,7 +147,10 @@ def detect_arithmetic_relationships(
                         "accuracy": float(accuracy),
                     })
 
+                # ------------------------------------------
                 # A / B = C
+                # ------------------------------------------
+
                 non_zero = right_values != 0
 
                 if non_zero.any():
@@ -132,11 +160,13 @@ def detect_arithmetic_relationships(
                         / right_values[non_zero]
                     )
 
-                    accuracy = (
-                        predicted
-                        .eq(target_values[non_zero])
-                        .mean()
-                    )
+                    accuracy = np.isclose(
+                        predicted,
+                        target_values[non_zero],
+                        rtol=1e-5,
+                        atol=1e-2,
+                        equal_nan=False,
+                    ).mean()
 
                     if accuracy >= threshold:
                         rules.append({
@@ -148,14 +178,11 @@ def detect_arithmetic_relationships(
 
     return rules
 
+
 def apply_business_rules(
     dataframe: pd.DataFrame,
     rules: list,
 ) -> pd.DataFrame:
-    """
-    Apply detected arithmetic business rules
-    to a synthetic dataframe.
-    """
 
     result = dataframe.copy()
 
@@ -165,7 +192,6 @@ def apply_business_rules(
         operation = rule["operation"]
         left, right = rule["operands"]
 
-        # Required columns must exist
         if (
             left not in result.columns
             or right not in result.columns
@@ -173,16 +199,19 @@ def apply_business_rules(
             continue
 
         if operation == "add":
+
             result[target] = (
                 result[left] + result[right]
             )
 
         elif operation == "subtract":
+
             result[target] = (
                 result[left] - result[right]
             )
 
         elif operation == "multiply":
+
             result[target] = (
                 result[left] * result[right]
             )
@@ -198,6 +227,7 @@ def apply_business_rules(
 
         # Preserve integer type when possible
         if target in result.columns:
+
             if pd.api.types.is_integer_dtype(
                 dataframe[target]
             ):

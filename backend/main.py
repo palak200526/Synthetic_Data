@@ -50,6 +50,10 @@ from backend.controllers.multi_table_generation_controller import (
     router as multi_table_generation_router
 )
 
+from backend.controllers.validation_rule_controller import (
+    router as validation_rule_router,
+)
+
 app = FastAPI(
     title="Synthetic Data Platform API",
     description="Backend API for the Synthetic Data Platform",
@@ -142,3 +146,4 @@ app.include_router(id_generation_router)
 app.include_router(preprocessing_router)
 app.include_router(relationship_router)
 app.include_router(dataset_group_router)
+app.include_router(validation_rule_router)

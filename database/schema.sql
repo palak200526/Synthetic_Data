@@ -152,5 +152,22 @@ CREATE TABLE reports (
     generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE validation_rules (
+    rule_id SERIAL PRIMARY KEY,
 
+    dataset_id INTEGER NOT NULL
+        REFERENCES datasets(dataset_id)
+        ON DELETE CASCADE,
 
+    rule_name VARCHAR(255) NOT NULL,
+
+    rule_type VARCHAR(100) NOT NULL,
+
+    rule_definition JSONB NOT NULL,
+
+    description TEXT,
+
+    is_active BOOLEAN DEFAULT TRUE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

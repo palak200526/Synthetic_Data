@@ -23,6 +23,14 @@ from backend.repositories.generation_repository import (
     update_generation_run_status,
 )
 
+from backend.repositories.validation_rules_repository import (
+    get_validation_rules,
+)
+
+from backend.services.validation_resampling_service import (
+    generate_valid_rows,
+)
+
 
 SUPPORTED_MODELS = {
     "gaussian_copula",
@@ -35,9 +43,12 @@ def _generate_gaussian_copula(
     dataframe: pd.DataFrame,
     configurations: list,
     random_state: int = 42,
+    num_rows: int | None = None,
 ) -> pd.DataFrame:
 
     rng = np.random.default_rng(random_state)
+    if num_rows is None:
+        num_rows = len(dataframe)
 
     # 1. Determine columns based on configuration
     remove_columns = {
@@ -71,7 +82,7 @@ def _generate_gaussian_copula(
     ]
 
     synthetic_dataframe = pd.DataFrame(
-        index=range(len(dataframe))
+        index=range(num_rows)
     )
 
     # 3. Generate numerical columns
@@ -147,7 +158,7 @@ def _generate_gaussian_copula(
                     len(numerical_columns)
                 ),
                 cov=correlation_matrix,
-                size=len(dataframe),
+                size=num_rows,
             )
         )
 
@@ -196,7 +207,7 @@ def _generate_gaussian_copula(
         synthetic_dataframe[column] = (
             rng.choice(
                 categories,
-                size=len(dataframe),
+                size=num_rows,
                 p=probabilities,
             )
         )
@@ -409,6 +420,7 @@ def generate_synthetic_dataset(
     configurations = preparation[
         "configurations"
     ]
+    validation_rules = get_validation_rules(dataset_id)
 
     # --------------------------------------------------
     # 3. Detect generalized business rules
@@ -422,7 +434,6 @@ def generate_synthetic_dataset(
 
     # --------------------------------------------------
     # 4. Generate synthetic data
-    # --------------------------------------------------
 
     if model_name == "gaussian_copula":
 
@@ -431,13 +442,20 @@ def generate_synthetic_dataset(
             42,
         )
 
-        synthetic_dataframe = (
-            _generate_gaussian_copula(
+        def generate_rows(count):
+            generated = _generate_gaussian_copula(
                 dataframe=dataframe,
                 configurations=configurations,
                 random_state=random_state,
+                num_rows=count,
             )
-        )
+
+            generated = apply_business_rules(
+                generated,
+                business_rules,
+            )
+
+            return generated
 
     else:
 
@@ -466,24 +484,72 @@ def generate_synthetic_dataset(
             generation_dataframe
         )
 
-        # Generate same number of rows
-        # as source dataset
-        synthetic_dataframe = (
-            generator.generate(
-                num_rows=len(dataframe)
+        def generate_rows(count):
+            generated = generator.generate(
+                num_rows=count
             )
+
+            generated = apply_business_rules(
+                generated,
+                business_rules,
+            )
+
+            return generated
+
+
+    if validation_rules:
+
+        validation_result = generate_valid_rows(
+            generate_function=generate_rows,
+            target_row_count=len(dataframe),
+            rules=validation_rules,
+            max_attempts=10,
         )
 
+        synthetic_dataframe = validation_result[
+            "dataframe"
+        ]
+
+    else:
+
+        synthetic_dataframe = generate_rows(
+            len(dataframe)
+        )
+
+        validation_result = {
+            "dataframe": synthetic_dataframe,
+            "target_row_count": len(dataframe),
+            "total_generated_rows": len(
+                synthetic_dataframe
+            ),
+            "total_valid_rows": len(
+                synthetic_dataframe
+            ),
+            "total_rejected_rows": 0,
+            "attempts": 1,
+            "validation_history": [],
+            "final_validation": {
+                "valid": True,
+                "valid_row_count": len(
+                    synthetic_dataframe
+                ),
+                "invalid_row_count": 0,
+                "invalid_rows": [],
+                "rules": [],
+            },
+        }
+        
+       
     # --------------------------------------------------
     # 5. Apply generalized business rules
     # --------------------------------------------------
 
-    synthetic_dataframe = (
-        apply_business_rules(
-            synthetic_dataframe,
-            business_rules,
-        )
-    )
+    # synthetic_dataframe = (
+    #     apply_business_rules(
+    #         synthetic_dataframe,
+    #         business_rules,
+    #     )
+    # )
 
     # --------------------------------------------------
     # 6. Enforce column actions
@@ -545,5 +611,13 @@ def generate_synthetic_dataset(
             "business_rules": (
                 business_rules
             ),
+            "validation": {
+                "target_row_count": validation_result["target_row_count"],
+                "total_generated_rows": validation_result["total_generated_rows"],
+                "total_valid_rows": validation_result["total_valid_rows"],
+                "total_rejected_rows": validation_result["total_rejected_rows"],
+                "attempts": validation_result["attempts"],
+                "final_validation": validation_result["final_validation"],
+            },
         },
     }
