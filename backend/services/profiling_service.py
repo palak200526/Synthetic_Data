@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from backend.services.dataset_loader import load_dataset
 from backend.services.dataset_profiler import generate_profile
 from backend.services.sensitive_detector import (
@@ -11,28 +9,42 @@ from backend.services.domain_preset_service import (
 )
 
 from backend.repositories.dataset_repository import (
-    get_dataset_id_by_filename,
     get_dataset_profile,
     save_dataset_profile,
     get_dataset_domain_type,
+    get_dataset_file_path,
+    get_dataset_user_id,
 )
 
 
-UPLOAD_DIRECTORY = Path("data/uploads")
+def get_profile(dataset_id: int, user_id: int):
 
+    # ---------------------------------------------------------
+    # 1. Verify dataset ownership
+    # ---------------------------------------------------------
+    dataset_user_id = get_dataset_user_id(
+        dataset_id
+    )
 
-def get_profile(filename: str):
+    if dataset_user_id != user_id:
+        raise PermissionError(
+            "You do not have access to this dataset."
+        )
 
-    # 1. Get dataset ID
-    dataset_id = get_dataset_id_by_filename(filename)
-
+    # ---------------------------------------------------------
     # 2. Check if profile already exists
+    # ---------------------------------------------------------
     try:
-        saved_profile = get_dataset_profile(dataset_id)
+
+        saved_profile = get_dataset_profile(
+            dataset_id
+        )
 
         return {
             "status": "success",
-            "message": "Dataset profile retrieved successfully.",
+            "message": (
+                "Dataset profile retrieved successfully."
+            ),
             "dataset_id": dataset_id,
             "profile_id": saved_profile["profile_id"],
             "data": saved_profile["profile_data"],
@@ -40,33 +52,51 @@ def get_profile(filename: str):
 
     except ValueError:
 
-        # 3. Profile does not exist, so generate it
-        file_path = UPLOAD_DIRECTORY / filename
-
-        dataframe = load_dataset(
-            str(file_path)
+        # -----------------------------------------------------
+        # 3. Get actual stored dataset file path
+        # -----------------------------------------------------
+        file_path = get_dataset_file_path(
+            dataset_id
         )
 
+        # -----------------------------------------------------
+        # 4. Load dataset
+        # -----------------------------------------------------
+        dataframe = load_dataset(
+            file_path
+        )
+
+        # -----------------------------------------------------
+        # 5. Generate basic dataset profile
+        # -----------------------------------------------------
         profile = generate_profile(
             dataframe
         )
 
-        # 4. Get dataset domain
+        # -----------------------------------------------------
+        # 6. Get dataset domain
+        # -----------------------------------------------------
         domain_type = get_dataset_domain_type(
             dataset_id
         )
 
-        # 5. Detect sensitive and identifier columns
+        # -----------------------------------------------------
+        # 7. Detect sensitive and identifier columns
+        # -----------------------------------------------------
         sensitive_detection = (
             detect_sensitive_and_identifier_columns(
                 dataframe
             )
         )
 
-        # 6. Apply domain-specific presets
+        # -----------------------------------------------------
+        # 8. Apply domain-specific presets
+        # -----------------------------------------------------
         for column_result in sensitive_detection:
 
-            column_name = column_result["column_name"]
+            column_name = (
+                column_result["column_name"]
+            )
 
             preset = get_domain_preset(
                 column_name,
@@ -74,6 +104,7 @@ def get_profile(filename: str):
             )
 
             if preset:
+
                 column_result["preset_applied"] = True
 
                 column_result["suggested_type"] = (
@@ -89,23 +120,33 @@ def get_profile(filename: str):
                 )
 
             else:
-                # Fall back to existing US-005 detection
+
+                # Fall back to existing detection
                 column_result["preset_applied"] = False
 
+        # -----------------------------------------------------
+        # 9. Add sensitive detection to profile
+        # -----------------------------------------------------
         profile["sensitive_detection"] = (
             sensitive_detection
         )
 
-        # 7. Save newly generated profile
+        # -----------------------------------------------------
+        # 10. Save generated profile
+        # -----------------------------------------------------
         saved_profile = save_dataset_profile(
             dataset_id,
             profile,
         )
 
-        # 8. Return newly generated profile
+        # -----------------------------------------------------
+        # 11. Return generated profile
+        # -----------------------------------------------------
         return {
             "status": "success",
-            "message": "Dataset profile generated successfully.",
+            "message": (
+                "Dataset profile generated successfully."
+            ),
             "dataset_id": dataset_id,
             "profile_id": saved_profile["profile_id"],
             "data": profile,

@@ -13,8 +13,8 @@ def generate_valid_rows(
     Generate synthetic rows repeatedly until the required
     number of valid rows is collected.
 
-    Invalid rows are rejected and additional rows are generated.
-    No invalid row is corrected or modified.
+    Invalid rows are rejected and replacement rows are generated.
+    Invalid rows are never corrected or modified.
     """
 
     if target_row_count <= 0:
@@ -28,28 +28,26 @@ def generate_valid_rows(
         )
 
     valid_batches = []
+
     total_valid_rows = 0
     total_generated_rows = 0
     total_rejected_rows = 0
 
     validation_history = []
 
+    rows_to_generate = target_row_count
+
     for attempt in range(1, max_attempts + 1):
 
-        remaining_rows = (
-            target_row_count - total_valid_rows
-        )
-
-        if remaining_rows <= 0:
+        # Stop once enough valid rows have been collected.
+        if total_valid_rows >= target_row_count:
             break
 
-        # Generate extra rows to compensate for
-        # rows rejected by validation rules.
-        
-        batch_size = remaining_rows
-
+        # ---------------------------------------------------------
+        # Generate rows
+        # ---------------------------------------------------------
         generated_dataframe = generate_function(
-            batch_size
+            rows_to_generate
         )
 
         if not isinstance(
@@ -60,17 +58,22 @@ def generate_valid_rows(
                 "generate_function must return a pandas DataFrame."
             )
 
-        # Ensure the generator does not return
-        # more rows than requested for this batch.
-        if len(generated_dataframe) > batch_size:
-            generated_dataframe = generated_dataframe.head(
-                batch_size
-            )
+        # Never accept more rows than requested.
+        generated_dataframe = (
+            generated_dataframe
+            .head(rows_to_generate)
+            .copy()
+        )
 
-        total_generated_rows += len(
+        generated_count = len(
             generated_dataframe
         )
 
+        total_generated_rows += generated_count
+
+        # ---------------------------------------------------------
+        # Validate generated rows
+        # ---------------------------------------------------------
         validation_result = validate_dataframe(
             generated_dataframe,
             rules,
@@ -80,20 +83,21 @@ def generate_valid_rows(
             validation_result["invalid_rows"]
         )
 
-        valid_dataframe = (
-            generated_dataframe.drop(
-                index=list(invalid_indices),
-                errors="ignore",
-            )
+        valid_dataframe = generated_dataframe.drop(
+            index=list(invalid_indices),
+            errors="ignore",
+        )
+
+        valid_count = len(
+            valid_dataframe
         )
 
         rejected_count = (
-            len(generated_dataframe)
-            - len(valid_dataframe)
+            generated_count - valid_count
         )
 
+        total_valid_rows += valid_count
         total_rejected_rows += rejected_count
-        total_valid_rows += len(valid_dataframe)
 
         if not valid_dataframe.empty:
             valid_batches.append(
@@ -102,16 +106,42 @@ def generate_valid_rows(
 
         validation_history.append({
             "attempt": attempt,
-            "generated_rows": len(
-                generated_dataframe
-            ),
-            "valid_rows": len(
-                valid_dataframe
-            ),
+            "generated_rows": generated_count,
+            "valid_rows": valid_count,
             "rejected_rows": rejected_count,
             "validation": validation_result,
         })
 
+        # ---------------------------------------------------------
+        # Calculate remaining rows
+        # ---------------------------------------------------------
+        remaining_rows = (
+            target_row_count - total_valid_rows
+        )
+
+        if remaining_rows <= 0:
+            break
+
+        # ---------------------------------------------------------
+        # Prepare next generation batch
+        # ---------------------------------------------------------
+        if valid_count == 0:
+            # The entire retry batch failed validation.
+            #
+            # Do not keep generating the exact same tiny batch.
+            # Increase the batch size so that the generator gets
+            # enough opportunity to produce valid rows.
+            rows_to_generate = max(
+                remaining_rows * 2,
+                10,
+            )
+        else:
+            # Normally generate only the rows still required.
+            rows_to_generate = remaining_rows
+
+    # -------------------------------------------------------------
+    # Final check
+    # -------------------------------------------------------------
     if total_valid_rows < target_row_count:
         raise RuntimeError(
             "Unable to generate the required number "
@@ -121,6 +151,9 @@ def generate_valid_rows(
             f"Attempts: {max_attempts}."
         )
 
+    # -------------------------------------------------------------
+    # Combine valid batches
+    # -------------------------------------------------------------
     final_dataframe = (
         pd.concat(
             valid_batches,
@@ -129,6 +162,9 @@ def generate_valid_rows(
         .head(target_row_count)
     )
 
+    # -------------------------------------------------------------
+    # Final validation
+    # -------------------------------------------------------------
     final_validation = validate_dataframe(
         final_dataframe,
         rules,

@@ -186,6 +186,7 @@ def delete_validation_rule(rule_id: int):
         row = cursor.fetchone()
 
         if not row:
+            connection.rollback()
             return None
 
         connection.commit()

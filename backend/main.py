@@ -54,6 +54,8 @@ from backend.controllers.validation_rule_controller import (
     router as validation_rule_router,
 )
 
+from backend.controllers.auth_controller import router as auth_router
+
 app = FastAPI(
     title="Synthetic Data Platform API",
     description="Backend API for the Synthetic Data Platform",
@@ -119,19 +121,17 @@ async def value_error_handler(
     )
 
 
-@app.get("/")
-def root():
-    return {
-        "message": "Synthetic Data Platform API is running"
-    }
 
-
-@app.get("/health")
+@app.get(
+    "/health",
+    tags=["System"],
+    summary="Health Check",
+    description="Checks whether the Synthetic Data Platform API is running and available."
+)
 def health_check():
     return {
         "status": "healthy"
     }
-
 
 app.include_router(dataset_router)
 app.include_router(profile_router)
@@ -147,3 +147,4 @@ app.include_router(preprocessing_router)
 app.include_router(relationship_router)
 app.include_router(dataset_group_router)
 app.include_router(validation_rule_router)
+app.include_router(auth_router)

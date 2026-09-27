@@ -1,27 +1,39 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
 from backend.services.dataset_group_service import create_group
+from backend.utils.auth_dependency import get_current_user
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="",
+    tags=["Dataset Groups"],
+)
 
 
 class DatasetGroupRequest(BaseModel):
     group_name: str
     domain_type: str | None = None
-    user_id: int | None = None
 
 
-@router.post("/groups")
+@router.post(
+    "/groups",
+    summary="Create dataset group",
+    description=(
+        "Creates a dataset group for organizing multiple related datasets. "
+        "Groups can be used to associate datasets that belong to the same "
+        "domain or relational data workflow."
+    ),
+)
 def create_dataset_group_controller(
-    request: DatasetGroupRequest
+    request: DatasetGroupRequest,
+    current_user=Depends(get_current_user),
 ):
     try:
         group_id = create_group(
             group_name=request.group_name,
             domain_type=request.domain_type,
-            user_id=request.user_id,
+            user_id=current_user,
         )
 
         return {
@@ -35,11 +47,11 @@ def create_dataset_group_controller(
     except ValueError as error:
         raise HTTPException(
             status_code=400,
-            detail=str(error)
+            detail=str(error),
         )
 
     except Exception as error:
         raise HTTPException(
             status_code=500,
-            detail=str(error)
+            detail=str(error),
         )

@@ -31,6 +31,10 @@ from backend.services.validation_resampling_service import (
     generate_valid_rows,
 )
 
+from backend.repositories.dataset_repository import (
+    get_dataset_user_id,
+)
+
 
 SUPPORTED_MODELS = {
     "gaussian_copula",
@@ -359,10 +363,18 @@ def _apply_column_actions(
 
 
 def generate_synthetic_dataset(
-    dataset_id: int,
-    model_name: str,
+    dataset_id,
+    model_name,
+    user_id,
     parameters: dict | None = None,
 ):    
+
+    dataset_user_id = get_dataset_user_id(dataset_id)
+
+    if dataset_user_id != user_id:
+        raise PermissionError(
+            "You do not have permission to generate data for this dataset."
+        )
     # --------------------------------------------------
     # 1. Validate model
     # --------------------------------------------------

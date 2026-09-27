@@ -1,37 +1,51 @@
 from pathlib import Path
+from datetime import datetime
 
 import pandas as pd
-
-
-GENERATED_DIRECTORY = Path("data/generated")
 
 from backend.repositories.dataset_repository import (
     get_dataset_filename,
 )
+
 from backend.repositories.configuration_repository import (
     get_configurations,
 )
+
 from backend.services.dataset_loader import load_dataset
 
+from backend.repositories.dataset_repository import (
+    get_dataset_file_path,
+)
 
-
+GENERATED_DIRECTORY = Path("data/generated")
 UPLOAD_DIRECTORY = Path("data/uploads")
+
 
 def save_generated_dataset(
     dataframe: pd.DataFrame,
     dataset_id: int,
     model_name: str,
 ):
-    GENERATED_DIRECTORY.mkdir(
+    # Create date-wise folder
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    date_directory = (
+        GENERATED_DIRECTORY / today
+    )
+
+    date_directory.mkdir(
         parents=True,
         exist_ok=True,
     )
 
+    # Save using dataset ID and model name
     output_filename = (
         f"synthetic_dataset_{dataset_id}_{model_name}.csv"
     )
 
-    output_path = GENERATED_DIRECTORY / output_filename
+    output_path = (
+        date_directory / output_filename
+    )
 
     dataframe.to_csv(
         output_path,
@@ -45,13 +59,18 @@ def save_generated_dataset(
         "column_count": len(dataframe.columns),
     }
 
-def prepare_dataset_for_generation(dataset_id: int):
+
+def prepare_dataset_for_generation(
+    dataset_id: int,
+):
 
     # 1. Get original dataset filename
-    filename = get_dataset_filename(dataset_id)
+    filename = get_dataset_filename(
+        dataset_id
+    )
 
     # 2. Load original dataset
-    file_path = UPLOAD_DIRECTORY / filename
+    file_path = get_dataset_file_path(dataset_id)
 
     dataframe = load_dataset(
         str(file_path)

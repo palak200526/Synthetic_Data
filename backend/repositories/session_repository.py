@@ -1,7 +1,7 @@
 from backend.config.database import get_db_connection
 
 
-def create_processing_session():
+def create_processing_session(user_id: int):
     connection = None
     cursor = None
 
@@ -11,17 +11,26 @@ def create_processing_session():
 
         cursor.execute(
             """
-            INSERT INTO processing_sessions
-            DEFAULT VALUES
-            RETURNING session_id
-            """
+            INSERT INTO sessions (
+                user_id,
+                created_at,
+                expires_at
+            )
+            VALUES (
+                %s,
+                NOW(),
+                NOW() + INTERVAL '30 minutes'
+            )
+            RETURNING session_id, user_id, created_at, expires_at
+            """,
+            (user_id,)
         )
 
-        session_id = cursor.fetchone()[0]
+        session = cursor.fetchone()
 
         connection.commit()
 
-        return session_id
+        return session
 
     except Exception:
         if connection:

@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from backend.schemas.api_schema import MultiTableGenerationRequest
 from backend.services.multi_table_generation_service import (
@@ -7,13 +7,27 @@ from backend.services.multi_table_generation_service import (
 from backend.services.referential_integrity_service import (
     validate_referential_integrity,
 )
+from backend.utils.auth_dependency import get_current_user
 
-router = APIRouter()
+
+router = APIRouter(
+    prefix="",
+    tags=["Generation"],
+)
 
 
-@router.post("/generation/multi-table")
+@router.post(
+    "/generation/multi-table",
+    summary="Generate multi-table synthetic data",
+    description=(
+        "Generates synthetic data for multiple related tables while preserving "
+        "the configured relationships between datasets. This endpoint is used "
+        "for relational datasets such as supply-chain data."
+    ),
+)
 def generate_multi_table_data(
     request: MultiTableGenerationRequest,
+    current_user=Depends(get_current_user),
 ):
     result = generate_linked_tables(
         group_id=request.group_id,
