@@ -1,15 +1,13 @@
-import numpy as np
 import pandas as pd
-from scipy.stats import norm
 
 from backend.services.generated_dataset_service import (
     prepare_dataset_for_generation,
     save_generated_dataset,
 )
 
-from backend.services.id_generation_service import generate_new_ids
-
-from backend.generation.generator_factory import get_generator
+from backend.generation.generator_factory import (
+    get_generator
+)
 
 from backend.services.business_rule_detector import (
     detect_arithmetic_relationships,
@@ -43,343 +41,484 @@ SUPPORTED_MODELS = {
 }
 
 
-def _generate_gaussian_copula(
-    dataframe: pd.DataFrame,
+# ==========================================================
+# COLUMN ACTION HELPERS
+# ==========================================================
+
+def _get_columns_by_action(
     configurations: list,
-    random_state: int = 42,
-    num_rows: int | None = None,
-) -> pd.DataFrame:
+    action: str,
+) -> list[str]:
+    """
+    Return column names configured with a specific action.
+    """
 
-    rng = np.random.default_rng(random_state)
-    if num_rows is None:
-        num_rows = len(dataframe)
-
-    # 1. Determine columns based on configuration
-    remove_columns = {
+    return [
         config["column_name"]
         for config in configurations
-        if config["action"] == "remove"
-    }
+        if config["action"] == action
+    ]
 
-    working_dataframe = dataframe.drop(
-        columns=list(remove_columns),
-        errors="ignore",
-    ).copy()
 
-    if working_dataframe.empty:
-        raise ValueError(
-            "No columns available for synthetic generation."
-        )
+def _generate_unique_ids(
+    result: pd.DataFrame,
+    column_name: str,
+) -> pd.DataFrame:
+    """
+    Generate new unique identifiers for a column.
 
-    # 2. Separate numerical and categorical data
-    numerical_columns = (
-        working_dataframe
-        .select_dtypes(include=np.number)
-        .columns
+    Requirements:
+    - IDs must be unique.
+    - IDs must not match any original/generated ID
+      already present in the column.
+    - Number of IDs must equal number of rows.
+    """
+
+    if column_name not in result.columns:
+        return result
+
+    # --------------------------------------------------
+    # Preserve existing values before replacing them
+    # --------------------------------------------------
+
+    existing_values = set(
+        result[column_name]
+        .dropna()
+        .astype(str)
         .tolist()
     )
 
-    categorical_columns = [
-        column
-        for column in working_dataframe.columns
-        if column not in numerical_columns
-    ]
+    generated_ids = []
 
-    synthetic_dataframe = pd.DataFrame(
-        index=range(num_rows)
-    )
+    index = 1
 
-    # 3. Generate numerical columns
-    if numerical_columns:
+    while len(generated_ids) < len(result):
 
-        numerical_data = working_dataframe[
-            numerical_columns
-        ].copy()
-
-        # Rank -> Uniform -> Gaussian transformation
-        gaussian_data = pd.DataFrame(
-            index=numerical_data.index
+        new_id = (
+            f"{column_name}_synthetic_{index:06d}"
         )
 
-        for column in numerical_columns:
+        if new_id not in existing_values:
+            generated_ids.append(new_id)
 
-            values = numerical_data[
-                column
-            ].to_numpy()
+        index += 1
 
-            ranks = pd.Series(values).rank(
-                method="average"
-            ).to_numpy()
+    result[column_name] = generated_ids
 
-            uniform_values = (
-                ranks - 0.5
-            ) / len(values)
+    return result
 
-            gaussian_values = norm.ppf(
-                uniform_values
-            )
 
-            gaussian_data[column] = (
-                gaussian_values
-            )
-
-        # Correlation structure
-        correlation_matrix = (
-            gaussian_data
-            .corr()
-            .fillna(0)
-        )
-
-        correlation_matrix = (
-            correlation_matrix
-            + np.eye(
-                len(correlation_matrix)
-            ) * 1e-6
-        )
-
-        # Make matrix positive definite
-        eigenvalues, eigenvectors = (
-            np.linalg.eigh(
-                correlation_matrix
-            )
-        )
-
-        eigenvalues = np.maximum(
-            eigenvalues,
-            1e-6,
-        )
-
-        correlation_matrix = (
-            eigenvectors
-            @ np.diag(eigenvalues)
-            @ eigenvectors.T
-        )
-
-        # Generate correlated Gaussian samples
-        generated_gaussian = (
-            rng.multivariate_normal(
-                mean=np.zeros(
-                    len(numerical_columns)
-                ),
-                cov=correlation_matrix,
-                size=num_rows,
-            )
-        )
-
-        # Transform back to original distributions
-        for index, column in enumerate(
-            numerical_columns
-        ):
-
-            original_values = (
-                numerical_data[column]
-                .dropna()
-                .to_numpy()
-            )
-
-            uniform_values = norm.cdf(
-                generated_gaussian[:, index]
-            )
-
-            synthetic_values = np.quantile(
-                original_values,
-                uniform_values,
-            )
-
-            synthetic_dataframe[column] = (
-                synthetic_values
-            )
-
-    # 4. Generate categorical columns
-    for column in categorical_columns:
-
-        value_counts = (
-            working_dataframe[column]
-            .value_counts(
-                normalize=True
-            )
-        )
-
-        categories = (
-            value_counts.index.tolist()
-        )
-
-        probabilities = (
-            value_counts.values
-        )
-
-        synthetic_dataframe[column] = (
-            rng.choice(
-                categories,
-                size=num_rows,
-                p=probabilities,
-            )
-        )
-
-    # 5. Restore original column order
-    synthetic_dataframe = (
-        synthetic_dataframe[
-            working_dataframe.columns
-        ]
-    )
-
-    # 6. Restore integer columns
-    for column in numerical_columns:
-
-        if pd.api.types.is_integer_dtype(
-            dataframe[column]
-        ):
-
-            synthetic_dataframe[column] = (
-                np.rint(
-                    synthetic_dataframe[
-                        column
-                    ]
-                ).astype(int)
-            )
-
-    return synthetic_dataframe
-
+# ==========================================================
+# APPLY COLUMN ACTIONS
+# ==========================================================
 
 def _apply_column_actions(
     synthetic_dataframe: pd.DataFrame,
     configurations: list,
 ) -> pd.DataFrame:
     """
-    Enforce configured column actions
-    on generated data.
+    Apply configured column actions after synthetic generation.
+
+    Supported actions:
+    - keep
+    - remove
+    - generalize
+    - new_id
+    - derived
     """
 
     result = synthetic_dataframe.copy()
 
+    # ==================================================
+    # VALIDATE CONFIGURATIONS
+    # ==================================================
+
+    supported_actions = {
+        "keep",
+        "remove",
+        "generalize",
+        "new_id",
+        "derived",
+    }
+
     for config in configurations:
 
-        column_name = config["column_name"]
-        action = config["action"]
+        action = config.get("action")
+        column_name = config.get("column_name")
 
-        # If the configured column is not
-        # present, there is nothing to enforce.
-        if column_name not in result.columns:
-            continue
-
-        if action == "keep":
-
-            # Keep generated column unchanged.
-            continue
-
-        elif action == "remove":
-
-            result = result.drop(
-                columns=[column_name],
-                errors="ignore",
+        if action not in supported_actions:
+            raise ValueError(
+                f"Unsupported column action "
+                f"'{action}' for column "
+                f"'{column_name}'"
             )
 
-        elif action == "mask":
+    # ==================================================
+    # REMOVE
+    # ==================================================
+
+    remove_columns = _get_columns_by_action(
+        configurations,
+        "remove",
+    )
+
+    if remove_columns:
+
+        result = result.drop(
+            columns=remove_columns,
+            errors="ignore",
+        )
+
+
+    # ==================================================
+    # GENERALIZE
+    # ==================================================
+
+    generalize_columns = _get_columns_by_action(
+        configurations,
+        "generalize",
+    )
+
+    for column in generalize_columns:
+
+        if column not in result.columns:
+            continue
+
+        # Numeric generalization
+        if pd.api.types.is_numeric_dtype(
+            result[column]
+        ):
+
+            result[column] = (
+                result[column]
+                .round(0)
+            )
+
+        # String/text generalization
+        else:
+
+            result[column] = (
+                result[column]
+                .astype(str)
+                .str[:3]
+            )
+
+    # ==================================================
+    # NEW ID
+    # ==================================================
+
+    new_id_columns = _get_columns_by_action(
+        configurations,
+        "new_id",
+    )
+
+    for column in new_id_columns:
+
+        if column not in result.columns:
+            continue
+
+        result = _generate_unique_ids(
+            result=result,
+            column_name=column,
+        )
+
+    # ==================================================
+    # DERIVED
+    # ==================================================
+
+    derived_configurations = [
+        config
+        for config in configurations
+        if config["action"] == "derived"
+    ]
+
+    for config in derived_configurations:
+
+        column_name = config["column_name"]
+
+        rule = config.get("rule")
+
+        if not rule:
+            continue
+
+        operation = rule.get(
+            "operation"
+        )
+
+        operands = rule.get(
+            "operands",
+            [],
+        )
+
+        if len(operands) < 2:
+            continue
+
+        left = operands[0]
+        right = operands[1]
+
+        if (
+            left not in result.columns
+            or right not in result.columns
+        ):
+            continue
+
+        # --------------------------------------------------
+        # ADD
+        # --------------------------------------------------
+
+        if operation == "add":
 
             result[column_name] = (
-                result[column_name]
-                .astype(str)
-                .apply(
-                    lambda value:
-                    "*" * len(value)
-                    if value
-                    else value
-                )
+                result[left]
+                + result[right]
             )
 
-        elif action == "generalize":
+        # --------------------------------------------------
+        # SUBTRACT
+        # --------------------------------------------------
 
-            if pd.api.types.is_numeric_dtype(
-                result[column_name]
-            ):
+        elif operation == "subtract":
 
-                result[column_name] = (
-                    result[column_name]
-                    .round(0)
-                )
+            result[column_name] = (
+                result[left]
+                - result[right]
+            )
 
-            else:
+        # --------------------------------------------------
+        # MULTIPLY
+        # --------------------------------------------------
 
-                result[column_name] = (
-                    result[column_name]
-                    .astype(str)
-                    .str[:3]
-                )
+        elif operation == "multiply":
 
-        elif action == "new_id":
+            result[column_name] = (
+                result[left]
+                * result[right]
+            )
 
-            result = generate_new_ids(
-                result,
+        # --------------------------------------------------
+        # DIVIDE
+        # --------------------------------------------------
+
+        elif operation == "divide":
+
+            result[column_name] = 0.0
+
+            non_zero = (
+                result[right] != 0
+            )
+
+            result.loc[
+                non_zero,
                 column_name,
+            ] = (
+                result.loc[
+                    non_zero,
+                    left,
+                ]
+                /
+                result.loc[
+                    non_zero,
+                    right,
+                ]
             )
 
-        elif action == "derived":
-            rule = config.get("rule")
-
-            if not rule:
-                continue
-
-            operation = rule.get("operation")
-            operands = rule.get("operands", [])
-
-            if len(operands) < 2:
-                continue
-
-            left = operands[0]
-            right = operands[1]
-
-            if left not in result.columns or right not in result.columns:
-                continue
-
-            if operation == "add":
-                result[column_name] = (
-                    result[left] + result[right]
-                )
-
-            elif operation == "subtract":
-                result[column_name] = (
-                    result[left] - result[right]
-                )
-
-            elif operation == "multiply":
-                result[column_name] = (
-                    result[left] * result[right]
-                )
-
-            elif operation == "divide":
-                non_zero = result[right] != 0
-
-                result.loc[non_zero, column_name] = (
-                    result.loc[non_zero, left]
-                    / result.loc[non_zero, right]
-                )
         else:
+
             raise ValueError(
-                f"Unsupported column action '{action}' "
+                f"Unsupported derived "
+                f"operation '{operation}' "
                 f"for column '{column_name}'"
             )
 
     return result
 
 
+# ==========================================================
+# PREPARE DATAFRAME FOR GENERATION
+# ==========================================================
+
+def _prepare_generation_dataframe(
+    dataframe: pd.DataFrame,
+    configurations: list,
+) -> pd.DataFrame:
+    """
+    Prepare dataframe before model training.
+
+    Columns configured as 'remove' are excluded
+    from model training.
+    """
+
+    remove_columns = _get_columns_by_action(
+        configurations,
+        "remove",
+    )
+
+    generation_dataframe = (
+        dataframe
+        .drop(
+            columns=remove_columns,
+            errors="ignore",
+        )
+        .copy()
+    )
+
+    if generation_dataframe.empty:
+
+        raise ValueError(
+            "No columns available for "
+            "synthetic generation."
+        )
+
+    return generation_dataframe
+
+
+# ==========================================================
+# GENERATE USING SELECTED MODEL
+# ==========================================================
+
+def _generate_with_model(
+    model_name: str,
+    dataframe: pd.DataFrame,
+    configurations: list,
+    parameters: dict,
+    num_rows: int,
+) -> pd.DataFrame:
+    """
+    Train the selected generator and generate
+    synthetic records.
+
+    Identifier columns configured as new_id are
+    passed to the generator so that generators
+    can treat them separately.
+    """
+
+    # --------------------------------------------------
+    # Prepare dataframe
+    # --------------------------------------------------
+
+    generation_dataframe = (
+        _prepare_generation_dataframe(
+            dataframe=dataframe,
+            configurations=configurations,
+        )
+    )
+
+    # --------------------------------------------------
+    # Get identifier columns
+    # --------------------------------------------------
+
+    identifier_columns = (
+        _get_columns_by_action(
+            configurations,
+            "new_id",
+        )
+    )
+
+    identifier_columns = [
+        column
+        for column in identifier_columns
+        if column in generation_dataframe.columns
+    ]
+
+    # --------------------------------------------------
+    # Generator parameters
+    # --------------------------------------------------
+
+    generator_parameters = dict(
+        parameters
+    )
+
+    # Identifier handling is controlled by
+    # column configuration.
+    generator_parameters.pop(
+        "identifier_columns",
+        None,
+    )
+
+    # --------------------------------------------------
+    # Create generator
+    # --------------------------------------------------
+
+    generator = get_generator(
+        model_name,
+        **generator_parameters,
+    )
+
+    # --------------------------------------------------
+    # Train
+    # --------------------------------------------------
+
+    generator.fit(
+        generation_dataframe,
+        identifier_columns=identifier_columns,
+    )
+
+    # --------------------------------------------------
+    # Generate
+    # --------------------------------------------------
+
+    synthetic_dataframe = (
+        generator.generate(
+            num_rows=num_rows
+        )
+    )
+
+    return synthetic_dataframe
+
+
+# ==========================================================
+# MAIN GENERATION SERVICE
+# ==========================================================
+
 def generate_synthetic_dataset(
     dataset_id,
     model_name,
     user_id,
     parameters: dict | None = None,
-):    
+):
+    """
+    Main synthetic data generation service.
 
-    dataset_user_id = get_dataset_user_id(dataset_id)
+    Flow:
+
+    1. Validate dataset ownership
+    2. Validate generation model
+    3. Create generation run
+    4. Load dataset and configurations
+    5. Load validation rules
+    6. Detect business rules
+    7. Train selected generator
+    8. Generate synthetic data
+    9. Apply business rules
+    10. Apply configured column actions
+    11. Validate/resample
+    12. Save generated dataset
+    13. Save generation result
+    14. Update generation run
+    15. Return API response
+    """
+
+    # ==================================================
+    # 1. DATASET OWNERSHIP
+    # ==================================================
+
+    dataset_user_id = get_dataset_user_id(
+        dataset_id
+    )
 
     if dataset_user_id != user_id:
+
         raise PermissionError(
-            "You do not have permission to generate data for this dataset."
+            "You do not have permission to "
+            "generate data for this dataset."
         )
-    # --------------------------------------------------
-    # 1. Validate model
-    # --------------------------------------------------
+
+    # ==================================================
+    # 2. VALIDATE MODEL
+    # ==================================================
 
     if not model_name:
+
         raise ValueError(
             "Model name is required."
         )
@@ -400,20 +539,24 @@ def generate_synthetic_dataset(
 
     parameters = parameters or {}
 
+    # ==================================================
+    # 3. CREATE GENERATION RUN
+    # ==================================================
+
     run_id = create_generation_run(
         dataset_id=dataset_id,
         model_name=model_name,
     )
-    
+
     save_model_configuration(
         run_id=run_id,
         model_name=model_name,
         parameters=parameters,
     )
 
-    # --------------------------------------------------
-    # 2. Prepare dataset
-    # --------------------------------------------------
+    # ==================================================
+    # 4. PREPARE DATASET
+    # ==================================================
 
     preparation = (
         prepare_dataset_for_generation(
@@ -432,11 +575,20 @@ def generate_synthetic_dataset(
     configurations = preparation[
         "configurations"
     ]
-    validation_rules = get_validation_rules(dataset_id)
 
-    # --------------------------------------------------
-    # 3. Detect generalized business rules
-    # --------------------------------------------------
+    # ==================================================
+    # 5. VALIDATION RULES
+    # ==================================================
+
+    validation_rules = (
+        get_validation_rules(
+            dataset_id
+        )
+    )
+
+    # ==================================================
+    # 6. DETECT BUSINESS RULES
+    # ==================================================
 
     business_rules = (
         detect_arithmetic_relationships(
@@ -444,83 +596,58 @@ def generate_synthetic_dataset(
         )
     )
 
-    # --------------------------------------------------
-    # 4. Generate synthetic data
+    # ==================================================
+    # 7. GENERATION FUNCTION
+    # ==================================================
 
-    if model_name == "gaussian_copula":
+    def generate_rows(count):
 
-        random_state = parameters.get(
-            "random_state",
-            42,
+        generated = _generate_with_model(
+            model_name=model_name,
+            dataframe=dataframe,
+            configurations=configurations,
+            parameters=parameters,
+            num_rows=count,
         )
 
-        def generate_rows(count):
-            generated = _generate_gaussian_copula(
-                dataframe=dataframe,
-                configurations=configurations,
-                random_state=random_state,
-                num_rows=count,
-            )
+        # --------------------------------------------------
+        # Apply business rules
+        # --------------------------------------------------
 
-            generated = apply_business_rules(
-                generated,
-                business_rules,
-            )
-
-            return generated
-
-    else:
-
-        # Remove columns configured with "remove"
-        remove_columns = {
-            config["column_name"]
-            for config in configurations
-            if config["action"] == "remove"
-        }
-
-        generation_dataframe = (
-            dataframe.drop(
-                columns=list(remove_columns),
-                errors="ignore",
-            ).copy()
+        generated = apply_business_rules(
+            generated,
+            business_rules,
         )
 
-        # Create requested generator
-        generator = get_generator(
-            model_name,
-            **parameters,
+        # --------------------------------------------------
+        # Apply column actions
+        # --------------------------------------------------
+
+        generated = _apply_column_actions(
+            synthetic_dataframe=generated,
+            configurations=configurations,
         )
 
-        # Train generator
-        generator.fit(
-            generation_dataframe
-        )
+        return generated
 
-        def generate_rows(count):
-            generated = generator.generate(
-                num_rows=count
-            )
-
-            generated = apply_business_rules(
-                generated,
-                business_rules,
-            )
-
-            return generated
-
+    # ==================================================
+    # 8. GENERATE + VALIDATE
+    # ==================================================
 
     if validation_rules:
 
-        validation_result = generate_valid_rows(
-            generate_function=generate_rows,
-            target_row_count=len(dataframe),
-            rules=validation_rules,
-            max_attempts=10,
+        validation_result = (
+            generate_valid_rows(
+                generate_function=generate_rows,
+                target_row_count=len(dataframe),
+                rules=validation_rules,
+                max_attempts=10,
+            )
         )
 
-        synthetic_dataframe = validation_result[
-            "dataframe"
-        ]
+        synthetic_dataframe = (
+            validation_result["dataframe"]
+        )
 
     else:
 
@@ -529,56 +656,50 @@ def generate_synthetic_dataset(
         )
 
         validation_result = {
-            "dataframe": synthetic_dataframe,
-            "target_row_count": len(dataframe),
-            "total_generated_rows": len(
-                synthetic_dataframe
-            ),
-            "total_valid_rows": len(
-                synthetic_dataframe
-            ),
-            "total_rejected_rows": 0,
-            "attempts": 1,
-            "validation_history": [],
+
+            "dataframe":
+                synthetic_dataframe,
+
+            "target_row_count":
+                len(dataframe),
+
+            "total_generated_rows":
+                len(synthetic_dataframe),
+
+            "total_valid_rows":
+                len(synthetic_dataframe),
+
+            "total_rejected_rows":
+                0,
+
+            "attempts":
+                1,
+
+            "validation_history":
+                [],
+
             "final_validation": {
-                "valid": True,
-                "valid_row_count": len(
-                    synthetic_dataframe
-                ),
-                "invalid_row_count": 0,
-                "invalid_rows": [],
-                "rules": [],
+
+                "valid":
+                    True,
+
+                "valid_row_count":
+                    len(synthetic_dataframe),
+
+                "invalid_row_count":
+                    0,
+
+                "invalid_rows":
+                    [],
+
+                "rules":
+                    [],
             },
         }
-        
-       
-    # --------------------------------------------------
-    # 5. Apply generalized business rules
-    # --------------------------------------------------
 
-    # synthetic_dataframe = (
-    #     apply_business_rules(
-    #         synthetic_dataframe,
-    #         business_rules,
-    #     )
-    # )
-
-    # --------------------------------------------------
-    # 6. Enforce column actions
-    # --------------------------------------------------
-
-    synthetic_dataframe = (
-        _apply_column_actions(
-            synthetic_dataframe=(
-                synthetic_dataframe
-            ),
-            configurations=configurations,
-        )
-    )
-
-    # --------------------------------------------------
-    # 7. Save generated dataset
-    # --------------------------------------------------
+    # ==================================================
+    # 9. SAVE GENERATED DATASET
+    # ==================================================
 
     generated_dataset = (
         save_generated_dataset(
@@ -587,49 +708,112 @@ def generate_synthetic_dataset(
             model_name,
         )
     )
+
+    # ==================================================
+    # 10. SAVE GENERATION RESULT
+    # ==================================================
+
     result_id = save_generated_result(
         run_id=run_id,
-        file_name=generated_dataset["file_name"],
-        file_path=generated_dataset["file_path"],
-        row_count=generated_dataset["row_count"],
-        column_count=generated_dataset["column_count"],
+
+        file_name=generated_dataset[
+            "file_name"
+        ],
+
+        file_path=generated_dataset[
+            "file_path"
+        ],
+
+        row_count=generated_dataset[
+            "row_count"
+        ],
+
+        column_count=generated_dataset[
+            "column_count"
+        ],
     )
+
+    # ==================================================
+    # 11. UPDATE GENERATION RUN STATUS
+    # ==================================================
 
     update_generation_run_status(
         run_id=run_id,
         status="completed",
     )
 
-    # --------------------------------------------------
-    # 8. Return API response
-    # --------------------------------------------------
+    # ==================================================
+    # 12. API RESPONSE
+    # ==================================================
 
     return {
-        "status": "success",
-        "message": (
-            "Synthetic dataset generated successfully."
-        ),
+
+        "status":
+            "success",
+
+        "message":
+            "Synthetic dataset generated successfully.",
+
         "data": {
-            "run_id": run_id,
-            "result_id": result_id,
-            "dataset_id": dataset_id,
-            "model_name": model_name,
-            "parameters": parameters,
-            "source_filename": filename,
-            "configurations": configurations,
-            "generated_dataset": (
-                generated_dataset
-            ),
-            "business_rules": (
-                business_rules
-            ),
+
+            "run_id":
+                run_id,
+
+            "result_id":
+                result_id,
+
+            "dataset_id":
+                dataset_id,
+
+            "model_name":
+                model_name,
+
+            "parameters":
+                parameters,
+
+            "source_filename":
+                filename,
+
+            "configurations":
+                configurations,
+
+            "generated_dataset":
+                generated_dataset,
+
+            "business_rules":
+                business_rules,
+
             "validation": {
-                "target_row_count": validation_result["target_row_count"],
-                "total_generated_rows": validation_result["total_generated_rows"],
-                "total_valid_rows": validation_result["total_valid_rows"],
-                "total_rejected_rows": validation_result["total_rejected_rows"],
-                "attempts": validation_result["attempts"],
-                "final_validation": validation_result["final_validation"],
+
+                "target_row_count":
+                    validation_result[
+                        "target_row_count"
+                    ],
+
+                "total_generated_rows":
+                    validation_result[
+                        "total_generated_rows"
+                    ],
+
+                "total_valid_rows":
+                    validation_result[
+                        "total_valid_rows"
+                    ],
+
+                "total_rejected_rows":
+                    validation_result[
+                        "total_rejected_rows"
+                    ],
+
+                "attempts":
+                    validation_result[
+                        "attempts"
+                    ],
+
+                "final_validation":
+                    validation_result[
+                        "final_validation"
+                    ],
             },
         },
     }

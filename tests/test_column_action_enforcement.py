@@ -60,13 +60,9 @@ def test_remove_and_keep_actions():
 
 
 
-def test_mask_and_generalize_actions():
+def test_generalize_action():
     synthetic_data = pd.DataFrame(
         {
-            "customer_name": [
-                "Palak",
-                "Rahul",
-            ],
             "category": [
                 "Electronics",
                 "Mechanical",
@@ -79,10 +75,6 @@ def test_mask_and_generalize_actions():
     )
 
     configurations = [
-        {
-            "column_name": "customer_name",
-            "action": "mask",
-        },
         {
             "column_name": "category",
             "action": "generalize",
@@ -98,26 +90,18 @@ def test_mask_and_generalize_actions():
         configurations=configurations,
     )
 
-    # Masked values should not equal original values
-    assert result["customer_name"].iloc[0] != "Palak"
-    assert result["customer_name"].iloc[1] != "Rahul"
-
-    # Mask should preserve the length
-    assert len(result["customer_name"].iloc[0]) == len("Palak")
-    assert len(result["customer_name"].iloc[1]) == len("Rahul")
-
-    # Text generalization should reduce the value
+    # Text generalization
     assert result["category"].iloc[0] == "Ele"
     assert result["category"].iloc[1] == "Mec"
 
-    # Numeric generalization should round values
+    # Numeric generalization
     assert result["standard_cost"].iloc[0] == 1235
     assert result["standard_cost"].iloc[1] == 9877
 
     # Row count must remain unchanged
     assert len(result) == len(synthetic_data)
 
-    print("\nMask/Generalize enforcement: PASSED")
+    print("\nGeneralize enforcement: PASSED")
 
 def test_new_id_action():
     synthetic_data = pd.DataFrame(
@@ -220,11 +204,6 @@ def test_derived_column_action():
 
     print("\nDerived column enforcement: PASSED")
 
-if __name__ == "__main__":
-    test_remove_and_keep_actions()
-    test_mask_and_generalize_actions()
-    test_new_id_action()
-    test_derived_column_action()
 
 def test_generation_api_enforces_column_actions():
     """
@@ -395,3 +374,9 @@ def test_generation_api_recalculates_derived_column():
     print(
         "\nGeneration API derived-column recalculation: PASSED"
     )
+
+if __name__ == "__main__":
+    test_remove_and_keep_actions()
+    test_generalize_action()
+    test_new_id_action()
+    test_derived_column_action()

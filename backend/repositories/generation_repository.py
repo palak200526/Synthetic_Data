@@ -189,3 +189,28 @@ def update_generation_run_status(
 
         if connection:
             connection.close()
+
+
+def get_generated_result_by_run(run_id: int):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("""
+            SELECT result_id, run_id, file_name, file_path,
+                   row_count, column_count
+            FROM generated_results
+            WHERE run_id = %s
+            ORDER BY result_id DESC
+            LIMIT 1
+        """, (run_id,))
+        row = cur.fetchone()
+        if not row:
+            return None
+        return {
+            "result_id": row[0], "run_id": row[1],
+            "file_name": row[2], "file_path": row[3],
+            "row_count": row[4], "column_count": row[5],
+        }
+    finally:
+        cur.close()
+        conn.close()

@@ -47,7 +47,7 @@ async def upload_dataset_controller(
             "message": "At least one dataset file is required."
         }
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id)
 
     results = []
 

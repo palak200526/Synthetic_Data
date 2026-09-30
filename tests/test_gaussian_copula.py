@@ -9,7 +9,10 @@ from backend.generation.validators import (
 )
 
 
-# Load original dataset
+# ---------------------------------------------------------
+# 1. Load original dataset
+# ---------------------------------------------------------
+
 df = pd.read_csv(
     "data/sample_supply_chain/products.csv"
 )
@@ -21,21 +24,43 @@ print("\nOriginal shape:")
 print(df.shape)
 
 
-# Create and fit model
+# ---------------------------------------------------------
+# 2. Identifier columns come from configuration
+# ---------------------------------------------------------
+
+identifier_columns = [
+    "product_id"
+]
+
+
+# ---------------------------------------------------------
+# 3. Create and fit model
+# ---------------------------------------------------------
+
 model = GaussianCopulaGenerator(
     random_state=42
 )
 
-model.fit(df)
+model.fit(
+    df,
+    identifier_columns=identifier_columns
+)
 
 
-# Generate synthetic records
+# ---------------------------------------------------------
+# 4. Generate synthetic records
+# ---------------------------------------------------------
+
 required_rows = 100
 
 synthetic_df = model.generate(
     num_rows=required_rows
 )
 
+
+# ---------------------------------------------------------
+# 5. Display generated data
+# ---------------------------------------------------------
 
 print("\nSynthetic dataset:")
 print(synthetic_df.head())
@@ -50,7 +75,10 @@ print("\nSynthetic data types:")
 print(synthetic_df.dtypes)
 
 
-# Validate generated dataset
+# ---------------------------------------------------------
+# 6. Validate generated dataset
+# ---------------------------------------------------------
+
 validation_result = validate_synthetic_dataset(
     original_df=df,
     synthetic_df=synthetic_df,

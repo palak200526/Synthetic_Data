@@ -1,17 +1,9 @@
 from backend.services.dataset_loader import load_dataset
 from backend.services.dataset_profiler import generate_profile
-from backend.services.sensitive_detector import (
-    detect_sensitive_and_identifier_columns,
-)
-
-from backend.services.domain_preset_service import (
-    get_domain_preset,
-)
 
 from backend.repositories.dataset_repository import (
     get_dataset_profile,
     save_dataset_profile,
-    get_dataset_domain_type,
     get_dataset_file_path,
     get_dataset_user_id,
 )
@@ -74,65 +66,7 @@ def get_profile(dataset_id: int, user_id: int):
         )
 
         # -----------------------------------------------------
-        # 6. Get dataset domain
-        # -----------------------------------------------------
-        domain_type = get_dataset_domain_type(
-            dataset_id
-        )
-
-        # -----------------------------------------------------
-        # 7. Detect sensitive and identifier columns
-        # -----------------------------------------------------
-        sensitive_detection = (
-            detect_sensitive_and_identifier_columns(
-                dataframe
-            )
-        )
-
-        # -----------------------------------------------------
-        # 8. Apply domain-specific presets
-        # -----------------------------------------------------
-        for column_result in sensitive_detection:
-
-            column_name = (
-                column_result["column_name"]
-            )
-
-            preset = get_domain_preset(
-                column_name,
-                domain_type,
-            )
-
-            if preset:
-
-                column_result["preset_applied"] = True
-
-                column_result["suggested_type"] = (
-                    preset["suggested_type"]
-                )
-
-                column_result["is_sensitive"] = (
-                    preset["is_sensitive"]
-                )
-
-                column_result["is_identifier"] = (
-                    preset["is_identifier"]
-                )
-
-            else:
-
-                # Fall back to existing detection
-                column_result["preset_applied"] = False
-
-        # -----------------------------------------------------
-        # 9. Add sensitive detection to profile
-        # -----------------------------------------------------
-        profile["sensitive_detection"] = (
-            sensitive_detection
-        )
-
-        # -----------------------------------------------------
-        # 10. Save generated profile
+        # 6. Save generated profile
         # -----------------------------------------------------
         saved_profile = save_dataset_profile(
             dataset_id,
@@ -140,7 +74,7 @@ def get_profile(dataset_id: int, user_id: int):
         )
 
         # -----------------------------------------------------
-        # 11. Return generated profile
+        # 7. Return profile
         # -----------------------------------------------------
         return {
             "status": "success",

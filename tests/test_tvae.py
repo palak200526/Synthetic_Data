@@ -1,10 +1,15 @@
 import pandas as pd
 
 from backend.generation.tvae import TVAEGenerator
+
 from backend.generation.validators import (
     validate_synthetic_dataset
 )
 
+
+# --------------------------------------------------
+# Load original dataset
+# --------------------------------------------------
 
 df = pd.read_csv(
     "data/sample_supply_chain/products.csv"
@@ -12,6 +17,20 @@ df = pd.read_csv(
 
 print("Original shape:")
 print(df.shape)
+
+
+# --------------------------------------------------
+# Identifier configuration
+# --------------------------------------------------
+
+identifier_columns = [
+    "product_id"
+]
+
+
+# --------------------------------------------------
+# Train TVAE
+# --------------------------------------------------
 
 print("\nTraining TVAE...")
 
@@ -23,9 +42,17 @@ model = TVAEGenerator(
     random_state=42
 )
 
-model.fit(df)
+model.fit(
+    df,
+    identifier_columns=identifier_columns
+)
 
 print("Training completed.")
+
+
+# --------------------------------------------------
+# Generate synthetic data
+# --------------------------------------------------
 
 synthetic_df = model.generate(
     num_rows=100
@@ -44,6 +71,10 @@ print("\nSynthetic data types:")
 print(synthetic_df.dtypes)
 
 
+# --------------------------------------------------
+# Validate output
+# --------------------------------------------------
+
 validation_result = validate_synthetic_dataset(
     original_df=df,
     synthetic_df=synthetic_df,
@@ -54,11 +85,41 @@ print("\nValidation result:")
 print(validation_result)
 
 
+# --------------------------------------------------
+# Check identifier uniqueness
+# --------------------------------------------------
+
 print("\nProduct ID unique:")
 print(
     synthetic_df["product_id"].is_unique
 )
 
+
+# --------------------------------------------------
+# Check whether original IDs were preserved
+# --------------------------------------------------
+
+original_ids = set(
+    df["product_id"]
+)
+
+synthetic_ids = set(
+    synthetic_df["product_id"]
+)
+
+print("\nOriginal IDs preserved:")
+print(
+    bool(
+        original_ids.intersection(
+            synthetic_ids
+        )
+    )
+)
+
+
+# --------------------------------------------------
+# Numerical distribution sanity check
+# --------------------------------------------------
 
 print("\nOriginal standard_cost statistics:")
 print(
@@ -75,4 +136,4 @@ print(
 print("\nSynthetic standard_cost unique values:")
 print(
     synthetic_df["standard_cost"].nunique()
-)
+)   

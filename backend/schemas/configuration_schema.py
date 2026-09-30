@@ -11,7 +11,6 @@ class ColumnConfiguration(BaseModel):
     dataset_id: int
     column_name: str
     column_type: str
-    is_sensitive: bool
     is_identifier: bool
     action: str
     rule: DerivedRule | None = None

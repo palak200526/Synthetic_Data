@@ -102,17 +102,6 @@ def preprocess_dataset(
                 )
             ]
 
-        elif action == "mask":
-
-            dataframe[column_name] = (
-                dataframe[column_name]
-                .astype(str)
-                .apply(
-                    lambda value:
-                    "***" if value else value
-                )
-            )
-
         elif action == "keep":
 
             pass
