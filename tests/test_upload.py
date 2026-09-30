@@ -27,15 +27,18 @@ def test_upload_csv():
 
     response = client.post(
         "/upload",
-        files={
-            "file": (
-                "test.csv",
-                io.BytesIO(
-                    csv_content.encode("utf-8")
-                ),
-                "text/csv"
+        files=[
+            (
+                "files",
+                (
+                    "test.csv",
+                    io.BytesIO(
+                        csv_content.encode("utf-8")
+                    ),
+                    "text/csv"
+                )
             )
-        }
+        ]
     )
 
     assert response.status_code == 200
@@ -44,29 +47,46 @@ def test_upload_csv():
 
     assert result["status"] == "success"
 
-    assert result["data"]["rows"] == 3
+    assert "datasets" in result
+    assert len(result["datasets"]) == 1
 
-    assert result["data"]["columns"] == 3
+    dataset = result["datasets"][0]["data"]
+
+    assert dataset["filename"] == "test.csv"
+    assert dataset["rows"] == 3
+    assert dataset["columns"] == 3
+
+    assert dataset["column_names"] == [
+        "customer_id",
+        "age",
+        "gender",
+    ]
 
 
 def test_unsupported_file():
 
     response = client.post(
         "/upload",
-        files={
-            "file": (
-                "test.txt",
-                io.BytesIO(
-                    b"hello world"
-                ),
-                "text/plain"
+        files=[
+            (
+                "files",
+                (
+                    "test.txt",
+                    io.BytesIO(
+                        b"hello world"
+                    ),
+                    "text/plain"
+                )
             )
-        }
+        ]
     )
 
     assert response.status_code == 400
 
-    assert "Unsupported file type" in response.json()["message"]
+    assert (
+        "Unsupported file type"
+        in response.json()["message"]
+    )
 
 
 def test_dataset_profile():
@@ -79,15 +99,18 @@ def test_dataset_profile():
 
     upload_response = client.post(
         "/upload",
-        files={
-            "file": (
-                "profile_test.csv",
-                io.BytesIO(
-                    csv_content.encode("utf-8")
-                ),
-                "text/csv"
+        files=[
+            (
+                "files",
+                (
+                    "profile_test.csv",
+                    io.BytesIO(
+                        csv_content.encode("utf-8")
+                    ),
+                    "text/csv"
+                )
             )
-        }
+        ]
     )
 
     assert upload_response.status_code == 200
@@ -107,11 +130,9 @@ def test_dataset_profile():
     assert profile["basic"]["column_count"] == 4
 
     assert "age" in (
-        profile["column_types"]
-        ["numerical_columns"]
+        profile["column_types"]["numerical_columns"]
     )
 
     assert "gender" in (
-        profile["column_types"]
-        ["categorical_columns"]
+        profile["column_types"]["categorical_columns"]
     )

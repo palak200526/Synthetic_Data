@@ -4,7 +4,7 @@ from backend.repositories.configuration_repository import (
     get_identifier_configurations,
 )
 from backend.repositories.dataset_repository import (
-    get_dataset_filename,
+    get_dataset_file_path,
 )
 from backend.services.dataset_loader import load_dataset
 from backend.services.id_generation_service import (
@@ -13,8 +13,6 @@ from backend.services.id_generation_service import (
 from backend.services.generated_dataset_service import (
     save_generated_dataset,
 )
-
-UPLOAD_DIRECTORY = Path("data/uploads")
 
 
 def generate_ids_for_dataset(dataset_id: int):
@@ -26,11 +24,10 @@ def generate_ids_for_dataset(dataset_id: int):
             f"No identifier columns configured for dataset {dataset_id}."
         )
 
-    # 2. Get dataset filename
-    filename = get_dataset_filename(dataset_id)
+    # 2. Get actual uploaded dataset file path
+    file_path = get_dataset_file_path(dataset_id)
 
     # 3. Load dataset
-    file_path = UPLOAD_DIRECTORY / filename
     dataframe = load_dataset(str(file_path))
 
     # 4. Generate new IDs for each selected identifier column
@@ -46,9 +43,9 @@ def generate_ids_for_dataset(dataset_id: int):
     output = save_generated_dataset(
         dataframe,
         dataset_id,
+        "id_generation",
     )
 
     return {
-        "dataframe": dataframe,
         "output": output,
     }

@@ -1,5 +1,5 @@
 from backend.config.database import get_db_connection
-
+from psycopg2.extras import Json
 
 def save_configuration(configuration):
 
@@ -18,15 +18,17 @@ def save_configuration(configuration):
                 column_type,
                 is_sensitive,
                 is_identifier,
-                action
+                action,
+                rule
             )
-            VALUES (%s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
             ON CONFLICT (dataset_id, column_name)
             DO UPDATE SET
                 column_type = EXCLUDED.column_type,
                 is_sensitive = EXCLUDED.is_sensitive,
                 is_identifier = EXCLUDED.is_identifier,
-                action = EXCLUDED.action
+                action = EXCLUDED.action,
+                rule = EXCLUDED.rule
             RETURNING configuration_id
             """,
             (
@@ -36,9 +38,14 @@ def save_configuration(configuration):
                 configuration.is_sensitive,
                 configuration.is_identifier,
                 configuration.action,
+                (
+                    Json(configuration.rule.model_dump())
+                    if configuration.rule
+                    else None
+                ),
             ),
         )
-
+                
         configuration_id = cursor.fetchone()[0]
 
         connection.commit()
@@ -113,13 +120,14 @@ def get_configurations(dataset_id: int):
         cursor.execute(
             """
             SELECT
-                configuration_id,
-                dataset_id,
-                column_name,
-                column_type,
-                is_sensitive,
-                is_identifier,
-                action
+            configuration_id,
+            dataset_id,
+            column_name,
+            column_type,
+            is_sensitive,
+            is_identifier,
+            action,
+            rule
             FROM column_configurations
             WHERE dataset_id = %s
             ORDER BY configuration_id
@@ -138,6 +146,7 @@ def get_configurations(dataset_id: int):
                 "is_sensitive": row[4],
                 "is_identifier": row[5],
                 "action": row[6],
+                "rule": row[7],
             }
             for row in rows
         ]

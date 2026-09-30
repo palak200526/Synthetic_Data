@@ -1,29 +1,37 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from backend.services.id_configuration_service import (
     generate_ids_for_dataset,
 )
 
-router = APIRouter()
+from backend.utils.auth_dependency import get_current_user
+
+router = APIRouter(
+    prefix="",
+    tags=["ID Generation"],
+)
 
 
-@router.post("/generation/ids/{dataset_id}")
-def generate_ids(dataset_id: int):
+@router.post(
+    "/generation/ids/{dataset_id}",
+    summary="Generate synthetic identifiers",
+    description=(
+        "Generates new unique identifier values for the specified dataset. "
+        "The generated identifiers are designed to replace or protect original "
+        "identifier values while maintaining uniqueness in the synthetic data."
+    ),
+)
+def generate_ids(
+    dataset_id: int,
+    current_user=Depends(get_current_user),
+):
     result = generate_ids_for_dataset(dataset_id)
-
-    dataframe = result["dataframe"]
-    output = result["output"]
 
     return {
         "status": "success",
         "message": "New identifiers generated successfully.",
         "data": {
             "dataset_id": dataset_id,
-            "row_count": len(dataframe),
-            "columns": list(dataframe.columns),
-            "output": output,
-            "preview": dataframe.head(5).to_dict(
-                orient="records"
-            ),
+            "output": result["output"],
         },
     }

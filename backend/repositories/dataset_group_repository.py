@@ -2,9 +2,9 @@ from backend.config.database import get_db_connection
 
 
 def create_dataset_group(
-    group_name,
-    domain_type=None,
-    user_id=None
+    group_name: str,
+    domain_type: str | None = None,
+    user_id: int | None = None,
 ):
     connection = None
     cursor = None
@@ -27,7 +27,7 @@ def create_dataset_group(
                 group_name,
                 domain_type,
                 user_id,
-            )
+            ),
         )
 
         group_id = cursor.fetchone()[0]
@@ -46,4 +46,4 @@ def create_dataset_group(
             cursor.close()
 
         if connection:
-            connection.close() 
+            connection.close()

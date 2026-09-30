@@ -1,0 +1,501 @@
+customer_id,customer_name,customer_segment,city,state,country,industry
+406317d0-eef5-42b1-a3f8-ac5d31086098,****************,SMB,Pune,Maharashtra,India,Safety
+8b52ec4f-0c77-4667-9f56-b21d5a84edb2,*****************,Retail,Pune,Maharashtra,India,Industrial
+8e31eb75-a67b-42b7-9a8d-fd3c8c68338d,*****************,SMB,Hyderabad,Maharashtra,India,Safety
+68e91216-5e20-4cad-a114-bee6b4c7ebf7,********************,Retail,Chennai,Karnataka,India,Industrial
+59f9e491-ba5c-4d93-b1ca-6da093229f34,*******************,SMB,Indore,Maharashtra,India,Safety
+769f46ee-de1c-4b34-9df4-f5118ffadbf3,****************,Retail,Chennai,Maharashtra,India,Industrial
+a0351fe9-a462-4416-bbc6-cf11a0780c72,********************,Retail,Indore,Maharashtra,India,Safety
+49526fea-cad5-43a0-9d27-822cacbe72da,********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+c3689759-88d0-4b55-8687-36e6aa4917da,****************,Retail,Chennai,Maharashtra,India,Industrial
+2bb0b9e9-4246-430b-88fa-d430deea783d,******************,Retail,Chennai,Karnataka,India,Industrial
+cae1b60b-b0e4-4acb-b5db-b643e49ca186,********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+8a5e5524-7bbf-4fa0-8df9-1069b2fe1e68,**********************,Retail,Kolkata,Maharashtra,India,Industrial
+23ca9d96-cf35-4e46-a385-b742877925ef,*****************,Retail,Kochi,Karnataka,India,Industrial
+4564ffa6-9e42-48b4-9f92-edeb87a9b5fc,********************,Retail,Ahmedabad,Karnataka,India,IT
+64071b23-744a-4d05-b613-16ea820b0d16,******************,Retail,Chennai,Uttar Pradesh,India,Industrial
+8effada6-9cf2-4705-9327-81c7c7badb2c,**********************,SMB,Indore,Maharashtra,India,Safety
+55bfd21f-ae9c-43a0-b156-396a8f94333b,*******************,Retail,Pune,Maharashtra,India,Safety
+89d46149-1c2f-4574-9706-97d8af916b9e,****************,Retail,Indore,Uttar Pradesh,India,Safety
+e08c424d-b26f-4f90-aaf6-ae3ff7e5a94d,****************,Retail,Kolkata,Karnataka,India,Industrial
+f26dcb34-9ac7-4783-882f-bd2fca43e903,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+a2a47f96-9d61-49e0-a144-91dee923f3f0,*****************,SMB,Indore,Maharashtra,India,Safety
+73805e97-0aba-4175-8b6b-215d762e4af0,********************,Retail,Kolkata,Karnataka,India,Industrial
+ac8dfe3b-6410-4204-9f36-b9c4751af05a,******************,SMB,Indore,Uttar Pradesh,India,Safety
+0171d396-1986-4665-a6da-4c9c14798a5f,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+a89dd966-7ecf-428c-bf03-796b4ee20254,*****************,Retail,Pune,Maharashtra,India,Industrial
+30daf91e-2406-44ac-8a3e-fb6e3681d77a,*****************,Retail,Pune,Maharashtra,India,Safety
+ab98d88a-7ce6-4647-b9aa-0078cf9ce82c,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+2f6dad3e-94d6-4d05-b6d1-ebad92f6f5e1,****************,SMB,Pune,Uttar Pradesh,India,Safety
+f006014e-04f9-493d-b368-b2c4620c9210,********************,Retail,Kochi,Karnataka,India,Industrial
+4c902fe2-7469-424f-b385-c54d5989ee42,********************,Retail,Kolkata,Karnataka,India,Industrial
+10776fda-e497-457b-8c25-c740d53e16fd,****************,SMB,Indore,Uttar Pradesh,India,Safety
+5bbd80c4-090b-4c8a-b6aa-2a757d6e3bbf,*******************,SMB,Indore,Maharashtra,India,Safety
+dfecf7a8-ea43-4cee-a0fd-b5a37bc37f96,********************,SMB,Pune,Maharashtra,India,Safety
+df82537c-2e15-4567-b8aa-ea83ca1b08b6,********************,Retail,Pune,Maharashtra,India,Safety
+c21ec168-f911-4316-8c7d-fe26795babd2,********************,Retail,Kolkata,Karnataka,India,Industrial
+7d0898c5-b128-4eae-bdd7-de04ff96be2d,*******************,Retail,Chennai,Karnataka,India,Industrial
+dba35aa8-9ebb-4df1-82b6-55da9a752590,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+8dc1ae34-3ef6-4fea-b41b-13e902f36f65,*********************,Retail,Chennai,Maharashtra,India,Industrial
+ca409c54-05b0-4525-a914-3c68f7481217,******************,SMB,Hyderabad,Maharashtra,India,Safety
+c8a4fb3b-694e-4e48-8e17-032aabf346b2,********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+d5f6b0ce-920c-488b-8c99-b94d77eb2c01,*********************,SMB,Pune,Uttar Pradesh,India,Industrial
+37af82ad-2a8f-4420-81b0-2c356f16e24a,*********************,Retail,Pune,Uttar Pradesh,India,Industrial
+b394e1c6-3ef9-4ad9-97dd-fe999ab83e3f,*******************,SMB,Pune,Maharashtra,India,Safety
+096475f3-da43-4a6c-a4ee-1e3005ec2ec0,********************,Retail,Kochi,Telangana,India,Industrial
+eff630ec-1870-454d-abf8-8f61afc35c78,****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+70a05b8b-95e1-4704-812f-3e29f250f3ae,********************,Retail,Pune,Karnataka,India,Safety
+ad5c3949-008a-4baa-8ccc-d2988ea58a36,**********************,Retail,Chennai,Maharashtra,India,Safety
+d9bdd457-2531-450d-9e68-ced1bb728ea4,********************,Retail,Pune,Maharashtra,India,Safety
+1fa30eb5-225c-4d80-8649-c9c024ad026b,*******************,Retail,Chennai,Maharashtra,India,Industrial
+4b609062-2df9-44b0-816b-a57a0f43a397,*********************,Retail,Pune,Maharashtra,India,Industrial
+4c1b470c-a88b-4e35-b389-59fcbf031e7a,******************,SMB,Indore,Uttar Pradesh,India,Safety
+61a2dbb6-c4fd-4b0e-ab4f-fc3499de1063,*****************,Retail,Pune,Maharashtra,India,Safety
+bf5505ef-72dc-45f7-a951-b76a51903760,*******************,SMB,Hyderabad,Maharashtra,India,Safety
+e881a2f9-4066-42c3-a3c0-057cbea69bb7,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+f261159a-f6da-443f-9e56-04c3a111a4ea,*****************,SMB,Indore,Maharashtra,India,Safety
+bec29ab9-68a9-44c5-a709-e8cdef38a3d9,******************,Retail,Pune,Maharashtra,India,Industrial
+d2bc63ab-202c-47e2-862f-da1b6a5e60ab,*********************,Retail,Kolkata,Maharashtra,India,Industrial
+112c3342-69b7-44d0-87fa-b36fa39e6642,*********************,Retail,Indore,Maharashtra,India,Safety
+6589078f-98dd-4d57-aa36-898bc19a2e41,****************,Retail,Pune,Maharashtra,India,Safety
+73298e69-3c4c-4455-b14f-fda361f2ab76,******************,Retail,Indore,Maharashtra,India,Safety
+ecefce0a-43fe-4fc4-a886-15a182babb76,*******************,SMB,Indore,Maharashtra,India,Safety
+a541ac06-1d12-47a7-b8bd-cf4416013aae,********************,Retail,Ahmedabad,Karnataka,India,IT
+d09aaafa-4486-4506-b56d-17c7d05efdb1,******************,Retail,Chennai,Maharashtra,India,Industrial
+82a592ad-191a-4c91-80fc-131aeb9a406f,******************,Retail,Chennai,Maharashtra,India,Industrial
+854252bb-728b-4fc8-9eac-b2e49d1747a6,*******************,Retail,Kolkata,Maharashtra,India,Industrial
+5be46a04-0689-4cba-a05f-f6e6a02e3f74,******************,SMB,Indore,Maharashtra,India,Safety
+52a8997d-925b-459d-af40-acea9a2052a9,********************,Retail,Kolkata,Karnataka,India,Industrial
+cc233386-dbce-4011-8333-ac418977d813,*****************,Retail,Kochi,Karnataka,India,Industrial
+ea7dd453-57ae-471f-a02c-8d71e0495c40,******************,SMB,Pune,Maharashtra,India,Safety
+0a14a18a-33d8-40ce-bf3e-5fd80b11ebf3,*****************,Retail,Chennai,Karnataka,India,Safety
+2bbdddac-6611-4d00-820c-f053a9c95a61,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+291a5341-2a46-4743-806b-b0bca7f4542a,****************,Retail,Pune,Maharashtra,India,Safety
+8c459640-edce-43e1-b352-2ec621edf717,*********************,Retail,Chennai,Maharashtra,India,Safety
+12b801b0-f413-4d23-bffd-7a4fbb5dbe6f,******************,Retail,Kochi,Telangana,India,Industrial
+ac98331e-5120-44c3-8e0a-ac5033107bd6,********************,Retail,Chennai,Uttar Pradesh,India,Industrial
+5fa9f3a6-d3bb-420c-99c8-926967bf1a79,*******************,Retail,Pune,Uttar Pradesh,India,Industrial
+a4cdca8c-ea67-4d8e-ab6d-ac3ccf00cb3c,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+e4127565-05bb-4255-98cc-17388ee0d260,****************,Retail,Kolkata,Karnataka,India,Industrial
+f6868600-5274-4107-98f4-8d51f60c44f4,*****************,Retail,Pune,Maharashtra,India,Industrial
+648f594b-491d-4355-a0e2-9700c37e8600,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+bd10345f-a6c2-47c4-a114-215b390cccd9,*****************,Retail,Chennai,Maharashtra,India,Industrial
+0dec95a7-aaac-4896-9645-dffe9bc6b1f6,****************,Retail,Chennai,Maharashtra,India,Industrial
+9a8728ca-0ae0-48f7-964d-e8a4503e0392,****************,Retail,Pune,Maharashtra,India,Safety
+fd0477e9-77f3-48c0-a9e9-dc713ae2e414,********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+aad60ad9-e735-4699-877a-7af97d66b25c,****************,Retail,Chennai,Karnataka,India,Industrial
+79f6925c-5fc5-4686-97e4-8f3d68c8233f,*****************,Retail,Chennai,Maharashtra,India,Industrial
+faa14a4b-dbc4-4349-b03f-577504344dce,*******************,SMB,Pune,Maharashtra,India,Safety
+16692d48-fb31-4638-b3e5-f881bcbaf331,****************,Retail,Kolkata,Karnataka,India,Industrial
+6d9ab339-4bb3-436a-bfff-df6a455fe025,*****************,Retail,Kochi,Telangana,India,Industrial
+4b2d1174-469a-440c-bf2e-97af1572e122,*******************,SMB,Indore,Uttar Pradesh,India,Safety
+4513f5fc-cdca-4ee3-85e2-bcdcf5150317,*****************,Retail,Chennai,Maharashtra,India,Industrial
+21c0d949-1ff1-4657-9780-cbe5d799befc,*****************,Retail,Chennai,Maharashtra,India,Industrial
+436a3e92-aae4-4ec6-8865-42b4ea0bf2ed,*********************,SMB,Indore,Maharashtra,India,Safety
+878acc5e-df12-4a91-9bb6-5cc347962681,*******************,Retail,Kolkata,Maharashtra,India,Industrial
+474ebd0d-e84b-4d94-99fb-3373f196deb9,*****************,SMB,Indore,Maharashtra,India,Safety
+9abf835d-b4f8-44ab-b8d8-18b924bcf261,*****************,SMB,Indore,Maharashtra,India,Safety
+7f2aaacf-092c-468b-be9c-33782a8c3d49,*********************,SMB,Indore,Uttar Pradesh,India,Safety
+604405b9-9f58-493b-a891-89a2dc0aaefd,********************,Retail,Ahmedabad,Telangana,India,IT
+c26cb745-6667-4e37-abd6-8fd78d479db5,******************,Retail,Kochi,Maharashtra,India,IT
+7744c086-a6c9-4769-b25a-b2f3d0ac4d77,******************,SMB,Indore,Maharashtra,India,Safety
+a9637030-ecfb-488d-9559-e6e4e3dc021c,********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+7295d5d9-5da7-45c7-b69f-eab05e526990,*********************,SMB,Indore,Maharashtra,India,Safety
+fb0ec364-a658-4578-baea-cbb1e00a6fd3,****************,SMB,Pune,Maharashtra,India,Safety
+97696960-58c2-4dd7-be30-42d1eea9972e,*******************,SMB,Indore,Maharashtra,India,Safety
+e791c708-71fd-40ec-b89d-54b4b0eb5e74,****************,SMB,Indore,Maharashtra,India,Safety
+058232ff-3ce8-421c-bead-8466b8aa36c8,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+a24093e8-6411-4e15-9a94-e77c72b0b110,********************,SMB,Indore,Maharashtra,India,Safety
+7a4cd651-9a8d-4b7e-b863-0dbbe21eb81f,****************,SMB,Indore,Maharashtra,India,Safety
+fb0bcaa9-bdde-46f6-9bc5-f049ee8e58b8,*****************,Retail,Chennai,Maharashtra,India,Industrial
+8a866ded-fd75-4801-8c6c-1dfc487445f2,**********************,Retail,Kolkata,Karnataka,India,Industrial
+c7278297-d330-4a32-87c8-c5f127fb7c3e,*********************,SMB,Pune,Uttar Pradesh,India,Safety
+c5109102-594b-4e3e-a4bf-7e99ea1ea351,*******************,Retail,Pune,Maharashtra,India,Safety
+2fdbb69c-0f1f-4d62-9876-e33b23d8e1e2,****************,Retail,Chennai,Maharashtra,India,Industrial
+57af1c2b-572f-437c-97f5-28028c47f70e,********************,Retail,Chennai,Maharashtra,India,Industrial
+20d306c3-ae47-4789-867c-7e5383d34697,*******************,Retail,Chennai,Karnataka,India,Safety
+e0a994ea-5073-49f4-9053-3a1b08e2fbc2,*****************,Retail,Pune,Maharashtra,India,Safety
+490c3999-a83b-4d7b-ba5c-c63c9104163f,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+c5f21a26-b391-43bf-98a4-fae2eb8b9344,*********************,Retail,Pune,Maharashtra,India,Industrial
+503180de-5c10-4bee-8496-4e11fcfaadaa,****************,SMB,Indore,Maharashtra,India,Safety
+386a734d-d9e1-4fb8-ba7a-6c652aeca8b5,********************,Retail,Chennai,Maharashtra,India,Industrial
+5e4e6fed-47b6-4006-9607-9782279b19ec,*******************,Retail,Kolkata,Maharashtra,India,Industrial
+fdd6660f-2475-4292-a100-6196f73cf060,****************,Retail,Kolkata,Telangana,India,Safety
+4b3499f1-e5e4-4d86-94e8-75580e507be9,********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+cc00691f-7e7b-47a9-9db7-1df16c61ccbb,********************,SMB,Indore,Uttar Pradesh,India,Safety
+5403d56f-50c5-458d-8156-a6b39f5fc962,********************,Retail,Chennai,Uttar Pradesh,India,Industrial
+d46d4a94-6f57-4154-a7ac-cfc76242ffa0,********************,Retail,Kolkata,Karnataka,India,Industrial
+b5457074-62fb-4eda-80e8-4e567c122923,******************,Retail,Pune,Maharashtra,India,Safety
+5569d614-f8bc-4043-8daa-41b7be92efd8,*******************,Retail,Chennai,Maharashtra,India,Industrial
+4b495d68-876e-45c7-98fe-6985c890aca7,***************,SMB,Indore,Maharashtra,India,Safety
+05547bc6-55d4-4f8c-b213-fc18aec1477c,****************,SMB,Pune,Maharashtra,India,Safety
+bbce75ac-4a35-4237-af5e-d36aa0950921,*******************,Retail,Pune,Maharashtra,India,Safety
+7faabdb4-baef-4ee1-9247-c1511cf28669,*****************,Retail,Chennai,Maharashtra,India,Industrial
+3c4bc878-d812-4ef6-b1b8-c79c76cc7a77,*****************,Retail,Pune,Maharashtra,India,Industrial
+f12b032b-0324-46e7-852b-aced923ee7b4,*****************,SMB,Pune,Uttar Pradesh,India,Safety
+f719efea-d1f9-4f8c-b085-addf8105280e,****************,Retail,Kolkata,Karnataka,India,Safety
+a8c06c20-7ce8-4c3e-bda0-c38a13a0d8f9,******************,Retail,Kolkata,Maharashtra,India,Industrial
+f0b90079-d1cf-4721-af5f-1f1fe2c209fe,*******************,Retail,Indore,Uttar Pradesh,India,Safety
+f96d2fab-a830-4938-b0e7-48aeb2595d8d,********************,Retail,Chennai,Maharashtra,India,Industrial
+27b82567-66b2-4df0-b211-032cec1ab10d,******************,Retail,Kochi,Maharashtra,India,Industrial
+9010c299-256d-4f5f-b54c-d7b49afaccad,******************,Retail,Chennai,Maharashtra,India,Industrial
+08d19cc3-d888-4161-9bd3-4dc71836300f,*******************,Retail,Pune,Maharashtra,India,Safety
+8863f361-b787-4df5-b877-3c4183e1fd70,*****************,SMB,Indore,Maharashtra,India,Safety
+f1afd62f-4e40-49fc-8428-27538920ce3a,*****************,Retail,Pune,Uttar Pradesh,India,Safety
+d2adfc3e-ca6b-4254-b80b-e50191eb837e,*******************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+287088d8-1ed2-4eba-a572-b0eab158ec66,******************,Retail,Pune,Maharashtra,India,Industrial
+f69f63ea-d4b0-4554-b34b-bd713612c709,*****************,Retail,Ahmedabad,Telangana,India,Industrial
+3090be14-286b-4095-b3ed-edc99c53d5e7,*****************,Retail,Pune,Maharashtra,India,Safety
+1bba65c3-a48b-4c88-b0d3-834d5e9e1843,******************,Retail,Indore,Maharashtra,India,Safety
+d00cae63-9a34-407d-8d2d-1a38a38499b5,******************,SMB,Indore,Uttar Pradesh,India,Safety
+f05187f0-6c9c-4c5c-93a2-7d93b2923b38,*******************,SMB,Indore,Maharashtra,India,Safety
+d90a9537-64e9-4f18-a9e9-b73a27fec75f,*********************,Retail,Pune,Maharashtra,India,Safety
+eec97bd2-eef4-416e-8d0d-a34a4404688e,*****************,Retail,Ahmedabad,Karnataka,India,Industrial
+24e7e9c3-e8be-4305-a457-92498066aa37,********************,Retail,Pune,Maharashtra,India,Industrial
+de7eaf3b-0e2f-487c-aeab-6792607c4773,*********************,SMB,Indore,Maharashtra,India,Safety
+e24518fe-7879-4747-b998-52c8e9b4ce1e,********************,Retail,Kochi,Karnataka,India,Industrial
+58f74e69-2544-4710-8cf8-cc95b1a08d95,*****************,Retail,Pune,Maharashtra,India,Safety
+b4bd1551-ccc5-4908-b4e2-8ff4e543269d,*******************,Retail,Kolkata,Karnataka,India,Industrial
+bd642957-8450-4ca3-a2a0-7c5c26558761,******************,Retail,Chennai,Karnataka,India,Industrial
+e5a17e84-4470-49f5-8f90-d2f1ab8c38c0,*******************,Retail,Chennai,Maharashtra,India,Safety
+4783264b-0276-472c-8ca1-6354d8ec6277,*******************,SMB,Pune,Maharashtra,India,Safety
+256a7fa0-dfb8-4682-9205-7139a5413426,*******************,Retail,Pune,Maharashtra,India,Industrial
+c963d1e0-d613-41fe-9e24-b16b5cf443f8,*******************,Retail,Pune,Maharashtra,India,Safety
+d0889cd4-cfa0-47af-aa05-9acda0d12a04,******************,Retail,Pune,Uttar Pradesh,India,Safety
+484af693-9cf8-4955-80bb-32f8201941c5,******************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+09923364-2275-4f5b-8411-25a182b9834b,******************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+fa3400c4-7542-4381-81b9-c72912f64ea6,****************,Retail,Pune,Maharashtra,India,Safety
+7776c3e9-20cc-4674-bc7d-f3853ee236f5,***************,SMB,Indore,Maharashtra,India,Safety
+13640161-33f1-4ad6-bff2-6306b1c55c13,*******************,Retail,Pune,Maharashtra,India,Safety
+f151b891-219c-4865-9170-942209c448ec,******************,SMB,Pune,Maharashtra,India,Safety
+1d8bcb11-75ed-46b6-9629-0ecba553e8ba,****************,SMB,Pune,Maharashtra,India,Safety
+d53c7de7-e504-4366-9367-515c1e1da725,****************,Retail,Chennai,Maharashtra,India,Safety
+770e7d58-1c28-42ea-a1b4-b6f4351b41b2,*****************,Retail,Pune,Maharashtra,India,Safety
+9f2bacd7-3a64-4f78-9cba-3b80e3c90547,*****************,SMB,Indore,Maharashtra,India,Safety
+bb538f8b-4ec1-43b8-a2b1-b6a8e1fdac13,*******************,Retail,Chennai,Maharashtra,India,Industrial
+e6aa9eb5-3221-435f-aa06-20326c5ada89,*****************,SMB,Indore,Maharashtra,India,Safety
+4316eee0-4003-486f-87f5-cc4934780c4c,***************,Retail,Kochi,Karnataka,India,Industrial
+c5b157cf-9b05-494f-885e-4712141399fe,*******************,Retail,Kolkata,Karnataka,India,Industrial
+2171965b-dcbd-41a9-ab92-c5764cbb0f16,*****************,Retail,Chennai,Telangana,India,Safety
+fdc46c8e-1801-4077-8154-27fc3d982670,*******************,Retail,Chennai,Karnataka,India,Safety
+37929cfd-7ce4-4c61-b2ff-136aaf5c2244,*********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+cc3c7f8a-846b-41dc-876d-edaacae83225,*****************,Retail,Pune,Uttar Pradesh,India,Industrial
+04b6f931-e925-4c0c-8f2f-cd1e2cf4bdbb,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+4e86eda2-5f0e-48ac-b95a-049a21a9bac3,*********************,SMB,Indore,Maharashtra,India,Safety
+6f5ca20e-4ac5-4336-b593-1712656fc595,****************,Retail,Indore,Maharashtra,India,Safety
+3022a0a6-3ffb-4a48-bbab-a6c6b98b5db1,******************,Retail,Chennai,Maharashtra,India,Industrial
+2cc8adc8-5b55-4659-b0a0-39808b3b4295,*****************,SMB,Indore,Maharashtra,India,Safety
+dcb8a026-e9bf-4047-8191-e483b2abe040,******************,Retail,Indore,Uttar Pradesh,India,Safety
+c40eddb3-bd70-40a2-a7e6-891cf7e9b3ca,****************,Retail,Pune,Maharashtra,India,Safety
+103c96f6-f8ba-4c61-aea2-4fbb19c5121b,*****************,Retail,Kolkata,Karnataka,India,Industrial
+4339560f-9e93-4a61-9b6c-3db25c7458ca,********************,Retail,Kolkata,Karnataka,India,Industrial
+2632cdb9-6e0d-4ab0-9041-f7ac326d20bc,*********************,SMB,Pune,Maharashtra,India,Safety
+bf93c435-d1a9-4ccc-98e0-95d7298135ef,***************,Retail,Pune,Maharashtra,India,Industrial
+69ea7114-9628-4f51-ba5f-e1ee0b008212,****************,SMB,Hyderabad,Maharashtra,India,Safety
+24743403-e6f3-43e1-9ff1-6e3e1031d5bc,*********************,Retail,Kolkata,Karnataka,India,Industrial
+750d6d23-7163-416a-92f4-0388a3c29b6f,******************,Retail,Kolkata,Karnataka,India,Industrial
+9b4f6f89-bb43-4048-a8a8-020642f90bd1,**********************,Retail,Kolkata,Karnataka,India,Industrial
+dc531cc6-345d-4d26-adf3-3ef33376ed05,*****************,SMB,Indore,Maharashtra,India,Safety
+9082a22c-2345-44d9-aae3-d3565122ac52,*********************,Retail,Chennai,Karnataka,India,Safety
+fd08a6eb-3c38-4e6a-a9c0-f7c0748f8503,******************,Retail,Chennai,Maharashtra,India,Industrial
+e875310c-b479-4e81-afe1-eba55c69709c,*********************,Retail,Pune,Maharashtra,India,Safety
+a511860a-9730-4594-9c7a-758af0147a83,*****************,Retail,Pune,Karnataka,India,Safety
+729b3f83-5348-490b-b37b-3c99d428a2bb,*****************,Retail,Pune,Maharashtra,India,Industrial
+36da59a3-1dd3-4dc5-a33e-b69bdd19e791,*******************,SMB,Pune,Maharashtra,India,Safety
+44422b13-9118-4229-8dd6-bde31ec02dd5,******************,Retail,Chennai,Maharashtra,India,Industrial
+17579055-97ec-44c9-8105-950c09375f75,****************,Retail,Kolkata,Uttar Pradesh,India,Industrial
+04a4894e-ad8b-45bd-a217-854333f8caca,****************,Retail,Chennai,Uttar Pradesh,India,Industrial
+a93b7e60-92f8-4925-a486-61dd8a94c2c8,*****************,Retail,Ahmedabad,Karnataka,India,IT
+aa6a963a-25ed-4087-99ef-ae4bfc204508,******************,SMB,Pune,Maharashtra,India,Safety
+688595aa-9d65-497b-bbcd-ab005fcf119d,**********************,Retail,Kochi,Karnataka,India,Industrial
+7877214b-da67-4391-b7f4-e5ee7eb8329d,****************,Retail,Chennai,Karnataka,India,Safety
+c0e56a52-8dc6-48e2-b831-7888d85a5c34,****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+f59b1fb8-0c58-4c4e-8fe8-33d986f64e3a,********************,Retail,Chennai,Karnataka,India,Safety
+84729a0f-8fff-4b11-a1e6-f2d49e98715f,********************,SMB,Pune,Maharashtra,India,Safety
+29ede7b7-622b-47aa-9b6d-4cfdf48abc43,*******************,Retail,Kolkata,Uttar Pradesh,India,Industrial
+dbce69a7-c394-4ede-8705-967d0bc00996,********************,Retail,Chennai,Maharashtra,India,Industrial
+50607ab8-7bb0-412e-9ca8-3a91ce2b4b89,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+a90fc8b9-d500-4f5c-b4b2-a30229bffaa6,*******************,Retail,Kochi,Karnataka,India,IT
+9b6f9525-6a12-49e7-8ae1-36a89b3c0f77,*********************,Retail,Kolkata,Karnataka,India,Industrial
+187f5ebb-de56-4602-ae9c-dda77f94505a,********************,Retail,Pune,Karnataka,India,Safety
+88c13990-8c9e-4bd2-a94b-d16a006d1f7b,****************,Retail,Pune,Maharashtra,India,Safety
+ff29010d-79a5-45bd-81bf-381b4001cc1d,*****************,Retail,Chennai,Maharashtra,India,Industrial
+0bbadc82-5cfe-43eb-b991-2cf1eacdad04,*******************,Retail,Pune,Maharashtra,India,Safety
+1c3e80b4-cd06-44f3-bd13-121a3a92bfaf,***************,Retail,Kolkata,Karnataka,India,Industrial
+853939ed-b9b8-40bd-a4a0-2f343ed524c6,****************,Retail,Kochi,Karnataka,India,Industrial
+a84f729f-046b-4012-a883-8a93f915d288,*******************,Retail,Kolkata,Maharashtra,India,Industrial
+c1a79fbe-8682-4cfc-a132-a8404b080f8e,****************,Retail,Chennai,Uttar Pradesh,India,Industrial
+0a2c23eb-862c-484c-858d-96317bf1de58,*******************,Retail,Pune,Maharashtra,India,Safety
+2a260ca7-ee4c-49c5-b88f-f7491e002caf,*****************,Retail,Pune,Karnataka,India,Safety
+ebec3869-8989-4f08-8bd7-e7ff07f6f156,******************,Retail,Chennai,Maharashtra,India,Industrial
+f2840245-640c-4acc-8839-37c5df907de8,*****************,SMB,Pune,Maharashtra,India,Safety
+d5b5ba73-28f6-461a-b9c9-f98c3e6be12d,*******************,Retail,Pune,Maharashtra,India,Safety
+88f07c21-f672-45dc-9db8-5d51a7597bfd,*********************,Retail,Chennai,Maharashtra,India,Safety
+436cf3f9-c3b3-497f-b4ec-2ac0e2d90840,****************,Retail,Chennai,Karnataka,India,Safety
+bc0816fb-b36b-4639-9dad-e23d4c698e8e,*********************,SMB,Indore,Uttar Pradesh,India,Safety
+0460f0e9-758b-4e5c-ac97-36fc269d98b5,*********************,Retail,Kolkata,Karnataka,India,Industrial
+89ef3192-6266-4ff4-b00d-e7066fae6f2d,********************,Retail,Pune,Maharashtra,India,Industrial
+35e58d9c-1376-463a-ae53-d4c992578caa,*********************,SMB,Indore,Uttar Pradesh,India,Safety
+bf9b9138-b07f-4fd2-9eea-e9e0d0395d2b,******************,Retail,Chennai,Maharashtra,India,Safety
+9d00bce1-8b18-41e4-9025-94154c5a9b0e,*********************,SMB,Indore,Maharashtra,India,Safety
+6dbfed7e-5eee-403a-a23c-964d3b3e3bcd,******************,Retail,Kolkata,Karnataka,India,Safety
+c8988ab2-87ac-4350-8004-9d7a7a47cb78,******************,Retail,Chennai,Maharashtra,India,Safety
+67fc52bc-ed6d-4bb4-a8e3-a08fd9b6ac17,****************,Retail,Pune,Uttar Pradesh,India,Industrial
+d079de6b-2de5-4a58-99ec-e1011437039c,****************,SMB,Pune,Maharashtra,India,Safety
+e06b0e78-06f6-48fb-b49b-29790009ef7e,******************,Retail,Pune,Maharashtra,India,Safety
+cbb6c134-0bb7-4950-adc3-ca6484c9049f,********************,Retail,Kolkata,Karnataka,India,Safety
+38cdf316-b56f-40d3-bd98-f74db0552afe,*********************,Retail,Kochi,Telangana,India,Industrial
+fe0c0686-ddf6-42ca-874c-239ad6645333,********************,Retail,Pune,Maharashtra,India,Safety
+cbef8394-a592-4047-b879-ece21b8716cb,******************,Retail,Chennai,Maharashtra,India,Industrial
+5cec35ff-7a9e-45ec-84d3-16f855995cb7,*****************,Retail,Pune,Uttar Pradesh,India,Safety
+ca95b306-69d1-4696-a162-8956ec4379cb,*****************,Retail,Kochi,Karnataka,India,Industrial
+6c6bece8-5b39-4a64-8eb5-5d53bb6c2bc3,********************,Retail,Chennai,Karnataka,India,Safety
+895a600c-8b26-4942-a1fb-9bb73f612dc8,****************,Retail,Pune,Maharashtra,India,Safety
+da45b974-92de-482a-80d8-98a2a0775b95,****************,Retail,Kolkata,Karnataka,India,Industrial
+2f8e3672-5a06-48d2-93b6-221dba08a515,****************,Retail,Pune,Maharashtra,India,Safety
+447fe388-f6c0-419e-ba32-bf384caff9fe,*****************,Retail,Pune,Uttar Pradesh,India,Industrial
+7a7c1b16-091f-417c-8596-b133cceff669,******************,Retail,Pune,Uttar Pradesh,India,Industrial
+9e88d867-3d81-4725-a8dc-89d4d23b37dc,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+7470895a-2fe7-4231-b23b-76417f238f9c,*****************,Retail,Pune,Maharashtra,India,Safety
+6868e48e-05e2-46a0-b27d-3eee12d7554d,****************,SMB,Indore,Uttar Pradesh,India,Safety
+5d7f36ae-c214-434c-9bf0-0eb29b7175ab,****************,SMB,Indore,Uttar Pradesh,India,Safety
+4294a1c0-32ea-4143-90bf-763c5a67ff17,********************,Retail,Pune,Maharashtra,India,Safety
+aabca300-9986-467d-a94f-a59664175b57,*****************,Retail,Kochi,Telangana,India,Industrial
+8523ce96-004c-43be-9543-cad9832c013a,*******************,Retail,Chennai,Maharashtra,India,Industrial
+3bfae2d1-cb43-4765-9786-426f2a5045f2,*******************,Retail,Chennai,Maharashtra,India,Industrial
+fc070528-9233-4b12-82b8-1ac055a5fdef,*******************,Retail,Pune,Maharashtra,India,Industrial
+5d6a8430-ae41-4c7f-81e4-dfdf69e8f300,****************,Retail,Chennai,Maharashtra,India,Industrial
+6e8485e1-89ae-4a21-86c7-15b6fd2e8a7b,*******************,SMB,Pune,Maharashtra,India,Safety
+3026d461-29ad-434e-8db8-3dc9f2474ccf,****************,SMB,Hyderabad,Maharashtra,India,Safety
+d0acf1bf-1379-422f-8328-1e74b25fa8f5,********************,SMB,Indore,Maharashtra,India,Safety
+fbc58c51-0d0e-4dfc-bf43-6ae6e57873b3,*********************,Retail,Chennai,Maharashtra,India,Industrial
+0f4f227e-9f39-4797-b4cc-d44fdbb8cf0f,****************,Retail,Pune,Maharashtra,India,Safety
+da19802c-83a6-4a2c-b744-fd896804f56a,*********************,Retail,Chennai,Maharashtra,India,Safety
+4588969b-67d3-4cb2-af48-4ce1d50fcfb2,********************,Retail,Kochi,Telangana,India,Industrial
+f74875bb-7903-44a1-91a7-c0db54adfafe,******************,Retail,Indore,Maharashtra,India,Safety
+251e2741-56e5-4fc3-8d9d-572e77606fc2,*****************,Retail,Kolkata,Karnataka,India,Industrial
+cc31f04a-e7e4-48b4-8789-6f01705cc706,********************,Retail,Ahmedabad,Karnataka,India,IT
+f8bbd358-3c48-4ce7-8c04-b5fa6aee6393,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+00ca982e-b408-490c-9288-d547ae407498,*********************,SMB,Indore,Uttar Pradesh,India,Safety
+2e3356eb-d7ec-4f8e-8614-059d06c370a0,**********************,SMB,Pune,Maharashtra,India,Safety
+3c801438-86a0-42f1-a67a-3c5ff1693348,******************,SMB,Indore,Maharashtra,India,Safety
+235c812c-98be-4e22-9d73-e2ddd56b2288,*****************,Retail,Pune,Maharashtra,India,Safety
+7e6769de-a975-440f-be16-c2ee92f1b87d,*********************,SMB,Indore,Maharashtra,India,Safety
+09da3860-d494-4ec2-a756-6183f319a90b,******************,Retail,Pune,Uttar Pradesh,India,Industrial
+49f5916d-c2b0-4ab7-a197-d9d64e2617ac,*****************,SMB,Pune,Maharashtra,India,Safety
+e7a198e2-d1cd-4f7d-b6fc-7a25d4851fb2,*****************,Retail,Chennai,Maharashtra,India,Industrial
+59848af8-ee73-495c-a479-648603c28839,********************,Retail,Ahmedabad,Telangana,India,Industrial
+35082c7d-b530-4ac4-8c0e-9be7f24e32be,**********************,SMB,Pune,Maharashtra,India,Safety
+036cae97-5712-40e1-b451-cefea99e7ae2,*********************,Retail,Kochi,Maharashtra,India,IT
+a8749512-cc68-4881-86f0-ff2b28c11fed,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+6c51d79d-48a1-47b0-b31e-73cd66164a0f,*****************,Retail,Ahmedabad,Telangana,India,Industrial
+f8dab77f-d199-4467-87c5-acc280e849de,********************,Retail,Chennai,Karnataka,India,Industrial
+5d89abf9-8ace-4a95-b67b-3aff650f5a16,*******************,Retail,Kolkata,Karnataka,India,Industrial
+a51de207-3e8e-48d3-8877-b22b2609f44b,********************,Retail,Chennai,Karnataka,India,Industrial
+afbe7e6b-2f89-42c0-8c27-cc0fed0ab591,****************,Retail,Kolkata,Karnataka,India,Industrial
+f9df59d4-906a-47d1-8e27-0c755be599ed,*****************,Retail,Chennai,Karnataka,India,Safety
+6e5bd815-42bb-4eb3-bd98-a08064a6cb18,****************,Retail,Ahmedabad,Karnataka,India,Industrial
+5ddd2936-d22e-43ef-a483-c51da4d66dde,******************,SMB,Hyderabad,Maharashtra,India,Safety
+d42eaf0a-a24f-4610-a8bb-204f3c503d48,*****************,Retail,Kochi,Karnataka,India,Industrial
+ac8b07a7-41d5-4255-bbd2-8259090d0ec4,*****************,SMB,Pune,Maharashtra,India,Safety
+05a1f774-77c6-4171-8d49-aea3ad9f2098,********************,SMB,Pune,Uttar Pradesh,India,Safety
+af0016ea-55fe-4976-9411-294060f4dbcb,*****************,SMB,Indore,Maharashtra,India,Safety
+e553e5b4-40e0-4c90-9eb1-ea06a92f096b,*********************,Retail,Chennai,Maharashtra,India,Safety
+96069d93-2a56-4d67-b3fd-89563e63a17d,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+28cfc5ea-e192-4856-93b6-4258da863639,*********************,Retail,Kolkata,Karnataka,India,Industrial
+03b311b7-91a1-4d30-ae8b-728b59ce7543,*******************,SMB,Pune,Maharashtra,India,Safety
+5a19fb36-ad7b-41c3-a827-e13b4854643d,****************,Retail,Chennai,Maharashtra,India,Industrial
+1609e1af-2350-4e50-9c89-8718d4ed0cdf,*******************,Retail,Ahmedabad,Madhya Pradesh,India,IT
+13576cca-35f4-498c-a637-1770c9add33f,****************,Retail,Pune,Maharashtra,India,Safety
+8d166635-0b46-45a3-8ec2-f7542d5b3047,*********************,Retail,Kochi,Karnataka,India,Industrial
+fd05563f-b859-430b-98af-d3705fa7ac00,**********************,Retail,Kolkata,Maharashtra,India,Industrial
+81425146-17f1-4d83-8678-4a7fb8491c3d,*********************,SMB,Pune,Maharashtra,India,Safety
+6506a059-8f8f-4b13-a794-53b761551690,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+595d13fa-a6e4-4fb4-93d6-9f92fefb2ea6,*******************,Retail,Chennai,Maharashtra,India,Industrial
+eb3c4428-d36a-4950-afdf-a4c8070ac975,****************,Retail,Kochi,Telangana,India,Industrial
+c9f96df0-0ef4-4704-978a-a968792dac1f,********************,Retail,Kolkata,Karnataka,India,Industrial
+4af06be6-b558-42d2-ac8f-ade5f4533f59,******************,Retail,Chennai,Maharashtra,India,Industrial
+377ba40d-0a78-4ee9-9132-6999fb3b62df,*****************,Retail,Ahmedabad,Telangana,India,IT
+c145ea7a-9ad3-465f-b268-6b4bad5c8c66,**********************,Retail,Chennai,Maharashtra,India,Industrial
+3dc92c6d-c149-4859-8ef5-cd74675f3e3c,*****************,SMB,Indore,Maharashtra,India,Safety
+5162f908-dc63-40cb-a3c0-8b5cb5b69a73,********************,Retail,Chennai,Maharashtra,India,Industrial
+d0dc97b4-4116-4690-94e2-40ce48da1c8e,*******************,Retail,Chennai,Karnataka,India,Safety
+22a90891-dbf4-4900-bb44-e6ab418b5dea,*********************,Retail,Kolkata,Maharashtra,India,Industrial
+4bb6052a-f983-4073-a90c-119bd07f22f0,*********************,Retail,Pune,Karnataka,India,Safety
+1eb09250-eca7-48d4-bdf1-a9398578b324,********************,Retail,Pune,Maharashtra,India,Safety
+d5265250-6b4c-4207-81cc-a679be143a08,****************,Retail,Pune,Maharashtra,India,Industrial
+5aa6b809-1eb7-47a5-a2a2-a0d745123c90,******************,Retail,Chennai,Karnataka,India,Industrial
+eab834d7-0c5a-45b0-aba2-00ed3cce8617,********************,Retail,Chennai,Karnataka,India,Industrial
+d021e843-e7ea-4312-9644-ce65b785e24a,*****************,Retail,Chennai,Maharashtra,India,Industrial
+835f3e8b-d93e-4755-9d7e-2f46b69bdf34,*******************,Retail,Pune,Maharashtra,India,Safety
+342d1365-a5b6-445c-ae7d-40d118337ebc,******************,Retail,Kochi,Karnataka,India,Industrial
+d95fff43-e1c7-4cca-a8eb-a695dcddcf4d,********************,Retail,Kochi,Maharashtra,India,Industrial
+324c2d05-4e92-43fe-99bd-038dd83ace2c,*****************,Retail,Pune,Maharashtra,India,Industrial
+c86df789-dac8-4a47-b532-6d92fd21a325,****************,SMB,Indore,Uttar Pradesh,India,Safety
+c3011ffe-e18f-44c6-9106-2ecdaec17cfc,******************,Retail,Indore,Maharashtra,India,Safety
+bb8f5f45-1c75-40ff-91dc-62f1071a4017,*******************,SMB,Indore,Maharashtra,India,Safety
+1e819cfc-8df5-4f11-957a-6a45fc921429,*********************,Retail,Chennai,Karnataka,India,Industrial
+0f5ce53c-2c6c-4f2e-9004-dd1b225c6c60,******************,Retail,Chennai,Maharashtra,India,Industrial
+3c2c1cd4-70f9-4acc-bfb5-ff94f9d660aa,**********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+9b714684-87a4-4fdb-9811-efb82ea1aef9,*******************,Retail,Kolkata,Telangana,India,Safety
+b071a366-51e3-4599-9a50-2cbade8c4a41,*********************,Retail,Pune,Maharashtra,India,Industrial
+3c352983-d6e0-45ef-8efd-d1537f96f0d0,******************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+a4c2ea40-96fa-45e0-9043-f3c4f80e74fc,*******************,Retail,Chennai,Karnataka,India,Industrial
+03ffdf1a-5687-4819-a3f0-b1d6c35b9af0,*********************,Retail,Chennai,Maharashtra,India,Industrial
+e3bdfded-2789-4fc1-9f6b-5e3630910bfb,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+a5714bc7-ad2f-47c6-9b74-36f7a7dfd626,********************,SMB,Indore,Maharashtra,India,Safety
+efd56afe-1cd8-4081-a919-dd23d88754cb,**********************,Retail,Pune,Maharashtra,India,Industrial
+51801298-fb4f-4444-9a3c-30394af3f374,********************,Retail,Chennai,Karnataka,India,Industrial
+ae32e05c-bd08-4df7-8a6a-ef9da1b4a28f,******************,Retail,Chennai,Maharashtra,India,Industrial
+39ce70b4-5814-41c3-bc21-56824ad3b694,*****************,Retail,Kochi,Maharashtra,India,IT
+fef60b14-db1c-45b0-a2c7-46ae3cfd830a,*********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+f04a7d26-aecf-4866-a0f1-0ca91c1cb4fd,*******************,Retail,Kochi,Karnataka,India,Industrial
+abb3b2a0-3fae-4d0a-a176-4024ddfb7b78,******************,Retail,Kochi,Maharashtra,India,Industrial
+38a95359-8f69-462f-a6ec-2d4ca4ce3378,*******************,Retail,Kochi,Karnataka,India,IT
+3af252b6-68b8-45a3-8fd2-38d424e0a957,*********************,Retail,Chennai,Maharashtra,India,Industrial
+c1068649-a256-4d69-a9af-dae3252025f1,*******************,Retail,Indore,Maharashtra,India,Safety
+bbcbb6ea-a738-4d01-ab55-b5d988a7aa27,****************,Retail,Chennai,Maharashtra,India,Industrial
+b518c71d-b53e-4de1-a8f9-58da5cb7c6e0,********************,Retail,Pune,Karnataka,India,Industrial
+9e2f0793-8f10-4254-9460-d756345e448e,*******************,Retail,Pune,Karnataka,India,Safety
+4952e8c6-7987-47c7-9afb-2c013e2af8c0,****************,Retail,Kochi,Karnataka,India,Industrial
+8be1acaf-af0e-4ca7-94b8-33df2b9a1192,*********************,Retail,Kochi,Karnataka,India,Industrial
+5ce12976-fdbb-4d71-a3d3-f092b42164f6,****************,SMB,Indore,Uttar Pradesh,India,Safety
+2464753f-a8d8-47de-a357-8c02dd8135b6,****************,Retail,Chennai,Maharashtra,India,Industrial
+0e7572d6-0df1-4b27-8e82-5e59affede76,*****************,SMB,Pune,Maharashtra,India,Safety
+86529fbe-62d1-4720-9e92-a748f3199e95,****************,SMB,Pune,Maharashtra,India,Safety
+ccdc03e8-684f-49ad-9be0-84bfa50d0b91,*****************,Retail,Chennai,Maharashtra,India,Industrial
+4439c755-eb74-4b81-b984-60fbe6674740,*******************,SMB,Indore,Maharashtra,India,Safety
+c124786f-2719-4079-9888-24d05a880c2d,****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+ae644ab2-865f-46ed-9366-c2c43fa3de1e,*******************,Retail,Pune,Maharashtra,India,Safety
+f18aef30-6193-4619-b205-6e0e4b6ef4bb,*********************,Retail,Chennai,Maharashtra,India,Industrial
+201d45f4-fa7a-4595-a88b-b5ede5f35b66,*****************,SMB,Pune,Maharashtra,India,Safety
+b8e17a28-3d3b-46f9-b83a-2b8b4c9a7195,*****************,SMB,Bengaluru,Uttar Pradesh,India,Safety
+8de0a44d-c115-4330-a45d-aa9789bb0ee8,****************,SMB,Indore,Uttar Pradesh,India,Safety
+3e71e1bc-7ec7-4d47-8529-688e15e4c86b,****************,Retail,Chennai,Maharashtra,India,Industrial
+d9d1328d-182e-4aaf-8944-e6dbcb3023f1,*******************,Retail,Indore,Maharashtra,India,Safety
+29563628-09ec-4832-a007-1f86a3f1fd77,*********************,Retail,Indore,Uttar Pradesh,India,Safety
+dcfdb262-8131-470b-8690-4b1259e6a880,******************,Retail,Chennai,Uttar Pradesh,India,Industrial
+45705ef4-a652-48d7-b4eb-f276e25ac5e7,********************,Retail,Pune,Karnataka,India,Safety
+3011a108-bf89-4f61-84a4-b4034d4889d1,********************,Retail,Kochi,Karnataka,India,IT
+c066cab7-8da0-4f87-b485-99dc7444c4d7,********************,Retail,Chennai,Maharashtra,India,Safety
+759f7e7d-9421-4eb6-92b7-2def4c3f8060,******************,Retail,Kolkata,Telangana,India,Industrial
+dc565cfe-b213-4d26-8c9e-96cad7f8ef44,*****************,Retail,Chennai,Maharashtra,India,Industrial
+586c6f7a-7be8-4a5b-8b3a-bd21eec9496a,****************,Retail,Chennai,Uttar Pradesh,India,Industrial
+9fa6f12c-414f-48c0-bb28-30c5e7965269,********************,SMB,Indore,Uttar Pradesh,India,Safety
+f0ba9f86-0571-49d9-b069-65e8efc1708b,****************,Retail,Chennai,Uttar Pradesh,India,Industrial
+bb7e63c2-1b1e-444d-8623-f8964587a6f2,*****************,Retail,Chennai,Maharashtra,India,Industrial
+749d4cd2-c4c3-4eb9-b4d6-c6aef0f22774,******************,Retail,Chennai,Maharashtra,India,Industrial
+57c317bc-f2e9-4852-ab65-337521e02b3e,******************,SMB,Indore,Uttar Pradesh,India,Safety
+625e418a-8a40-43a8-8b53-e99bb9113d99,*****************,Retail,Chennai,Karnataka,India,Safety
+c9156882-47ee-40af-8b65-df1dfe9cd662,*********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+eb63b11f-561c-4d81-911b-768bc7a12d07,*****************,Retail,Chennai,Maharashtra,India,Industrial
+9f937443-8901-4e93-99e6-cdafc19bf5c8,*****************,SMB,Indore,Maharashtra,India,Safety
+c82b815f-4020-4bae-949b-ffdd9b1403e5,********************,Retail,Pune,Uttar Pradesh,India,Safety
+295a3eb4-fd0b-4e13-a970-b25d7cf35ea4,******************,Retail,Indore,Uttar Pradesh,India,Safety
+ff2fc8d9-9539-4ab0-8d3a-2b4b54a5e8ec,****************,Retail,Kolkata,Uttar Pradesh,India,IT
+ca673412-fe3c-4448-af3f-1edc7c88406f,*********************,SMB,Indore,Uttar Pradesh,India,Safety
+a1812ea9-1db7-4c00-b332-38eb69e3a39d,****************,Retail,Pune,Maharashtra,India,Industrial
+e60568db-083b-48f3-ab32-158f6fd718e0,*******************,SMB,Indore,Maharashtra,India,Safety
+d5144510-40bb-4611-93a1-30198089e779,*****************,Retail,Chennai,Karnataka,India,Industrial
+29283948-8ee3-4c94-aa89-6baf7ed47ecf,********************,Retail,Pune,Uttar Pradesh,India,Industrial
+dcb9e39b-7821-4773-a0b6-61c5737b5160,********************,Retail,Chennai,Karnataka,India,Safety
+41fbc5e0-dd45-49e6-a3ed-dc59c0685e8e,*********************,SMB,Indore,Maharashtra,India,Safety
+0205a082-9db9-40e9-bcf3-6ed284127905,*******************,Retail,Indore,Uttar Pradesh,India,Safety
+32865b1b-dfd2-4931-bc70-fea81516fc08,****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+f6bc1693-edf9-4b1a-883b-c427ca45fe36,****************,Retail,Indore,Maharashtra,India,Safety
+f08ad50f-9e2f-43d0-9dde-7afc3a28a74a,****************,Retail,Chennai,Karnataka,India,Safety
+043755a3-a685-4c18-bb6d-61d4e872c6a7,********************,Retail,Pune,Maharashtra,India,Industrial
+9e2edb95-6837-406e-9dc4-d6b0a9445ee1,********************,SMB,Pune,Maharashtra,India,Safety
+39a8eaed-dad7-43df-8a90-cd3fa7c3998c,********************,Retail,Kochi,Karnataka,India,Industrial
+f8383355-22d0-42cb-9423-462d8752adad,*****************,SMB,Pune,Maharashtra,India,Safety
+2dbe3919-2f36-4392-853b-eef8d32bc06d,*****************,Retail,Pune,Maharashtra,India,Safety
+efab2742-55f1-4c08-b5da-d66244b1b019,*********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+75e89e1a-aa0b-4d59-8202-eaeb459f8f17,****************,Retail,Chennai,Maharashtra,India,Industrial
+7473f249-57a5-4973-a190-ea2f3d995219,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+c5994f10-b4ec-463c-886c-f4b54aaa3421,*******************,Retail,Chennai,Maharashtra,India,Industrial
+95624bcf-67f3-47c9-903e-7350b010f8eb,*****************,SMB,Indore,Maharashtra,India,Safety
+fd8c9630-e6ca-4f0b-b217-2b39b5ec5b0e,****************,Retail,Kochi,Maharashtra,India,IT
+9bbd3752-d314-4584-b621-d163a15b239a,*******************,Retail,Kolkata,Karnataka,India,Industrial
+d551ef3a-bd8a-4dbc-bf61-b84b6260242e,*********************,Retail,Kochi,Telangana,India,Industrial
+8d59eea0-6337-4bf1-8d4a-e76936619d75,********************,Retail,Chennai,Karnataka,India,Industrial
+18cecf57-5ac7-47b9-9805-537308250bb0,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+7002a758-9a22-4d5b-848c-702af97be7b7,********************,Retail,Ahmedabad,Karnataka,India,Industrial
+e409afae-a634-441a-a131-ca7637657461,*********************,Retail,Pune,Maharashtra,India,Safety
+f81b99fd-ac36-49db-9720-fac5ee3a89a4,********************,Retail,Chennai,Karnataka,India,Industrial
+13357edc-d24a-486b-96af-824305affa13,*******************,Retail,Chennai,Karnataka,India,Safety
+3e4a117d-9dab-4049-a1d4-e2a721696a37,****************,Retail,Kochi,Telangana,India,Industrial
+8b231943-acf1-4f07-b421-8ef214d8be57,*********************,Retail,Kolkata,Maharashtra,India,Industrial
+9efaf748-d756-41f7-9f57-5422be49a0ce,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+606752d7-c8ac-4060-94f3-35d4cacad1bb,*******************,Retail,Pune,Maharashtra,India,Safety
+1ccb5b5f-664c-4d2e-beba-b9f0851e311b,*****************,Retail,Chennai,Maharashtra,India,Industrial
+c71fe8dd-e4bb-4c0a-a4ec-7ad2b4de98ce,******************,Retail,Chennai,Maharashtra,India,Industrial
+63436b20-79a0-4815-af29-8869e8ea61f9,*****************,SMB,Pune,Maharashtra,India,Safety
+3540edee-310b-41bd-8de7-30a8271bf290,******************,Retail,Pune,Maharashtra,India,Safety
+4046d3a5-28a7-4290-92ef-9903f96d5e84,******************,SMB,Pune,Maharashtra,India,Safety
+737c5a8c-0baf-45b4-92e4-303fe93072d3,****************,Retail,Pune,Maharashtra,India,Safety
+9f5a96d0-390c-4fb0-a2d1-4f2ffbfd9fdf,********************,Retail,Pune,Maharashtra,India,Industrial
+b1bd9b58-5c58-4c0e-b47e-cd61b9eb074a,*******************,Retail,Pune,Maharashtra,India,Safety
+9a198846-0d08-40c0-91a2-4772079cb8c7,*******************,Retail,Kolkata,Karnataka,India,Industrial
+b09f7a8c-2010-4624-ab3e-38ebc2d2aeb3,******************,Retail,Chennai,Maharashtra,India,Industrial
+59ed02b2-f1a8-442b-8b21-f34c334df319,********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+bcd254c9-49bb-4c65-a743-3ad0097e24ed,**********************,Retail,Kolkata,Karnataka,India,Industrial
+cd45873f-9f0e-4a4e-b984-939ef1e3beb4,********************,Retail,Chennai,Maharashtra,India,Industrial
+b256c0c9-843d-4264-80f1-114384c721b3,********************,Retail,Kochi,Karnataka,India,Industrial
+a70ae868-197b-42c5-a1a3-4e7211f60dd1,****************,Retail,Chennai,Karnataka,India,Industrial
+30269975-22b8-44de-b2ee-035f0d2daedb,******************,Retail,Chennai,Maharashtra,India,Industrial
+dcadcfed-8562-46e5-8aa3-7ac3414966b2,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+e18a7d92-ea5a-490d-a2d1-19e0e8932c2b,*****************,Retail,Kolkata,Maharashtra,India,Industrial
+0c7f3ffa-3e3e-4d77-811c-4f4479f39847,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+f676be17-3c1d-447a-b650-625b6ab695be,*******************,SMB,Indore,Uttar Pradesh,India,Safety
+bb6c3aad-2e8f-413f-a3c1-0d7c23af2ab0,*******************,SMB,Indore,Maharashtra,India,Safety
+ca30991c-6f6b-4a3d-b375-007aff8ff6ac,********************,SMB,Pune,Maharashtra,India,Safety
+0e092e07-1cca-4acf-9c67-36c08cfa85b8,**********************,Retail,Pune,Maharashtra,India,Safety
+fd449726-677d-4735-ba61-d308360052c5,********************,Retail,Chennai,Karnataka,India,Safety
+9191de3e-e98c-4ddf-89b8-6a05a33fdcb4,*******************,Retail,Chennai,Maharashtra,India,Industrial
+c9acf0d6-83c0-407d-b1dc-15e06ead19a4,*******************,Retail,Pune,Karnataka,India,Safety
+f7a7c471-7fd8-4a9e-8418-0a0f0b7a3316,*******************,SMB,Pune,Maharashtra,India,Safety
+45d77da3-cebf-4e9c-8f27-0b39b93f96f9,*********************,SMB,Indore,Uttar Pradesh,India,Safety
+8a667ecf-f175-4c17-83b8-f77a1e12e45a,****************,Retail,Chennai,Maharashtra,India,Safety
+c3391fe9-b2e2-4b17-9889-71cc7fc4bb5e,*******************,Retail,Chennai,Karnataka,India,Industrial
+f6021064-b257-4297-acc4-d34b45546693,*********************,Retail,Pune,Maharashtra,India,Industrial
+408cac72-ef26-44c0-9cc2-5acc1d38ba5b,********************,Retail,Pune,Maharashtra,India,Safety
+7a359949-a160-4551-bc8d-0ce1c0567f39,******************,Retail,Pune,Maharashtra,India,Safety
+64bd4cec-e2ed-46f7-be56-71bcd3a5da15,*********************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+04bb75db-41e6-41cc-b3be-c7f85d38ff03,****************,Retail,Kolkata,Karnataka,India,Industrial
+e8830483-f43a-46e9-97b0-bfd0e6a5b115,********************,Retail,Pune,Maharashtra,India,Safety
+58626b36-ce75-4ec0-847b-58d1824c2371,***************,Retail,Pune,Maharashtra,India,Safety
+0e2e532d-1ed0-4cf0-8b2f-367248bbed87,****************,Retail,Ahmedabad,Telangana,India,Industrial
+f408e6e5-6280-43e4-9517-0df2c9315aee,*********************,Retail,Chennai,Uttar Pradesh,India,Industrial
+3bcae674-5b85-41cf-924a-19ac5cf0fa76,*****************,SMB,Indore,Maharashtra,India,Safety
+770d9fa9-8aaa-4034-98f5-2249317d6eea,*****************,SMB,Indore,Maharashtra,India,Safety
+6df4b269-cde2-4924-ac5f-bcb9d3ef5cca,****************,Retail,Chennai,Maharashtra,India,Industrial
+57fbc6d1-b015-44df-b900-1be40599a02d,*******************,SMB,Indore,Maharashtra,India,Safety
+e9eae669-45bb-434e-82e4-99e8ffc130f5,*********************,SMB,Indore,Maharashtra,India,Safety
+d746ddc7-10e4-40de-8827-3320e93453b7,*****************,SMB,Hyderabad,Uttar Pradesh,India,Safety
+8f013edc-93e4-4e73-8b14-49b2ce113df6,******************,Retail,Chennai,Maharashtra,India,Safety
+8d159a03-2e75-4887-9f36-325c7ca76af8,******************,Retail,Kolkata,Karnataka,India,Industrial
+9ddc1829-f7e0-4c4e-a95f-367adb9a635b,****************,SMB,Indore,Uttar Pradesh,India,Safety
+9c2aac81-fb1c-4b76-bf94-66d264f0eaca,******************,Retail,Kochi,Telangana,India,Industrial
+c92ce9ea-10f6-4a82-acb0-35346d577a37,*******************,Retail,Kolkata,Karnataka,India,Industrial
+af45f60e-9049-41dd-89bc-0f85d87151fb,******************,Retail,Indore,Maharashtra,India,Safety
+1cbf98f0-f8f3-4377-a858-e69556584a74,*********************,Retail,Chennai,Karnataka,India,Safety
+0b96be6a-f6df-4b53-8402-381184ebb678,*****************,SMB,Indore,Maharashtra,India,Safety
+c3e2e838-c83f-4b3d-9cbb-c6c0b8038b5b,*****************,Retail,Chennai,Maharashtra,India,Safety
+a7d4d858-4359-4899-ae6b-dd381f67449e,********************,Retail,Chennai,Maharashtra,India,Industrial
+9748a985-1112-4ec0-874b-4a642d05337f,*****************,SMB,Indore,Uttar Pradesh,India,Safety
+e3e2b7cf-6085-40d9-bec7-4a9f8008c5c9,*********************,Retail,Pune,Uttar Pradesh,India,Industrial
+634b80a5-8288-4f4c-9936-e0f330fdd96f,******************,Retail,Chennai,Karnataka,India,Safety
+8ccab964-b03c-4c92-a7c1-1582ee3efdf4,********************,Retail,Indore,Maharashtra,India,Safety
+e743f123-ef4c-4435-927a-ab7a2a4c92f8,*********************,Retail,Pune,Maharashtra,India,Safety
+acf66484-2f94-4e17-a7f5-1fc2c61f4afe,****************,Retail,Kolkata,Karnataka,India,Safety
+f6deb0d0-aea6-4246-8ec6-e03e7192cf19,******************,SMB,Indore,Uttar Pradesh,India,Safety
+3fc6cd80-12ef-4444-9f77-044423f995e5,******************,SMB,Indore,Maharashtra,India,Safety
+724cccec-2955-4937-9f0b-fc44e4af3c06,********************,SMB,Pune,Maharashtra,India,Safety
+9eb97e95-43cb-45dd-8710-7751053d63e4,********************,Retail,Chennai,Maharashtra,India,Industrial
+4c452e19-a1b9-488d-a172-42814071e3b1,****************,Retail,Pune,Maharashtra,India,Safety
+7b342583-cbd3-4c21-a9dd-46e28578f5fd,*******************,Retail,Chennai,Maharashtra,India,Industrial
+6ad598b5-95e0-4e14-b1a8-7c2d011b3833,***************,Retail,Kochi,Karnataka,India,Industrial
+6f76a4ee-5caa-4f31-83c1-1127d540b328,*****************,Retail,Kolkata,Karnataka,India,IT
+090a10e7-d828-4a1c-b812-6c6e51735220,*****************,SMB,Pune,Maharashtra,India,Safety
+e17743e8-b45d-4d65-a796-7af338dc7ccc,********************,Retail,Chennai,Maharashtra,India,Safety
+8a0cb2db-eafe-4054-be87-c534908515e1,*****************,Retail,Pune,Maharashtra,India,Safety

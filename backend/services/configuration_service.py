@@ -1,8 +1,12 @@
 from pathlib import Path
+
 from backend.repositories.dataset_repository import (
     get_dataset_filename,
+    get_dataset_user_id,
 )
+
 from backend.services.dataset_loader import load_dataset
+
 from backend.utils.action_validator import (
     validate_column_configuration,
 )
@@ -16,23 +20,77 @@ from backend.repositories.configuration_repository import (
 UPLOAD_DIRECTORY = Path("data/uploads")
 
 
-def save_column_configurations(request):
+def find_dataset_file(dataset_id: int, filename: str):
+    """
+    Finds the actual uploaded dataset file.
+
+    Files are stored inside date-wise folders and renamed
+    using the dataset ID.
+    """
+
+    # Expected stored filename
+    expected_filename = f"dataset_{dataset_id}_{filename}"
+
+    # Search inside data/uploads recursively
+    matches = list(
+        UPLOAD_DIRECTORY.rglob(expected_filename)
+    )
+
+    if matches:
+        return matches[0]
+
+    # Fallback: search using original filename
+    matches = list(
+        UPLOAD_DIRECTORY.rglob(filename)
+    )
+
+    if matches:
+        return matches[0]
+
+    raise FileNotFoundError(
+        f"Dataset file for dataset ID {dataset_id} "
+        f"could not be found."
+    )
+
+
+def save_column_configurations(
+    request,
+    user_id: int
+):
     saved_configurations = []
     seen_columns = set()
 
     for configuration in request.configurations:
 
-        # 1. Validate action and classification
+        # ---------------------------------------------------------
+        # 1. Verify dataset ownership
+        # ---------------------------------------------------------
+        dataset_user_id = get_dataset_user_id(
+            configuration.dataset_id
+        )
+
+        if dataset_user_id != user_id:
+            raise PermissionError(
+                "You do not have access to this dataset."
+            )
+
+        # ---------------------------------------------------------
+        # 2. Validate action and classification
+        # ---------------------------------------------------------
         validate_column_configuration(
             configuration
         )
 
-        # 2. Normalize column name
+        # ---------------------------------------------------------
+        # 3. Normalize column name
+        # ---------------------------------------------------------
         configuration.column_name = (
             configuration.column_name.strip()
         )
 
-        # 3. Check for duplicate configuration
+        # ---------------------------------------------------------
+        # 4. Check duplicate configuration
+        # ---------------------------------------------------------
         key = (
             configuration.dataset_id,
             configuration.column_name,
@@ -47,19 +105,31 @@ def save_column_configurations(request):
 
         seen_columns.add(key)
 
-        # 4. Get the correct dataset file
+        # ---------------------------------------------------------
+        # 5. Get original dataset filename
+        # ---------------------------------------------------------
         filename = get_dataset_filename(
             configuration.dataset_id
         )
 
-        file_path = UPLOAD_DIRECTORY / filename
+        # ---------------------------------------------------------
+        # 6. Find actual uploaded file
+        # ---------------------------------------------------------
+        file_path = find_dataset_file(
+            configuration.dataset_id,
+            filename
+        )
 
-        # 5. Load the exact dataset
+        # ---------------------------------------------------------
+        # 7. Load exact dataset
+        # ---------------------------------------------------------
         dataframe = load_dataset(
             str(file_path)
         )
 
-        # 6. Verify that the column exists
+        # ---------------------------------------------------------
+        # 8. Verify column exists
+        # ---------------------------------------------------------
         if configuration.column_name not in dataframe.columns:
             raise ValueError(
                 f"Column '{configuration.column_name}' "
@@ -67,7 +137,9 @@ def save_column_configurations(request):
                 f"{configuration.dataset_id}."
             )
 
-        # 7. Save configuration
+        # ---------------------------------------------------------
+        # 9. Save configuration
+        # ---------------------------------------------------------
         result = save_configuration(
             configuration
         )
@@ -80,9 +152,30 @@ def save_column_configurations(request):
         "data": saved_configurations,
     }
 
-def review_column_configurations(dataset_id: int):
 
-    configurations = get_configurations(dataset_id)
+def review_column_configurations(
+    dataset_id: int,
+    user_id: int
+):
+
+    # ---------------------------------------------------------
+    # 1. Verify dataset ownership
+    # ---------------------------------------------------------
+    dataset_user_id = get_dataset_user_id(
+        dataset_id
+    )
+
+    if dataset_user_id != user_id:
+        raise PermissionError(
+            "You do not have access to this dataset."
+        )
+
+    # ---------------------------------------------------------
+    # 2. Get configurations
+    # ---------------------------------------------------------
+    configurations = get_configurations(
+        dataset_id
+    )
 
     if not configurations:
         return {

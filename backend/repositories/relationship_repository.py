@@ -1,6 +1,11 @@
-from backend.config.database import get_db_connection
 import json
 
+from backend.config.database import get_db_connection
+
+
+# ============================================================
+# Relationship Analysis
+# ============================================================
 
 def save_relationship_analysis(
     dataset_id: int,
@@ -10,6 +15,7 @@ def save_relationship_analysis(
     random_state: int,
 ):
     connection = get_db_connection()
+    cursor = None
 
     try:
         cursor = connection.cursor()
@@ -50,12 +56,17 @@ def save_relationship_analysis(
         raise
 
     finally:
-        cursor.close()
-        connection.close()
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
 
 
 def get_relationship_analysis(dataset_id: int):
     connection = get_db_connection()
+    cursor = None
+
     try:
         cursor = connection.cursor()
 
@@ -80,19 +91,37 @@ def get_relationship_analysis(dataset_id: int):
         if not result:
             return None
 
+        correlation_matrix = result[2]
+        covariance_matrix = result[3]
+
+        # Handle JSON stored as string or returned as dictionary
+        if isinstance(correlation_matrix, str):
+            correlation_matrix = json.loads(correlation_matrix)
+
+        if isinstance(covariance_matrix, str):
+            covariance_matrix = json.loads(covariance_matrix)
+
         return {
             "analysis_id": result[0],
             "dataset_id": result[1],
-            "correlation_matrix": result[2],
-            "covariance_matrix": result[3],
+            "correlation_matrix": correlation_matrix,
+            "covariance_matrix": covariance_matrix,
             "test_size": result[4],
             "random_state": result[5],
             "created_at": result[6],
         }
 
     finally:
-        cursor.close()
-        connection.close()
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+
+# ============================================================
+# Dataset Relationships
+# ============================================================
 
 def save_dataset_relationship(
     group_id: int,
@@ -108,8 +137,7 @@ def save_dataset_relationship(
     try:
         cursor = connection.cursor()
 
-        cursor.execute(
-            """
+        query = """
             INSERT INTO dataset_relationships (
                 group_id,
                 parent_dataset_id,
@@ -119,8 +147,11 @@ def save_dataset_relationship(
                 relationship_type
             )
             VALUES (%s, %s, %s, %s, %s, %s)
-            RETURNING relationship_id, created_at
-            """,
+            RETURNING relationship_id, created_at;
+        """
+
+        cursor.execute(
+            query,
             (
                 group_id,
                 parent_dataset_id,
@@ -140,8 +171,7 @@ def save_dataset_relationship(
         }
 
     except Exception:
-        if connection:
-            connection.rollback()
+        connection.rollback()
         raise
 
     finally:
@@ -159,8 +189,7 @@ def get_dataset_relationships(group_id: int):
     try:
         cursor = connection.cursor()
 
-        cursor.execute(
-            """
+        query = """
             SELECT
                 relationship_id,
                 group_id,
@@ -172,11 +201,10 @@ def get_dataset_relationships(group_id: int):
                 created_at
             FROM dataset_relationships
             WHERE group_id = %s
-            ORDER BY relationship_id
-            """,
-            (group_id,),
-        )
+            ORDER BY relationship_id;
+        """
 
+        cursor.execute(query, (group_id,))
         rows = cursor.fetchall()
 
         return [

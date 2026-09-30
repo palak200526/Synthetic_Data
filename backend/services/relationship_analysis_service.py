@@ -1,8 +1,7 @@
 import pandas as pd
-from pathlib import Path
 
 from backend.repositories.dataset_repository import (
-    get_dataset_filename,
+    get_dataset_file_path,
 )
 
 from backend.services.dataset_loader import load_dataset
@@ -11,12 +10,23 @@ from backend.repositories.relationship_repository import (
     save_relationship_analysis,
     get_relationship_analysis,
     save_dataset_relationship,
+    get_dataset_relationships,
 )
 
-UPLOAD_DIRECTORY = Path("data/uploads")
 
+# ============================================================
+# Relationship Analysis
+# ============================================================
 
 def analyze_relationships(dataframe: pd.DataFrame):
+    """
+    Analyze numerical relationships within a dataset.
+
+    Calculates:
+    - Correlation matrix
+    - Covariance matrix
+    """
+
     if dataframe.empty:
         raise ValueError("Dataset cannot be empty.")
 
@@ -38,7 +48,20 @@ def analyze_relationships(dataframe: pd.DataFrame):
         "covariance_matrix": covariance_matrix,
     }
 
+
+# ============================================================
+# Create Dataset Relationship
+# ============================================================
+
 def create_dataset_relationship(request):
+    """
+    Create a relationship between two datasets/tables.
+
+    The relationship defines:
+    - Parent dataset and column
+    - Child dataset and column
+    - Relationship type
+    """
 
     # 1. Validate parent and child datasets are different
     if request.parent_dataset_id == request.child_dataset_id:
@@ -46,24 +69,24 @@ def create_dataset_relationship(request):
             "Parent and child dataset must be different."
         )
 
-    # 2. Get parent dataset filename
-    parent_filename = get_dataset_filename(
+    # 2. Get parent dataset file path
+    parent_file_path = get_dataset_file_path(
         request.parent_dataset_id
     )
 
-    # 3. Get child dataset filename
-    child_filename = get_dataset_filename(
+    # 3. Get child dataset file path
+    child_file_path = get_dataset_file_path(
         request.child_dataset_id
     )
 
     # 4. Load parent dataset
     parent_dataframe = load_dataset(
-        str(UPLOAD_DIRECTORY / parent_filename)
+        str(parent_file_path)
     )
 
     # 5. Load child dataset
     child_dataframe = load_dataset(
-        str(UPLOAD_DIRECTORY / child_filename)
+        str(child_file_path)
     )
 
     # 6. Validate parent column
@@ -105,4 +128,44 @@ def create_dataset_relationship(request):
             "relationship_type": request.relationship_type,
             "created_at": result["created_at"],
         },
+    }
+
+
+# ============================================================
+# Identify Related Tables
+# ============================================================
+
+def identify_related_tables(group_id: int):
+    """
+    Retrieve all datasets and relationships belonging
+    to a dataset group.
+    """
+
+    if not group_id:
+        raise ValueError("Group ID is required.")
+
+    relationships = get_dataset_relationships(group_id)
+
+    if not relationships:
+        return {
+            "group_id": group_id,
+            "dataset_ids": [],
+            "relationships": [],
+        }
+
+    dataset_ids = set()
+
+    for relationship in relationships:
+        dataset_ids.add(
+            relationship["parent_dataset_id"]
+        )
+
+        dataset_ids.add(
+            relationship["child_dataset_id"]
+        )
+
+    return {
+        "group_id": group_id,
+        "dataset_ids": sorted(dataset_ids),
+        "relationships": relationships,
     }

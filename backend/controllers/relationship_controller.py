@@ -1,27 +1,30 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from backend.utils.auth_dependency import get_current_user
 
 from backend.services.dataset_loader import load_dataset
+
 from backend.services.relationship_analysis_service import (
     analyze_relationships,
+    create_dataset_relationship,
 )
+
 from backend.services.train_test_split_service import (
     create_train_test_split,
 )
-from backend.schemas.relationship_schema import (
-    RelationshipAnalysisRequest,
-)
-from backend.repositories.relationship_repository import (
-    save_relationship_analysis,
-    get_relationship_analysis,
-)
+
 from backend.schemas.relationship_schema import (
     RelationshipAnalysisRequest,
     DatasetRelationshipRequest,
 )
 
-from backend.services.relationship_analysis_service import (
-    analyze_relationships,
-    create_dataset_relationship,
+from backend.repositories.relationship_repository import (
+    save_relationship_analysis,
+    get_relationship_analysis,
+)
+
+# Add your dataset repository function
+from backend.repositories.dataset_repository import (
+    get_dataset_file_path,
 )
 
 
@@ -31,14 +34,25 @@ router = APIRouter(
 )
 
 
-@router.post("/{dataset_id}/{filename}")
+@router.post(
+    "/dataset",
+    summary="Analyze dataset relationships",
+    description=(
+        "Analyzes relationships within the specified dataset and prepares "
+        "relationship information required for synthetic data generation. "
+        "The dataset is identified using dataset_id. "
+        "The stored file path is retrieved internally."
+    ),
+)
 def analyze_relationships_api(
     dataset_id: int,
-    filename: str,
     request: RelationshipAnalysisRequest,
+    current_user=Depends(get_current_user),
 ):
-    file_path = f"data/uploads/{filename}"
+    # Get stored file path using dataset_id
+    file_path = get_dataset_file_path(dataset_id)
 
+    # Load dataset
     dataframe = load_dataset(file_path)
 
     relationship_result = analyze_relationships(dataframe)
@@ -70,7 +84,6 @@ def analyze_relationships_api(
         ),
         "analysis_id": saved_analysis["analysis_id"],
         "dataset_id": dataset_id,
-        "filename": filename,
         "numerical_columns": relationship_result[
             "numerical_columns"
         ],
@@ -90,8 +103,19 @@ def analyze_relationships_api(
         "random_state": split_result["random_state"],
     }
 
-@router.get("/{dataset_id}")
-def get_relationship_analysis_api(dataset_id: int):
+
+@router.get(
+    "/{dataset_id}",
+    summary="Get relationship analysis",
+    description=(
+        "Retrieves the previously stored relationship analysis for a "
+        "dataset using its dataset ID."
+    ),
+)
+def get_relationship_analysis_api(
+    dataset_id: int,
+    current_user=Depends(get_current_user),
+):
     analysis = get_relationship_analysis(dataset_id)
 
     if not analysis:
@@ -112,8 +136,18 @@ def get_relationship_analysis_api(dataset_id: int):
         "created_at": analysis["created_at"],
     }
 
-@router.post("/dataset")
+
+@router.post(
+    "/{dataset_id}",
+    summary="Create dataset relationship",
+    description=(
+        "Creates and stores relationships between datasets or tables "
+        "by defining relational information required for multi-table "
+        "synthetic data generation."
+    ),
+)
 def create_dataset_relationship_api(
     request: DatasetRelationshipRequest,
+    current_user=Depends(get_current_user),
 ):
     return create_dataset_relationship(request)
