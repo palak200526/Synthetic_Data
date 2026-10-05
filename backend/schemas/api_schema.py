@@ -6,6 +6,16 @@ class GenerationRequest(BaseModel):
     dataset_id: int
     model_name: str
     parameters: Optional[dict] = None
+    background: bool = True
+
+
+class AutoTuneGenerationRequest(BaseModel):
+    dataset_id: int
+    model_name: str
+    parameters: Optional[dict] = None
+    max_attempts: int = 3
+    min_score: float = 80.0
+    improvement_threshold: float = 1.0
 
 
 class EvaluationRequest(BaseModel):
@@ -15,11 +25,37 @@ class EvaluationRequest(BaseModel):
 class DashboardResponse(BaseModel):
     status: str
     message: str
+    total_datasets: Optional[int] = 0
+    total_generations: Optional[int] = 0
+    total_evaluations: Optional[int] = 0
+    average_score: Optional[float] = None
+    recent_datasets: Optional[list[dict]] = None
+    recent_generations: Optional[list[dict]] = None
+    recent_evaluations: Optional[list[dict]] = None
+    data: Optional[dict] = None
+    statistical_similarity: Optional[dict] = None
+    correlation_covariance: Optional[dict] = None
+    data_quality: Optional[dict] = None
+    ml_utility: Optional[dict] = None
+    relationship_integrity: Optional[dict] = None
+    privacy: Optional[dict] = None
+
+    class Config:
+        extra = "allow"
+
+
+class ReportGenerateRequest(BaseModel):
+    result_id: int
+    format: Optional[str] = "json"
 
 
 class ReportResponse(BaseModel):
     status: str
     message: str
+    data: Optional[dict] = None
+
+    class Config:
+        extra = "allow"
 
 
 class DownloadResponse(BaseModel):

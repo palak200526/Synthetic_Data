@@ -227,3 +227,128 @@ def get_dataset_relationships(group_id: int):
 
         if connection:
             connection.close()
+
+
+def get_relationships_for_dataset(dataset_id: int):
+    connection = get_db_connection()
+    cursor = None
+
+    try:
+        cursor = connection.cursor()
+
+        query = """
+            SELECT
+                relationship_id,
+                group_id,
+                parent_dataset_id,
+                parent_column,
+                child_dataset_id,
+                child_column,
+                relationship_type,
+                created_at
+            FROM dataset_relationships
+            WHERE parent_dataset_id = %s OR child_dataset_id = %s
+            ORDER BY relationship_id;
+        """
+
+        cursor.execute(query, (dataset_id, dataset_id))
+        rows = cursor.fetchall()
+
+        return [
+            {
+                "relationship_id": row[0],
+                "group_id": row[1],
+                "parent_dataset_id": row[2],
+                "parent_column": row[3],
+                "child_dataset_id": row[4],
+                "child_column": row[5],
+                "relationship_type": row[6],
+                "created_at": row[7],
+            }
+            for row in rows
+        ]
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+
+def get_dataset_relationship_by_id(relationship_id: int):
+    connection = get_db_connection()
+    cursor = None
+
+    try:
+        cursor = connection.cursor()
+
+        query = """
+            SELECT
+                relationship_id,
+                group_id,
+                parent_dataset_id,
+                parent_column,
+                child_dataset_id,
+                child_column,
+                relationship_type,
+                created_at
+            FROM dataset_relationships
+            WHERE relationship_id = %s;
+        """
+
+        cursor.execute(query, (relationship_id,))
+        row = cursor.fetchone()
+
+        if not row:
+            return None
+
+        return {
+            "relationship_id": row[0],
+            "group_id": row[1],
+            "parent_dataset_id": row[2],
+            "parent_column": row[3],
+            "child_dataset_id": row[4],
+            "child_column": row[5],
+            "relationship_type": row[6],
+            "created_at": row[7].isoformat() if row[7] else None,
+        }
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+
+def delete_dataset_relationship(relationship_id: int) -> bool:
+    connection = get_db_connection()
+    cursor = None
+
+    try:
+        cursor = connection.cursor()
+
+        query = """
+            DELETE FROM dataset_relationships
+            WHERE relationship_id = %s
+            RETURNING relationship_id;
+        """
+
+        cursor.execute(query, (relationship_id,))
+        row = cursor.fetchone()
+        connection.commit()
+
+        return row is not None
+
+    except Exception:
+        connection.rollback()
+        raise
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+

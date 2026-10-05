@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import Any, List, Optional, Union
 
 
 class DerivedRule(BaseModel):
@@ -13,7 +13,7 @@ class ColumnConfiguration(BaseModel):
     column_type: str
     is_identifier: bool
     action: str
-    rule: DerivedRule | None = None
+    rule: Optional[Union[DerivedRule, dict[str, Any]]] = None
 
 
 class ColumnConfigurationRequest(BaseModel):

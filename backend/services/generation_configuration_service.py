@@ -1,10 +1,10 @@
 from backend.repositories.configuration_repository import (
     get_generation_configurations,
 )
+from backend.utils.action_validator import validate_action
 
 
 def get_generation_configuration(dataset_id: int):
-
     configurations = get_generation_configurations(
         dataset_id
     )
@@ -16,26 +16,25 @@ def get_generation_configuration(dataset_id: int):
 
     return configurations
 
-def group_columns_by_action(configurations):
 
+def group_columns_by_action(configurations):
     grouped = {
         "keep": [],
         "remove": [],
         "new_id": [],
         "generalize": [],
         "derived": [],
+        "llm": [],
     }
 
     for config in configurations:
+        raw_action = config.get("action", "keep")
+        column_name = config.get("column_name", "")
 
-        action = config["action"]
-        column_name = config["column_name"]
-
-        if action not in grouped:
-            raise ValueError(
-                f"Unsupported action '{action}' "
-                f"for column '{column_name}'."
-            )
+        try:
+            action = validate_action(raw_action)
+        except Exception:
+            action = "keep"
 
         grouped[action].append(column_name)
 

@@ -102,7 +102,7 @@ def preprocess_dataset(
                 )
             ]
 
-        elif action == "keep":
+        elif action in ("keep", "llm"):
 
             pass
 
@@ -136,8 +136,16 @@ def preprocess_dataset(
     # 6. Prepare data for generation
     # --------------------------------------------------
 
+    llm_columns = [
+        configuration["column_name"]
+        for configuration in configurations
+        if configuration.get("action") == "llm"
+        and configuration.get("column_name") in dataframe.columns
+    ]
+
     preparation_result = prepare_data_for_model(
-        dataframe
+        dataframe,
+        skip_columns=llm_columns,
     )
 
     processed_dataframe = (

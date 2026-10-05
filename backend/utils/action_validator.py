@@ -4,6 +4,24 @@ ALLOWED_ACTIONS = {
     "generalize",
     "new_id",
     "derived",
+    "llm",
+}
+
+ACTION_ALIASES = {
+    "llm_generate": "llm",
+    "llm_text": "llm",
+    "text": "llm",
+    "generate_llm": "llm",
+    "llm text": "llm",
+    "drop": "remove",
+    "delete": "remove",
+    "exclude": "remove",
+    "id": "new_id",
+    "identifier": "new_id",
+    "new id": "new_id",
+    "synthesize": "keep",
+    "generate": "keep",
+    "standard": "keep",
 }
 
 
@@ -16,16 +34,15 @@ ALLOWED_DERIVED_OPERATIONS = {
 
 
 def validate_action(action: str) -> str:
-
     if not action:
         raise ValueError(
             "Column action is required."
         )
 
     action = action.strip().lower()
+    action = ACTION_ALIASES.get(action, action)
 
     if action not in ALLOWED_ACTIONS:
-
         raise ValueError(
             f"Invalid column action: {action}. "
             f"Allowed actions are: "
@@ -38,13 +55,10 @@ def validate_action(action: str) -> str:
 def validate_column_configuration(
     configuration
 ):
-
     # ---------------------------------------------------------
     # Validate column name
     # ---------------------------------------------------------
-
-    if not configuration.column_name.strip():
-
+    if not str(configuration.column_name or "").strip():
         raise ValueError(
             "Column name is required."
         )
@@ -52,9 +66,7 @@ def validate_column_configuration(
     # ---------------------------------------------------------
     # Validate dataset ID
     # ---------------------------------------------------------
-
     if configuration.dataset_id <= 0:
-
         raise ValueError(
             "Dataset ID must be greater than zero."
         )
@@ -62,7 +74,6 @@ def validate_column_configuration(
     # ---------------------------------------------------------
     # Validate action
     # ---------------------------------------------------------
-
     configuration.action = validate_action(
         configuration.action
     )
@@ -70,76 +81,55 @@ def validate_column_configuration(
     # ---------------------------------------------------------
     # Validate new_id action
     # ---------------------------------------------------------
-
     if configuration.action == "new_id":
+        configuration.is_identifier = True
 
-        if not configuration.is_identifier:
-
-            raise ValueError(
-                f"Column '{configuration.column_name}' "
-                "must be marked as an identifier when "
-                "using the 'new_id' action."
-            )
+    if configuration.action == "llm":
+        configuration.is_identifier = False
 
     # ---------------------------------------------------------
     # Validate derived-column rule
     # ---------------------------------------------------------
-
     if configuration.action == "derived":
-
         if configuration.rule is None:
-
             raise ValueError(
-                f"Derived column "
-                f"'{configuration.column_name}' "
-                "requires a rule."
+                f"Derived column '{configuration.column_name}' requires a rule."
             )
 
-        if (
-            configuration.rule.operation
-            not in ALLOWED_DERIVED_OPERATIONS
-        ):
+        operation = getattr(configuration.rule, "operation", None)
+        operands = getattr(configuration.rule, "operands", None)
 
+        if isinstance(configuration.rule, dict):
+            operation = configuration.rule.get("operation")
+            operands = configuration.rule.get("operands")
+
+        if operation not in ALLOWED_DERIVED_OPERATIONS:
             raise ValueError(
-                f"Unsupported derived operation: "
-                f"{configuration.rule.operation}. "
+                f"Unsupported derived operation: {operation}. "
                 f"Allowed operations are: "
                 f"{', '.join(sorted(ALLOWED_DERIVED_OPERATIONS))}."
             )
 
-        if len(
-            configuration.rule.operands
-        ) < 2:
-
+        if not operands or len(operands) < 2:
             raise ValueError(
-                f"Derived column "
-                f"'{configuration.column_name}' "
-                "requires at least two operands."
+                f"Derived column '{configuration.column_name}' requires at least two operands."
             )
 
-        for operand in configuration.rule.operands:
-
-            if not operand.strip():
-
+        for operand in operands:
+            if not str(operand or "").strip():
                 raise ValueError(
-                    f"Invalid operand in derived "
-                    f"rule for column "
-                    f"'{configuration.column_name}'."
+                    f"Invalid operand in derived rule for column '{configuration.column_name}'."
                 )
 
     # ---------------------------------------------------------
-    # Non-derived columns should not have a rule
+    # Non-derived / non-llm columns should not have complex rules
     # ---------------------------------------------------------
+    if configuration.action in ("llm", "derived"):
+        return True
 
-    if (
-        configuration.action != "derived"
-        and configuration.rule is not None
-    ):
-
+    if configuration.rule is not None and isinstance(configuration.rule, dict) and len(configuration.rule) > 0:
         raise ValueError(
-            f"Column '{configuration.column_name}' "
-            "cannot have a derived rule because its "
-            f"action is '{configuration.action}'."
+            f"Column '{configuration.column_name}' cannot have a derived rule because its action is '{configuration.action}'."
         )
 
     return True

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from backend.utils.auth_dependency import get_current_user
 
 from backend.services.dataset_loader import load_dataset
@@ -20,11 +20,14 @@ from backend.schemas.relationship_schema import (
 from backend.repositories.relationship_repository import (
     save_relationship_analysis,
     get_relationship_analysis,
+    get_dataset_relationships,
+    delete_dataset_relationship,
 )
 
-# Add your dataset repository function
 from backend.repositories.dataset_repository import (
     get_dataset_file_path,
+    get_dataset_by_id,
+    assign_dataset_to_group,
 )
 
 
@@ -105,6 +108,42 @@ def analyze_relationships_api(
 
 
 @router.get(
+    "/group/{group_id}",
+    summary="Get dataset relationships for a group",
+    description="Retrieves all relationships configured for datasets within a group, enriched with table names.",
+)
+def get_group_relationships_api(
+    group_id: int,
+    current_user=Depends(get_current_user),
+):
+    try:
+        relationships = get_dataset_relationships(group_id)
+        enriched = []
+        for r in relationships:
+            p_info = get_dataset_by_id(r["parent_dataset_id"])
+            c_info = get_dataset_by_id(r["child_dataset_id"])
+            p_name = (p_info.get("dataset_name") or p_info.get("file_name")) if p_info else f"Dataset {r['parent_dataset_id']}"
+            c_name = (c_info.get("dataset_name") or c_info.get("file_name")) if c_info else f"Dataset {r['child_dataset_id']}"
+            enriched.append({
+                **r,
+                "parent_table_name": p_name,
+                "child_table_name": c_name,
+            })
+
+        return {
+            "status": "success",
+            "group_id": group_id,
+            "relationships": enriched,
+            "count": len(enriched),
+        }
+    except Exception as error:
+        raise HTTPException(
+            status_code=500,
+            detail=str(error),
+        )
+
+
+@router.get(
     "/{dataset_id}",
     summary="Get relationship analysis",
     description=(
@@ -138,8 +177,31 @@ def get_relationship_analysis_api(
 
 
 @router.post(
-    "/{dataset_id}",
+    "",
     summary="Create dataset relationship",
+    description="Creates and stores a relationship between datasets for multi-table synthetic data generation.",
+)
+def create_relationship_direct_api(
+    request: DatasetRelationshipRequest,
+    current_user=Depends(get_current_user),
+):
+    try:
+        result = create_dataset_relationship(request)
+        try:
+            assign_dataset_to_group(request.parent_dataset_id, request.group_id)
+            assign_dataset_to_group(request.child_dataset_id, request.group_id)
+        except Exception:
+            pass
+        return result
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+    except Exception as error:
+        raise HTTPException(status_code=500, detail=str(error))
+
+
+@router.post(
+    "/{dataset_id}",
+    summary="Create dataset relationship (legacy path)",
     description=(
         "Creates and stores relationships between datasets or tables "
         "by defining relational information required for multi-table "
@@ -150,4 +212,45 @@ def create_dataset_relationship_api(
     request: DatasetRelationshipRequest,
     current_user=Depends(get_current_user),
 ):
-    return create_dataset_relationship(request)
+    try:
+        result = create_dataset_relationship(request)
+        try:
+            assign_dataset_to_group(request.parent_dataset_id, request.group_id)
+            assign_dataset_to_group(request.child_dataset_id, request.group_id)
+        except Exception:
+            pass
+        return result
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+    except Exception as error:
+        raise HTTPException(status_code=500, detail=str(error))
+
+
+@router.delete(
+    "/{relationship_id}",
+    summary="Delete dataset relationship",
+    description="Deletes a relationship between datasets by relationship ID.",
+)
+def delete_dataset_relationship_api(
+    relationship_id: int,
+    current_user=Depends(get_current_user),
+):
+    try:
+        success = delete_dataset_relationship(relationship_id)
+        if not success:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Relationship {relationship_id} not found.",
+            )
+        return {
+            "status": "success",
+            "message": f"Relationship {relationship_id} deleted successfully.",
+            "relationship_id": relationship_id,
+        }
+    except HTTPException:
+        raise
+    except Exception as error:
+        raise HTTPException(
+            status_code=500,
+            detail=str(error),
+        )

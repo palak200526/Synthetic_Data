@@ -11,7 +11,7 @@ class ColumnLLMAnalysis(BaseModel):
         ...,
         description=(
             "Action to apply during synthetic data generation. "
-            "Allowed values: keep, remove, new_id, generalize, derived."
+            "Allowed values: keep, remove, new_id, generalize, derived, llm."
         )
     )
 

@@ -15,7 +15,7 @@ def create_dataset(
     group_id=None,
     domain_type=None,
     user_id=None
-):
+):  
 
     connection = None
     cursor = None
@@ -426,3 +426,231 @@ def get_dataset_user_id(dataset_id: int):
 
         if connection:
             connection.close()
+
+
+# --------------------------------------------------
+# Get Dataset By ID
+# --------------------------------------------------
+
+def get_dataset_by_id(dataset_id: int):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                dataset_id,
+                dataset_name,
+                file_name,
+                file_type,
+                row_count,
+                column_count,
+                session_id,
+                group_id,
+                domain_type,
+                user_id
+            FROM datasets
+            WHERE dataset_id = %s
+            """,
+            (dataset_id,),
+        )
+
+        row = cursor.fetchone()
+        if row is None:
+            return None
+
+        return {
+            "dataset_id": row[0],
+            "dataset_name": row[1],
+            "name": row[1] or row[2],
+            "file_name": row[2],
+            "file_type": row[3],
+            "row_count": row[4],
+            "column_count": row[5],
+            "session_id": row[6],
+            "group_id": row[7],
+            "domain_type": row[8],
+            "user_id": row[9],
+        }
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+
+# --------------------------------------------------
+# Get Datasets By Group
+# --------------------------------------------------
+
+def get_datasets_by_group(group_id: int):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                dataset_id,
+                dataset_name,
+                file_name,
+                file_type,
+                row_count,
+                column_count,
+                group_id,
+                domain_type,
+                user_id,
+                uploaded_at
+            FROM datasets
+            WHERE group_id = %s
+            ORDER BY dataset_id ASC
+            """,
+            (group_id,),
+        )
+
+        rows = cursor.fetchall()
+
+        return [
+            {
+                "dataset_id": row[0],
+                "dataset_name": row[1],
+                "name": row[1] or row[2],
+                "file_name": row[2],
+                "file_type": row[3],
+                "row_count": row[4],
+                "column_count": row[5],
+                "group_id": row[6],
+                "domain_type": row[7],
+                "user_id": row[8],
+                "uploaded_at": row[9].isoformat() if row[9] else None,
+            }
+            for row in rows
+        ]
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+
+# --------------------------------------------------
+# Get User Datasets
+# --------------------------------------------------
+
+def get_user_datasets(user_id: int | None = None):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        if user_id:
+            cursor.execute(
+                """
+                SELECT
+                    dataset_id,
+                    dataset_name,
+                    file_name,
+                    file_type,
+                    row_count,
+                    column_count,
+                    group_id,
+                    domain_type,
+                    user_id,
+                    uploaded_at
+                FROM datasets
+                WHERE user_id = %s OR user_id IS NULL
+                ORDER BY dataset_id DESC
+                """,
+                (user_id,),
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT
+                    dataset_id,
+                    dataset_name,
+                    file_name,
+                    file_type,
+                    row_count,
+                    column_count,
+                    group_id,
+                    domain_type,
+                    user_id,
+                    uploaded_at
+                FROM datasets
+                ORDER BY dataset_id DESC
+                """
+            )
+
+        rows = cursor.fetchall()
+
+        return [
+            {
+                "dataset_id": row[0],
+                "dataset_name": row[1],
+                "name": row[1] or row[2],
+                "file_name": row[2],
+                "file_type": row[3],
+                "row_count": row[4],
+                "column_count": row[5],
+                "group_id": row[6],
+                "domain_type": row[7],
+                "user_id": row[8],
+                "uploaded_at": row[9].isoformat() if row[9] else None,
+            }
+            for row in rows
+        ]
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+
+# --------------------------------------------------
+# Assign Dataset to Group
+# --------------------------------------------------
+
+def assign_dataset_to_group(dataset_id: int, group_id: int):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            UPDATE datasets
+            SET group_id = %s
+            WHERE dataset_id = %s
+            """,
+            (group_id, dataset_id),
+        )
+
+        connection.commit()
+        return True
+
+    except Exception:
+        if connection:
+            connection.rollback()
+        raise
+
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+

@@ -22,14 +22,14 @@ def build_column_profile(
     }
 
     # ---------------------------------------
-    # Sample values
+    # Sample values — reduced from 10 → 5
     # ---------------------------------------
 
     profile["sample_values"] = (
         series
         .dropna()
         .astype(str)
-        .head(10)
+        .head(5)          # 👈 CHANGE: 10 → 5
         .tolist()
     )
 
@@ -57,23 +57,16 @@ def build_column_profile(
                 "average": float(lengths.mean()),
             }
 
-        profile["patterns"] = detect_patterns(
-            series
-        )
+        profile["patterns"] = detect_patterns(series)
 
     # ---------------------------------------
-    # Numerical information
+    # Numerical statistics — REMOVED
+    # (LLM doesn't need these; adds tokens)
     # ---------------------------------------
 
-    if pd.api.types.is_numeric_dtype(series):
-
-        profile["statistics"] = {
-            "min": float(series.min()),
-            "max": float(series.max()),
-            "mean": float(series.mean()),
-            "median": float(series.median()),
-            "std": float(series.std()),
-        }
+    # NOTE: statistics block removed on purpose.
+    # It was adding ~30 tokens per column with no
+    # meaningful impact on LLM decisions.
 
     # ---------------------------------------
     # Categorical information
@@ -86,7 +79,7 @@ def build_column_profile(
         profile["top_values"] = (
             series
             .value_counts(dropna=True)
-            .head(10)
+            .head(5)      # 👈 CHANGE: 10 → 5
             .to_dict()
         )
 
@@ -94,6 +87,10 @@ def build_column_profile(
 
 
 def detect_patterns(series: pd.Series) -> list[str]:
+    """
+    Detect well-known patterns (email, phone, uuid).
+    Now samples only 30 values instead of 100 for speed.
+    """
 
     patterns = []
 
@@ -101,8 +98,11 @@ def detect_patterns(series: pd.Series) -> list[str]:
         series
         .dropna()
         .astype(str)
-        .head(100)
+        .head(30)         # 👈 CHANGE: 100 → 30
     )
+
+    if values.empty:
+        return patterns
 
     pattern_checks = {
         "email": r"^[^@\s]+@[^@\s]+\.[^@\s]+$",
@@ -117,18 +117,12 @@ def detect_patterns(series: pd.Series) -> list[str]:
     }
 
     for pattern_name, regex in pattern_checks.items():
-
-        if not values.empty:
-
-            matches = values.str.match(
-                regex,
-                na=False
-            )
-
-            if matches.mean() >= 0.8:
-                patterns.append(pattern_name)
+        matches = values.str.match(regex, na=False)
+        if matches.mean() >= 0.8:
+            patterns.append(pattern_name)
 
     return patterns
+
 
 def build_dataset_column_profiles(
     df: pd.DataFrame
@@ -137,12 +131,8 @@ def build_dataset_column_profiles(
     profiles = []
 
     for column in df.columns:
-
         profiles.append(
-            build_column_profile(
-                df,
-                column
-            )
+            build_column_profile(df, column)
         )
 
     return profiles

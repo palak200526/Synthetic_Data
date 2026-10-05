@@ -1,16 +1,22 @@
-from fastapi import APIRouter, File, UploadFile, Form, Depends
+from fastapi import APIRouter, File, UploadFile, Form, Depends, HTTPException
+import pandas as pd
 
 from backend.utils.auth_dependency import get_current_user
 from backend.services.dataset_service import upload_dataset
+from backend.services.dataset_loader import load_dataset
 from backend.repositories.session_repository import (
     create_processing_session,
+)
+from backend.repositories.dataset_repository import (
+    get_user_datasets,
+    get_dataset_file_path,
+    get_dataset_by_id,
 )
 
 router = APIRouter(
     prefix="",
     tags=["Dataset Upload"],
 )
-
 
 
 @router.post(
@@ -25,7 +31,6 @@ router = APIRouter(
         "group and domain type."
     ),
 )
-
 async def upload_dataset_controller(
     files: list[UploadFile] = File(
         ...,
@@ -70,3 +75,60 @@ async def upload_dataset_controller(
         "session_id": session_id,
         "datasets": results,
     }
+
+
+@router.get(
+    "/datasets",
+    summary="List user datasets",
+    description="Retrieves datasets owned by the current user.",
+)
+def list_datasets_controller(
+    user_id: int = Depends(get_current_user),
+):
+    try:
+        datasets = get_user_datasets(user_id=user_id)
+        return {
+            "status": "success",
+            "datasets": datasets,
+            "count": len(datasets),
+        }
+    except Exception as error:
+        raise HTTPException(
+            status_code=500,
+            detail=str(error),
+        )
+
+
+@router.get(
+    "/datasets/{dataset_id}/columns",
+    summary="Get dataset columns",
+    description="Retrieves the column names, data types, and sample values for a dataset.",
+)
+def get_dataset_columns_controller(
+    dataset_id: int,
+    user_id: int = Depends(get_current_user),
+):
+    try:
+        file_path = get_dataset_file_path(dataset_id)
+        df = load_dataset(str(file_path))
+        columns = [
+            {
+                "name": str(col),
+                "type": str(df[col].dtype),
+                "is_numeric": bool(pd.api.types.is_numeric_dtype(df[col])),
+                "unique_count": int(df[col].nunique(dropna=True)),
+                "sample_values": [str(x) for x in df[col].dropna().head(3).tolist()],
+            }
+            for col in df.columns
+        ]
+        return {
+            "status": "success",
+            "dataset_id": dataset_id,
+            "columns": columns,
+            "column_names": [str(c) for c in df.columns],
+        }
+    except Exception as error:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to load columns for dataset {dataset_id}: {error}",
+        )

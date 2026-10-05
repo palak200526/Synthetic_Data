@@ -214,3 +214,127 @@ def get_generated_result_by_run(run_id: int):
     finally:
         cur.close()
         conn.close()
+
+def get_generated_result_by_id(
+    result_id: int,
+):
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    try:
+        cur.execute(
+            """
+            SELECT
+                gr.result_id,
+                gr.run_id,
+                gr.file_name,
+                gr.file_path,
+                gr.row_count,
+                gr.column_count,
+                grn.dataset_id
+            FROM generated_results gr
+            JOIN generation_runs grn
+                ON gr.run_id = grn.run_id
+            WHERE gr.result_id = %s
+            """,
+            (result_id,),
+        )
+
+        row = cur.fetchone()
+
+        if not row:
+            return None
+
+        return {
+            "result_id": row[0],
+            "run_id": row[1],
+            "file_name": row[2],
+            "file_path": row[3],
+            "row_count": row[4],
+            "column_count": row[5],
+            "dataset_id": row[6],
+        }
+
+    finally:
+        cur.close()
+        conn.close()
+
+
+def get_latest_generated_result_by_dataset_id(dataset_id: int):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+            SELECT
+                gr.result_id,
+                gr.run_id,
+                gr.file_name,
+                gr.file_path,
+                gr.row_count,
+                gr.column_count,
+                grn.dataset_id
+            FROM generated_results gr
+            JOIN generation_runs grn ON gr.run_id = grn.run_id
+            WHERE grn.dataset_id = %s
+            ORDER BY gr.result_id DESC
+            LIMIT 1
+            """,
+            (dataset_id,),
+        )
+        row = cur.fetchone()
+        if not row:
+            return None
+        return {
+            "result_id": row[0],
+            "run_id": row[1],
+            "file_name": row[2],
+            "file_path": row[3],
+            "row_count": row[4],
+            "column_count": row[5],
+            "dataset_id": row[6],
+        }
+    finally:
+        cur.close()
+        conn.close()
+
+
+def get_latest_generated_result_for_user(user_id: int):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+            SELECT
+                gr.result_id,
+                gr.run_id,
+                gr.file_name,
+                gr.file_path,
+                gr.row_count,
+                gr.column_count,
+                grn.dataset_id
+            FROM generated_results gr
+            JOIN generation_runs grn ON gr.run_id = grn.run_id
+            JOIN datasets d ON grn.dataset_id = d.dataset_id
+            WHERE d.user_id = %s
+            ORDER BY gr.result_id DESC
+            LIMIT 1
+            """,
+            (user_id,),
+        )
+        row = cur.fetchone()
+        if not row:
+            return None
+        return {
+            "result_id": row[0],
+            "run_id": row[1],
+            "file_name": row[2],
+            "file_path": row[3],
+            "row_count": row[4],
+            "column_count": row[5],
+            "dataset_id": row[6],
+        }
+    finally:
+        cur.close()
+        conn.close()
+

@@ -12,7 +12,9 @@ from backend.schemas.configuration_schema import (
 
 from backend.repositories.configuration_repository import (
     save_configuration,
+    save_configurations_bulk,
 )
+
 
 def build_column_configurations(
     dataframe,
@@ -29,7 +31,7 @@ def build_column_configurations(
 
     profile = generate_profile(dataframe)
 
-    column_profiles = profile["columns"]
+    column_profiles = profile.get("columns", [])
 
     # ---------------------------------------------------------
     # 2. Run LLM analysis
@@ -40,8 +42,7 @@ def build_column_configurations(
     )
 
     # ---------------------------------------------------------
-    # 3. Convert LLM output into
-    #    ColumnConfiguration objects
+    # 3. Convert LLM output into ColumnConfiguration objects
     # ---------------------------------------------------------
 
     configurations = []
@@ -53,11 +54,13 @@ def build_column_configurations(
             analysis.column_name
         )
 
+        is_id = True if analysis.action == "new_id" else analysis.is_identifier
+
         configuration = ColumnConfiguration(
             dataset_id=dataset_id,
             column_name=analysis.column_name,
             column_type=column_type,
-            is_identifier=analysis.is_identifier,
+            is_identifier=is_id,
             action=analysis.action,
             rule=None,
         )
@@ -73,13 +76,16 @@ def _get_column_type(
     column_profiles: list[dict],
     column_name: str
 ):
-
     for column in column_profiles:
+        if column.get("column_name") == column_name:
+            return (
+                column.get("classification")
+                or column.get("dtype")
+                or column.get("type")
+                or "string"
+            )
 
-        if column["column_name"] == column_name:
-            return column["classification"]
-
-    return "other"
+    return "string"
 
 
 def save_llm_configurations(
@@ -96,14 +102,7 @@ def save_llm_configurations(
         dataset_id
     )
 
-    saved_configurations = []
-
-    for configuration in configurations:
-
-        result = save_configuration(
-            configuration
-        )
-
-        saved_configurations.append(result)
-
-    return saved_configurations
+    return save_configurations_bulk(
+        dataset_id=dataset_id,
+        configurations=configurations,
+    )
