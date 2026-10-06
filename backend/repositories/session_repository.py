@@ -1,7 +1,9 @@
 from backend.config.database import get_db_connection
 
 
-def create_processing_session(user_id: int):
+def create_processing_session(user_id: int, 
+    status: str = "processing"
+):
     connection = None
     cursor = None
 
@@ -30,7 +32,7 @@ def create_processing_session(user_id: int):
 
         connection.commit()
 
-        return session
+        return session[0]
 
     except Exception:
         if connection:

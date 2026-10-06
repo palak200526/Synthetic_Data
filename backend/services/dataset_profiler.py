@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 
 def get_basic_profile(dataframe: pd.DataFrame) -> dict:
@@ -11,6 +12,7 @@ def get_basic_profile(dataframe: pd.DataFrame) -> dict:
         "column_count": int(dataframe.shape[1]),
     }
 
+
 def get_column_types(dataframe: pd.DataFrame) -> dict:
     """
     Classify columns as numerical or categorical.
@@ -21,7 +23,7 @@ def get_column_types(dataframe: pd.DataFrame) -> dict:
     ).columns.tolist()
 
     categorical_columns = dataframe.select_dtypes(
-        include=["str", "category", "bool"]
+        include=["object", "string", "category", "bool"]
     ).columns.tolist()
 
     return {
@@ -29,39 +31,249 @@ def get_column_types(dataframe: pd.DataFrame) -> dict:
         "categorical_columns": categorical_columns,
     }
 
+
+def detect_patterns(series: pd.Series) -> list[str]:
+    """
+    Detect common patterns in string columns.
+    """
+
+    patterns = []
+
+    values = (
+        series
+        .dropna()
+        .astype(str)
+        .head(100)
+    )
+
+    pattern_checks = {
+        "email": r"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+
+        "phone": r"^\+?[\d\s().-]{7,}$",
+
+        "uuid": (
+            r"^[0-9a-fA-F]{8}-"
+            r"[0-9a-fA-F]{4}-"
+            r"[0-9a-fA-F]{4}-"
+            r"[0-9a-fA-F]{4}-"
+            r"[0-9a-fA-F]{12}$"
+        ),
+    }
+
+    for pattern_name, regex in pattern_checks.items():
+
+        if not values.empty:
+
+            matches = values.str.match(
+                regex,
+                na=False
+            )
+
+            if matches.mean() >= 0.8:
+                patterns.append(pattern_name)
+
+    return patterns
+
+
 def get_column_information(dataframe: pd.DataFrame) -> list:
     """
-    Generate information for every column.
+    Generate detailed information for every column.
+
+    This information is used by the LLM to determine:
+    - whether a column is an identifier
+    - which action should be applied during generation
     """
 
     column_information = []
 
     for column in dataframe.columns:
 
-        dtype = str(dataframe[column].dtype)
+        series = dataframe[column]
 
-        if pd.api.types.is_numeric_dtype(dataframe[column]):
+        dtype = str(series.dtype)
+
+        # ---------------------------------------------------------
+        # Column classification
+        # ---------------------------------------------------------
+
+        if pd.api.types.is_numeric_dtype(series):
+
             column_type = "numerical"
 
         elif (
-            pd.api.types.is_object_dtype(dataframe[column])
+            pd.api.types.is_object_dtype(series)
+            or pd.api.types.is_string_dtype(series)
             or isinstance(
-                dataframe[column].dtype,
+                series.dtype,
                 pd.CategoricalDtype
             )
-            or pd.api.types.is_bool_dtype(dataframe[column])
+            or pd.api.types.is_bool_dtype(series)
         ):
+
             column_type = "categorical"
 
         else:
+
             column_type = "other"
 
-        column_information.append(
-            {
-                "column": column,
-                "data_type": dtype,
-                "classification": column_type,
+        # ---------------------------------------------------------
+        # Basic column information
+        # ---------------------------------------------------------
+
+        row_count = len(series)
+
+        unique_count = int(
+            series.nunique(dropna=True)
+        )
+
+        unique_ratio = (
+            float(unique_count / row_count)
+            if row_count > 0
+            else 0.0
+        )
+
+        null_count = int(
+            series.isna().sum()
+        )
+
+        null_ratio = float(
+            series.isna().mean()
+        )
+
+        # ---------------------------------------------------------
+        # Create base profile
+        # ---------------------------------------------------------
+
+        column_profile = {
+
+            "column_name": column,
+
+            "dtype": dtype,
+
+            "classification": column_type,
+
+            "row_count": row_count,
+
+            "unique_count": unique_count,
+
+            "unique_ratio": unique_ratio,
+
+            "null_count": null_count,
+
+            "null_ratio": null_ratio,
+
+            # Actual examples from the dataset
+            "sample_values": (
+                series
+                .dropna()
+                .astype(str)
+                .head(10)
+                .tolist()
+            ),
+        }
+
+        # ---------------------------------------------------------
+        # String information
+        # ---------------------------------------------------------
+
+        if (
+            pd.api.types.is_object_dtype(series)
+            or pd.api.types.is_string_dtype(series)
+            or isinstance(
+                series.dtype,
+                pd.CategoricalDtype
+            )
+        ):
+
+            values = (
+                series
+                .dropna()
+                .astype(str)
+            )
+
+            if not values.empty:
+
+                lengths = values.str.len()
+
+                column_profile["string_length"] = {
+
+                    "min": int(
+                        lengths.min()
+                    ),
+
+                    "max": int(
+                        lengths.max()
+                    ),
+
+                    "average": float(
+                        lengths.mean()
+                    ),
+                }
+
+                column_profile["patterns"] = (
+                    detect_patterns(series)
+                )
+
+        # ---------------------------------------------------------
+        # Numerical information
+        # ---------------------------------------------------------
+
+        if pd.api.types.is_numeric_dtype(series):
+
+            column_profile["statistics"] = {
+
+                "min": float(
+                    series.min()
+                ),
+
+                "max": float(
+                    series.max()
+                ),
+
+                "mean": float(
+                    series.mean()
+                ),
+
+                "median": float(
+                    series.median()
+                ),
+
+                "std": float(
+                    series.std()
+                ),
             }
+
+        # ---------------------------------------------------------
+        # Categorical information
+        # ---------------------------------------------------------
+
+        if (
+            not pd.api.types.is_numeric_dtype(series)
+            and unique_count <= 50
+        ):
+
+            value_counts = (
+                series
+                .value_counts(
+                    dropna=True
+                )
+                .head(10)
+            )
+
+            column_profile["top_values"] = {
+
+                str(value): int(count)
+
+                for value, count
+                in value_counts.items()
+            }
+
+        # ---------------------------------------------------------
+        # Add completed profile
+        # ---------------------------------------------------------
+
+        column_information.append(
+            column_profile
         )
 
     return column_information
@@ -86,16 +298,21 @@ def get_missing_value_summary(
         )
 
         if total_rows > 0:
+
             missing_percentage = (
                 missing_count / total_rows
             ) * 100
+
         else:
+
             missing_percentage = 0.0
 
         missing_summary.append(
             {
                 "column": column,
+
                 "missing_count": missing_count,
+
                 "missing_percentage": round(
                     missing_percentage,
                     2
@@ -105,11 +322,13 @@ def get_missing_value_summary(
 
     return missing_summary
 
+
 def get_numerical_statistics(
     dataframe: pd.DataFrame
 ) -> dict:
     """
-    Calculate descriptive statistics for numerical columns.
+    Calculate descriptive statistics
+    for numerical columns.
     """
 
     numerical_data = dataframe.select_dtypes(
@@ -119,7 +338,11 @@ def get_numerical_statistics(
     if numerical_data.empty:
         return {}
 
-    statistics = numerical_data.describe().round(2)
+    statistics = (
+        numerical_data
+        .describe()
+        .round(2)
+    )
 
     return statistics.to_dict()
 
@@ -128,11 +351,17 @@ def get_categorical_frequencies(
     dataframe: pd.DataFrame
 ) -> dict:
     """
-    Calculate value frequencies for categorical columns.
+    Calculate value frequencies
+    for categorical columns.
     """
 
     categorical_columns = dataframe.select_dtypes(
-        include=["str", "category", "bool"]
+        include=[
+            "object",
+            "string",
+            "category",
+            "bool"
+        ]
     ).columns
 
     frequencies = {}
@@ -141,13 +370,18 @@ def get_categorical_frequencies(
 
         value_counts = (
             dataframe[column]
-            .value_counts(dropna=False)
+            .value_counts(
+                dropna=False
+            )
             .head(20)
         )
 
         frequencies[column] = {
+
             str(value): int(count)
-            for value, count in value_counts.items()
+
+            for value, count
+            in value_counts.items()
         }
 
     return frequencies
@@ -175,15 +409,21 @@ def generate_profile(
     )
 
     profile["missing_values"] = (
-        get_missing_value_summary(dataframe)
+        get_missing_value_summary(
+            dataframe
+        )
     )
 
     profile["numerical_statistics"] = (
-        get_numerical_statistics(dataframe)
+        get_numerical_statistics(
+            dataframe
+        )
     )
 
     profile["categorical_frequencies"] = (
-        get_categorical_frequencies(dataframe)
+        get_categorical_frequencies(
+            dataframe
+        )
     )
 
     return profile

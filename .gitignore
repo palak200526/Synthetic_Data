@@ -12,6 +12,7 @@ __pycache__/
 .env
 
 # Uploaded datasets
+data/
 data/uploads/*
 data/uploads/**/*.csv
 data/uploads/**/*.xls
@@ -27,3 +28,12 @@ data/uploads/**/*.xlsx
 # OS
 .DS_Store
 Thumbs.db
+
+node_modules
+dist
+.env.local
+.DS_Store
+
+frontend/src/hooks/.gitkeep
+
+reports/

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from backend.services.sensitive_detector import (
+from backend.services.sensitive_column_detector import (
     detect_sensitive_and_identifier_columns
 )
 

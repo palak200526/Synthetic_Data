@@ -1,0 +1,201 @@
+product_id,product_name,category,unit_of_measure,standard_cost,primary_source_country,status
+PROD0001,Industrial Stainless Steel Rod,Mechanical,Unit,12896.889998580695,Vietnam,Active
+PROD0002,Industrial Polymer Resin,Raw Materials,Unit,12910.352571598412,Vietnam,Active
+PROD0003,Premium Steel Coil,Raw Materials,Unit,12101.810575897596,Vietnam,Active
+PROD0004,Standard Polymer Resin,Raw Materials,Unit,12794.257304765242,Vietnam,Active
+PROD0005,Standard Steel Coil,Raw Materials,Unit,11589.50719840078,India,Active
+PROD0006,Industrial Copper Wire,Raw Materials,Unit,11907.726182625322,Vietnam,Active
+PROD0007,Standard Hydraulic Valve,Mechanical,Unit,12473.560169809713,Vietnam,Active
+PROD0008,Industrial Gear Assembly,Mechanical,Unit,12153.036056755947,Vietnam,Active
+PROD0009,Premium Packaging Tape,Raw Materials,Unit,11782.841218420423,Vietnam,Active
+PROD0010,Standard Industrial Rubber,Raw Materials,Unit,11721.433765058735,India,Active
+PROD0011,Standard Industrial Rubber,Raw Materials,Unit,12576.56139714953,Vietnam,Active
+PROD0012,Premium Steel Coil,Raw Materials,Unit,12093.513155838868,Vietnam,Active
+PROD0013,Standard Copper Wire,Raw Materials,Unit,11259.243999366761,Vietnam,Active
+PROD0014,Premium Polymer Resin,Mechanical,Unit,12879.328238276428,Vietnam,Active
+PROD0015,Industrial Packaging Tape,Raw Materials,Unit,11334.810024971164,Vietnam,Active
+PROD0016,Standard Hydraulic Valve,Mechanical,Unit,12541.032187900444,Vietnam,Active
+PROD0017,Premium Industrial Rubber,Mechanical,Unit,12945.856490844077,Vietnam,Active
+PROD0018,Premium Copper Wire,Raw Materials,Unit,11708.781648211498,Vietnam,Active
+PROD0019,Industrial Polymer Resin,Raw Materials,Unit,11946.11554417912,Vietnam,Active
+PROD0020,Premium Pump Assembly,Mechanical,Unit,12913.721890735998,Vietnam,Active
+PROD0021,Industrial Polymer Resin,Raw Materials,Unit,12221.795620351868,Vietnam,Active
+PROD0022,Standard Industrial Rubber,Raw Materials,Unit,12451.30927753415,Vietnam,Active
+PROD0023,Industrial Steel Coil,Raw Materials,Unit,13039.098396908805,Vietnam,Active
+PROD0024,Heavy Duty Polymer Resin,Raw Materials,Unit,12924.433026906341,Vietnam,Active
+PROD0025,Heavy Duty Stainless Steel Rod,Mechanical,Unit,13066.93699651019,Vietnam,Active
+PROD0026,Standard Steel Coil,Raw Materials,Unit,12868.21227472044,Vietnam,Active
+PROD0027,Premium Industrial Rubber,Raw Materials,Unit,12017.483073203088,Vietnam,Active
+PROD0028,Heavy Duty Gear Assembly,Mechanical,Unit,12354.387501283938,Vietnam,Active
+PROD0029,Premium Industrial Rubber,Mechanical,Unit,11962.373782809116,Vietnam,Active
+PROD0030,Heavy Duty Gear Assembly,Mechanical,Unit,12774.940296551493,Vietnam,Active
+PROD0031,Standard Steel Coil,Raw Materials,Unit,12052.948084519307,Vietnam,Active
+PROD0032,Heavy Duty PET Container,Packaging,Unit,11908.085387150828,India,Active
+PROD0033,Industrial Steel Coil,Raw Materials,Unit,11206.499093268843,Vietnam,Active
+PROD0034,Premium Steel Coil,Raw Materials,Unit,12093.52524330038,Vietnam,Active
+PROD0035,Premium Aluminium Sheet,Raw Materials,Unit,12965.475331528076,Vietnam,Active
+PROD0036,Standard Packaging Tape,Raw Materials,Unit,11252.73847667368,India,Active
+PROD0037,Standard Gear Assembly,Mechanical,Unit,12367.705850287326,Vietnam,Active
+PROD0038,Standard Copper Wire,Raw Materials,Unit,12261.65846134053,Vietnam,Active
+PROD0039,Premium Copper Wire,Raw Materials,Unit,12583.584715569987,Vietnam,Active
+PROD0040,Premium Packaging Tape,Raw Materials,Unit,12682.546697858908,Vietnam,Active
+PROD0041,Premium Copper Wire,Raw Materials,Unit,11875.490109144914,Vietnam,Active
+PROD0042,Standard Stainless Steel Rod,Mechanical,Unit,11829.09896729332,Vietnam,Active
+PROD0043,Heavy Duty Polymer Resin,Raw Materials,Unit,12347.74856414419,Vietnam,Active
+PROD0044,Standard Polymer Resin,Raw Materials,Unit,11664.034558658048,Vietnam,Active
+PROD0045,Industrial Steel Coil,Raw Materials,Unit,12458.979310302842,Vietnam,Active
+PROD0046,Heavy Duty Copper Wire,Raw Materials,Unit,12341.147091843559,India,Active
+PROD0047,Industrial Steel Coil,Raw Materials,Unit,12587.617160848044,Vietnam,Active
+PROD0048,Standard Adhesive Resin,Chemicals,Unit,12957.604376844987,Vietnam,Active
+PROD0049,Industrial Copper Wire,Raw Materials,Unit,12062.299463715792,Vietnam,Active
+PROD0050,Standard Aluminium Sheet,Raw Materials,Unit,11742.014484154693,India,Active
+PROD0051,Heavy Duty Stretch Film,Packaging,Unit,12078.095067540708,Vietnam,Active
+PROD0052,Industrial Aluminium Sheet,Raw Materials,Unit,12330.292701754144,Vietnam,Active
+PROD0053,Industrial Steel Coil,Raw Materials,Unit,12284.694917524359,Vietnam,Active
+PROD0054,Industrial Thermal Label,Packaging,Unit,11433.128482929693,Vietnam,Active
+PROD0055,Standard Polymer Resin,Raw Materials,Unit,11336.814766903217,Vietnam,Active
+PROD0056,Standard Copper Wire,Raw Materials,Unit,12087.189577203986,Vietnam,Active
+PROD0057,Heavy Duty Polymer Resin,Raw Materials,Unit,12151.208419325063,Vietnam,Active
+PROD0058,Standard Industrial Rubber,Mechanical,Unit,12794.649543081088,Vietnam,Discontinued
+PROD0059,Industrial Gear Assembly,Mechanical,Unit,12851.649325468043,Vietnam,Active
+PROD0060,Premium Conveyor Roller,Mechanical,Set,12740.730740563366,Vietnam,Active
+PROD0061,Heavy Duty Aluminium Sheet,Raw Materials,Unit,11708.763157054367,Vietnam,Active
+PROD0062,Heavy Duty Stainless Steel Rod,Raw Materials,Unit,12905.095600701277,Vietnam,Active
+PROD0063,Premium Aluminium Sheet,Raw Materials,Unit,12066.336411328464,Vietnam,Active
+PROD0064,Heavy Duty Pallet Wrap,Raw Materials,Unit,11372.839976660955,Vietnam,Active
+PROD0065,Heavy Duty Packaging Tape,Raw Materials,Unit,12293.21663042387,Vietnam,Active
+PROD0066,Standard Copper Wire,Raw Materials,Unit,12442.845507404476,Vietnam,Active
+PROD0067,Premium Pallet Wrap,Packaging,Unit,11888.3533614225,India,Active
+PROD0068,Standard Stainless Steel Rod,Mechanical,Unit,12645.554425296792,Vietnam,Active
+PROD0069,Industrial Polymer Resin,Mechanical,Unit,12227.554086142432,Vietnam,Active
+PROD0070,Standard Industrial Rubber,Mechanical,Unit,12458.053163028662,Vietnam,Active
+PROD0071,Standard Stainless Steel Rod,Raw Materials,Unit,12384.873073987152,Vietnam,Discontinued
+PROD0072,Premium Copper Wire,Raw Materials,Unit,11750.375263551006,Vietnam,Active
+PROD0073,Premium Steel Coil,Raw Materials,Unit,11770.982348458103,Vietnam,Active
+PROD0074,Heavy Duty Pallet Wrap,Raw Materials,Unit,11951.10388351655,Vietnam,Active
+PROD0075,Standard HDPE Drum,Packaging,Unit,12105.755280059271,Vietnam,Active
+PROD0076,Premium Gear Assembly,Mechanical,Unit,12516.913678644023,Vietnam,Active
+PROD0077,Industrial HDPE Drum,Packaging,Unit,11427.730863195742,Vietnam,Active
+PROD0078,Premium Copper Wire,Raw Materials,Unit,11596.624016115218,Vietnam,Active
+PROD0079,Heavy Duty Packaging Tape,Raw Materials,Unit,12204.598996696473,Vietnam,Active
+PROD0080,Standard Packaging Tape,Packaging,Unit,10700.5982715003,Vietnam,Active
+PROD0081,Premium Steel Coil,Raw Materials,Unit,12987.47747991471,Vietnam,Active
+PROD0082,Standard Copper Wire,Raw Materials,Unit,12111.865318523622,Vietnam,Active
+PROD0083,Premium Copper Wire,Raw Materials,Unit,11533.884907188023,Vietnam,Active
+PROD0084,Premium Thermal Label,Raw Materials,Unit,12291.494216459378,Vietnam,Active
+PROD0085,Heavy Duty Stainless Steel Rod,Mechanical,Unit,12282.585587408546,Vietnam,Active
+PROD0086,Heavy Duty Industrial Rubber,Mechanical,Unit,12750.422091916618,Vietnam,Active
+PROD0087,Premium Packaging Tape,Raw Materials,Unit,11497.40620339977,Vietnam,Active
+PROD0088,Standard Thermal Label,Raw Materials,Unit,12191.855900161718,Vietnam,Active
+PROD0089,Heavy Duty Polymer Resin,Mechanical,Unit,13046.072289753713,Vietnam,Active
+PROD0090,Industrial Packaging Tape,Raw Materials,Unit,11880.077636332044,Vietnam,Active
+PROD0091,Heavy Duty Hydraulic Valve,Mechanical,Unit,12578.762655283525,Vietnam,Active
+PROD0092,Standard Steel Coil,Raw Materials,Unit,12397.044433920853,India,Active
+PROD0093,Industrial Steel Coil,Raw Materials,Unit,12401.501545939349,India,Active
+PROD0094,Premium Copper Wire,Raw Materials,Unit,12225.43163945025,Vietnam,Active
+PROD0095,Premium Thermal Label,Packaging,Unit,11095.611940769171,Vietnam,Active
+PROD0096,Standard Industrial Rubber,Mechanical,Unit,12395.712840340719,Vietnam,Active
+PROD0097,Standard Steel Coil,Raw Materials,Unit,12104.409161016942,Vietnam,Active
+PROD0098,Premium Aluminium Sheet,Raw Materials,Unit,11844.581042170115,Vietnam,Active
+PROD0099,Standard Packaging Tape,Packaging,Unit,10844.962351647211,Vietnam,Active
+PROD0100,Heavy Duty Polymer Resin,Raw Materials,Unit,12478.63416796253,Vietnam,Active
+PROD0101,Heavy Duty Aluminium Sheet,Raw Materials,Unit,11727.40565260733,Vietnam,Active
+PROD0102,Premium Industrial Rubber,Mechanical,Unit,12464.084840273694,Vietnam,Active
+PROD0103,Industrial Industrial Rubber,Mechanical,Unit,12645.967579534501,Vietnam,Active
+PROD0104,Premium Pallet Wrap,Raw Materials,Unit,11964.099657026189,Vietnam,Active
+PROD0105,Premium Polymer Resin,Raw Materials,Unit,12585.808779629584,Vietnam,Active
+PROD0106,Heavy Duty Steel Coil,Raw Materials,Unit,12170.89415198768,Vietnam,Active
+PROD0107,Premium Gear Assembly,Raw Materials,Unit,12564.514886790052,Vietnam,Active
+PROD0108,Premium Aluminium Sheet,Raw Materials,Unit,11792.136329925412,India,Active
+PROD0109,Premium Stainless Steel Rod,Mechanical,Unit,12895.41626337499,Vietnam,Active
+PROD0110,Industrial Gear Assembly,Mechanical,Unit,12671.625864343017,Vietnam,Active
+PROD0111,Industrial Steel Coil,Raw Materials,Unit,13023.306217157395,Vietnam,Active
+PROD0112,Standard Steel Coil,Raw Materials,Unit,12209.945932091816,India,Active
+PROD0113,Heavy Duty Packaging Tape,Raw Materials,Unit,11500.939712348669,Vietnam,Active
+PROD0114,Heavy Duty Industrial Rubber,Raw Materials,Unit,12651.365046999586,Vietnam,Active
+PROD0115,Standard Shaft Coupling,Mechanical,Unit,13080.31144242706,Vietnam,Active
+PROD0116,Industrial Polymer Resin,Raw Materials,Unit,12459.033097405329,Vietnam,Active
+PROD0117,Heavy Duty Copper Wire,Raw Materials,Unit,12475.896018626696,Vietnam,Active
+PROD0118,Standard Copper Wire,Raw Materials,Unit,11822.564906360582,Vietnam,Active
+PROD0119,Premium Aluminium Sheet,Raw Materials,Unit,12414.940042667109,India,Active
+PROD0120,Heavy Duty Thermal Label,Raw Materials,Unit,11796.342115722202,Vietnam,Active
+PROD0121,Industrial Copper Wire,Raw Materials,Unit,11580.441482318707,India,Active
+PROD0122,Heavy Duty Shaft Coupling,Mechanical,Unit,13249.872861872052,Vietnam,Discontinued
+PROD0123,Premium Thermal Label,Raw Materials,Unit,11382.772624162433,Vietnam,Active
+PROD0124,Industrial Packaging Tape,Raw Materials,Unit,11544.301130992195,Vietnam,Active
+PROD0125,Industrial Industrial Rubber,Mechanical,Unit,13147.785730808946,Vietnam,Active
+PROD0126,Standard Steel Coil,Raw Materials,Unit,11301.45670160919,Vietnam,Active
+PROD0127,Premium Steel Coil,Raw Materials,Unit,12517.94100454884,Vietnam,Active
+PROD0128,Industrial Aluminium Sheet,Raw Materials,Unit,12374.186797374838,Vietnam,Active
+PROD0129,Premium Copper Wire,Raw Materials,Unit,12182.259871122316,Vietnam,Active
+PROD0130,Heavy Duty Polymer Resin,Raw Materials,Unit,12449.558533101004,Vietnam,Active
+PROD0131,Standard Hydraulic Valve,Mechanical,Unit,12321.69587722301,Vietnam,Active
+PROD0132,Industrial Steel Coil,Raw Materials,Unit,12720.159836449075,Vietnam,Active
+PROD0133,Premium Steel Coil,Raw Materials,Unit,12668.439514566553,Vietnam,Active
+PROD0134,Industrial Hydraulic Valve,Mechanical,Unit,13157.856723292078,Vietnam,Active
+PROD0135,Heavy Duty Polymer Resin,Raw Materials,Unit,12482.650857407449,Vietnam,Active
+PROD0136,Heavy Duty Steel Coil,Raw Materials,Unit,12462.631529239461,Vietnam,Active
+PROD0137,Standard Aluminium Sheet,Raw Materials,Unit,12514.718785706458,Vietnam,Active
+PROD0138,Heavy Duty Shaft Coupling,Raw Materials,Unit,12225.783715457328,India,Active
+PROD0139,Industrial Aluminium Sheet,Raw Materials,Unit,11493.204588874776,Vietnam,Active
+PROD0140,Premium Steel Coil,Raw Materials,Unit,13212.97645863836,Vietnam,Active
+PROD0141,Standard Industrial Rubber,Raw Materials,Unit,12438.964625608158,Vietnam,Active
+PROD0142,Industrial Copper Wire,Raw Materials,Unit,11734.600900033693,Vietnam,Active
+PROD0143,Heavy Duty PET Container,Packaging,Unit,11525.889105776612,Vietnam,Active
+PROD0144,Premium Thermal Label,Packaging,Unit,11554.868801712293,India,Active
+PROD0145,Standard Stainless Steel Rod,Raw Materials,Unit,12359.056308938323,Vietnam,Active
+PROD0146,Industrial Shaft Coupling,Mechanical,Unit,12302.583440867811,Vietnam,Active
+PROD0147,Premium Shaft Coupling,Mechanical,Unit,12828.628486857748,Vietnam,Active
+PROD0148,Heavy Duty Industrial Rubber,Raw Materials,Unit,11948.928966698404,Vietnam,Active
+PROD0149,Heavy Duty Industrial Rubber,Raw Materials,Unit,12453.795317610144,Vietnam,Active
+PROD0150,Industrial Industrial Rubber,Raw Materials,Unit,12758.348204136812,Vietnam,Active
+PROD0151,Standard Gear Assembly,Mechanical,Unit,13104.644674590547,Vietnam,Active
+PROD0152,Heavy Duty Thermal Label,Raw Materials,Unit,11555.655234106747,Vietnam,Active
+PROD0153,Industrial Packaging Tape,Raw Materials,Unit,12403.038765305362,Vietnam,Active
+PROD0154,Standard Aluminium Sheet,Raw Materials,Unit,11526.356322166048,Vietnam,Active
+PROD0155,Heavy Duty Thermal Label,Raw Materials,Unit,11531.577420805166,Vietnam,Active
+PROD0156,Premium Copper Wire,Raw Materials,Unit,12340.042619960643,Vietnam,Active
+PROD0157,Heavy Duty Aluminium Sheet,Raw Materials,Unit,11670.36850597479,Vietnam,Active
+PROD0158,Premium Copper Wire,Raw Materials,Unit,12292.682890150856,Vietnam,Active
+PROD0159,Heavy Duty Aluminium Sheet,Raw Materials,Unit,11752.748328062173,Vietnam,Active
+PROD0160,Heavy Duty Aluminium Sheet,Raw Materials,Unit,11481.445203827076,Vietnam,Active
+PROD0161,Industrial Copper Wire,Raw Materials,Unit,12132.061233600341,Vietnam,Active
+PROD0162,Standard Packaging Tape,Raw Materials,Unit,12338.56216021059,Vietnam,Active
+PROD0163,Standard Polymer Resin,Raw Materials,Unit,12384.384729881069,Vietnam,Active
+PROD0164,Standard Copper Wire,Raw Materials,Unit,11780.246023970154,India,Active
+PROD0165,Premium Industrial Rubber,Mechanical,Unit,12811.817171734328,Vietnam,Active
+PROD0166,Standard Aluminium Sheet,Raw Materials,Unit,11498.83868174189,Vietnam,Active
+PROD0167,Premium Packaging Tape,Raw Materials,Unit,11519.926644102246,India,Active
+PROD0168,Premium Stainless Steel Rod,Mechanical,Unit,12679.870717253285,Vietnam,Active
+PROD0169,Premium Copper Wire,Raw Materials,Unit,11450.378504201784,Vietnam,Active
+PROD0170,Premium Pallet Wrap,Packaging,Unit,11577.095654992094,Vietnam,Active
+PROD0171,Premium Thermal Label,Raw Materials,Unit,12147.623043398104,Vietnam,Active
+PROD0172,Premium Polymer Resin,Mechanical,Unit,12635.720526950507,Vietnam,Active
+PROD0173,Industrial Polymer Resin,Raw Materials,Unit,12594.850768843484,Vietnam,Discontinued
+PROD0174,Premium Polymer Resin,Raw Materials,Unit,11841.973433883748,India,Active
+PROD0175,Standard Copper Wire,Raw Materials,Unit,11988.187500839178,Vietnam,Active
+PROD0176,Industrial Gear Assembly,Mechanical,Unit,12593.188903094919,Vietnam,Active
+PROD0177,Heavy Duty Steel Coil,Raw Materials,Unit,12429.169608366008,Vietnam,Active
+PROD0178,Industrial Copper Wire,Raw Materials,Unit,12705.635764392482,Vietnam,Active
+PROD0179,Industrial Polymer Resin,Raw Materials,Unit,12593.031667562176,Vietnam,Active
+PROD0180,Heavy Duty Steel Coil,Raw Materials,Unit,12945.338353833706,Vietnam,Active
+PROD0181,Heavy Duty Industrial Rubber,Mechanical,Unit,12911.394048825878,Vietnam,Active
+PROD0182,Heavy Duty Packaging Tape,Raw Materials,Unit,11799.123967607984,Vietnam,Active
+PROD0183,Industrial Cleaning Solvent,Mechanical,Unit,13682.757430660435,Vietnam,Active
+PROD0184,Industrial Steel Coil,Raw Materials,Unit,12822.541741553194,Vietnam,Active
+PROD0185,Industrial Copper Wire,Raw Materials,Unit,12233.878366243242,Vietnam,Active
+PROD0186,Standard Thermal Label,Raw Materials,Unit,11616.981510463596,India,Active
+PROD0187,Heavy Duty Copper Wire,Raw Materials,Unit,10904.655862356425,Vietnam,Active
+PROD0188,Premium Thermal Label,Raw Materials,Unit,11657.926014978117,Vietnam,Active
+PROD0189,Premium Stainless Steel Rod,Mechanical,Unit,12365.803606465293,Vietnam,Active
+PROD0190,Heavy Duty Stainless Steel Rod,Mechanical,Unit,12970.591185492152,Vietnam,Active
+PROD0191,Industrial Pallet Wrap,Raw Materials,Unit,12332.342859914583,Vietnam,Active
+PROD0192,Heavy Duty Aluminium Sheet,Raw Materials,Unit,12507.976670120892,Vietnam,Active
+PROD0193,Industrial Packaging Tape,Raw Materials,Unit,11538.706249101866,Vietnam,Active
+PROD0194,Standard Aluminium Sheet,Raw Materials,Unit,12268.25467973713,Vietnam,Active
+PROD0195,Standard Polymer Resin,Raw Materials,Unit,11898.090318743225,Vietnam,Active
+PROD0196,Industrial Gear Assembly,Mechanical,Unit,12423.00314514549,Vietnam,Active
+PROD0197,Premium Copper Wire,Raw Materials,Unit,12302.243795952363,Vietnam,Active
+PROD0198,Standard Industrial Rubber,Raw Materials,Unit,12482.214428595329,Vietnam,Active
+PROD0199,Industrial Aluminium Sheet,Raw Materials,Unit,12497.722392770385,Vietnam,Active
+PROD0200,Heavy Duty Aluminium Sheet,Raw Materials,Unit,12236.57480745617,Vietnam,Active

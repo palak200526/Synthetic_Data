@@ -13,6 +13,7 @@ from backend.utils.action_validator import (
 
 from backend.repositories.configuration_repository import (
     save_configuration,
+    save_configurations_bulk,   # 👈 naya function
     get_configurations,
 )
 
@@ -28,22 +29,13 @@ def find_dataset_file(dataset_id: int, filename: str):
     using the dataset ID.
     """
 
-    # Expected stored filename
     expected_filename = f"dataset_{dataset_id}_{filename}"
 
-    # Search inside data/uploads recursively
-    matches = list(
-        UPLOAD_DIRECTORY.rglob(expected_filename)
-    )
-
+    matches = list(UPLOAD_DIRECTORY.rglob(expected_filename))
     if matches:
         return matches[0]
 
-    # Fallback: search using original filename
-    matches = list(
-        UPLOAD_DIRECTORY.rglob(filename)
-    )
-
+    matches = list(UPLOAD_DIRECTORY.rglob(filename))
     if matches:
         return matches[0]
 
@@ -53,98 +45,87 @@ def find_dataset_file(dataset_id: int, filename: str):
     )
 
 
-def save_column_configurations(
-    request,
-    user_id: int
-):
-    saved_configurations = []
+def save_column_configurations(request, user_id: int):
+    """
+    Save multiple column configurations in a single batch.
+
+    Optimizations:
+      1. Ownership verified ONCE (not per column)
+      2. Dataset loaded ONCE (not 618 times)
+      3. All validations done in memory
+      4. Bulk insert into DB (single transaction)
+    """
+
+    if not request.configurations:
+        raise ValueError("No configurations provided.")
+
+    # ---------------------------------------------------------
+    # 1. All configs must target the SAME dataset
+    # ---------------------------------------------------------
+    dataset_id = request.configurations[0].dataset_id
+
+    for config in request.configurations:
+        if config.dataset_id != dataset_id:
+            raise ValueError(
+                "All configurations must target the same dataset."
+            )
+
+    # ---------------------------------------------------------
+    # 2. Ownership check — ONCE
+    # ---------------------------------------------------------
+    dataset_user_id = get_dataset_user_id(dataset_id)
+    if dataset_user_id != user_id:
+        raise PermissionError(
+            "You do not have access to this dataset."
+        )
+
+    # ---------------------------------------------------------
+    # 3. Load dataset ONCE
+    # ---------------------------------------------------------
+    filename = get_dataset_filename(dataset_id)
+    file_path = find_dataset_file(dataset_id, filename)
+    dataframe = load_dataset(str(file_path))
+
+    valid_columns = set(dataframe.columns)
+
+    # ---------------------------------------------------------
+    # 4. Validate everything in memory (fast)
+    # ---------------------------------------------------------
     seen_columns = set()
+    prepared = []
 
     for configuration in request.configurations:
 
-        # ---------------------------------------------------------
-        # 1. Verify dataset ownership
-        # ---------------------------------------------------------
-        dataset_user_id = get_dataset_user_id(
-            configuration.dataset_id
-        )
+        # Action + rule validation
+        validate_column_configuration(configuration)
 
-        if dataset_user_id != user_id:
-            raise PermissionError(
-                "You do not have access to this dataset."
-            )
+        # Normalize column name
+        configuration.column_name = configuration.column_name.strip()
 
-        # ---------------------------------------------------------
-        # 2. Validate action and classification
-        # ---------------------------------------------------------
-        validate_column_configuration(
-            configuration
-        )
-
-        # ---------------------------------------------------------
-        # 3. Normalize column name
-        # ---------------------------------------------------------
-        configuration.column_name = (
-            configuration.column_name.strip()
-        )
-
-        # ---------------------------------------------------------
-        # 4. Check duplicate configuration
-        # ---------------------------------------------------------
-        key = (
-            configuration.dataset_id,
-            configuration.column_name,
-        )
-
-        if key in seen_columns:
+        # Duplicate check
+        if configuration.column_name in seen_columns:
             raise ValueError(
                 f"Duplicate configuration for column "
-                f"'{configuration.column_name}' "
-                f"in dataset {configuration.dataset_id}."
+                f"'{configuration.column_name}'."
             )
+        seen_columns.add(configuration.column_name)
 
-        seen_columns.add(key)
-
-        # ---------------------------------------------------------
-        # 5. Get original dataset filename
-        # ---------------------------------------------------------
-        filename = get_dataset_filename(
-            configuration.dataset_id
-        )
-
-        # ---------------------------------------------------------
-        # 6. Find actual uploaded file
-        # ---------------------------------------------------------
-        file_path = find_dataset_file(
-            configuration.dataset_id,
-            filename
-        )
-
-        # ---------------------------------------------------------
-        # 7. Load exact dataset
-        # ---------------------------------------------------------
-        dataframe = load_dataset(
-            str(file_path)
-        )
-
-        # ---------------------------------------------------------
-        # 8. Verify column exists
-        # ---------------------------------------------------------
-        if configuration.column_name not in dataframe.columns:
+        # Column must exist in dataset
+        if configuration.column_name not in valid_columns:
             raise ValueError(
-                f"Column '{configuration.column_name}' "
-                f"does not exist in dataset "
-                f"{configuration.dataset_id}."
+                f"Column '{configuration.column_name}' does not exist "
+                f"in dataset {dataset_id}."
             )
 
-        # ---------------------------------------------------------
-        # 9. Save configuration
-        # ---------------------------------------------------------
-        result = save_configuration(
-            configuration
-        )
+        prepared.append(configuration)
 
-        saved_configurations.append(result)
+    # ---------------------------------------------------------
+    # 5. Bulk save to DB (single transaction)
+    # ---------------------------------------------------------
+    saved_configurations = save_configurations_bulk(
+        dataset_id=dataset_id,
+        configurations=prepared,
+    )
 
     return {
         "status": "success",
@@ -153,36 +134,21 @@ def save_column_configurations(
     }
 
 
-def review_column_configurations(
-    dataset_id: int,
-    user_id: int
-):
+def review_column_configurations(dataset_id: int, user_id: int):
 
-    # ---------------------------------------------------------
-    # 1. Verify dataset ownership
-    # ---------------------------------------------------------
-    dataset_user_id = get_dataset_user_id(
-        dataset_id
-    )
-
+    dataset_user_id = get_dataset_user_id(dataset_id)
     if dataset_user_id != user_id:
         raise PermissionError(
             "You do not have access to this dataset."
         )
 
-    # ---------------------------------------------------------
-    # 2. Get configurations
-    # ---------------------------------------------------------
-    configurations = get_configurations(
-        dataset_id
-    )
+    configurations = get_configurations(dataset_id)
 
     if not configurations:
         return {
             "status": "error",
             "message": (
-                "No column configurations found "
-                f"for dataset {dataset_id}."
+                f"No column configurations found for dataset {dataset_id}."
             ),
             "dataset_id": dataset_id,
             "data": [],

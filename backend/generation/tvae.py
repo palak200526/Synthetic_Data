@@ -4,8 +4,17 @@ import torch
 import torch.nn as nn
 
 
+# ==========================================================
+# Encoder
+# ==========================================================
+
 class Encoder(nn.Module):
-    def __init__(self, input_dim, latent_dim):
+
+    def __init__(
+        self,
+        input_dim,
+        latent_dim
+    ):
         super().__init__()
 
         self.network = nn.Sequential(
@@ -15,10 +24,18 @@ class Encoder(nn.Module):
             nn.ReLU()
         )
 
-        self.mu = nn.Linear(64, latent_dim)
-        self.logvar = nn.Linear(64, latent_dim)
+        self.mu = nn.Linear(
+            64,
+            latent_dim
+        )
+
+        self.logvar = nn.Linear(
+            64,
+            latent_dim
+        )
 
     def forward(self, x):
+
         hidden = self.network(x)
 
         return (
@@ -27,8 +44,17 @@ class Encoder(nn.Module):
         )
 
 
+# ==========================================================
+# Decoder
+# ==========================================================
+
 class Decoder(nn.Module):
-    def __init__(self, latent_dim, output_dim):
+
+    def __init__(
+        self,
+        latent_dim,
+        output_dim
+    ):
         super().__init__()
 
         self.network = nn.Sequential(
@@ -41,8 +67,13 @@ class Decoder(nn.Module):
         )
 
     def forward(self, z):
+
         return self.network(z)
 
+
+# ==========================================================
+# TVAE Generator
+# ==========================================================
 
 class TVAEGenerator:
     """
@@ -53,8 +84,8 @@ class TVAEGenerator:
     - Categorical columns
     - Identifier columns separately
 
-    The model learns a latent representation of the
-    tabular dataset and reconstructs synthetic records.
+    Identifier columns are supplied externally through
+    identifier_columns instead of being automatically detected.
     """
 
     def __init__(
@@ -65,6 +96,7 @@ class TVAEGenerator:
         learning_rate=0.001,
         random_state=42
     ):
+
         self.latent_dim = latent_dim
         self.epochs = epochs
         self.batch_size = batch_size
@@ -75,7 +107,9 @@ class TVAEGenerator:
             random_state
         )
 
-        torch.manual_seed(random_state)
+        torch.manual_seed(
+            random_state
+        )
 
         self.columns = None
 
@@ -89,9 +123,21 @@ class TVAEGenerator:
         self.encoder = None
         self.decoder = None
 
-    def fit(self, df: pd.DataFrame):
+    # ======================================================
+    # FIT
+    # ======================================================
+
+    def fit(
+        self,
+        df: pd.DataFrame,
+        identifier_columns: list[str] | None = None
+    ):
+
         """
         Train the TVAE model.
+
+        identifier_columns are provided by the
+        column-configuration / LLM analysis layer.
         """
 
         if df.empty:
@@ -99,20 +145,48 @@ class TVAEGenerator:
                 "Input dataset cannot be empty."
             )
 
-        self.columns = list(df.columns)
+        # --------------------------------------------------
+        # Store columns
+        # --------------------------------------------------
 
-        # Identify columns
+        self.columns = list(
+            df.columns
+        )
 
-        self.identifier_columns = [
+        # --------------------------------------------------
+        # Identifier columns
+        # --------------------------------------------------
+
+        self.identifier_columns = (
+            identifier_columns or []
+        )
+
+        # Validate identifier columns
+        invalid_identifiers = [
             column
-            for column in df.columns
-            if column.lower().endswith("_id")
-            or column.lower() == "id"
+            for column in self.identifier_columns
+            if column not in df.columns
         ]
 
-        self.numeric_columns = df.select_dtypes(
-            include=[np.number]
-        ).columns.tolist()
+        if invalid_identifiers:
+            raise ValueError(
+                "Identifier columns not found "
+                f"in dataset: {invalid_identifiers}"
+            )
+
+        # --------------------------------------------------
+        # Numerical columns
+        # --------------------------------------------------
+
+        self.numeric_columns = (
+            df.select_dtypes(
+                include=[np.number]
+            ).columns.tolist()
+        )
+
+        # --------------------------------------------------
+        # Categorical columns
+        # --------------------------------------------------
 
         self.categorical_columns = [
             column
@@ -121,15 +195,23 @@ class TVAEGenerator:
             and column not in self.identifier_columns
         ]
 
+        # --------------------------------------------------
+        # Encoded training data
+        # --------------------------------------------------
+
         encoded_data = []
 
+        # ==================================================
         # Numerical columns
+        # ==================================================
 
         for column in self.numeric_columns:
 
             values = (
                 df[column]
-                .fillna(df[column].median())
+                .fillna(
+                    df[column].median()
+                )
                 .astype(float)
             )
 
@@ -141,22 +223,26 @@ class TVAEGenerator:
             max_value = values.max()
 
             if max_value == min_value:
+
                 normalized = np.zeros(
                     len(values)
                 )
+
             else:
+
                 normalized = (
                     (values - min_value)
                     / (max_value - min_value)
                 )
 
             encoded_data.append(
-                normalized.to_numpy().reshape(-1, 1)
+                normalized.to_numpy()
+                .reshape(-1, 1)
             )
 
-        # --------------------------------------------------
+        # ==================================================
         # Categorical columns
-        # --------------------------------------------------
+        # ==================================================
 
         for column in self.categorical_columns:
 
@@ -166,7 +252,9 @@ class TVAEGenerator:
                 .astype(str)
             )
 
-            categories = values.unique().tolist()
+            categories = (
+                values.unique().tolist()
+            )
 
             mapping = {
                 category: index
@@ -174,60 +262,101 @@ class TVAEGenerator:
                 in enumerate(categories)
             }
 
-            self.category_mappings[column] = mapping
+            self.category_mappings[
+                column
+            ] = mapping
 
-            encoded = values.map(mapping).to_numpy()
+            encoded = (
+                values
+                .map(mapping)
+                .to_numpy()
+            )
 
             if len(categories) > 1:
+
                 encoded = (
                     encoded
                     / (len(categories) - 1)
+                )
+
+            else:
+
+                encoded = np.zeros(
+                    len(values)
                 )
 
             encoded_data.append(
                 encoded.reshape(-1, 1)
             )
 
+        # --------------------------------------------------
+        # Validate training columns
+        # --------------------------------------------------
+
         if not encoded_data:
+
             raise ValueError(
-                "No numerical or categorical columns "
-                "available for training."
+                "No numerical or categorical "
+                "columns available for training."
             )
+
+        # --------------------------------------------------
+        # Create training matrix
+        # --------------------------------------------------
 
         data = np.concatenate(
             encoded_data,
             axis=1
-        ).astype(np.float32)
+        ).astype(
+            np.float32
+        )
 
-        data_tensor = torch.tensor(data)
+        data_tensor = torch.tensor(
+            data
+        )
 
         input_dim = data.shape[1]
 
-        # --------------------------------------------------
-        # Create encoder and decoder
-        # --------------------------------------------------
+        # ==================================================
+        # Encoder
+        # ==================================================
 
         self.encoder = Encoder(
             input_dim=input_dim,
             latent_dim=self.latent_dim
         )
 
+        # ==================================================
+        # Decoder
+        # ==================================================
+
         self.decoder = Decoder(
             latent_dim=self.latent_dim,
             output_dim=input_dim
         )
 
+        # ==================================================
+        # Optimizer
+        # ==================================================
+
         optimizer = torch.optim.Adam(
-            list(self.encoder.parameters())
-            + list(self.decoder.parameters()),
+            list(
+                self.encoder.parameters()
+            )
+            +
+            list(
+                self.decoder.parameters()
+            ),
             lr=self.learning_rate
         )
 
-        # --------------------------------------------------
+        # ==================================================
         # Training
-        # --------------------------------------------------
+        # ==================================================
 
-        for epoch in range(self.epochs):
+        for epoch in range(
+            self.epochs
+        ):
 
             indices = torch.randperm(
                 len(data_tensor)
@@ -240,19 +369,26 @@ class TVAEGenerator:
             ):
 
                 batch_indices = indices[
-                    start:start + self.batch_size
+                    start:
+                    start + self.batch_size
                 ]
 
                 batch = data_tensor[
                     batch_indices
                 ]
 
+                # ------------------------------------------
                 # Encoder
-                mu, logvar = self.encoder(
-                    batch
+                # ------------------------------------------
+
+                mu, logvar = (
+                    self.encoder(batch)
                 )
 
+                # ------------------------------------------
                 # Reparameterization trick
+                # ------------------------------------------
+
                 std = torch.exp(
                     0.5 * logvar
                 )
@@ -266,28 +402,53 @@ class TVAEGenerator:
                     + epsilon * std
                 )
 
+                # ------------------------------------------
                 # Decoder
-                reconstructed = self.decoder(
-                    z
+                # ------------------------------------------
+
+                reconstructed = (
+                    self.decoder(z)
                 )
 
+                # ------------------------------------------
                 # Reconstruction loss
-                reconstruction_loss = torch.mean(
-                    (reconstructed - batch) ** 2
+                # ------------------------------------------
+
+                reconstruction_loss = (
+                    torch.mean(
+                        (
+                            reconstructed
+                            - batch
+                        ) ** 2
+                    )
                 )
 
+                # ------------------------------------------
                 # KL divergence
-                kl_loss = -0.5 * torch.mean(
-                    1
-                    + logvar
-                    - mu.pow(2)
-                    - logvar.exp()
+                # ------------------------------------------
+
+                kl_loss = (
+                    -0.5
+                    * torch.mean(
+                        1
+                        + logvar
+                        - mu.pow(2)
+                        - logvar.exp()
+                    )
                 )
+
+                # ------------------------------------------
+                # Total loss
+                # ------------------------------------------
 
                 loss = (
                     reconstruction_loss
                     + 0.01 * kl_loss
                 )
+
+                # ------------------------------------------
+                # Optimization
+                # ------------------------------------------
 
                 optimizer.zero_grad()
 
@@ -297,51 +458,80 @@ class TVAEGenerator:
 
         return self
 
-    def generate(self, num_rows: int) -> pd.DataFrame:
+    # ======================================================
+    # GENERATE
+    # ======================================================
+
+    def generate(
+        self,
+        num_rows: int
+    ) -> pd.DataFrame:
+
         """
         Generate synthetic tabular records.
         """
 
         if self.encoder is None:
+
             raise RuntimeError(
                 "Model has not been fitted. "
                 "Call fit() first."
             )
 
         if num_rows <= 0:
+
             raise ValueError(
                 "num_rows must be greater than zero."
             )
 
+        # --------------------------------------------------
+        # Columns handled by model
+        # --------------------------------------------------
+
         model_columns = (
             self.numeric_columns
-            + self.categorical_columns
+            +
+            self.categorical_columns
         )
 
-        input_dim = len(model_columns)
+        input_dim = len(
+            model_columns
+        )
 
         if input_dim == 0:
+
             raise RuntimeError(
                 "No columns available for generation."
             )
 
-        # Sample from latent space
+        # --------------------------------------------------
+        # Sample latent space
+        # --------------------------------------------------
 
         latent = torch.randn(
             num_rows,
             self.latent_dim
         )
 
+        # --------------------------------------------------
+        # Decode
+        # --------------------------------------------------
+
         with torch.no_grad():
-            generated = self.decoder(
-                latent
-            ).numpy()
+
+            generated = (
+                self.decoder(
+                    latent
+                ).numpy()
+            )
 
         synthetic_data = {}
 
         column_index = 0
 
+        # ==================================================
         # Numerical columns
+        # ==================================================
 
         for column in self.numeric_columns:
 
@@ -350,7 +540,8 @@ class TVAEGenerator:
             )
 
             values = generated[
-                :, column_index
+                :,
+                column_index
             ]
 
             min_value = np.min(
@@ -367,12 +558,16 @@ class TVAEGenerator:
                 + min_value
             )
 
-            # Add small variation
+            # ----------------------------------------------
+            # Small variation
+            # ----------------------------------------------
+
             std = np.std(
                 original_values
             )
 
             if std > 0:
+
                 values += self.rng.normal(
                     0,
                     std * 0.01,
@@ -385,24 +580,31 @@ class TVAEGenerator:
                 max_value
             )
 
-            synthetic_data[column] = values
+            synthetic_data[
+                column
+            ] = values
 
             column_index += 1
 
+        # ==================================================
         # Categorical columns
+        # ==================================================
 
         for column in self.categorical_columns:
 
-            mapping = self.category_mappings[
-                column
-            ]
+            mapping = (
+                self.category_mappings[
+                    column
+                ]
+            )
 
             categories = list(
                 mapping.keys()
             )
 
             values = generated[
-                :, column_index
+                :,
+                column_index
             ]
 
             values = np.clip(
@@ -411,49 +613,54 @@ class TVAEGenerator:
                 1
             )
 
-            indices = np.round(
-                values
-                * (len(categories) - 1)
-            ).astype(int)
+            if len(categories) > 1:
 
-            synthetic_data[column] = [
+                indices = np.round(
+                    values
+                    * (len(categories) - 1)
+                ).astype(int)
+
+            else:
+
+                indices = np.zeros(
+                    num_rows,
+                    dtype=int
+                )
+
+            synthetic_data[
+                column
+            ] = [
                 categories[index]
                 for index in indices
             ]
 
             column_index += 1
 
-        # Generate unique identifiers
+        # ==================================================
+        # Generate new identifiers
+        # ==================================================
 
         for column in self.identifier_columns:
 
-            if column.lower() == "product_id":
+            prefix = (
+                column
+                .replace("_id", "")
+                .upper()
+            )
 
-                synthetic_data[column] = [
-                    f"PROD{index:04d}"
-                    for index in range(
-                        1,
-                        num_rows + 1
-                    )
-                ]
-
-            else:
-
-                prefix = (
-                    column
-                    .replace("_id", "")
-                    .upper()
+            synthetic_data[
+                column
+            ] = [
+                f"{prefix}{index:04d}"
+                for index in range(
+                    1,
+                    num_rows + 1
                 )
+            ]
 
-                synthetic_data[column] = [
-                    f"{prefix}{index:04d}"
-                    for index in range(
-                        1,
-                        num_rows + 1
-                    )
-                ]
-
+        # ==================================================
         # Restore original column order
+        # ==================================================
 
         synthetic_df = pd.DataFrame(
             synthetic_data,

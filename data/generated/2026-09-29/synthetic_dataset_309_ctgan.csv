@@ -1,0 +1,99 @@
+"Text, Sentiment, Source, Date/Time, User ID, Location, Confidence Score"
+"""The ride on this cruise ship was an unforgettable experience. I loved every moment!"", Positive, Travel Blog, 2023-07-16 09:12:54, travelenthusiast2, Sydney, 0.95"
+"""The ride on this cruise ship was an unforgettable experience. I loved every moment!"", Positive, Travel Blog, 2023-07-16 09:12:54, travelenthusiast2, Sydney, 0.95"
+"""The roller coaster at this theme park is a thrilling experience. A must-try!"", Positive, Theme Park Review, 2023-07-14 17:25:09, thrillseeker3, Orlando, 0.91"
+__MISSING__
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+__MISSING__
+__MISSING__
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+__MISSING__
+"""I'm in awe of this artist's talent. Their paintings are breathtaking!"", Positive, Art Review, 2023-07-15 12:30:08, artlover123, Paris, 0.94"
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+"""The product I ordered never arrived. Poor customer service."", Negative, Online Store, 2023-07-15 08:50:13, buyer1234, Chicago, 0.63"
+__MISSING__
+__MISSING__
+__MISSING__
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+"""The website layout is cluttered and confusing. Difficult to find information."", Negative, Website Review, 2023-07-14 14:40:05, user2468, Sydney, 0.67"
+"""The product I ordered never arrived. Poor customer service."", Negative, Online Store, 2023-07-15 08:50:13, buyer1234, Chicago, 0.63"
+__MISSING__
+__MISSING__
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+"""The ride on this cruise ship was an unforgettable experience. I loved every moment!"", Positive, Travel Blog, 2023-07-16 09:12:54, travelenthusiast2, Sydney, 0.95"
+"""This playlist is perfect for relaxation. Soothing and calming!"", Positive, Spotify, 2023-07-15 18:20:17, relaxmusiclover, Berlin, 0.91"
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+__MISSING__
+"""This playlist is perfect for relaxation. Soothing and calming!"", Positive, Spotify, 2023-07-15 18:20:17, relaxmusiclover, Berlin, 0.91"
+"""The website layout is cluttered and confusing. Difficult to find information."", Negative, Website Review, 2023-07-14 14:40:05, user2468, Sydney, 0.67"
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+__MISSING__
+__MISSING__
+__MISSING__
+__MISSING__
+__MISSING__
+__MISSING__
+__MISSING__
+__MISSING__
+"""The website layout is cluttered and confusing. Difficult to find information."", Negative, Website Review, 2023-07-14 14:40:05, user2468, Sydney, 0.67"
+"""The website layout is cluttered and confusing. Difficult to find information."", Negative, Website Review, 2023-07-14 14:40:05, user2468, Sydney, 0.67"
+__MISSING__
+"""This playlist is perfect for relaxation. Soothing and calming!"", Positive, Spotify, 2023-07-15 18:20:17, relaxmusiclover, Berlin, 0.91"
+"""The ride on this cruise ship was an unforgettable experience. I loved every moment!"", Positive, Travel Blog, 2023-07-16 09:12:54, travelenthusiast2, Sydney, 0.95"
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+__MISSING__
+"""This playlist is perfect for relaxation. Soothing and calming!"", Positive, Spotify, 2023-07-15 18:20:17, relaxmusiclover, Berlin, 0.91"
+__MISSING__
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+"""The website navigation is smooth and intuitive. I found what I needed quickly."", Positive, Website Testimonial, 2023-07-15 21:05:44, happyuser123, Toronto, 0.88"
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+"""The product I ordered never arrived. Poor customer service."", Negative, Online Store, 2023-07-15 08:50:13, buyer1234, Chicago, 0.63"
+__MISSING__
+__MISSING__
+"""The product I ordered never arrived. Poor customer service."", Negative, Online Store, 2023-07-15 08:50:13, buyer1234, Chicago, 0.63"
+__MISSING__
+"""The website navigation is smooth and intuitive. I found what I needed quickly."", Positive, Website Testimonial, 2023-07-15 21:05:44, happyuser123, Toronto, 0.88"
+"""The website layout is cluttered and confusing. Difficult to find information."", Negative, Website Review, 2023-07-14 14:40:05, user2468, Sydney, 0.67"
+"""The website layout is cluttered and confusing. Difficult to find information."", Negative, Website Review, 2023-07-14 14:40:05, user2468, Sydney, 0.67"
+__MISSING__
+__MISSING__
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+__MISSING__
+"""This playlist is perfect for relaxation. Soothing and calming!"", Positive, Spotify, 2023-07-15 18:20:17, relaxmusiclover, Berlin, 0.91"
+__MISSING__
+__MISSING__
+"""The product I ordered never arrived. Poor customer service."", Negative, Online Store, 2023-07-15 08:50:13, buyer1234, Chicago, 0.63"
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+__MISSING__
+__MISSING__
+__MISSING__
+__MISSING__
+"""This playlist is perfect for relaxation. Soothing and calming!"", Positive, Spotify, 2023-07-15 18:20:17, relaxmusiclover, Berlin, 0.91"
+"""The roller coaster at this theme park is a thrilling experience. A must-try!"", Positive, Theme Park Review, 2023-07-14 17:25:09, thrillseeker3, Orlando, 0.91"
+"""The roller coaster at this theme park is a thrilling experience. A must-try!"", Positive, Theme Park Review, 2023-07-14 17:25:09, thrillseeker3, Orlando, 0.91"
+__MISSING__
+__MISSING__
+"""The website navigation is smooth and intuitive. I found what I needed quickly."", Positive, Website Testimonial, 2023-07-15 21:05:44, happyuser123, Toronto, 0.88"
+__MISSING__
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+"""This book kept me hooked from start to finish. A captivating read!"", Positive, Goodreads, 2023-07-16 14:23:18, bookworm7890, London, 0.90"
+__MISSING__
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+"""The product I ordered never arrived. Poor customer service."", Negative, Online Store, 2023-07-15 08:50:13, buyer1234, Chicago, 0.63"
+__MISSING__
+"""The food at this restaurant was disappointing. Not worth the price."", Negative, Zomato, 2023-07-15 15:45:32, foodcritic246, Mumbai, 0.68"
+__MISSING__
+__MISSING__
+"""The website navigation is smooth and intuitive. I found what I needed quickly."", Positive, Website Testimonial, 2023-07-15 21:05:44, happyuser123, Toronto, 0.88"
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+"""The customer service at this store is outstanding. They truly care about their customers."", Positive, Retail Store, 2023-07-16 17:05:46, happyshopper1, New York, 0.92"
+__MISSING__
+"""The roller coaster at this theme park is a thrilling experience. A must-try!"", Positive, Theme Park Review, 2023-07-14 17:25:09, thrillseeker3, Orlando, 0.91"
+"""The website layout is cluttered and confusing. Difficult to find information."", Negative, Website Review, 2023-07-14 14:40:05, user2468, Sydney, 0.67"
+__MISSING__
+"""The product I received was of poor quality. It broke after a few uses."", Negative, Online Store, 2023-07-16 11:45:32, shopper567, Los Angeles, 0.61"
+"""This album is a masterpiece. Every song is a work of art!"", Positive, Music Review, 2023-07-14 11:05:27, musicenthusiast1, London, 0.93"
+"""I'm in awe of this artist's talent. Their paintings are breathtaking!"", Positive, Art Review, 2023-07-15 12:30:08, artlover123, Paris, 0.94"
+__MISSING__
+__MISSING__

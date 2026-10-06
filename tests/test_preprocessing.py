@@ -218,6 +218,22 @@ def test_categorical_columns_are_encoded():
     assert "category_Furniture" in prepared_data.columns
 
 
+def test_llm_text_columns_are_not_dummy_encoded():
+    dataframe = pd.DataFrame({
+        "Text": ["Loved this a lot", "Not great", "Pretty good"],
+        "Sentiment": ["Positive", "Negative", "Positive"],
+        "score": [0.9, 0.2, 0.7],
+    })
+
+    result = prepare_data_for_model(dataframe, skip_columns=["Text"])
+    prepared = result["dataframe"]
+
+    assert "Text" in prepared.columns
+    assert "Sentiment" not in prepared.columns
+    assert "Sentiment_Positive" in prepared.columns
+
+
+
 def test_numerical_columns_are_preserved():
 
     dataframe = pd.DataFrame({

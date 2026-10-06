@@ -1,0 +1,501 @@
+customer_id,customer_name,customer_segment,city,state,country,industry
+CUSTOMER0001,Aditya Systems 461,Retail,Indore,Telangana,India,Automotive
+CUSTOMER0002,Riya Systems 433,Enterprise,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0003,Anaya Enterprises 073,SMB,Indore,Telangana,India,Safety
+CUSTOMER0004,Aditya Industries 133,SMB,Lucknow,Uttar Pradesh,India,Automotive
+CUSTOMER0005,Aditya Solutions 248,Enterprise,Indore,Telangana,India,Industrial
+CUSTOMER0006,Vivaan Retail 440,Enterprise,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0007,Kabir Enterprises 274,SMB,Chennai,Tamil Nadu,India,Automotive
+CUSTOMER0008,Aarav Retail 300,SMB,Hyderabad,Karnataka,India,Packaging
+CUSTOMER0009,Ishaan Industries 328,SMB,Bengaluru,Maharashtra,India,Packaging
+CUSTOMER0010,Meera Systems 205,Enterprise,Mumbai,Uttar Pradesh,India,IT
+CUSTOMER0011,Aarav Systems 239,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0012,Ishaan Industries 261,Enterprise,Chennai,Madhya Pradesh,India,Packaging
+CUSTOMER0013,Meera Enterprises 186,SMB,Kochi,Kerala,India,Electronics
+CUSTOMER0014,Aditya Trading 323,Retail,Indore,Telangana,India,Automotive
+CUSTOMER0015,Meera Solutions 187,Enterprise,Hyderabad,Karnataka,India,Packaging
+CUSTOMER0016,Anaya Retail 467,SMB,Lucknow,Uttar Pradesh,India,Automotive
+CUSTOMER0017,Anaya Systems 096,Retail,Chennai,Tamil Nadu,India,Automotive
+CUSTOMER0018,Meera Systems 216,SMB,Jaipur,Rajasthan,India,Safety
+CUSTOMER0019,Aditya Systems 108,SMB,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0020,Anaya Retail 342,Retail,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0021,Aarav Solutions 178,SMB,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0022,Aditya Industries 077,SMB,Indore,Telangana,India,Safety
+CUSTOMER0023,Kabir Industries 184,Retail,Indore,Telangana,India,Electronics
+CUSTOMER0024,Riya Enterprises 316,Retail,Lucknow,Uttar Pradesh,India,Safety
+CUSTOMER0025,Aditya Industries 179,Enterprise,Kochi,West Bengal,India,Industrial
+CUSTOMER0026,Aarav Enterprises 354,SMB,Bengaluru,Karnataka,India,Industrial
+CUSTOMER0027,Ishaan Industries 328,SMB,Indore,Telangana,India,Packaging
+CUSTOMER0028,Aarav Retail 300,SMB,Chennai,West Bengal,India,Industrial
+CUSTOMER0029,Vivaan Enterprises 192,Enterprise,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0030,Riya Enterprises 283,SMB,Kochi,Kerala,India,Safety
+CUSTOMER0031,Aditya Systems 312,SMB,Kochi,Kerala,India,IT
+CUSTOMER0032,Ishaan Solutions 251,Retail,Pune,Madhya Pradesh,India,Automotive
+CUSTOMER0033,Anaya Retail 180,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0034,Meera Industries 396,SMB,Jaipur,Rajasthan,India,Industrial
+CUSTOMER0035,Aarav Systems 287,Enterprise,Kochi,Kerala,India,Safety
+CUSTOMER0036,Anaya Solutions 418,Enterprise,Kolkata,West Bengal,India,Industrial
+CUSTOMER0037,Riya Solutions 235,Enterprise,Ahmedabad,Gujarat,India,Electronics
+CUSTOMER0038,Anaya Systems 306,Enterprise,Bengaluru,Maharashtra,India,Electronics
+CUSTOMER0039,Meera Enterprises 411,Retail,Indore,Telangana,India,Automotive
+CUSTOMER0040,Kabir Industries 264,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0041,Meera Retail 301,SMB,Ahmedabad,Gujarat,India,Industrial
+CUSTOMER0042,Aarav Enterprises 412,Retail,Lucknow,Uttar Pradesh,India,Safety
+CUSTOMER0043,Aditya Retail 120,SMB,Kolkata,West Bengal,India,Industrial
+CUSTOMER0044,Vivaan Enterprises 192,SMB,Indore,Telangana,India,Industrial
+CUSTOMER0045,Vivaan Solutions 176,SMB,Indore,Telangana,India,Safety
+CUSTOMER0046,Anaya Trading 200,SMB,Kolkata,West Bengal,India,Industrial
+CUSTOMER0047,Kabir Industries 157,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0048,Vivaan Systems 374,SMB,Indore,Telangana,India,Industrial
+CUSTOMER0049,Vivaan Systems 475,SMB,Indore,Telangana,India,Safety
+CUSTOMER0050,Riya Enterprises 143,SMB,Bengaluru,Karnataka,India,Automotive
+CUSTOMER0051,Aarav Trading 193,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0052,Ishaan Solutions 356,SMB,Delhi,Delhi,India,IT
+CUSTOMER0053,Aditya Industries 203,Retail,Bengaluru,Maharashtra,India,Industrial
+CUSTOMER0054,Aditya Solutions 160,Enterprise,Chennai,Madhya Pradesh,India,Industrial
+CUSTOMER0055,Vivaan Retail 369,Enterprise,Kolkata,West Bengal,India,IT
+CUSTOMER0056,Kabir Industries 082,Retail,Indore,Telangana,India,Industrial
+CUSTOMER0057,Kabir Industries 066,Enterprise,Mumbai,Uttar Pradesh,India,Safety
+CUSTOMER0058,Aditya Retail 245,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0059,Kabir Industries 157,Enterprise,Kolkata,West Bengal,India,IT
+CUSTOMER0060,Kabir Enterprises 322,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0061,Riya Systems 291,SMB,Indore,Telangana,India,Industrial
+CUSTOMER0062,Meera Solutions 187,Enterprise,Delhi,Delhi,India,Industrial
+CUSTOMER0063,Aditya Retail 351,Retail,Mumbai,Uttar Pradesh,India,Industrial
+CUSTOMER0064,Aditya Industries 236,SMB,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0065,Aarav Enterprises 140,SMB,Bengaluru,Maharashtra,India,Automotive
+CUSTOMER0066,Vivaan Retail 321,SMB,Lucknow,Uttar Pradesh,India,IT
+CUSTOMER0067,Anaya Solutions 127,SMB,Kolkata,West Bengal,India,Safety
+CUSTOMER0068,Vivaan Trading 081,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0069,Kabir Retail 295,Retail,Bengaluru,Maharashtra,India,Automotive
+CUSTOMER0070,Meera Retail 125,SMB,Delhi,Delhi,India,IT
+CUSTOMER0071,Aarav Retail 033,Enterprise,Lucknow,Rajasthan,India,IT
+CUSTOMER0072,Riya Trading 242,Enterprise,Pune,Telangana,India,IT
+CUSTOMER0073,Riya Systems 291,SMB,Bengaluru,Karnataka,India,Electronics
+CUSTOMER0074,Riya Enterprises 439,SMB,Delhi,Rajasthan,India,Automotive
+CUSTOMER0075,Meera Solutions 151,Enterprise,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0076,Aarav Retail 300,SMB,Jaipur,Rajasthan,India,IT
+CUSTOMER0077,Aditya Enterprises 443,Retail,Indore,Telangana,India,Automotive
+CUSTOMER0078,Vivaan Solutions 429,SMB,Chennai,Tamil Nadu,India,IT
+CUSTOMER0079,Aditya Retail 245,SMB,Delhi,Delhi,India,Automotive
+CUSTOMER0080,Riya Systems 353,SMB,Hyderabad,Telangana,India,Safety
+CUSTOMER0081,Aditya Trading 397,SMB,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0082,Aditya Retail 330,Enterprise,Hyderabad,Karnataka,India,Safety
+CUSTOMER0083,Riya Industries 406,Retail,Lucknow,Uttar Pradesh,India,Industrial
+CUSTOMER0084,Kabir Retail 181,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0085,Kabir Solutions 257,Enterprise,Kochi,Kerala,India,Automotive
+CUSTOMER0086,Ishaan Systems 233,SMB,Delhi,Delhi,India,Electronics
+CUSTOMER0087,Meera Trading 392,Retail,Mumbai,Uttar Pradesh,India,Electronics
+CUSTOMER0088,Anaya Enterprises 073,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUSTOMER0089,Meera Trading 050,Retail,Lucknow,Uttar Pradesh,India,Electronics
+CUSTOMER0090,Kabir Retail 172,Retail,Jaipur,Rajasthan,India,Safety
+CUSTOMER0091,Riya Enterprises 485,SMB,Jaipur,Rajasthan,India,Safety
+CUSTOMER0092,Kabir Trading 325,Enterprise,Indore,Telangana,India,Industrial
+CUSTOMER0093,Riya Systems 353,Enterprise,Pune,Telangana,India,IT
+CUSTOMER0094,Riya Retail 217,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0095,Aditya Systems 461,Enterprise,Pune,Telangana,India,IT
+CUSTOMER0096,Ishaan Solutions 230,SMB,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0097,Anaya Industries 224,SMB,Indore,Telangana,India,Safety
+CUSTOMER0098,Meera Retail 056,Retail,Indore,Karnataka,India,Electronics
+CUSTOMER0099,Vivaan Enterprises 054,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0100,Anaya Retail 088,Retail,Mumbai,Uttar Pradesh,India,Industrial
+CUSTOMER0101,Riya Industries 406,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0102,Kabir Systems 182,SMB,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0103,Kabir Industries 157,SMB,Hyderabad,Karnataka,India,Safety
+CUSTOMER0104,Kabir Trading 355,SMB,Indore,Telangana,India,Safety
+CUSTOMER0105,Kabir Solutions 044,SMB,Hyderabad,Telangana,India,Automotive
+CUSTOMER0106,Anaya Solutions 128,SMB,Kochi,Kerala,India,Safety
+CUSTOMER0107,Meera Retail 402,SMB,Ahmedabad,Gujarat,India,IT
+CUSTOMER0108,Kabir Trading 094,Enterprise,Ahmedabad,Gujarat,India,Automotive
+CUSTOMER0109,Vivaan Systems 345,SMB,Kochi,Gujarat,India,Industrial
+CUSTOMER0110,Ishaan Solutions 282,SMB,Mumbai,Maharashtra,India,IT
+CUSTOMER0111,Anaya Retail 162,SMB,Chennai,Tamil Nadu,India,Electronics
+CUSTOMER0112,Meera Enterprises 208,SMB,Ahmedabad,Gujarat,India,Safety
+CUSTOMER0113,Riya Industries 343,SMB,Bengaluru,Karnataka,India,Automotive
+CUSTOMER0114,Riya Retail 289,Enterprise,Pune,Telangana,India,Industrial
+CUSTOMER0115,Meera Enterprises 186,Retail,Delhi,Rajasthan,India,Safety
+CUSTOMER0116,Anaya Retail 045,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0117,Anaya Retail 342,SMB,Kochi,Gujarat,India,Industrial
+CUSTOMER0118,Aditya Trading 323,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0119,Aditya Enterprises 460,SMB,Chennai,Tamil Nadu,India,Safety
+CUSTOMER0120,Riya Trading 242,Enterprise,Lucknow,Uttar Pradesh,India,Safety
+CUSTOMER0121,Kabir Retail 298,SMB,Bengaluru,Maharashtra,India,Industrial
+CUSTOMER0122,Anaya Retail 215,SMB,Kochi,Kerala,India,Industrial
+CUSTOMER0123,Aarav Systems 287,SMB,Indore,Telangana,India,IT
+CUSTOMER0124,Ishaan Enterprises 041,SMB,Kochi,Kerala,India,Safety
+CUSTOMER0125,Ishaan Trading 313,SMB,Indore,Telangana,India,Automotive
+CUSTOMER0126,Aarav Enterprises 303,SMB,Jaipur,Rajasthan,India,Industrial
+CUSTOMER0127,Aarav Trading 417,SMB,Kolkata,West Bengal,India,Industrial
+CUSTOMER0128,Aditya Retail 059,Enterprise,Kolkata,West Bengal,India,Industrial
+CUSTOMER0129,Kabir Industries 184,Enterprise,Ahmedabad,Gujarat,India,Automotive
+CUSTOMER0130,Aarav Trading 268,SMB,Lucknow,Uttar Pradesh,India,Electronics
+CUSTOMER0131,Kabir Trading 175,SMB,Hyderabad,Karnataka,India,Safety
+CUSTOMER0132,Meera Industries 183,SMB,Kolkata,West Bengal,India,Safety
+CUSTOMER0133,Meera Retail 327,Retail,Lucknow,Uttar Pradesh,India,IT
+CUSTOMER0134,Ishaan Solutions 362,Retail,Kochi,Kerala,India,Automotive
+CUSTOMER0135,Anaya Retail 088,Retail,Kolkata,West Bengal,India,Industrial
+CUSTOMER0136,Aditya Industries 212,Retail,Chennai,Tamil Nadu,India,IT
+CUSTOMER0137,Kabir Retail 117,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0138,Anaya Industries 149,SMB,Jaipur,Rajasthan,India,Industrial
+CUSTOMER0139,Kabir Industries 403,Enterprise,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0140,Riya Enterprises 143,SMB,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0141,Riya Retail 206,Retail,Bengaluru,Maharashtra,India,Automotive
+CUSTOMER0142,Anaya Enterprises 122,Retail,Chennai,Tamil Nadu,India,Industrial
+CUSTOMER0143,Meera Trading 098,Enterprise,Jaipur,Uttar Pradesh,India,Industrial
+CUSTOMER0144,Aarav Systems 239,Retail,Jaipur,Uttar Pradesh,India,Packaging
+CUSTOMER0145,Meera Enterprises 186,Retail,Jaipur,Rajasthan,India,IT
+CUSTOMER0146,Anaya Systems 306,Retail,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0147,Aditya Trading 388,SMB,Pune,Madhya Pradesh,India,IT
+CUSTOMER0148,Kabir Industries 405,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUSTOMER0149,Meera Enterprises 208,SMB,Delhi,Delhi,India,IT
+CUSTOMER0150,Aditya Industries 203,SMB,Mumbai,Maharashtra,India,IT
+CUSTOMER0151,Anaya Solutions 418,Enterprise,Bengaluru,Maharashtra,India,IT
+CUSTOMER0152,Kabir Retail 172,Enterprise,Mumbai,Uttar Pradesh,India,IT
+CUSTOMER0153,Aarav Systems 340,SMB,Indore,Karnataka,India,Packaging
+CUSTOMER0154,Kabir Systems 194,Retail,Hyderabad,Karnataka,India,IT
+CUSTOMER0155,Aarav Solutions 220,Enterprise,Mumbai,Uttar Pradesh,India,Electronics
+CUSTOMER0156,Anaya Solutions 132,SMB,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0157,Kabir Systems 240,Retail,Pune,Tamil Nadu,India,Industrial
+CUSTOMER0158,Aditya Systems 210,SMB,Hyderabad,Karnataka,India,Safety
+CUSTOMER0159,Aditya Industries 271,Enterprise,Ahmedabad,Gujarat,India,IT
+CUSTOMER0160,Aditya Solutions 413,Enterprise,Chennai,Madhya Pradesh,India,IT
+CUSTOMER0161,Anaya Enterprises 329,Enterprise,Indore,Karnataka,India,Industrial
+CUSTOMER0162,Riya Retail 289,SMB,Kochi,Kerala,India,IT
+CUSTOMER0163,Ishaan Solutions 251,SMB,Kochi,Kerala,India,Packaging
+CUSTOMER0164,Kabir Systems 177,Enterprise,Pune,Telangana,India,Packaging
+CUSTOMER0165,Ishaan Retail 100,Retail,Lucknow,Uttar Pradesh,India,Industrial
+CUSTOMER0166,Ishaan Retail 372,SMB,Chennai,Tamil Nadu,India,IT
+CUSTOMER0167,Aarav Systems 340,SMB,Jaipur,Rajasthan,India,Safety
+CUSTOMER0168,Aditya Trading 285,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0169,Ishaan Industries 214,SMB,Pune,Madhya Pradesh,India,IT
+CUSTOMER0170,Meera Trading 142,SMB,Chennai,Tamil Nadu,India,IT
+CUSTOMER0171,Aarav Enterprises 333,SMB,Bengaluru,Maharashtra,India,IT
+CUSTOMER0172,Vivaan Systems 345,Enterprise,Pune,Madhya Pradesh,India,IT
+CUSTOMER0173,Aarav Industries 431,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0174,Aarav Trading 079,SMB,Mumbai,Uttar Pradesh,India,Safety
+CUSTOMER0175,Anaya Enterprises 280,Retail,Ahmedabad,Gujarat,India,Automotive
+CUSTOMER0176,Ishaan Systems 233,Enterprise,Kochi,Kerala,India,Safety
+CUSTOMER0177,Vivaan Systems 410,Retail,Kolkata,West Bengal,India,Safety
+CUSTOMER0178,Riya Retail 289,SMB,Bengaluru,Karnataka,India,Packaging
+CUSTOMER0179,Kabir Industries 148,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0180,Aditya Solutions 025,SMB,Kolkata,West Bengal,India,IT
+CUSTOMER0181,Riya Trading 152,SMB,Chennai,Madhya Pradesh,India,Packaging
+CUSTOMER0182,Aditya Enterprises 091,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0183,Kabir Retail 174,Retail,Hyderabad,Karnataka,India,Safety
+CUSTOMER0184,Kabir Trading 109,SMB,Pune,Madhya Pradesh,India,Electronics
+CUSTOMER0185,Ishaan Solutions 292,SMB,Indore,Telangana,India,IT
+CUSTOMER0186,Aditya Industries 179,Retail,Ahmedabad,Gujarat,India,Electronics
+CUSTOMER0187,Meera Enterprises 286,Enterprise,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0188,Vivaan Solutions 341,SMB,Mumbai,Maharashtra,India,Safety
+CUSTOMER0189,Aditya Retail 068,Retail,Mumbai,Uttar Pradesh,India,Automotive
+CUSTOMER0190,Aditya Systems 076,Retail,Kolkata,West Bengal,India,Automotive
+CUSTOMER0191,Vivaan Systems 374,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0192,Kabir Systems 407,Retail,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0193,Aditya Retail 366,SMB,Kolkata,Kerala,India,Safety
+CUSTOMER0194,Kabir Enterprises 021,SMB,Indore,Telangana,India,Automotive
+CUSTOMER0195,Meera Solutions 106,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0196,Meera Industries 324,Enterprise,Kolkata,West Bengal,India,Industrial
+CUSTOMER0197,Anaya Enterprises 329,Enterprise,Pune,Telangana,India,Industrial
+CUSTOMER0198,Riya Enterprises 332,SMB,Mumbai,Uttar Pradesh,India,Automotive
+CUSTOMER0199,Vivaan Solutions 429,SMB,Bengaluru,Maharashtra,India,Automotive
+CUSTOMER0200,Aarav Trading 326,Retail,Pune,Madhya Pradesh,India,Automotive
+CUSTOMER0201,Anaya Systems 361,Retail,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0202,Aditya Systems 359,Retail,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0203,Aarav Systems 451,Retail,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0204,Aditya Trading 397,SMB,Kolkata,West Bengal,India,IT
+CUSTOMER0205,Meera Systems 408,Retail,Hyderabad,Telangana,India,Electronics
+CUSTOMER0206,Aditya Industries 420,Retail,Kochi,Kerala,India,Automotive
+CUSTOMER0207,Riya Industries 406,Retail,Mumbai,Uttar Pradesh,India,Safety
+CUSTOMER0208,Meera Solutions 281,Enterprise,Lucknow,Uttar Pradesh,India,Safety
+CUSTOMER0209,Ishaan Solutions 282,SMB,Indore,Telangana,India,Automotive
+CUSTOMER0210,Aarav Trading 381,Retail,Kolkata,West Bengal,India,IT
+CUSTOMER0211,Kabir Solutions 044,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0212,Vivaan Enterprises 192,SMB,Chennai,Tamil Nadu,India,Industrial
+CUSTOMER0213,Kabir Trading 399,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0214,Anaya Retail 342,Retail,Bengaluru,Karnataka,India,IT
+CUSTOMER0215,Kabir Systems 194,Retail,Lucknow,Uttar Pradesh,India,Safety
+CUSTOMER0216,Aarav Systems 350,SMB,Pune,Madhya Pradesh,India,IT
+CUSTOMER0217,Aditya Retail 120,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0218,Meera Enterprises 411,SMB,Kochi,Kerala,India,Safety
+CUSTOMER0219,Ishaan Trading 426,SMB,Kolkata,West Bengal,India,Safety
+CUSTOMER0220,Anaya Systems 334,SMB,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0221,Riya Retail 217,Retail,Hyderabad,Karnataka,India,Safety
+CUSTOMER0222,Aditya Solutions 167,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0223,Meera Solutions 352,SMB,Mumbai,Maharashtra,India,IT
+CUSTOMER0224,Ishaan Systems 279,Enterprise,Kochi,Kerala,India,Industrial
+CUSTOMER0225,Vivaan Enterprises 153,SMB,Chennai,West Bengal,India,Industrial
+CUSTOMER0226,Meera Industries 375,Retail,Chennai,Tamil Nadu,India,Automotive
+CUSTOMER0227,Vivaan Systems 410,SMB,Mumbai,Uttar Pradesh,India,Packaging
+CUSTOMER0228,Anaya Systems 299,Retail,Chennai,Tamil Nadu,India,Safety
+CUSTOMER0229,Ishaan Solutions 282,SMB,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0230,Aditya Industries 212,Retail,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0231,Vivaan Enterprises 042,Retail,Kolkata,West Bengal,India,Industrial
+CUSTOMER0232,Aarav Enterprises 333,Enterprise,Indore,Karnataka,India,IT
+CUSTOMER0233,Anaya Retail 342,SMB,Indore,Telangana,India,Packaging
+CUSTOMER0234,Meera Enterprises 286,Enterprise,Jaipur,Rajasthan,India,Safety
+CUSTOMER0235,Kabir Retail 174,Retail,Indore,Telangana,India,Automotive
+CUSTOMER0236,Vivaan Solutions 159,Enterprise,Chennai,Tamil Nadu,India,Electronics
+CUSTOMER0237,Aditya Solutions 258,Retail,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0238,Aarav Systems 350,Retail,Mumbai,Uttar Pradesh,India,Automotive
+CUSTOMER0239,Ishaan Trading 338,SMB,Lucknow,Uttar Pradesh,India,Industrial
+CUSTOMER0240,Kabir Systems 182,SMB,Indore,Telangana,India,Industrial
+CUSTOMER0241,Kabir Trading 070,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0242,Kabir Systems 207,Enterprise,Indore,Telangana,India,Industrial
+CUSTOMER0243,Kabir Solutions 044,Retail,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0244,Anaya Enterprises 452,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0245,Kabir Systems 240,Retail,Indore,Telangana,India,Packaging
+CUSTOMER0246,Ishaan Trading 338,SMB,Kochi,Kerala,India,IT
+CUSTOMER0247,Kabir Retail 117,Enterprise,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0248,Ishaan Systems 048,Retail,Lucknow,Uttar Pradesh,India,Automotive
+CUSTOMER0249,Vivaan Trading 163,SMB,Delhi,Delhi,India,Industrial
+CUSTOMER0250,Vivaan Enterprises 153,Enterprise,Pune,Telangana,India,Industrial
+CUSTOMER0251,Aarav Systems 340,Enterprise,Pune,Telangana,India,Automotive
+CUSTOMER0252,Aditya Industries 126,SMB,Lucknow,Uttar Pradesh,India,Automotive
+CUSTOMER0253,Ishaan Industries 259,Retail,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0254,Vivaan Solutions 415,SMB,Chennai,West Bengal,India,Safety
+CUSTOMER0255,Meera Industries 154,SMB,Kochi,Kerala,India,Industrial
+CUSTOMER0256,Riya Enterprises 332,Enterprise,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0257,Riya Trading 218,Retail,Indore,Madhya Pradesh,India,Packaging
+CUSTOMER0258,Ishaan Industries 259,Retail,Bengaluru,Karnataka,India,Safety
+CUSTOMER0259,Riya Industries 406,SMB,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0260,Riya Trading 089,Retail,Chennai,Tamil Nadu,India,Automotive
+CUSTOMER0261,Aarav Trading 381,SMB,Kolkata,West Bengal,India,Industrial
+CUSTOMER0262,Meera Industries 247,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0263,Aarav Systems 297,Retail,Indore,Telangana,India,Automotive
+CUSTOMER0264,Aditya Systems 108,SMB,Delhi,Delhi,India,IT
+CUSTOMER0265,Meera Industries 396,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0266,Ishaan Trading 277,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0267,Vivaan Systems 276,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0268,Anaya Systems 096,Retail,Indore,Telangana,India,Industrial
+CUSTOMER0269,Aarav Enterprises 140,Retail,Bengaluru,Karnataka,India,Industrial
+CUSTOMER0270,Meera Retail 327,SMB,Hyderabad,Karnataka,India,Packaging
+CUSTOMER0271,Vivaan Retail 371,Retail,Kochi,Kerala,India,Automotive
+CUSTOMER0272,Kabir Retail 296,Retail,Indore,Telangana,India,IT
+CUSTOMER0273,Meera Enterprises 421,SMB,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0274,Riya Enterprises 143,Retail,Jaipur,Rajasthan,India,Safety
+CUSTOMER0275,Anaya Enterprises 030,SMB,Delhi,Delhi,India,Safety
+CUSTOMER0276,Vivaan Trading 051,SMB,Kolkata,West Bengal,India,Packaging
+CUSTOMER0277,Vivaan Systems 015,SMB,Hyderabad,Telangana,India,Automotive
+CUSTOMER0278,Aditya Enterprises 443,Retail,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0279,Anaya Systems 306,Retail,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0280,Anaya Retail 237,SMB,Mumbai,Uttar Pradesh,India,IT
+CUSTOMER0281,Aditya Solutions 167,Enterprise,Chennai,Madhya Pradesh,India,Industrial
+CUSTOMER0282,Aarav Solutions 246,SMB,Jaipur,Rajasthan,India,Electronics
+CUSTOMER0283,Aarav Solutions 139,Enterprise,Kolkata,West Bengal,India,Industrial
+CUSTOMER0284,Ishaan Solutions 292,SMB,Jaipur,Rajasthan,India,IT
+CUSTOMER0285,Anaya Enterprises 329,Enterprise,Hyderabad,Karnataka,India,Safety
+CUSTOMER0286,Vivaan Enterprises 153,SMB,Delhi,Delhi,India,IT
+CUSTOMER0287,Ishaan Trading 338,Enterprise,Indore,Telangana,India,Industrial
+CUSTOMER0288,Vivaan Systems 308,Retail,Indore,Telangana,India,Industrial
+CUSTOMER0289,Anaya Retail 045,SMB,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0290,Aarav Solutions 225,Retail,Jaipur,Rajasthan,India,IT
+CUSTOMER0291,Ishaan Retail 100,Retail,Bengaluru,Maharashtra,India,Industrial
+CUSTOMER0292,Anaya Industries 188,SMB,Indore,Telangana,India,IT
+CUSTOMER0293,Aarav Trading 381,SMB,Chennai,Tamil Nadu,India,Industrial
+CUSTOMER0294,Kabir Industries 288,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0295,Kabir Solutions 257,Retail,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0296,Riya Enterprises 143,Retail,Kochi,Kerala,India,Industrial
+CUSTOMER0297,Aarav Solutions 220,Retail,Delhi,Delhi,India,Automotive
+CUSTOMER0298,Kabir Retail 295,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0299,Riya Industries 272,Retail,Kolkata,West Bengal,India,Industrial
+CUSTOMER0300,Ishaan Industries 328,Enterprise,Indore,Karnataka,India,Industrial
+CUSTOMER0301,Aarav Solutions 246,SMB,Kochi,Kerala,India,Automotive
+CUSTOMER0302,Meera Industries 247,Retail,Bengaluru,Karnataka,India,Packaging
+CUSTOMER0303,Meera Industries 375,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0304,Vivaan Enterprises 470,Enterprise,Indore,Telangana,India,Automotive
+CUSTOMER0305,Meera Systems 273,SMB,Chennai,Tamil Nadu,India,IT
+CUSTOMER0306,Meera Solutions 479,Retail,Chennai,Tamil Nadu,India,Safety
+CUSTOMER0307,Kabir Industries 288,Enterprise,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0308,Anaya Systems 104,SMB,Kolkata,Tamil Nadu,India,Safety
+CUSTOMER0309,Aditya Industries 212,SMB,Chennai,Tamil Nadu,India,Safety
+CUSTOMER0310,Vivaan Retail 369,Retail,Kolkata,Kerala,India,Safety
+CUSTOMER0311,Aarav Enterprises 398,Retail,Chennai,Tamil Nadu,India,Automotive
+CUSTOMER0312,Ishaan Trading 277,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0313,Riya Retail 206,SMB,Kolkata,West Bengal,India,IT
+CUSTOMER0314,Riya Systems 191,SMB,Kochi,Gujarat,India,Automotive
+CUSTOMER0315,Anaya Systems 334,Enterprise,Hyderabad,Karnataka,India,Safety
+CUSTOMER0316,Riya Trading 032,SMB,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0317,Meera Enterprises 252,SMB,Kochi,Kerala,India,Industrial
+CUSTOMER0318,Anaya Solutions 103,Retail,Indore,Telangana,India,IT
+CUSTOMER0319,Meera Solutions 404,Retail,Pune,Madhya Pradesh,India,IT
+CUSTOMER0320,Riya Systems 226,Enterprise,Hyderabad,Karnataka,India,Packaging
+CUSTOMER0321,Meera Industries 154,Enterprise,Kochi,Kerala,India,Automotive
+CUSTOMER0322,Anaya Solutions 436,SMB,Ahmedabad,Gujarat,India,Safety
+CUSTOMER0323,Vivaan Enterprises 213,Enterprise,Lucknow,Uttar Pradesh,India,IT
+CUSTOMER0324,Ishaan Industries 382,SMB,Hyderabad,Karnataka,India,Electronics
+CUSTOMER0325,Anaya Enterprises 122,Enterprise,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0326,Riya Retail 135,SMB,Jaipur,Rajasthan,India,Electronics
+CUSTOMER0327,Anaya Systems 385,Retail,Kochi,Kerala,India,Safety
+CUSTOMER0328,Aarav Industries 358,SMB,Delhi,Delhi,India,Packaging
+CUSTOMER0329,Vivaan Trading 051,Retail,Jaipur,Rajasthan,India,Safety
+CUSTOMER0330,Vivaan Enterprises 204,Retail,Lucknow,Uttar Pradesh,India,Packaging
+CUSTOMER0331,Vivaan Systems 475,SMB,Hyderabad,Karnataka,India,Packaging
+CUSTOMER0332,Riya Enterprises 439,Retail,Ahmedabad,Gujarat,India,Packaging
+CUSTOMER0333,Anaya Systems 334,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0334,Ishaan Enterprises 314,Enterprise,Mumbai,Uttar Pradesh,India,Safety
+CUSTOMER0335,Aditya Enterprises 091,SMB,Lucknow,Uttar Pradesh,India,Electronics
+CUSTOMER0336,Meera Solutions 450,Retail,Kochi,Kerala,India,Safety
+CUSTOMER0337,Aarav Trading 249,Enterprise,Jaipur,Uttar Pradesh,India,Electronics
+CUSTOMER0338,Kabir Systems 177,Retail,Lucknow,Rajasthan,India,Automotive
+CUSTOMER0339,Anaya Industries 141,SMB,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0340,Aarav Trading 249,Enterprise,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0341,Meera Systems 273,Enterprise,Indore,Karnataka,India,Packaging
+CUSTOMER0342,Kabir Enterprises 274,Enterprise,Chennai,Tamil Nadu,India,Industrial
+CUSTOMER0343,Kabir Retail 320,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0344,Kabir Systems 177,Enterprise,Chennai,Tamil Nadu,India,Safety
+CUSTOMER0345,Aarav Solutions 228,Enterprise,Kochi,Kerala,India,Industrial
+CUSTOMER0346,Ishaan Retail 100,SMB,Chennai,Tamil Nadu,India,Automotive
+CUSTOMER0347,Aditya Solutions 336,Retail,Lucknow,Uttar Pradesh,India,Industrial
+CUSTOMER0348,Aditya Industries 203,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0349,Riya Retail 201,Enterprise,Kolkata,Tamil Nadu,India,Automotive
+CUSTOMER0350,Riya Trading 335,Enterprise,Indore,Telangana,India,Industrial
+CUSTOMER0351,Kabir Systems 407,Enterprise,Mumbai,Uttar Pradesh,India,Industrial
+CUSTOMER0352,Aarav Solutions 246,Enterprise,Jaipur,Rajasthan,India,Electronics
+CUSTOMER0353,Anaya Retail 215,Retail,Indore,Telangana,India,Safety
+CUSTOMER0354,Aarav Enterprises 412,Enterprise,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0355,Aarav Industries 060,Retail,Indore,Telangana,India,IT
+CUSTOMER0356,Aditya Trading 285,SMB,Kolkata,West Bengal,India,Electronics
+CUSTOMER0357,Aarav Retail 170,SMB,Lucknow,Rajasthan,India,Industrial
+CUSTOMER0358,Aditya Retail 245,Enterprise,Pune,Madhya Pradesh,India,Automotive
+CUSTOMER0359,Aditya Trading 368,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0360,Ishaan Trading 393,SMB,Pune,Madhya Pradesh,India,IT
+CUSTOMER0361,Riya Systems 363,Enterprise,Bengaluru,Maharashtra,India,IT
+CUSTOMER0362,Aarav Solutions 246,Enterprise,Hyderabad,Telangana,India,Automotive
+CUSTOMER0363,Riya Trading 463,Enterprise,Hyderabad,Karnataka,India,IT
+CUSTOMER0364,Aditya Solutions 265,Retail,Indore,Telangana,India,Safety
+CUSTOMER0365,Meera Solutions 187,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0366,Aditya Systems 097,SMB,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0367,Riya Trading 428,SMB,Jaipur,Rajasthan,India,IT
+CUSTOMER0368,Aditya Systems 210,SMB,Kochi,Kerala,India,Automotive
+CUSTOMER0369,Vivaan Solutions 159,SMB,Bengaluru,Maharashtra,India,Industrial
+CUSTOMER0370,Meera Retail 056,Enterprise,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0371,Riya Industries 232,Retail,Hyderabad,Karnataka,India,Safety
+CUSTOMER0372,Aditya Retail 478,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0373,Meera Enterprises 208,Retail,Jaipur,Uttar Pradesh,India,Electronics
+CUSTOMER0374,Riya Systems 363,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0375,Anaya Enterprises 452,Retail,Indore,Telangana,India,Safety
+CUSTOMER0376,Riya Enterprises 364,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0377,Anaya Solutions 103,Enterprise,Lucknow,Uttar Pradesh,India,Automotive
+CUSTOMER0378,Vivaan Enterprises 042,SMB,Pune,Madhya Pradesh,India,IT
+CUSTOMER0379,Aditya Industries 085,Retail,Chennai,Tamil Nadu,India,Electronics
+CUSTOMER0380,Vivaan Industries 367,Retail,Kolkata,West Bengal,India,Electronics
+CUSTOMER0381,Riya Systems 291,SMB,Bengaluru,Maharashtra,India,Electronics
+CUSTOMER0382,Kabir Systems 177,SMB,Bengaluru,Karnataka,India,Industrial
+CUSTOMER0383,Kabir Retail 348,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0384,Aditya Retail 090,Enterprise,Hyderabad,Karnataka,India,Safety
+CUSTOMER0385,Aditya Enterprises 266,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0386,Aditya Enterprises 091,Enterprise,Jaipur,Rajasthan,India,Safety
+CUSTOMER0387,Kabir Systems 207,Enterprise,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0388,Meera Solutions 187,Retail,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0389,Anaya Retail 162,Retail,Kochi,Kerala,India,Electronics
+CUSTOMER0390,Vivaan Solutions 415,Retail,Chennai,Tamil Nadu,India,IT
+CUSTOMER0391,Aditya Systems 400,SMB,Bengaluru,Maharashtra,India,Automotive
+CUSTOMER0392,Vivaan Retail 321,Enterprise,Hyderabad,Karnataka,India,Safety
+CUSTOMER0393,Kabir Systems 240,Retail,Mumbai,Maharashtra,India,IT
+CUSTOMER0394,Ishaan Industries 442,Retail,Indore,Telangana,India,Industrial
+CUSTOMER0395,Aditya Systems 229,Enterprise,Hyderabad,Maharashtra,India,IT
+CUSTOMER0396,Riya Trading 152,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0397,Riya Systems 291,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0398,Meera Solutions 352,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0399,Anaya Systems 299,SMB,Hyderabad,Karnataka,India,Safety
+CUSTOMER0400,Aarav Solutions 178,Enterprise,Kolkata,West Bengal,India,Safety
+CUSTOMER0401,Ishaan Trading 029,Retail,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0402,Riya Enterprises 364,Retail,Bengaluru,Maharashtra,India,IT
+CUSTOMER0403,Riya Systems 434,Enterprise,Kolkata,West Bengal,India,Safety
+CUSTOMER0404,Kabir Industries 405,Retail,Hyderabad,Karnataka,India,Electronics
+CUSTOMER0405,Meera Trading 142,SMB,Chennai,West Bengal,India,Industrial
+CUSTOMER0406,Riya Enterprises 061,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0407,Riya Industries 146,SMB,Kolkata,West Bengal,India,Packaging
+CUSTOMER0408,Anaya Systems 334,Enterprise,Delhi,Delhi,India,Electronics
+CUSTOMER0409,Anaya Enterprises 452,SMB,Mumbai,Maharashtra,India,Safety
+CUSTOMER0410,Riya Enterprises 202,Enterprise,Mumbai,Uttar Pradesh,India,Industrial
+CUSTOMER0411,Aditya Industries 133,SMB,Indore,Karnataka,India,Packaging
+CUSTOMER0412,Anaya Enterprises 047,Enterprise,Mumbai,Uttar Pradesh,India,Packaging
+CUSTOMER0413,Aditya Industries 085,Enterprise,Bengaluru,Maharashtra,India,Safety
+CUSTOMER0414,Meera Industries 315,SMB,Indore,Telangana,India,IT
+CUSTOMER0415,Ishaan Trading 424,SMB,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0416,Aditya Retail 120,Enterprise,Hyderabad,Karnataka,India,Safety
+CUSTOMER0417,Aditya Solutions 265,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0418,Aditya Systems 108,Retail,Indore,Telangana,India,Industrial
+CUSTOMER0419,Ishaan Systems 048,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0420,Anaya Systems 361,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0421,Anaya Solutions 103,SMB,Delhi,Delhi,India,Electronics
+CUSTOMER0422,Riya Systems 318,SMB,Bengaluru,Karnataka,India,Safety
+CUSTOMER0423,Kabir Trading 389,SMB,Mumbai,Uttar Pradesh,India,Automotive
+CUSTOMER0424,Ishaan Solutions 230,Enterprise,Indore,Karnataka,India,Automotive
+CUSTOMER0425,Meera Systems 123,Retail,Pune,Madhya Pradesh,India,Automotive
+CUSTOMER0426,Aditya Industries 271,Enterprise,Indore,Telangana,India,Industrial
+CUSTOMER0427,Aditya Industries 203,Retail,Lucknow,Uttar Pradesh,India,Industrial
+CUSTOMER0428,Aditya Industries 271,SMB,Ahmedabad,Gujarat,India,Safety
+CUSTOMER0429,Anaya Trading 468,Retail,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0430,Ishaan Solutions 230,Retail,Kolkata,West Bengal,India,Packaging
+CUSTOMER0431,Meera Retail 349,Enterprise,Kolkata,West Bengal,India,Industrial
+CUSTOMER0432,Kabir Retail 172,SMB,Kochi,Kerala,India,IT
+CUSTOMER0433,Anaya Enterprises 262,Retail,Ahmedabad,Gujarat,India,IT
+CUSTOMER0434,Meera Retail 083,Retail,Delhi,Delhi,India,Automotive
+CUSTOMER0435,Aditya Industries 133,SMB,Jaipur,Rajasthan,India,Safety
+CUSTOMER0436,Aditya Industries 203,SMB,Chennai,Tamil Nadu,India,IT
+CUSTOMER0437,Aditya Systems 344,Retail,Mumbai,Maharashtra,India,Automotive
+CUSTOMER0438,Kabir Enterprises 322,Enterprise,Chennai,Madhya Pradesh,India,Industrial
+CUSTOMER0439,Meera Systems 065,Retail,Jaipur,Rajasthan,India,Electronics
+CUSTOMER0440,Riya Enterprises 143,SMB,Mumbai,Uttar Pradesh,India,Safety
+CUSTOMER0441,Aditya Systems 121,Enterprise,Bengaluru,Maharashtra,India,IT
+CUSTOMER0442,Meera Retail 327,Retail,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0443,Aarav Retail 063,Retail,Chennai,Tamil Nadu,India,Industrial
+CUSTOMER0444,Ishaan Solutions 292,Retail,Bengaluru,Karnataka,India,Automotive
+CUSTOMER0445,Meera Industries 481,Enterprise,Hyderabad,Karnataka,India,IT
+CUSTOMER0446,Aditya Industries 420,Retail,Bengaluru,Maharashtra,India,Electronics
+CUSTOMER0447,Ishaan Industries 214,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0448,Aditya Trading 397,Retail,Mumbai,Uttar Pradesh,India,Industrial
+CUSTOMER0449,Aditya Industries 126,SMB,Kolkata,West Bengal,India,Automotive
+CUSTOMER0450,Vivaan Systems 255,Retail,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0451,Aditya Systems 121,Retail,Bengaluru,Maharashtra,India,Automotive
+CUSTOMER0452,Aarav Trading 249,Retail,Bengaluru,Maharashtra,India,Industrial
+CUSTOMER0453,Meera Industries 064,SMB,Pune,Madhya Pradesh,India,Automotive
+CUSTOMER0454,Anaya Systems 104,SMB,Chennai,Tamil Nadu,India,Safety
+CUSTOMER0455,Aditya Solutions 336,Retail,Kochi,Kerala,India,Industrial
+CUSTOMER0456,Vivaan Industries 367,Retail,Jaipur,Rajasthan,India,Automotive
+CUSTOMER0457,Meera Enterprises 208,Retail,Chennai,Tamil Nadu,India,IT
+CUSTOMER0458,Anaya Retail 215,SMB,Hyderabad,Karnataka,India,IT
+CUSTOMER0459,Anaya Retail 237,Retail,Pune,Madhya Pradesh,India,IT
+CUSTOMER0460,Aarav Solutions 228,SMB,Indore,Telangana,India,Safety
+CUSTOMER0461,Aditya Solutions 167,Enterprise,Lucknow,Uttar Pradesh,India,Electronics
+CUSTOMER0462,Aditya Industries 077,SMB,Indore,Telangana,India,Automotive
+CUSTOMER0463,Vivaan Industries 137,SMB,Pune,Madhya Pradesh,India,Electronics
+CUSTOMER0464,Aarav Systems 239,SMB,Indore,Telangana,India,Safety
+CUSTOMER0465,Riya Enterprises 316,Retail,Chennai,Tamil Nadu,India,IT
+CUSTOMER0466,Meera Retail 390,SMB,Pune,Madhya Pradesh,India,Industrial
+CUSTOMER0467,Ishaan Solutions 250,SMB,Hyderabad,Karnataka,India,Safety
+CUSTOMER0468,Ishaan Trading 277,Retail,Hyderabad,Karnataka,India,Safety
+CUSTOMER0469,Aditya Retail 269,SMB,Pune,Madhya Pradesh,India,Packaging
+CUSTOMER0470,Ishaan Systems 048,Enterprise,Indore,Karnataka,India,IT
+CUSTOMER0471,Aditya Retail 366,SMB,Kolkata,West Bengal,India,Safety
+CUSTOMER0472,Aditya Industries 236,SMB,Kochi,Kerala,India,Packaging
+CUSTOMER0473,Aarav Systems 287,Retail,Chennai,West Bengal,India,Packaging
+CUSTOMER0474,Ishaan Trading 107,SMB,Kolkata,West Bengal,India,Industrial
+CUSTOMER0475,Vivaan Industries 219,Retail,Kochi,Kerala,India,Automotive
+CUSTOMER0476,Aarav Systems 340,Retail,Kolkata,West Bengal,India,Industrial
+CUSTOMER0477,Riya Industries 166,SMB,Hyderabad,Karnataka,India,Safety
+CUSTOMER0478,Vivaan Trading 435,SMB,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0479,Aarav Enterprises 058,Enterprise,Indore,Telangana,India,Safety
+CUSTOMER0480,Ishaan Solutions 199,Retail,Bengaluru,Maharashtra,India,IT
+CUSTOMER0481,Vivaan Systems 475,SMB,Pune,Tamil Nadu,India,Safety
+CUSTOMER0482,Kabir Solutions 347,SMB,Mumbai,Maharashtra,India,Safety
+CUSTOMER0483,Riya Systems 110,SMB,Hyderabad,Karnataka,India,Packaging
+CUSTOMER0484,Ishaan Trading 195,Enterprise,Pune,Madhya Pradesh,India,Safety
+CUSTOMER0485,Aarav Systems 239,SMB,Jaipur,Rajasthan,India,IT
+CUSTOMER0486,Aditya Industries 236,Retail,Indore,Karnataka,India,Electronics
+CUSTOMER0487,Ishaan Trading 426,Enterprise,Chennai,Madhya Pradesh,India,IT
+CUSTOMER0488,Kabir Solutions 044,SMB,Mumbai,Maharashtra,India,Industrial
+CUSTOMER0489,Kabir Industries 066,SMB,Jaipur,Rajasthan,India,Safety
+CUSTOMER0490,Aarav Trading 381,Retail,Hyderabad,Karnataka,India,Safety
+CUSTOMER0491,Meera Industries 247,Enterprise,Ahmedabad,Gujarat,India,Electronics
+CUSTOMER0492,Ishaan Systems 254,SMB,Hyderabad,Karnataka,India,Automotive
+CUSTOMER0493,Ishaan Industries 259,SMB,Lucknow,Uttar Pradesh,India,Automotive
+CUSTOMER0494,Aditya Retail 309,Retail,Hyderabad,Karnataka,India,Industrial
+CUSTOMER0495,Aarav Trading 118,Retail,Indore,Telangana,India,Safety
+CUSTOMER0496,Kabir Trading 115,SMB,Hyderabad,Karnataka,India,Electronics
+CUSTOMER0497,Riya Industries 057,Enterprise,Mumbai,Uttar Pradesh,India,Industrial
+CUSTOMER0498,Kabir Trading 102,Retail,Indore,Telangana,India,Safety
+CUSTOMER0499,Vivaan Enterprises 144,SMB,Hyderabad,Telangana,India,Automotive
+CUSTOMER0500,Aditya Systems 466,Retail,Mumbai,Maharashtra,India,Packaging

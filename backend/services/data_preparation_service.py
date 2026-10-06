@@ -1,8 +1,9 @@
 import pandas as pd
 
 
-def prepare_data_for_model(dataframe: pd.DataFrame):
+def prepare_data_for_model(dataframe: pd.DataFrame, skip_columns=None):
     dataframe = dataframe.copy()
+    skip = set(skip_columns or [])
 
     numerical_columns = dataframe.select_dtypes(
         include="number"
@@ -11,6 +12,9 @@ def prepare_data_for_model(dataframe: pd.DataFrame):
     categorical_columns = []
 
     for column in dataframe.columns:
+        if column in skip:
+            continue
+
         dtype = dataframe[column].dtype
 
         if (

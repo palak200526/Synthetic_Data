@@ -4,31 +4,46 @@ import torch
 import torch.nn as nn
 
 
+# ============================================================
+# Generator Network
+# ============================================================
+
 class Generator(nn.Module):
+
     def __init__(self, input_dim, output_dim):
         super().__init__()
 
         self.model = nn.Sequential(
             nn.Linear(input_dim, 128),
             nn.ReLU(),
+
             nn.Linear(128, 256),
             nn.ReLU(),
-            nn.Linear(256, output_dim)
+
+            nn.Linear(256, output_dim),
+            nn.Sigmoid()
         )
 
     def forward(self, x):
         return self.model(x)
 
 
+# ============================================================
+# Discriminator Network
+# ============================================================
+
 class Discriminator(nn.Module):
+
     def __init__(self, input_dim):
         super().__init__()
 
         self.model = nn.Sequential(
             nn.Linear(input_dim, 256),
             nn.LeakyReLU(0.2),
+
             nn.Linear(256, 128),
             nn.LeakyReLU(0.2),
+
             nn.Linear(128, 1),
             nn.Sigmoid()
         )
@@ -37,17 +52,30 @@ class Discriminator(nn.Module):
         return self.model(x)
 
 
+# ============================================================
+# CTGAN Generator
+# ============================================================
+
 class CTGANGenerator:
     """
-    Lightweight PyTorch-based CTGAN-style generator.
+    Lightweight CTGAN-style generator for tabular data.
 
     Handles:
     - Numerical columns
     - Categorical columns
     - Identifier columns
 
-    Numerical columns use the learned empirical distribution
-    to avoid numerical mode collapse.
+    Identifier columns are excluded from GAN training
+    and generated separately as new unique values.
+
+    Numerical columns use:
+    - Min-max normalization during training
+    - GAN-generated latent values
+    - Quantile calibration during reconstruction
+
+    Quantile calibration prevents the numerical output
+    from collapsing toward only one end of the original
+    numerical range.
     """
 
     def __init__(
@@ -57,13 +85,19 @@ class CTGANGenerator:
         learning_rate=0.0002,
         random_state=42
     ):
+
         self.epochs = epochs
         self.batch_size = batch_size
         self.learning_rate = learning_rate
         self.random_state = random_state
 
-        self.rng = np.random.default_rng(random_state)
-        torch.manual_seed(random_state)
+        self.rng = np.random.default_rng(
+            random_state
+        )
+
+        torch.manual_seed(
+            random_state
+        )
 
         self.columns = None
 
@@ -72,14 +106,29 @@ class CTGANGenerator:
         self.identifier_columns = []
 
         self.category_mappings = {}
+        self.category_probabilities = {}
+
         self.numeric_values = {}
+        self.numeric_min = {}
+        self.numeric_max = {}
 
         self.generator = None
         self.discriminator = None
 
-    def fit(self, df: pd.DataFrame):
+    # ========================================================
+    # FIT
+    # ========================================================
+
+    def fit(
+        self,
+        df: pd.DataFrame,
+        identifier_columns: list[str] | None = None
+    ):
         """
-        Train the CTGAN-style model.
+        Learn the dataset representation.
+
+        Identifier columns are supplied from the column
+        configuration and excluded from GAN training.
         """
 
         if df.empty:
@@ -87,24 +136,39 @@ class CTGANGenerator:
                 "Input dataset cannot be empty."
             )
 
-        self.columns = list(df.columns)
+        # ----------------------------------------------------
+        # Store columns
+        # ----------------------------------------------------
 
-        # Identify ID columns
+        self.columns = list(
+            df.columns
+        )
+
+        # ----------------------------------------------------
+        # Identifier columns
+        # ----------------------------------------------------
 
         self.identifier_columns = [
             column
-            for column in df.columns
-            if column.lower().endswith("_id")
-            or column.lower() == "id"
+            for column in (identifier_columns or [])
+            if column in df.columns
         ]
 
-        # Identify numerical columns
+        # ----------------------------------------------------
+        # Numerical columns
+        # ----------------------------------------------------
 
-        self.numeric_columns = df.select_dtypes(
-            include=[np.number]
-        ).columns.tolist()
+        self.numeric_columns = (
+            df.select_dtypes(
+                include=[np.number]
+            )
+            .columns
+            .tolist()
+        )
 
-        # Identify categorical columns
+        # ----------------------------------------------------
+        # Categorical columns
+        # ----------------------------------------------------
 
         self.categorical_columns = [
             column
@@ -115,40 +179,61 @@ class CTGANGenerator:
 
         encoded_data = []
 
+        # ====================================================
         # Numerical columns
+        # ====================================================
 
         for column in self.numeric_columns:
 
             values = (
                 df[column]
-                .fillna(df[column].median())
+                .fillna(
+                    df[column].median()
+                )
                 .astype(float)
             )
 
-            # Store original distribution
+            numeric_array = values.to_numpy()
+
             self.numeric_values[column] = (
-                values.to_numpy()
+                numeric_array
             )
 
-            # Normalize for GAN training
-            min_value = values.min()
-            max_value = values.max()
+            min_value = numeric_array.min()
+            max_value = numeric_array.max()
+
+            self.numeric_min[column] = (
+                min_value
+            )
+
+            self.numeric_max[column] = (
+                max_value
+            )
+
+            # ----------------------------------------------
+            # Min-max normalization
+            # ----------------------------------------------
 
             if max_value == min_value:
+
                 normalized = np.zeros(
-                    len(values)
+                    len(numeric_array)
                 )
+
             else:
+
                 normalized = (
-                    (values - min_value)
+                    (numeric_array - min_value)
                     / (max_value - min_value)
                 )
 
             encoded_data.append(
-                normalized.to_numpy().reshape(-1, 1)
+                normalized.reshape(-1, 1)
             )
 
+        # ====================================================
         # Categorical columns
+        # ====================================================
 
         for column in self.categorical_columns:
 
@@ -158,7 +243,10 @@ class CTGANGenerator:
                 .astype(str)
             )
 
-            categories = values.unique().tolist()
+            categories = (
+                values.unique()
+                .tolist()
+            )
 
             mapping = {
                 category: index
@@ -166,21 +254,50 @@ class CTGANGenerator:
                 in enumerate(categories)
             }
 
-            self.category_mappings[column] = mapping
+            self.category_mappings[column] = (
+                mapping
+            )
 
-            encoded = values.map(mapping).to_numpy()
+            probabilities = (
+                values
+                .value_counts(
+                    normalize=True
+                )
+            )
+
+            self.category_probabilities[column] = (
+                probabilities
+            )
+
+            encoded = (
+                values
+                .map(mapping)
+                .to_numpy()
+            )
 
             if len(categories) > 1:
+
                 encoded = (
                     encoded
                     / (len(categories) - 1)
+                )
+
+            else:
+
+                encoded = np.zeros(
+                    len(values)
                 )
 
             encoded_data.append(
                 encoded.reshape(-1, 1)
             )
 
+        # ====================================================
+        # Training data
+        # ====================================================
+
         if not encoded_data:
+
             raise ValueError(
                 "No numerical or categorical columns "
                 "available for training."
@@ -189,14 +306,20 @@ class CTGANGenerator:
         data = np.concatenate(
             encoded_data,
             axis=1
-        ).astype(np.float32)
+        ).astype(
+            np.float32
+        )
 
-        data_tensor = torch.tensor(data)
+        data_tensor = torch.tensor(
+            data
+        )
 
         input_dim = data.shape[1]
         output_dim = data.shape[1]
 
+        # ====================================================
         # Networks
+        # ====================================================
 
         self.generator = Generator(
             input_dim=input_dim,
@@ -219,9 +342,13 @@ class CTGANGenerator:
 
         criterion = nn.BCELoss()
 
-        # Training
+        # ====================================================
+        # GAN training
+        # ====================================================
 
-        for epoch in range(self.epochs):
+        for epoch in range(
+            self.epochs
+        ):
 
             indices = torch.randperm(
                 len(data_tensor)
@@ -245,7 +372,10 @@ class CTGANGenerator:
                     real_data
                 )
 
-                # Discriminator
+                # ------------------------------------------
+                # Train discriminator
+                # ------------------------------------------
+
                 noise = torch.randn(
                     current_batch_size,
                     input_dim
@@ -267,12 +397,16 @@ class CTGANGenerator:
 
                 optimizer_d.zero_grad()
 
-                real_output = self.discriminator(
-                    real_data
+                real_output = (
+                    self.discriminator(
+                        real_data
+                    )
                 )
 
-                fake_output = self.discriminator(
-                    fake_data.detach()
+                fake_output = (
+                    self.discriminator(
+                        fake_data.detach()
+                    )
                 )
 
                 loss_real = criterion(
@@ -286,13 +420,17 @@ class CTGANGenerator:
                 )
 
                 loss_d = (
-                    loss_real + loss_fake
+                    loss_real
+                    + loss_fake
                 )
 
                 loss_d.backward()
+
                 optimizer_d.step()
 
-                # Generator
+                # ------------------------------------------
+                # Train generator
+                # ------------------------------------------
 
                 optimizer_g.zero_grad()
 
@@ -315,22 +453,130 @@ class CTGANGenerator:
                 )
 
                 loss_g.backward()
+
                 optimizer_g.step()
+
+        print(
+            "Training completed."
+        )
 
         return self
 
-    def generate(self, num_rows: int) -> pd.DataFrame:
+    # ========================================================
+    # NUMERICAL QUANTILE CALIBRATION
+    # ========================================================
+
+    def _reconstruct_numeric_column(
+        self,
+        generated_values,
+        column
+    ):
         """
-        Generate synthetic tabular records.
+        Convert GAN output into values following the
+        learned empirical numerical distribution.
+
+        The GAN output determines the ordering/ranks,
+        while the original numerical distribution provides
+        the actual value scale.
+
+        This prevents numerical mode collapse toward one
+        end of the range.
+        """
+
+        original_values = (
+            self.numeric_values[column]
+        )
+
+        if len(original_values) == 0:
+            return generated_values
+
+        # ----------------------------------------------------
+        # Sort GAN-generated values
+        # ----------------------------------------------------
+
+        generated_values = np.asarray(
+            generated_values
+        )
+
+        generated_values = np.clip(
+            generated_values,
+            0.0,
+            1.0
+        )
+
+        # ----------------------------------------------------
+        # Convert generated values to ranks
+        # ----------------------------------------------------
+
+        ranks = np.argsort(
+            np.argsort(
+                generated_values
+            )
+        )
+
+        if len(generated_values) == 1:
+            quantiles = np.array([0.5])
+        else:
+            quantiles = (
+                ranks + 0.5
+            ) / len(
+                generated_values
+            )
+
+        # ----------------------------------------------------
+        # Original empirical distribution
+        # ----------------------------------------------------
+
+        sorted_original = np.sort(
+            original_values
+        )
+
+        original_positions = (
+            np.arange(
+                len(sorted_original)
+            )
+            / max(
+                len(sorted_original) - 1,
+                1
+            )
+        )
+
+        # ----------------------------------------------------
+        # Interpolate generated quantiles
+        # ----------------------------------------------------
+
+        reconstructed = np.interp(
+            quantiles,
+            original_positions,
+            sorted_original
+        )
+
+        return reconstructed
+
+    # ========================================================
+    # GENERATE
+    # ========================================================
+
+    def generate(
+        self,
+        num_rows: int
+    ) -> pd.DataFrame:
+        """
+        Generate synthetic records.
+
+        Identifier columns are NOT generated by the GAN.
+        They are created separately as unique synthetic IDs.
         """
 
         if self.generator is None:
+
             raise RuntimeError(
                 "Model has not been fitted. "
                 "Call fit() first."
             )
 
         if num_rows <= 0:
+
             raise ValueError(
                 "num_rows must be greater than zero."
             )
@@ -340,145 +586,148 @@ class CTGANGenerator:
             + self.categorical_columns
         )
 
-        input_dim = len(model_columns)
+        input_dim = len(
+            model_columns
+        )
 
         if input_dim == 0:
+
             raise RuntimeError(
                 "No columns available for generation."
             )
 
-        # Generate GAN output.
+        # ====================================================
+        # Generate GAN output
+        # ====================================================
+
         noise = torch.randn(
             num_rows,
             input_dim
         )
 
         with torch.no_grad():
-            generated = self.generator(
-                noise
-            ).numpy()
+
+            generated = (
+                self.generator(
+                    noise
+                )
+                .numpy()
+            )
 
         synthetic_data = {}
 
         column_index = 0
 
+        # ====================================================
         # Numerical columns
+        # ====================================================
+
         for column in self.numeric_columns:
 
-            original_values = (
-                self.numeric_values[column]
+            generated_values = (
+                generated[
+                    :,
+                    column_index
+                ]
             )
 
-            # Bootstrap from learned empirical distribution
-            # and add very small jitter.
-            values = self.rng.choice(
-                original_values,
-                size=num_rows,
-                replace=True
-            ).astype(float)
+            # ----------------------------------------------
+            # Quantile calibration
+            # ----------------------------------------------
 
-            std = np.std(original_values)
-
-            if std > 0:
-                jitter = self.rng.normal(
-                    loc=0,
-                    scale=std * 0.01,
-                    size=num_rows
+            values = (
+                self._reconstruct_numeric_column(
+                    generated_values,
+                    column
                 )
-
-                values = values + jitter
-
-            # Keep values inside original range
-            values = np.clip(
-                values,
-                np.min(original_values),
-                np.max(original_values)
             )
 
-            # Preserve integer columns
             original_dtype = (
-                pd.Series(original_values).dtype
+                self.numeric_values[
+                    column
+                ].dtype
             )
+
+            # ----------------------------------------------
+            # Preserve integer columns
+            # ----------------------------------------------
 
             if pd.api.types.is_integer_dtype(
                 original_dtype
             ):
+
                 values = np.round(
                     values
                 ).astype(int)
 
-            synthetic_data[column] = values
+            synthetic_data[column] = (
+                values
+            )
 
             column_index += 1
 
+        # ====================================================
         # Categorical columns
+        # ====================================================
+
         for column in self.categorical_columns:
 
-            mapping = self.category_mappings[
-                column
-            ]
-
-            categories = list(
-                mapping.keys()
+            probabilities = (
+                self.category_probabilities[
+                    column
+                ]
             )
 
-            # Use the GAN output to select categories.
-            values = generated[
-                :, column_index
-            ]
-
-            values = np.clip(
-                values,
-                0,
-                1
+            categories = (
+                probabilities.index
+                .tolist()
             )
 
-            indices = np.round(
-                values * (len(categories) - 1)
-            ).astype(int)
+            probabilities_array = (
+                probabilities
+                .to_numpy()
+            )
 
-            synthetic_data[column] = [
-                categories[index]
-                for index in indices
-            ]
+            values = self.rng.choice(
+                categories,
+                size=num_rows,
+                p=probabilities_array
+            )
+
+            synthetic_data[column] = (
+                values
+            )
 
             column_index += 1
 
-        # Unique identifiers
+        # ====================================================
+        # Generate new identifiers
+        # ====================================================
 
         for column in self.identifier_columns:
 
-            if column.lower() == "product_id":
-
-                synthetic_data[column] = [
-                    f"PROD{index:04d}"
-                    for index in range(
-                        1,
-                        num_rows + 1
-                    )
-                ]
-
-            else:
-
-                prefix = (
-                    column
-                    .replace("_id", "")
-                    .upper()
+            synthetic_data[column] = [
+                f"{column}_{index:06d}"
+                for index in range(
+                    1,
+                    num_rows + 1
                 )
+            ]
 
-                synthetic_data[column] = [
-                    f"{prefix}{index:04d}"
-                    for index in range(
-                        1,
-                        num_rows + 1
-                    )
-                ]
-
-        # Restore original column order
+        # ====================================================
+        # Create final DataFrame
+        # ====================================================
 
         synthetic_df = pd.DataFrame(
-            synthetic_data,
-            columns=self.columns
+            synthetic_data
         )
+
+        # ====================================================
+        # Restore original column order
+        # ====================================================
+
+        synthetic_df = synthetic_df[
+            self.columns
+        ]
 
         return synthetic_df

@@ -56,6 +56,10 @@ from backend.controllers.validation_rule_controller import (
 
 from backend.controllers.auth_controller import router as auth_router
 
+from backend.controllers.llm_column_configuration_controller import (
+    router as llm_column_configuration_router,
+)
+
 app = FastAPI(
     title="Synthetic Data Platform API",
     description="Backend API for the Synthetic Data Platform",
@@ -148,3 +152,6 @@ app.include_router(relationship_router)
 app.include_router(dataset_group_router)
 app.include_router(validation_rule_router)
 app.include_router(auth_router)
+app.include_router(
+    llm_column_configuration_router
+)

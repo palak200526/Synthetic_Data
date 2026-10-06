@@ -21,23 +21,24 @@ router = APIRouter(
     description=(
         "Retrieves the profiling information for a dataset using its dataset ID. "
         "If a profile already exists, the saved profile is returned. "
-        "Otherwise, the dataset is loaded, profiled, sensitive and identifier "
-        "columns are detected, domain-specific presets are applied, and the "
-        "generated profile is stored for future retrieval."
+        "Otherwise, the dataset is loaded, profiled, and the generated "
+        "profile is stored for future retrieval."
     ),
 )
 def get_profile_controller(
     dataset_id: int,
-    user_id: int = Depends(get_current_user)
+    user_id: int = Depends(get_current_user),
 ):
     try:
+
         return get_profile(
             dataset_id,
-            user_id
+            user_id,
         )
 
     except PermissionError as e:
+
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail=str(e)
+            detail=str(e),
         )
