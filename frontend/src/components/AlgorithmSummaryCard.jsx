@@ -142,9 +142,6 @@ export function AlgorithmPickerCard({ algorithmId, active, disabled, onClick }) 
             {info.label}
           </span>
         </div>
-        <Chip tone={info.speedTone}>
-          <Clock size={9} /> {info.speed}
-        </Chip>
       </div>
       <p className="text-[11px] font-medium text-ink-500">{info.tagline}</p>
       <p className="text-xs leading-snug text-ink-600">{info.oneLiner}</p>
@@ -170,9 +167,6 @@ export default function AlgorithmSummaryCard({ algorithmId, defaultOpen = false 
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="text-sm font-semibold text-ink-900">{info.label}</h3>
             <Chip tone="ink">{info.short}</Chip>
-            <Chip tone={info.speedTone}>
-              <Clock size={9} /> {info.speed}
-            </Chip>
           </div>
           <p className="mt-1 text-xs text-ink-500">{info.oneLiner}</p>
         </div>

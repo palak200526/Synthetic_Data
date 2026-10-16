@@ -9,7 +9,9 @@ import {
   FileText,
   Settings as SettingsIcon,
   LogOut,
+  History,
   Sparkles,
+  BookOpen,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { listLocalDatasets } from '../utils/batchStore.js'
@@ -49,9 +51,21 @@ const NAV_SECTIONS = [
       { type: 'action', action: 'generate', label: 'Generate Data', icon: Cpu },
       {
         type: 'link',
+        to: '/generations',
+        label: 'Job History & Resume',
+        icon: History,
+      },
+      {
+        type: 'link',
         to: '/relationships',
         label: 'Multi-Table',
         icon: GitBranch,
+      },
+      {
+        type: 'link',
+        to: '/algorithms',
+        label: 'Algorithm Guide',
+        icon: BookOpen,
       },
     ],
   },

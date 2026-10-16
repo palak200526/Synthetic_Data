@@ -3,7 +3,7 @@ from pathlib import Path
 
 ALLOWED_EXTENSIONS = {".csv", ".xls", ".xlsx"}
 
-MAX_FILE_SIZE = 50 * 1024 * 1024  # 50 MB
+MAX_FILE_SIZE = 10 * 1024 * 1024 * 1024  # 10 GB
 
 
 def validate_file_extension(filename: str) -> None:
@@ -31,7 +31,7 @@ def validate_file_size(file_size: int) -> None:
 
     if file_size > MAX_FILE_SIZE:
         raise ValueError(
-            "File size exceeds the maximum allowed limit of 50 MB."
+            "File size exceeds the maximum allowed limit of 10 GB."
         )
 
 

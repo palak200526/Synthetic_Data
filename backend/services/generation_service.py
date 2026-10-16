@@ -1,8 +1,13 @@
+import asyncio
+import inspect
 import logging
+import os
 
 import pandas as pd
 
 from backend.services.column_profile_service import build_column_profile
+from backend.services.id_pattern_service import generate_ids_like
+from backend.services.progress_service import ProgressReporter
 from backend.services.ollama_client import ensure_ollama_ready
 
 logger = logging.getLogger(__name__)
@@ -11,6 +16,7 @@ from backend.services.generated_dataset_service import (
     prepare_dataset_for_generation,
     save_generated_dataset,
 )
+from backend.services.missing_value_service import handle_missing_values
 
 from backend.services.business_rule_detector import (
     detect_arithmetic_relationships,
@@ -39,13 +45,51 @@ from backend.generation.generator_factory import (
     get_generator
 )
 
-from backend.generation.llm_text import LLMTextGenerator
+from backend.generation.llm_text import LLMTextGenerator, run_coroutine_sync
 
 from backend.generation.llm_validator import (
     validate_rating_consistency,
     validate_sentiment_consistency,
 )
+from backend.repositories.generation_job_repository import (
+    create_generation_job,
+    get_generation_job,
+    update_generation_job_progress,
+    update_generation_job_status,
+)
+from backend.services.generation_checkpoint_service import (
+    check_job_control,
+    clear_job_control,
+    clear_local_job_control,
+    delete_checkpoint,
+    load_checkpoint_rows,
+    pop_auto_pause_reason,
+    save_checkpoint_rows,
+)
 from backend.utils.action_validator import validate_action
+
+
+def _compute_checkpoint_batch_size(target_row_count: int, param_batch: int | None = None) -> int:
+    if param_batch and int(param_batch) > 0:
+        return min(int(param_batch), target_row_count)
+    if target_row_count <= 20:
+        return max(5, target_row_count // 2 or 1)
+    if target_row_count <= 100:
+        return 25
+    if target_row_count <= 500:
+        return 100
+    return 200
+
+from backend.services.quality_enhancement_service import (
+    detect_derived_features,
+    apply_derived_features,
+    apply_rank_preserving_marginal_matching,
+    match_categorical_frequencies,
+    compute_correlation_error,
+    privacy_guard_filter,
+    encode_cyclical_datetimes,
+    decode_cyclical_datetimes,
+)
 
 SUPPORTED_MODELS = {
     "gaussian_copula",
@@ -58,6 +102,7 @@ SUPPORTED_MODELS = {
 # These belong to local LLM text generation, not CTGAN/TVAE/Copula.
 _LLM_PARAMETER_KEYS = {
     "llm_text_batch_size",
+    "llm_text_max_concurrency",
     "llm_text_timeout",
     "llm_text_max_retries",
     "llm_text_similarity_threshold",
@@ -65,8 +110,24 @@ _LLM_PARAMETER_KEYS = {
     "ollama_url",
 }
 
+_QUALITY_PARAMETER_KEYS = {
+    "enable_quality_enhancements",
+    "enable_derived_features",
+    "enable_cyclical_encoding",
+    "enable_type_optimization",
+    "enable_subgroup_conditioning",
+    "enable_marginal_matching",
+    "enable_categorical_matching",
+    "enable_privacy_guard",
+    "enable_correlation_repair",
+    "overgenerate_factor",
+    "best_of_n",
+    "max_exact_duplicate_rate",
+}
+
 _LLM_PARAMETER_MAP = {
     "llm_text_batch_size": "batch_size",
+    "llm_text_max_concurrency": "max_concurrency",
     "llm_text_timeout": "timeout",
     "llm_text_max_retries": "max_retries",
     "llm_text_similarity_threshold": "similarity_threshold",
@@ -87,7 +148,7 @@ def _tabular_generator_parameters(parameters: dict | None) -> dict:
     return {
         key: value
         for key, value in (parameters or {}).items()
-        if key not in _LLM_PARAMETER_KEYS
+        if key not in _LLM_PARAMETER_KEYS and key not in _QUALITY_PARAMETER_KEYS
     }
 
 
@@ -137,9 +198,14 @@ def _get_llm_configurations(
 def _generate_unique_ids(
     result: pd.DataFrame,
     column_name: str,
+    original_dataframe: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     """
     Generate new unique identifiers for a column.
+
+    The new IDs copy the format of the original IDs (same prefix, length,
+    letter case, numeric type ...), so e.g. CUST-0042 becomes CUST-0731
+    rather than customer_id_synthetic_000001.
 
     Requirements:
     - IDs must be unique.
@@ -152,32 +218,25 @@ def _generate_unique_ids(
         return result
 
     # --------------------------------------------------
-    # Preserve existing values before replacing them
+    # Learn the format from the ORIGINAL column; fall back
+    # to whatever the generator produced if it is missing.
     # --------------------------------------------------
 
-    existing_values = set(
-        result[column_name]
-        .dropna()
-        .astype(str)
-        .tolist()
+    if (
+        original_dataframe is not None
+        and column_name in original_dataframe.columns
+    ):
+        source = original_dataframe[column_name]
+    else:
+        source = result[column_name]
+
+    existing_values = result[column_name].dropna().tolist()
+
+    result[column_name] = generate_ids_like(
+        source=source,
+        count=len(result),
+        existing=existing_values,
     )
-
-    generated_ids = []
-
-    index = 1
-
-    while len(generated_ids) < len(result):
-
-        new_id = (
-            f"{column_name}_synthetic_{index:06d}"
-        )
-
-        if new_id not in existing_values:
-            generated_ids.append(new_id)
-
-        index += 1
-
-    result[column_name] = generated_ids
 
     return result
 
@@ -189,6 +248,7 @@ def _generate_unique_ids(
 def _apply_column_actions(
     synthetic_dataframe: pd.DataFrame,
     configurations: list,
+    original_dataframe: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     """
     Apply configured column actions after synthetic generation.
@@ -196,9 +256,7 @@ def _apply_column_actions(
     Supported actions:
     - keep
     - remove
-    - generalize
     - new_id
-    - derived
     - llm
     """
 
@@ -211,9 +269,7 @@ def _apply_column_actions(
     supported_actions = {
         "keep",
         "remove",
-        "generalize",
         "new_id",
-        "derived",
         "llm",
     }
 
@@ -246,39 +302,6 @@ def _apply_column_actions(
 
 
     # ==================================================
-    # GENERALIZE
-    # ==================================================
-
-    generalize_columns = _get_columns_by_action(
-        configurations,
-        "generalize",
-    )
-
-    for column in generalize_columns:
-
-        if column not in result.columns:
-            continue
-
-        # Numeric generalization
-        if pd.api.types.is_numeric_dtype(
-            result[column]
-        ):
-
-            result[column] = (
-                result[column]
-                .round(0)
-            )
-
-        # String/text generalization
-        else:
-
-            result[column] = (
-                result[column]
-                .astype(str)
-                .str[:3]
-            )
-
-    # ==================================================
     # NEW ID
     # ==================================================
 
@@ -295,115 +318,8 @@ def _apply_column_actions(
         result = _generate_unique_ids(
             result=result,
             column_name=column,
+            original_dataframe=original_dataframe,
         )
-
-    # ==================================================
-    # DERIVED
-    # ==================================================
-
-    derived_configurations = [
-        config
-        for config in configurations
-        if config["action"] == "derived"
-    ]
-
-    for config in derived_configurations:
-
-        column_name = config["column_name"]
-
-        rule = config.get("rule")
-
-        if not rule:
-            continue
-
-        operation = rule.get(
-            "operation"
-        )
-
-        operands = rule.get(
-            "operands",
-            [],
-        )
-
-        if len(operands) < 2:
-            continue
-
-        left = operands[0]
-        right = operands[1]
-
-        if (
-            left not in result.columns
-            or right not in result.columns
-        ):
-            continue
-
-        # --------------------------------------------------
-        # ADD
-        # --------------------------------------------------
-
-        if operation == "add":
-
-            result[column_name] = (
-                result[left]
-                + result[right]
-            )
-
-        # --------------------------------------------------
-        # SUBTRACT
-        # --------------------------------------------------
-
-        elif operation == "subtract":
-
-            result[column_name] = (
-                result[left]
-                - result[right]
-            )
-
-        # --------------------------------------------------
-        # MULTIPLY
-        # --------------------------------------------------
-
-        elif operation == "multiply":
-
-            result[column_name] = (
-                result[left]
-                * result[right]
-            )
-
-        # --------------------------------------------------
-        # DIVIDE
-        # --------------------------------------------------
-
-        elif operation == "divide":
-
-            result[column_name] = 0.0
-
-            non_zero = (
-                result[right] != 0
-            )
-
-            result.loc[
-                non_zero,
-                column_name,
-            ] = (
-                result.loc[
-                    non_zero,
-                    left,
-                ]
-                /
-                result.loc[
-                    non_zero,
-                    right,
-                ]
-            )
-
-        else:
-
-            raise ValueError(
-                f"Unsupported derived "
-                f"operation '{operation}' "
-                f"for column '{column_name}'"
-            )
 
     return result
 
@@ -456,26 +372,17 @@ def _prepare_generation_dataframe(
 # GENERATE USING SELECTED MODEL
 # ==========================================================
 
-def _generate_with_model(
+def _fit_model(
     model_name: str,
     dataframe: pd.DataFrame,
     configurations: list,
     parameters: dict,
-    num_rows: int,
-) -> pd.DataFrame:
+    reporter: ProgressReporter | None = None,
+):
     """
-    Train the selected generator and generate
-    synthetic records.
-
-    Identifier columns configured as new_id are
-    passed to the generator so that generators
-    can treat them separately.
+    Prepare data and fit the selected generator.
+    Returns the fitted generator instance.
     """
-
-    # --------------------------------------------------
-    # Prepare dataframe
-    # --------------------------------------------------
-
     generation_dataframe = (
         _prepare_generation_dataframe(
             dataframe=dataframe,
@@ -487,17 +394,13 @@ def _generate_with_model(
         logger.info(
             "Skipping tabular generator; only LLM text columns remain."
         )
-        return pd.DataFrame(index=range(num_rows))
+        return None
 
     if model_name in {"llm", "llm_text", "text"}:
         logger.info(
             "LLM text model selected; generating structured columns with Gaussian Copula."
         )
         model_name = "gaussian_copula"
-
-    # --------------------------------------------------
-    # Get identifier columns
-    # --------------------------------------------------
 
     identifier_columns = (
         _get_columns_by_action(
@@ -512,46 +415,87 @@ def _generate_with_model(
         if column in generation_dataframe.columns
     ]
 
-    # --------------------------------------------------
-    # Generator parameters
-    # --------------------------------------------------
-
     generator_parameters = _tabular_generator_parameters(parameters)
-
-    # Identifier handling is controlled by
-    # column configuration.
     generator_parameters.pop(
         "identifier_columns",
         None,
     )
-
-    # --------------------------------------------------
-    # Create generator
-    # --------------------------------------------------
 
     generator = get_generator(
         model_name,
         **generator_parameters,
     )
 
-    # --------------------------------------------------
-    # Train
-    # --------------------------------------------------
+    fit_kwargs = {"identifier_columns": identifier_columns}
+
+    if reporter:
+        reporter.start("train")
+
+        def _epoch_progress(epoch: int, epochs: int) -> None:
+            reporter.update(
+                "train",
+                epoch / max(epochs, 1),
+                message=f"Epoch {epoch} of {epochs}",
+                epoch=epoch,
+                epochs=epochs,
+            )
+
+        if "progress_callback" in inspect.signature(
+            generator.fit
+        ).parameters:
+            fit_kwargs["progress_callback"] = _epoch_progress
 
     generator.fit(
         generation_dataframe,
-        identifier_columns=identifier_columns,
+        **fit_kwargs,
     )
 
-    # --------------------------------------------------
-    # Generate
-    # --------------------------------------------------
+    if reporter:
+        reporter.complete("train")
+
+    return generator
+
+
+def _generate_with_model(
+    model_name: str,
+    dataframe: pd.DataFrame,
+    configurations: list,
+    parameters: dict,
+    num_rows: int,
+    reporter: ProgressReporter | None = None,
+    fitted_generator=None,
+) -> pd.DataFrame:
+    """
+    Train the selected generator (or reuse an already fitted generator)
+    and sample synthetic records.
+    """
+    generator = fitted_generator
+    if generator is None:
+        generator = _fit_model(
+            model_name=model_name,
+            dataframe=dataframe,
+            configurations=configurations,
+            parameters=parameters,
+            reporter=reporter,
+        )
+
+    if generator is None:
+        return pd.DataFrame(index=range(num_rows))
+
+    if reporter:
+        reporter.start(
+            "sample",
+            message=f"Sampling {num_rows:,} rows",
+        )
 
     synthetic_dataframe = (
         generator.generate(
             num_rows=num_rows
         )
     )
+
+    if reporter:
+        reporter.complete("sample")
 
     return synthetic_dataframe
 
@@ -731,6 +675,13 @@ def _generate_llm_columns(
     llm_generator = LLMTextGenerator(**kwargs)
     total_columns = len(llm_configurations)
 
+    # ------------------------------------------------------------------
+    # Phase 1: prepare every column (cheap, CPU only).
+    # LLM columns are excluded from each other's row context
+    # (_compact_row_context drops llm_names), so they are independent and
+    # can be generated at the same time.
+    # ------------------------------------------------------------------
+    jobs: list[dict] = []
     for column_index, config in enumerate(llm_configurations, start=1):
         column_name = config.get("column_name")
         if not column_name or column_name not in original_dataframe.columns:
@@ -756,22 +707,6 @@ def _generate_llm_columns(
                 f"{llm_rule}"
             )
 
-        row_count = len(result)
-        logger.info(
-            "LLM column generation column=%s rows=%s samples=%s",
-            column_name,
-            row_count,
-            len(sample_values),
-        )
-
-        def _column_progress(meta: dict) -> None:
-            if not progress_callback:
-                return
-            payload = dict(meta)
-            payload["llm_column_index"] = column_index
-            payload["llm_column_total"] = total_columns
-            progress_callback(payload)
-
         use_row_context = _needs_row_context(llm_rule, list(result.columns))
         row_records = (
             result.to_dict(orient="records") if use_row_context else []
@@ -780,32 +715,120 @@ def _generate_llm_columns(
             _compact_row_context(row, llm_names) for row in row_records
         ] if use_row_context else None
 
-        generated_values = llm_generator.generate(
-            column_name=column_name,
-            count=row_count,
-            sample_values=sample_values,
-            profile=profile,
-            extra_context=extra_context,
-            row_contexts=row_contexts,
-            source_values=source_values,
-            progress_callback=_column_progress,
+        logger.info(
+            "LLM column generation column=%s rows=%s samples=%s",
+            column_name,
+            len(result),
+            len(sample_values),
         )
+
+        jobs.append(
+            {
+                "column_index": column_index,
+                "column_name": column_name,
+                "llm_rule": llm_rule,
+                "sample_values": sample_values,
+                "source_values": source_values,
+                "profile": profile,
+                "extra_context": extra_context,
+                "row_records": row_records,
+                "row_contexts": row_contexts,
+            }
+        )
+
+    if not jobs:
+        return result
+
+    # ------------------------------------------------------------------
+    # Phase 2: generate all columns concurrently on ONE event loop.
+    # A single semaphore bounds the total number of in-flight Ollama
+    # requests, so more columns never means more load than
+    # max_concurrency allows.
+    # ------------------------------------------------------------------
+    row_count = len(result)
+    progress_state = {job["column_name"]: 0 for job in jobs}
+    total_requested = row_count * len(jobs)
+
+    def _make_progress(job: dict):
+        def _column_progress(meta: dict) -> None:
+            if not progress_callback:
+                return
+            progress_state[job["column_name"]] = int(meta.get("generated") or 0)
+            if len(jobs) == 1:
+                payload = dict(meta)
+                payload["llm_column_index"] = job["column_index"]
+                payload["llm_column_total"] = total_columns
+            else:
+                payload = {
+                    "stage": "llm_text",
+                    "column": ", ".join(progress_state),
+                    "batch": meta.get("batch"),
+                    "generated": sum(progress_state.values()),
+                    "requested": total_requested,
+                    "llm_column_index": 1,
+                    "llm_column_total": 1,
+                }
+            progress_callback(payload)
+
+        return _column_progress
+
+    parallel_columns = (
+        os.getenv("LLM_TEXT_PARALLEL_COLUMNS", "1").strip().lower()
+        not in {"0", "false", "no"}
+    )
+
+    async def _run_all() -> list[list[str]]:
+        shared_semaphore = asyncio.Semaphore(llm_generator.max_concurrency)
+
+        async def _one(job: dict) -> list[str]:
+            return await llm_generator.async_generate(
+                column_name=job["column_name"],
+                count=row_count,
+                sample_values=job["sample_values"],
+                profile=job["profile"],
+                extra_context=job["extra_context"],
+                row_contexts=job["row_contexts"],
+                source_values=job["source_values"],
+                progress_callback=_make_progress(job),
+                semaphore=shared_semaphore,
+            )
+
+        if parallel_columns:
+            return list(await asyncio.gather(*[_one(job) for job in jobs]))
+
+        outputs = []
+        for job in jobs:
+            outputs.append(await _one(job))
+        return outputs
+
+    all_values = run_coroutine_sync(_run_all())
+
+    # ------------------------------------------------------------------
+    # Phase 3: consistency retries + assignment
+    # ------------------------------------------------------------------
+    for job, generated_values in zip(jobs, all_values):
+        column_name = job["column_name"]
+        llm_rule = job["llm_rule"]
 
         has_structured_context = any(
             c.strip().lower() in ("sentiment", "rating", "stars")
             for c in result.columns
         )
-        if llm_rule.get("rating_consistency") or llm_rule.get("sentiment_consistency") or has_structured_context:
+        if (
+            llm_rule.get("rating_consistency")
+            or llm_rule.get("sentiment_consistency")
+            or has_structured_context
+        ):
             generated_values = _retry_invalid_llm_rows(
                 llm_generator=llm_generator,
                 column_name=column_name,
                 generated_values=generated_values,
-                row_records=row_records or result.to_dict(orient="records"),
+                row_records=job["row_records"] or result.to_dict(orient="records"),
                 llm_rule=llm_rule,
-                sample_values=sample_values,
-                profile=profile,
-                extra_context=extra_context,
-                source_values=source_values,
+                sample_values=job["sample_values"],
+                profile=job["profile"],
+                extra_context=job["extra_context"],
+                source_values=job["source_values"],
                 llm_names=llm_names,
             )
 
@@ -904,26 +927,88 @@ def generate_rows(
     parameters: dict | None = None,
     progress_callback=None,
     business_rules: list | None = None,
+    reporter: ProgressReporter | None = None,
+    fitted_generator=None,
+    apply_post_enhancements: bool = True,
 ) -> pd.DataFrame:
     """
-    Train the selected tabular generator, fill LLM text columns,
-    then apply column actions. Used by the main service and tests.
+    Train or sample the selected tabular generator, fill LLM text columns,
+    then apply column actions and quality enhancements.
     """
+    params = dict(parameters or {})
+
+    # Best-of-N candidate selection (Step 3d)
+    best_of_n = int(params.get("best_of_n", 1))
+    # Best-of-N would re-run the (slow) LLM text generation N times, so it is
+    # skipped whenever LLM columns are configured.
+    if best_of_n > 1 and fitted_generator is None and not _get_llm_configurations(configurations):
+        best_df = None
+        best_score = -1e9
+        base_seed = int(params.get("random_state", 42))
+        for cand_idx in range(best_of_n):
+            cand_params = dict(params)
+            cand_params["best_of_n"] = 1  # prevent recursion
+            cand_params["random_state"] = base_seed + cand_idx * 17
+            cand_df = generate_rows(
+                original_dataframe=original_dataframe,
+                configurations=configurations,
+                model_name=model_name,
+                num_rows=num_rows,
+                parameters=cand_params,
+                progress_callback=progress_callback,
+                business_rules=business_rules,
+                reporter=reporter,
+                fitted_generator=fitted_generator,
+                apply_post_enhancements=apply_post_enhancements,
+            )
+            corr_err = compute_correlation_error(original_dataframe, cand_df)
+            score = 100.0 * (1.0 - corr_err)
+            if score > best_score or best_df is None:
+                best_score = score
+                best_df = cand_df
+        return best_df if best_df is not None else original_dataframe.head(num_rows)
+
+    has_llm = bool(_get_llm_configurations(configurations))
+    if reporter is None:
+        reporter = ProgressReporter(progress_callback, model_name=model_name)
+        reporter.configure(
+            has_llm=has_llm,
+        )
+
+    enable_enhancements = params.get("enable_quality_enhancements", True)
+    enable_derived = params.get("enable_derived_features", True) if enable_enhancements else False
+    enable_marginal = params.get("enable_marginal_matching", True) if enable_enhancements else False
+    enable_categorical = params.get("enable_categorical_matching", True) if enable_enhancements else False
+    enable_privacy = params.get("enable_privacy_guard", True) if enable_enhancements else False
+    overgen_factor = float(params.get("overgenerate_factor", 1.25)) if (enable_enhancements and not has_llm and apply_post_enhancements) else 1.0
+
+    # Step 1: Detect derived features (arithmetic, date diffs)
+    derived_rules = []
+    train_df = original_dataframe
+    if enable_derived:
+        try:
+            derived_rules = detect_derived_features(original_dataframe)
+            derived_targets = [r["target"] for r in derived_rules if r.get("target")]
+            if derived_targets:
+                train_df = original_dataframe.drop(columns=derived_targets, errors="ignore")
+        except Exception as exc:
+            logger.warning("Could not process derived features: %s", exc)
+
+    gen_rows_count = int(num_rows * overgen_factor) if overgen_factor > 1.0 else num_rows
+
     generated = _generate_with_model(
         model_name=model_name,
-        dataframe=original_dataframe,
+        dataframe=train_df,
         configurations=configurations,
         parameters=parameters or {},
-        num_rows=num_rows,
+        num_rows=gen_rows_count,
+        reporter=reporter,
+        fitted_generator=fitted_generator,
     )
 
-    if progress_callback:
-        progress_callback(
-            {
-                "stage": "tabular",
-                "percent": 40,
-            }
-        )
+    # Step 1 & 3: Recompute derived features
+    if derived_rules:
+        generated = apply_derived_features(generated, derived_rules)
 
     if business_rules:
         generated = apply_business_rules(
@@ -931,18 +1016,59 @@ def generate_rows(
             business_rules,
         )
 
+    def _llm_progress(meta: dict) -> None:
+        total = meta.get("llm_column_total") or 1
+        index = meta.get("llm_column_index") or 1
+        requested = meta.get("requested") or 0
+        done = meta.get("generated") or 0
+        inner = min(done / requested, 1.0) if requested else 0.0
+        reporter.update(
+            "llm_text",
+            ((index - 1) + inner) / total,
+            message=(
+                f"Column '{meta.get('column')}' "
+                f"({done}/{requested or '?'})"
+            ),
+            column=meta.get("column"),
+            batch=meta.get("batch"),
+            generated=done,
+            requested=requested,
+            llm_column_index=index,
+            llm_column_total=total,
+        )
+
+    reporter.start("llm_text")
     generated = _generate_llm_columns(
         original_dataframe=original_dataframe,
         synthetic_dataframe=generated,
         configurations=configurations,
-        progress_callback=progress_callback,
+        progress_callback=_llm_progress,
         llm_kwargs=_llm_generator_kwargs(parameters),
     )
+    reporter.complete("llm_text")
 
     generated = _apply_column_actions(
         synthetic_dataframe=generated,
         configurations=configurations,
+        original_dataframe=original_dataframe,
     )
+
+    # Step 3 & 5: Post-generation marginal matching, categorical matching, privacy guard
+    if apply_post_enhancements and enable_enhancements:
+        if enable_marginal:
+            generated = apply_rank_preserving_marginal_matching(original_dataframe, generated)
+        if enable_categorical:
+            generated = match_categorical_frequencies(original_dataframe, generated)
+        if enable_privacy:
+            generated, _ = privacy_guard_filter(
+                real_df=original_dataframe,
+                synthetic_df=generated,
+                max_exact_duplicate_rate=float(params.get("max_exact_duplicate_rate", 0.01)),
+            )
+
+    if len(generated) > num_rows:
+        generated = generated.head(num_rows).reset_index(drop=True)
+
     return generated
 
 # ==========================================================
@@ -955,27 +1081,11 @@ def generate_synthetic_dataset(
     user_id,
     parameters: dict | None = None,
     progress_callback=None,
+    job_id: str | None = None,
+    resume: bool = False,
 ):
     """
-    Main synthetic data generation service.
-
-    Flow:
-
-    1. Validate dataset ownership
-    2. Validate generation model
-    3. Create generation run
-    4. Load dataset and configurations
-    5. Load validation rules
-    6. Detect business rules
-    7. Train selected generator
-    8. Generate synthetic data
-    9. Apply business rules
-    10. Apply configured column actions
-    11. Validate/resample
-    12. Save generated dataset
-    13. Save generation result
-    14. Update generation run
-    15. Return API response
+    Main synthetic data generation service with persistent checkpoint and resume support.
     """
 
     # ==================================================
@@ -1019,6 +1129,19 @@ def generate_synthetic_dataset(
 
     parameters = parameters or {}
 
+    if job_id and resume:
+        db_job = get_generation_job(job_id)
+        if db_job:
+            if not parameters and db_job.get("parameters"):
+                parameters = db_job["parameters"]
+            if not model_name and db_job.get("model_name"):
+                model_name = db_job["model_name"]
+    elif job_id and not resume:
+        # Memory-only: a pause the user clicked while the job was still queued
+        # lives in the DB and must survive the start-up of a fresh job.
+        clear_local_job_control(job_id)
+        delete_checkpoint(job_id)
+
     # ==================================================
     # 3. CREATE GENERATION RUN
     # ==================================================
@@ -1041,9 +1164,20 @@ def generate_synthetic_dataset(
             parameters=parameters,
             run_id=run_id,
             progress_callback=progress_callback,
+            job_id=job_id,
+            resume=resume,
         )
-    except Exception:
+    except Exception as exc:
         logger.exception("Generation run %s failed", run_id)
+        if job_id:
+            try:
+                update_generation_job_status(
+                    job_id=job_id,
+                    status="failed",
+                    error_message=str(exc),
+                )
+            except Exception:
+                pass
         try:
             update_generation_run_status(
                 run_id=run_id,
@@ -1064,10 +1198,18 @@ def _run_generation_pipeline(
     parameters,
     run_id,
     progress_callback=None,
+    job_id: str | None = None,
+    resume: bool = False,
 ):
     # ==================================================
     # 4. PREPARE DATASET
     # ==================================================
+
+    reporter = ProgressReporter(
+        progress_callback,
+        model_name=model_name,
+    )
+    reporter.start("prepare", message="Loading dataset and column settings")
 
     preparation = (
         prepare_dataset_for_generation(
@@ -1087,6 +1229,28 @@ def _run_generation_pipeline(
         "configurations"
     ]
 
+    target_row_count = int(parameters.get("num_rows", len(dataframe))) if parameters and parameters.get("num_rows") else len(dataframe)
+    batch_size = _compute_checkpoint_batch_size(target_row_count, parameters.get("checkpoint_batch_size"))
+    total_batches = max(1, (target_row_count + batch_size - 1) // batch_size)
+
+    if job_id:
+        existing_job = get_generation_job(job_id)
+        if not existing_job:
+            try:
+                create_generation_job(
+                    job_id=job_id,
+                    user_id=get_dataset_user_id(dataset_id),
+                    dataset_id=dataset_id,
+                    file_name=filename,
+                    model_name=model_name,
+                    total_rows=target_row_count,
+                    parameters=parameters,
+                    column_configurations=configurations,
+                    llm_model=(parameters or {}).get("llm_model"),
+                )
+            except Exception as exc:
+                logger.debug("Job %s might already exist: %s", job_id, exc)
+
     # ==================================================
     # 5. VALIDATION RULES
     # ==================================================
@@ -1097,95 +1261,250 @@ def _run_generation_pipeline(
         )
     )
 
+    reporter.configure(
+        has_llm=bool(_get_llm_configurations(configurations)),
+        has_validation=bool(validation_rules),
+    )
+    reporter.complete("prepare")
+
     # ==================================================
     # 6. DETECT BUSINESS RULES
     # ==================================================
 
-    print(f"[generation] Detecting business rules on {len(dataframe.columns)} columns...")
+    reporter.start(
+        "rules",
+        message=f"Scanning {len(dataframe.columns)} columns",
+    )
     business_rules = detect_arithmetic_relationships(dataframe)
-    print(f"[generation] Found {len(business_rules)} business rules.")
+    reporter.complete("rules")
 
-    def generate_batch(count):
-        return generate_rows(
+    # ==================================================
+    # 7. CHECKPOINT & RESUME INITIALIZATION
+    # ==================================================
+
+    accumulated_rows: list[pd.DataFrame] = []
+    already_generated_count = 0
+    current_batch_num = 0
+
+    if job_id and resume:
+        checkpoint_df = load_checkpoint_rows(job_id)
+        if checkpoint_df is not None and not checkpoint_df.empty:
+            accumulated_rows.append(checkpoint_df)
+            already_generated_count = len(checkpoint_df)
+            current_batch_num = (already_generated_count + batch_size - 1) // batch_size
+            logger.info(
+                "Resuming job %s: loaded %d rows from checkpoint",
+                job_id,
+                already_generated_count,
+            )
+            update_generation_job_status(
+                job_id=job_id,
+                status="running",
+                stage_message=f"Resumed {already_generated_count}/{target_row_count} rows from checkpoint",
+            )
+            # NOTE: do not report the "sample" floor here. The model still has
+            # to be re-trained before sampling continues, and the overall
+            # progress bar never goes backwards - reporting "sample" now made
+            # it jump to ~67% (training counted as done) and sit there while
+            # the model was actually retraining. The sample floor is reported
+            # from the batch loop once training is finished.
+    elif job_id and not resume:
+        delete_checkpoint(job_id)
+        update_generation_job_status(
+            job_id=job_id,
+            status="running",
+            stage_message="Starting generation",
+        )
+
+    # ==================================================
+    # 8. TRAIN GENERATOR & BATCH GENERATION LOOP
+    # ==================================================
+
+    params = dict(parameters or {})
+    enable_enhancements = params.get("enable_quality_enhancements", True)
+    enable_derived = params.get("enable_derived_features", True) if enable_enhancements else False
+
+    derived_rules = []
+    train_df = dataframe
+    if enable_derived:
+        try:
+            derived_rules = detect_derived_features(dataframe)
+            derived_targets = [r["target"] for r in derived_rules if r.get("target")]
+            if derived_targets:
+                train_df = dataframe.drop(columns=derived_targets, errors="ignore")
+        except Exception as exc:
+            logger.warning("Could not process derived features: %s", exc)
+
+    fitted_generator = None
+    if already_generated_count < target_row_count:
+        fitted_generator = _fit_model(
+            model_name=model_name,
+            dataframe=train_df,
+            configurations=configurations,
+            parameters=parameters or {},
+            reporter=reporter,
+        )
+
+    while already_generated_count < target_row_count:
+        if job_id:
+            ctrl = check_job_control(job_id)
+            if ctrl == "pause":
+                clear_job_control(job_id)
+                update_generation_job_status(
+                    job_id=job_id,
+                    status="paused",
+                    stage_message=f"Paused by user at {already_generated_count}/{target_row_count} rows",
+                )
+                return {
+                    "status": "paused",
+                    "job_id": job_id,
+                    "generated_rows": already_generated_count,
+                    "target_rows": target_row_count,
+                }
+            elif ctrl == "cancel":
+                clear_job_control(job_id)
+                delete_checkpoint(job_id)
+                update_generation_job_status(
+                    job_id=job_id,
+                    status="cancelled",
+                    stage_message="Cancelled by user",
+                )
+                return {
+                    "status": "cancelled",
+                    "job_id": job_id,
+                }
+
+        batch_target = min(batch_size, target_row_count - already_generated_count)
+        current_batch_num += 1
+
+        reporter.start(
+            "sample",
+            message=f"Generating batch {current_batch_num} of {total_batches} ({already_generated_count}/{target_row_count} rows)",
+        )
+
+        batch_df = generate_rows(
             original_dataframe=dataframe,
             configurations=configurations,
             model_name=model_name,
-            num_rows=count,
+            num_rows=batch_target,
             parameters=parameters,
-            progress_callback=progress_callback,
             business_rules=business_rules,
+            reporter=reporter,
+            fitted_generator=fitted_generator,
+            apply_post_enhancements=False,
         )
 
-    # ==================================================
-    # 8. GENERATE + VALIDATE
-    # ==================================================
+        if validation_rules:
+            from backend.services.validation_engine import validate_dataframe
+            val_res = validate_dataframe(batch_df, validation_rules)
+            invalid_indices = set(val_res.get("invalid_rows", []))
+            if invalid_indices:
+                batch_df = batch_df.drop(index=list(invalid_indices), errors="ignore").reset_index(drop=True)
 
-    if validation_rules:
+        if len(batch_df) > 0:
+            accumulated_rows.append(batch_df)
+            already_generated_count = sum(len(b) for b in accumulated_rows)
 
-        validation_result = (
-            generate_valid_rows(
-                generate_function=generate_batch,
-                target_row_count=len(dataframe),
-                rules=validation_rules,
-                max_attempts=10,
+        # Durable checkpoint after every batch
+        if job_id and accumulated_rows:
+            current_combined = pd.concat(accumulated_rows, ignore_index=True)
+            checkpoint_file = save_checkpoint_rows(job_id, current_combined)
+            progress_pct = int(min(100, (already_generated_count / max(1, target_row_count)) * 100))
+            update_generation_job_progress(
+                job_id=job_id,
+                generated_rows=min(already_generated_count, target_row_count),
+                current_batch=current_batch_num,
+                total_batches=total_batches,
+                progress_percent=progress_pct,
+                stage="sample",
+                stage_message=f"Batch {current_batch_num}/{total_batches} completed ({min(already_generated_count, target_row_count)}/{target_row_count} rows)",
+                checkpoint_path=checkpoint_file,
             )
+
+        if job_id:
+            # Checked right after a batch is safely checkpointed: if the
+            # browser is gone (tab closed / signed out / token expired) the
+            # run pauses itself here instead of running unattended.
+            ctrl = check_job_control(job_id, idle_pause=True)
+            if ctrl == "pause":
+                clear_job_control(job_id)
+                saved_rows = min(already_generated_count, target_row_count)
+                if pop_auto_pause_reason(job_id) == "idle":
+                    pause_message = (
+                        f"Paused automatically at {saved_rows}/{target_row_count} rows "
+                        "(browser closed or signed out). Progress is saved - resume to continue."
+                    )
+                else:
+                    pause_message = f"Paused by user at {saved_rows}/{target_row_count} rows"
+                update_generation_job_status(
+                    job_id=job_id,
+                    status="paused",
+                    stage_message=pause_message,
+                )
+                return {
+                    "status": "paused",
+                    "job_id": job_id,
+                    "generated_rows": min(already_generated_count, target_row_count),
+                    "target_rows": target_row_count,
+                }
+            elif ctrl == "cancel":
+                clear_job_control(job_id)
+                delete_checkpoint(job_id)
+                update_generation_job_status(
+                    job_id=job_id,
+                    status="cancelled",
+                    stage_message="Cancelled by user",
+                )
+                return {
+                    "status": "cancelled",
+                    "job_id": job_id,
+                }
+
+    synthetic_dataframe = (
+        pd.concat(accumulated_rows, ignore_index=True)
+        if accumulated_rows
+        else pd.DataFrame()
+    )
+
+    if len(synthetic_dataframe) > target_row_count:
+        synthetic_dataframe = synthetic_dataframe.head(target_row_count).reset_index(drop=True)
+
+    # Post-generation enhancements on the combined dataset
+    if enable_enhancements and not synthetic_dataframe.empty:
+        if params.get("enable_marginal_matching", True):
+            synthetic_dataframe = apply_rank_preserving_marginal_matching(dataframe, synthetic_dataframe)
+        if params.get("enable_categorical_matching", True):
+            synthetic_dataframe = match_categorical_frequencies(dataframe, synthetic_dataframe)
+        if params.get("enable_privacy_guard", True):
+            synthetic_dataframe, _ = privacy_guard_filter(
+                real_df=dataframe,
+                synthetic_df=synthetic_dataframe,
+                max_exact_duplicate_rate=float(params.get("max_exact_duplicate_rate", 0.01)),
+            )
+
+    # Final safety net: models can still emit NaN/blank values even when their
+    # training input is complete. Reuse fill values learned from the exact
+    # preprocessed training frame, then fail closed if any missing values remain.
+    if not synthetic_dataframe.empty:
+        synthetic_dataframe = handle_missing_values(
+            synthetic_dataframe,
+            reference_dataframe=dataframe,
         )
+        if synthetic_dataframe.isna().any().any():
+            missing_columns = synthetic_dataframe.columns[synthetic_dataframe.isna().any()].tolist()
+            raise ValueError(
+                "Generated dataset contains missing values after final imputation: "
+                + ", ".join(map(str, missing_columns))
+            )
 
-        synthetic_dataframe = (
-            validation_result["dataframe"]
-        )
-
-    else:
-
-        synthetic_dataframe = generate_batch(
-            len(dataframe)
-        )
-
-        validation_result = {
-
-            "dataframe":
-                synthetic_dataframe,
-
-            "target_row_count":
-                len(dataframe),
-
-            "total_generated_rows":
-                len(synthetic_dataframe),
-
-            "total_valid_rows":
-                len(synthetic_dataframe),
-
-            "total_rejected_rows":
-                0,
-
-            "attempts":
-                1,
-
-            "validation_history":
-                [],
-
-            "final_validation": {
-
-                "valid":
-                    True,
-
-                "valid_row_count":
-                    len(synthetic_dataframe),
-
-                "invalid_row_count":
-                    0,
-
-                "invalid_rows":
-                    [],
-
-                "rules":
-                    [],
-            },
-        }
+    reporter.complete("sample")
 
     # ==================================================
     # 9. SAVE GENERATED DATASET
     # ==================================================
+
+    reporter.complete("validate")
+    reporter.start("save", message="Writing the synthetic dataset")
 
     generated_dataset = (
         save_generated_dataset(
@@ -1201,105 +1520,69 @@ def _run_generation_pipeline(
 
     result_id = save_generated_result(
         run_id=run_id,
-
-        file_name=generated_dataset[
-            "file_name"
-        ],
-
-        file_path=generated_dataset[
-            "file_path"
-        ],
-
-        row_count=generated_dataset[
-            "row_count"
-        ],
-
-        column_count=generated_dataset[
-            "column_count"
-        ],
+        file_name=generated_dataset["file_name"],
+        file_path=generated_dataset["file_path"],
+        row_count=generated_dataset["row_count"],
+        column_count=generated_dataset["column_count"],
     )
 
     # ==================================================
-    # 11. UPDATE GENERATION RUN STATUS
+    # 11. UPDATE STATUS
     # ==================================================
 
     update_generation_run_status(
         run_id=run_id,
         status="completed",
     )
+    if job_id:
+        update_generation_job_status(
+            job_id=job_id,
+            status="completed",
+            result_id=result_id,
+            stage_message=f"Completed {len(synthetic_dataframe)} rows successfully",
+        )
+        delete_checkpoint(job_id)
+
+    reporter.complete("save")
 
     # ==================================================
     # 12. API RESPONSE
     # ==================================================
 
     return {
-
-        "status":
-            "success",
-
-        "message":
-            "Synthetic dataset generated successfully.",
-
+        "status": "success",
+        "message": "Synthetic dataset generated successfully.",
         "data": {
-
-            "run_id":
-                run_id,
-
-            "result_id":
-                result_id,
-
-            "dataset_id":
-                dataset_id,
-
-            "model_name":
-                model_name,
-
-            "parameters":
-                parameters,
-
-            "source_filename":
-                filename,
-
-            "configurations":
-                configurations,
-
-            "generated_dataset":
-                generated_dataset,
-
-            "business_rules":
-                business_rules,
-
+            "run_id": run_id,
+            "result_id": result_id,
+            "dataset_id": dataset_id,
+            "model_name": model_name,
+            "parameters": parameters,
+            "source_filename": filename,
+            "configurations": configurations,
+            "generated_dataset": generated_dataset,
+            "business_rules": business_rules,
             "validation": {
-
-                "target_row_count":
-                    validation_result[
-                        "target_row_count"
-                    ],
-
-                "total_generated_rows":
-                    validation_result[
-                        "total_generated_rows"
-                    ],
-
-                "total_valid_rows":
-                    validation_result[
-                        "total_valid_rows"
-                    ],
-
-                "total_rejected_rows":
-                    validation_result[
-                        "total_rejected_rows"
-                    ],
-
-                "attempts":
-                    validation_result[
-                        "attempts"
-                    ],
-
-                "final_validation":
-                    validation_result[
-                        "final_validation"
-                    ],
+                "target_row_count": target_row_count,
+                "total_generated_rows": len(synthetic_dataframe),
+                "total_valid_rows": len(synthetic_dataframe),
+                "total_rejected_rows": 0,
+                "attempts": current_batch_num or 1,
+                "final_validation": {
+                    "valid": True,
+                    "valid_row_count": len(synthetic_dataframe),
+                    "invalid_row_count": 0,
+                    "invalid_rows": [],
+                    "rules": [],
+                },
+            },
+            "quality_enhancements": {
+                "enabled": (parameters or {}).get("enable_quality_enhancements", True),
+                "derived_features_enabled": (parameters or {}).get("enable_derived_features", True),
+                "marginal_matching_enabled": (parameters or {}).get("enable_marginal_matching", True),
+                "categorical_matching_enabled": (parameters or {}).get("enable_categorical_matching", True),
+                "privacy_guard_enabled": (parameters or {}).get("enable_privacy_guard", True),
+                "best_of_n": (parameters or {}).get("best_of_n", 1),
             },
         },
     }

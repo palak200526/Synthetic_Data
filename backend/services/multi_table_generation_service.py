@@ -18,6 +18,14 @@ from backend.repositories.generation_repository import (
     update_generation_run_status,
 )
 from backend.services.dataset_loader import load_dataset
+from backend.services.id_pattern_service import generate_ids_like
+from backend.services.multi_table_integrity_service import (
+    analyze_table,
+    apply_key_functions,
+    postprocess_generated,
+    prepare_training_frame,
+    validate_linked_tables,
+)
 from backend.services.generated_dataset_service import (
     save_generated_dataset,
 )
@@ -94,22 +102,55 @@ def generate_linked_tables(
 
     generated_tables = {}
 
+    rng = np.random.default_rng((parameters or {}).get("random_state"))
+
+    # Which columns take part in a relationship (per dataset)
+    parent_key_columns: dict = {}
+    foreign_key_columns: dict = {}
+    for relationship in relationships:
+        parent_key_columns.setdefault(
+            relationship["parent_dataset_id"], set()
+        ).add(relationship["parent_column"])
+        foreign_key_columns.setdefault(
+            relationship["child_dataset_id"], set()
+        ).add(relationship["child_column"])
+
+    profiles = {}
+
     # --------------------------------------------------
     # 1. Generate each dataset
+    #    IDs, keys, derived columns and key-derived names are NOT
+    #    modelled; they are rebuilt afterwards so they stay valid.
     # --------------------------------------------------
 
     for dataset_id, dataset_info in datasets.items():
         dataframe = dataset_info["dataframe"]
+
+        profile = analyze_table(
+            dataframe,
+            parent_key_columns=parent_key_columns.get(dataset_id),
+            foreign_key_columns=foreign_key_columns.get(dataset_id),
+        )
+        profiles[dataset_id] = profile
+
+        training_dataframe = prepare_training_frame(dataframe, profile)
 
         generator = get_generator(
             model_name,
             **tabular_params,
         )
 
-        generator.fit(dataframe)
+        generator.fit(training_dataframe)
 
         synthetic_dataframe = generator.generate(
             len(dataframe)
+        )
+
+        synthetic_dataframe = postprocess_generated(
+            original=dataframe,
+            synthetic=synthetic_dataframe,
+            profile=profile,
+            rng=rng,
         )
 
         generated_tables[dataset_id] = {
@@ -183,10 +224,12 @@ def generate_linked_tables(
                         range(max_val + 1, max_val + 1 + extra_needed)
                     )
                 else:
-                    extended = orig_vals + [
-                        f"PK_{i}"
-                        for i in range(len(orig_vals) + 1, len(orig_vals) + 1 + extra_needed)
-                    ]
+                    # Continue in the same format as the real keys
+                    # (e.g. CUST-0042 -> CUST-0043) instead of "PK_n".
+                    extended = orig_vals + generate_ids_like(
+                        source=original_parent_dataframe[parent_column],
+                        count=extra_needed,
+                    )
                 parent_dataframe[parent_column] = extended[: len(parent_dataframe)]
 
         final_parent_keys = (
@@ -201,6 +244,19 @@ def generate_linked_tables(
                 final_parent_keys[i % len(final_parent_keys)]
                 for i in range(len(parent_dataframe))
             ]
+
+        # Columns that are a function of the key (e.g. supplier_name for
+        # SUP017 -> "Supplier 17") are rebuilt from the final keys.
+        key_fn_columns = profiles[parent_dataset_id].key_function_columns.get(
+            parent_column, []
+        )
+        if key_fn_columns:
+            parent_dataframe = apply_key_functions(
+                original=original_parent_dataframe,
+                synthetic=parent_dataframe,
+                key_column=parent_column,
+                columns=key_fn_columns,
+            )
 
         # Map original parent keys -> newly generated parent keys
         key_mapping = {
@@ -243,6 +299,17 @@ def generate_linked_tables(
 
         generated_tables[parent_dataset_id]["dataframe"] = parent_dataframe
         generated_tables[child_dataset_id]["dataframe"] = child_dataframe
+
+    # --------------------------------------------------
+    # 2b. Validate integrity of the generated tables
+    # --------------------------------------------------
+
+    integrity_report = validate_linked_tables(
+        tables={k: v["dataframe"] for k, v in generated_tables.items()},
+        originals={k: v["dataframe"] for k, v in datasets.items()},
+        relationships=relationships,
+        profiles=profiles,
+    )
 
     # --------------------------------------------------
     # 3. Save generated tables
@@ -294,4 +361,5 @@ def generate_linked_tables(
         "model_name": model_name,
         "tables": saved_tables,
         "relationships": relationships,
+        "integrity_report": integrity_report,
     }

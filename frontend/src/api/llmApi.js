@@ -12,8 +12,6 @@ export const VALID_ACTIONS = [
   'keep',
   'remove',
   'new_id',
-  'generalize',
-  'derived',
   'llm',
 ]
 

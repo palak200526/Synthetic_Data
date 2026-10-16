@@ -69,6 +69,35 @@ _TEXT_NAME_HINTS = (
 )
 
 
+def _pct(ratio: float) -> str:
+    """Format a 0-1 ratio as a whole-number percentage string."""
+    return f"{round(max(0.0, min(1.0, ratio)) * 100)}%"
+
+
+def _identifier_reason(unique_ratio: float, name_based: bool = True) -> str:
+    """
+    Build a confidence-aware explanation for an identifier column.
+    Confidence comes from how unique the values actually are, so the
+    user can see WHY the column was flagged and how sure we are.
+    """
+    distinct = _pct(unique_ratio)
+    if unique_ratio >= 0.9:
+        basis = "name and values both indicate an ID" if name_based else "values are almost all distinct"
+        return (
+            f"Unique identifier (high confidence): {basis} "
+            f"({distinct} distinct). New IDs will be generated."
+        )
+    if unique_ratio >= 0.5:
+        return (
+            f"Probably unique identifier (medium confidence): name suggests an ID "
+            f"and {distinct} of values are distinct. Please review."
+        )
+    return (
+        f"Probably unique identifier (low confidence): name suggests an ID "
+        f"but only {distinct} of values are distinct. Check before regenerating IDs."
+    )
+
+
 def is_freeform_text_profile(profile: dict) -> bool:
     """
     True when a column looks like free-form natural language
@@ -132,7 +161,7 @@ def is_obvious_column(profile: dict) -> dict | None:
             "column_name": name,
             "is_identifier": False,
             "action": "remove",
-            "reason": "Unnamed or index column.",
+            "reason": "Unnamed or index column (high confidence): carries no real data, so it is removed.",
         }
 
     # ---------------------------------------------------------
@@ -143,7 +172,7 @@ def is_obvious_column(profile: dict) -> dict | None:
             "column_name": name,
             "is_identifier": False,
             "action": "remove",
-            "reason": "Column is almost entirely empty.",
+            "reason": f"Almost entirely empty (high confidence): {_pct(null_ratio)} of values are missing, so it is removed.",
         }
 
     # ---------------------------------------------------------
@@ -154,7 +183,7 @@ def is_obvious_column(profile: dict) -> dict | None:
             "column_name": name,
             "is_identifier": False,
             "action": "remove",
-            "reason": "Constant column with no variance.",
+            "reason": "Constant column (high confidence): every value is the same, so it adds no information.",
         }
 
     # ---------------------------------------------------------
@@ -165,7 +194,7 @@ def is_obvious_column(profile: dict) -> dict | None:
             "column_name": name,
             "is_identifier": False,
             "action": "keep",
-            "reason": "Numeric feature column.",
+            "reason": "Probably a numeric feature (high confidence): name matches an auto-generated feature pattern.",
         }
 
     # ---------------------------------------------------------
@@ -182,7 +211,7 @@ def is_obvious_column(profile: dict) -> dict | None:
             "column_name": name,
             "is_identifier": True,
             "action": "new_id",
-            "reason": "Identifier column. Regenerate unique IDs.",
+            "reason": _identifier_reason(unique_ratio, name_based=True),
         }
 
     # ---------------------------------------------------------
@@ -193,7 +222,7 @@ def is_obvious_column(profile: dict) -> dict | None:
             "column_name": name,
             "is_identifier": False,
             "action": "llm",
-            "reason": "Free-form text column. Use local LLM generation.",
+            "reason": "Probably free-form text (medium confidence): long or text-like values. Local LLM generation is recommended.",
         }
 
     # ---------------------------------------------------------
@@ -222,7 +251,7 @@ def heuristic_column_analysis(profile: dict) -> dict:
             "column_name": name,
             "is_identifier": False,
             "action": "llm",
-            "reason": "Free-form text column. Use local LLM generation.",
+            "reason": "Probably free-form text (medium confidence): long or text-like values. Local LLM generation is recommended.",
         }
 
     # Identifier
@@ -231,7 +260,7 @@ def heuristic_column_analysis(profile: dict) -> dict:
             "column_name": name,
             "is_identifier": True,
             "action": "new_id",
-            "reason": "High-cardinality identifier column.",
+            "reason": _identifier_reason(unique_ratio, name_based=False),
         }
 
     # Temporal / Datetime
@@ -240,7 +269,7 @@ def heuristic_column_analysis(profile: dict) -> dict:
             "column_name": name,
             "is_identifier": False,
             "action": "keep",
-            "reason": "Temporal column. Preserve date distribution.",
+            "reason": "Date/time column (high confidence): data type is temporal, so the date distribution is preserved.",
         }
 
     # Standard tabular / numeric / categorical column
@@ -248,5 +277,5 @@ def heuristic_column_analysis(profile: dict) -> dict:
         "column_name": name,
         "is_identifier": False,
         "action": "keep",
-        "reason": "Standard feature column. Model with generative distribution.",
+        "reason": "Standard feature column (medium confidence): no ID, text or empty-column signals found. Modelled with a generative distribution.",
     }

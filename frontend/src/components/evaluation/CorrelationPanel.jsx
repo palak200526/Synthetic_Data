@@ -1,5 +1,6 @@
 // src/components/evaluation/CorrelationPanel.jsx
 import MetricExplainer from '../MetricExplainer.jsx'
+import { CORRELATION_DOC, CATEGORICAL_ASSOCIATION_DOC } from './metricDocs.js'
 import {
   CATEGORY_META,
   colorForScore,
@@ -13,6 +14,10 @@ export default function CorrelationPanel({ section }) {
 
   const status = raw.status || 'not_applicable'
   const overall = section.score ?? raw.overall_score
+  // Datasets with < 2 numeric columns are scored with Cramér's V on
+  // category columns instead of Pearson correlation.
+  const isCat = raw.association_type === 'cramers_v'
+  const kind = isCat ? 'categorical' : 'numerical'
   const corrSim = raw.correlation_similarity
   const covSim = raw.covariance_similarity
   const numericalColumns = Array.isArray(raw.numerical_columns)
@@ -37,10 +42,10 @@ export default function CorrelationPanel({ section }) {
     overall == null
       ? 'This metric is not applicable for this dataset.'
       : overall >= 80
-      ? 'The synthetic data preserves the relationships between numerical columns very well. Downstream models should behave similarly on both datasets.'
+      ? `The synthetic data preserves the relationships between ${kind} columns very well. Downstream models should behave similarly on both datasets.`
       : overall >= 50
-      ? 'Relationships between numerical columns are partially preserved. Some dependencies have been weakened — see the drifted pairs below.'
-      : 'Relationships between numerical columns are largely broken. Models trained on this synthetic data may not transfer to the real data.'
+      ? `Relationships between ${kind} columns are partially preserved. Some dependencies have been weakened — see the drifted pairs below.`
+      : `Relationships between ${kind} columns are largely broken. Models trained on this synthetic data may not transfer to the real data.`
 
   return (
     <div className="dx-card overflow-hidden">
@@ -50,7 +55,14 @@ export default function CorrelationPanel({ section }) {
             <Icon size={16} />
           </div>
           <div>
-            <p className="text-sm font-semibold text-ink-900">{meta.label}</p>
+            <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-ink-900">
+              {meta.label}
+              {isCat && (
+                <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 ring-1 ring-inset ring-indigo-200">
+                  Categorical · Cramér&apos;s V
+                </span>
+              )}
+            </p>
             <p className="mt-0.5 text-[11px] text-ink-500">{meta.description}</p>
           </div>
         </div>
@@ -67,15 +79,25 @@ export default function CorrelationPanel({ section }) {
       <div className="px-5 py-5 space-y-5">
         <div>
           <h3 className="text-sm font-semibold text-ink-900">What this measures</h3>
-          <p className="mt-1 text-sm leading-relaxed text-ink-600">
-            Correlation and covariance describe <em>how columns move together</em>.
-            If <code className="font-mono text-xs">age</code> and{' '}
-            <code className="font-mono text-xs">income</code> are positively correlated
-            in the real data, this metric checks whether the synthetic data preserves
-            that relationship. A high score means the synthetic data has learned the
-            same internal dependencies — a low score means columns move independently
-            in the synthetic data even though they don't in the real data.
-          </p>
+          {isCat ? (
+            <p className="mt-1 text-sm leading-relaxed text-ink-600">
+              This check looks at <em>how strongly category columns are linked</em>.
+              If, in the real data, knowing one column tells you a lot about
+              another, the synthetic data should keep that link. A high score
+              means the links between columns are preserved. A low score means
+              they were lost, or that unrelated columns became tied together.
+            </p>
+          ) : (
+            <p className="mt-1 text-sm leading-relaxed text-ink-600">
+              Correlation and covariance describe <em>how columns move together</em>.
+              If <code className="font-mono text-xs">study_hours</code> and{' '}
+              <code className="font-mono text-xs">marks</code> rise together in the
+              real data, this check confirms that the synthetic data keeps that
+              link. A high score means the relationships between columns are
+              preserved. A low score means they were lost, or that unrelated
+              columns became tied together.
+            </p>
+          )}
         </div>
 
         {status === 'evaluated' && (
@@ -93,7 +115,7 @@ export default function CorrelationPanel({ section }) {
               </p>
             </div>
             <div className="rounded-lg bg-ink-50 p-4">
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-ink-500">Correlation similarity</span>
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-ink-500">{isCat ? 'Association similarity (Cramér\'s V)' : 'Correlation similarity'}</span>
               <p className="mt-1 text-xl font-bold text-ink-900">
                 {corrSim != null ? `${corrSim.toFixed(2)}%` : '—'}
               </p>
@@ -101,7 +123,7 @@ export default function CorrelationPanel({ section }) {
             <div className="rounded-lg bg-ink-50 p-4">
               <span className="text-[10px] uppercase tracking-wider font-semibold text-ink-500">Covariance similarity</span>
               <p className="mt-1 text-xl font-bold text-ink-900">
-                {covSim != null ? `${covSim.toFixed(2)}%` : '—'}
+                {covSim != null ? `${covSim.toFixed(2)}%` : isCat ? 'Not used' : '—'}
               </p>
             </div>
           </div>
@@ -112,6 +134,32 @@ export default function CorrelationPanel({ section }) {
           {bannerText}
         </div>
 
+        {isCat ? (
+          <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-4 text-xs leading-relaxed text-indigo-900">
+            <p className="font-semibold">
+              Method used: Cramér&apos;s V (association), not Pearson correlation
+            </p>
+            <p className="mt-1">
+              This dataset has fewer than 2 numeric columns, and Pearson
+              correlation only works on numbers. For category columns, Cramér&apos;s V
+              measures how strongly two columns are linked, from 0 (no link) to
+              1 (one column fully decides the other). The score compares V in the
+              real data with V in the synthetic data. Covariance is not
+              calculated for category columns.
+            </p>
+            <p className="mt-1 text-indigo-800/80">
+              On small tables, or columns with many distinct values, V can read 0
+              or change a lot, so treat this score as a rough guide.
+            </p>
+          </div>
+        ) : (
+          raw.note && (
+            <p className="rounded-lg border border-sky-200 bg-sky-50 p-3 text-xs text-sky-800">
+              {raw.note}
+            </p>
+          )
+        )}
+
         {status === 'not_applicable' && raw.reason && (
           <p className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
             {raw.reason}
@@ -121,15 +169,15 @@ export default function CorrelationPanel({ section }) {
         {diverging.length > 0 && (
           <div>
             <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-500">
-              Pairs with the largest drift
+              Pairs with the largest drift{isCat ? ' (Cramér\'s V, 0 to 1)' : ''}
             </h3>
             <div className="overflow-hidden rounded-lg border border-ink-200">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-ink-200 bg-ink-50/60">
                     <th className="px-4 py-2 text-left text-[11px] font-semibold uppercase tracking-wide text-ink-500">Column pair</th>
-                    <th className="px-4 py-2 text-right text-[11px] font-semibold uppercase tracking-wide text-ink-500">Real</th>
-                    <th className="px-4 py-2 text-right text-[11px] font-semibold uppercase tracking-wide text-ink-500">Synthetic</th>
+                    <th className="px-4 py-2 text-right text-[11px] font-semibold uppercase tracking-wide text-ink-500">{isCat ? 'Real V' : 'Real'}</th>
+                    <th className="px-4 py-2 text-right text-[11px] font-semibold uppercase tracking-wide text-ink-500">{isCat ? 'Synthetic V' : 'Synthetic'}</th>
                     <th className="px-4 py-2 text-right text-[11px] font-semibold uppercase tracking-wide text-ink-500">Δ</th>
                   </tr>
                 </thead>
@@ -164,7 +212,7 @@ export default function CorrelationPanel({ section }) {
         {numericalColumns.length > 0 && (
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink-500">
-              Numerical columns evaluated ({numericalColumns.length})
+              {isCat ? 'Categorical' : 'Numerical'} columns evaluated ({numericalColumns.length})
             </p>
             <div className="flex flex-wrap gap-1.5">
               {numericalColumns.map((c) => (
@@ -176,29 +224,7 @@ export default function CorrelationPanel({ section }) {
           </div>
         )}
 
-        <MetricExplainer
-          title="How the correlation score is calculated"
-          intro="Two sub-scores are computed and averaged. Each measures a different facet of how column relationships are preserved."
-          formula={
-            'correlation_similarity = (1 - mean(|R_real - R_synth|) / 2) * 100\n' +
-            'covariance_similarity  = (1 - mean(normalized |C_real - C_synth|)) * 100\n' +
-            'overall_score = mean(correlation_similarity, covariance_similarity)'
-          }
-          steps={[
-            'Extract all eligible numerical columns from both datasets.',
-            'Compute the real correlation matrix R_real and the synthetic correlation matrix R_synth.',
-            'Compute the real and synthetic covariance matrices the same way.',
-            'For every pair of columns, take the absolute difference between real and synthetic values.',
-            'Average the differences, scale them to [0, 1], and convert to a percentage similarity.',
-            'Final score is the mean of the correlation and covariance sub-scores.',
-          ]}
-          interpretation={[
-            { range: '≥ 80%', label: 'Excellent — column dependencies preserved', tone: 'emerald' },
-            { range: '50–79%', label: 'Partial preservation — some pairs drift', tone: 'amber' },
-            { range: '< 50%',  label: 'Poor preservation — dependencies broken', tone: 'rose' },
-          ]}
-          references={['Pearson correlation', 'Covariance matrix']}
-        />
+        <MetricExplainer {...(isCat ? CATEGORICAL_ASSOCIATION_DOC : CORRELATION_DOC)} />
       </div>
     </div>
   )

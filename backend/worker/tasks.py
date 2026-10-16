@@ -31,9 +31,14 @@ def generate_dataset_task(
     model_name: str,
     user_id: int,
     parameters=None,
+    job_id=None,
+    resume=False,
 ):
     """
     Background synthetic generation, including local LLM text columns.
+
+    job_id / resume tie this run to a row in generation_jobs so checkpoints,
+    pause/cancel requests and resume all work under Celery too.
     """
 
     def progress_update(state, meta):
@@ -46,6 +51,8 @@ def generate_dataset_task(
             user_id=user_id,
             parameters=parameters,
             progress_update=progress_update,
+            job_id=job_id,
+            resume=resume,
         )
     except Exception as exc:
         self.update_state(state="FAILURE", meta={"error": str(exc)})

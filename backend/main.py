@@ -103,12 +103,15 @@ app.openapi = custom_openapi
 # CORS CONFIGURATION
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://127.0.0.1:5173",
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["X-New-Token"],
 )
-
 
 # COMMON ERROR HANDLING
 @app.exception_handler(ValueError)
@@ -124,6 +127,16 @@ async def value_error_handler(
         }
     )
 
+
+
+@app.on_event("startup")
+def on_startup():
+    from backend.repositories.generation_job_repository import (
+        ensure_generation_jobs_table,
+        recover_interrupted_jobs,
+    )
+    ensure_generation_jobs_table()
+    recover_interrupted_jobs()
 
 
 @app.get(

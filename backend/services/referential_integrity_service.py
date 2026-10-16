@@ -111,6 +111,7 @@ def evaluate_referential_integrity(
 
     results = []
     scores = []
+    missing_ids: set = set()
 
     for rel in rel_list:
         parent_id = rel["parent_dataset_id"]
@@ -119,11 +120,26 @@ def evaluate_referential_integrity(
         child_col = rel["child_column"]
 
         # If tables dictionary provided, look up dataframes
-        if tables and parent_id in tables and child_id in tables:
-            parent_df = tables[parent_id]
-            child_df = tables[child_id]
-        else:
+        parent_df = None
+        child_df = None
+        if tables is not None:
+            for k in (parent_id, str(parent_id), int(parent_id) if str(parent_id).isdigit() else None):
+                if k is not None and k in tables and tables[k] is not None:
+                    parent_df = tables[k]
+                    break
+
+            for k in (child_id, str(child_id), int(child_id) if str(child_id).isdigit() else None):
+                if k is not None and k in tables and tables[k] is not None:
+                    child_df = tables[k]
+                    break
+
+        if parent_df is None or child_df is None:
             # Tables not available in context
+            missing_ids.update(
+                i
+                for i, df in ((parent_id, parent_df), (child_id, child_df))
+                if df is None
+            )
             continue
 
         if parent_col not in parent_df.columns or child_col not in child_df.columns:
@@ -177,7 +193,15 @@ def evaluate_referential_integrity(
         return {
             "metric": "relationship_integrity",
             "status": "not_applicable",
-            "reason": "Tables for defined relationships could not be loaded",
+            "reason": (
+                "Tables for defined relationships could not be loaded"
+                + (
+                    f" (no synthetic data found for dataset(s): "
+                    f"{', '.join(str(i) for i in sorted(missing_ids, key=str))})"
+                    if missing_ids
+                    else ""
+                )
+            ),
             "overall_score": None,
             "referential_integrity_score": None,
             "valid": None,

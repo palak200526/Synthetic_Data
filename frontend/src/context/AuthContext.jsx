@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { tokenStore } from '../api/client.js'
+import { tokenStore, pauseActiveGenerationsKeepalive } from '../api/client.js'
 import { authApi, extractToken } from '../api/authApi.js'
 
 const AuthContext = createContext(null)
@@ -33,6 +33,9 @@ export function AuthProvider({ children }) {
   }, [])
 
   const logout = useCallback(() => {
+    // Pause any running generation first (token still valid here). Finished
+    // batches are checkpointed, so nothing is lost; Resume continues later.
+    pauseActiveGenerationsKeepalive()
     setToken(null)
     setUser(null)
   }, [setToken])

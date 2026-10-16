@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import re
 import io
 import json
 import logging
@@ -23,10 +24,37 @@ from backend.repositories.report_repository import (
     save_report,
 )
 from backend.services.evaluation_service import evaluate_generation
+from backend.services.report_pdf_service import build_pdf_report
 
 logger = logging.getLogger(__name__)
 
 REPORTS_DIR = Path("reports")
+
+
+def invalidate_report_cache(result_id: int, dataset_id: int) -> None:
+    """Delete cached report artifacts so the next view rebuilds them."""
+    for name in (
+        f"report_dataset_{dataset_id}_result_{result_id}.json",
+        f"report_dataset_{dataset_id}_result_{result_id}.html",
+        f"report_dataset_{dataset_id}_result_{result_id}_summary.csv",
+        f"report_dataset_{dataset_id}_result_{result_id}.pdf",
+    ):
+        path = REPORTS_DIR / name
+        try:
+            if path.exists():
+                path.unlink()
+        except OSError as exc:
+            logger.warning("Could not delete cached report %s: %s", path, exc)
+
+
+_DONE = ("evaluated", "completed")
+
+
+def _clean_model_name(raw: str | None) -> str | None:
+    """Multi-table runs store e.g. 'ctgan_group_20' - show just 'ctgan'."""
+    if not raw:
+        return None
+    return re.sub(r"_group_\d+$", "", str(raw))
 
 
 def _get_grade(score: float | None) -> str:
@@ -47,6 +75,19 @@ def _build_html_report(report_data: dict[str, Any]) -> str:
     scores = summary.get("dimension_scores", {})
     stats = report_data.get("statistical_similarity", {})
     corr = report_data.get("correlation_covariance", {})
+    corr_is_cat = corr.get("association_type") == "cramers_v"
+    corr_title = (
+        "Association between categorical columns (Cramér's V)"
+        if corr_is_cat else "Correlation & Covariance"
+    )
+    corr_blurb = (
+        "Method: Cramér's V, not Pearson correlation. The dataset has fewer than 2 "
+        "numeric columns, so the link between category columns is compared instead "
+        "(0 = no link, 1 = perfect link). Covariance is not calculated."
+        if corr_is_cat else
+        "Measures whether mathematical dependencies between numerical variables are preserved."
+    )
+    corr_cols_label = "Evaluated Categorical Columns" if corr_is_cat else "Evaluated Numerical Columns"
     ml = report_data.get("ml_utility", {})
     text_eval = report_data.get("text_evaluation", {})
     ref = report_data.get("relationship_integrity", {})
@@ -289,7 +330,7 @@ def _build_html_report(report_data: dict[str, Any]) -> str:
         <!-- Section 1: Statistical Similarity -->
         <div class="section">
             <h2>
-                Statistical Similarity (US-023)
+                Statistical Similarity
                 <span class="badge badge-info">{stats.get('evaluated_columns', 0)} of {stats.get('total_common_columns', 0)} evaluated</span>
             </h2>
             <p style="color: var(--text-muted); font-size: 14px; margin-top: 0;">
@@ -312,20 +353,20 @@ def _build_html_report(report_data: dict[str, Any]) -> str:
 
         <!-- Section 2: Correlation & Covariance -->
         <div class="section">
-            <h2>Correlation & Covariance (US-024)</h2>
+            <h2>{corr_title}</h2>
             <p style="color: var(--text-muted); font-size: 14px; margin-top: 0;">
-                Measures whether mathematical dependencies between numerical variables are preserved.
+                {corr_blurb}
             </p>
             <p>
                 Status: <strong>{corr.get('status', 'not_applicable')}</strong> &nbsp;|&nbsp;
                 Score: <strong>{f"{corr.get('overall_score'):.2f}%" if corr.get('overall_score') is not None else "—"}</strong> &nbsp;|&nbsp;
-                Evaluated Numerical Columns: <strong>{", ".join(corr.get('numerical_columns', [])) if corr.get('numerical_columns') else "None (< 2 numerical columns)"}</strong>
+                {corr_cols_label}: <strong>{", ".join(corr.get('numerical_columns', [])) if corr.get('numerical_columns') else "None (< 2 numerical columns)"}</strong>
             </p>
         </div>
 
         <!-- Section 3: Machine Learning Utility -->
         <div class="section">
-            <h2>Machine Learning Utility (US-025)</h2>
+            <h2>Machine Learning Utility</h2>
             <p style="color: var(--text-muted); font-size: 14px; margin-top: 0;">
                 Synthetic-train / Real-test performance compared against real-data baseline.
             </p>
@@ -362,7 +403,7 @@ def _build_html_report(report_data: dict[str, Any]) -> str:
 
         <!-- Section 5: Referential Integrity -->
         <div class="section">
-            <h2>Cross-Table Referential Integrity (US-027)</h2>
+            <h2>Cross-Table Referential Integrity</h2>
             <p>
                 Status: <strong>{ref.get('status', 'not_applicable')}</strong> &nbsp;|&nbsp;
                 Message: <strong>{ref.get('message', 'No multi-table relationships defined.')}</strong>
@@ -475,7 +516,11 @@ def generate_report(
 
     # 2. Fetch or trigger evaluation
     eval_record = get_evaluation_by_result_id(result_id)
-    if not eval_record or not eval_record.get("utility_metrics"):
+    if (
+        not eval_record
+        or not eval_record.get("utility_metrics")
+        or eval_record.get("privacy_metrics") is None  # older run: no real privacy data
+    ):
         logger.info(
             "Evaluation missing for result %s, triggering evaluation now...",
             result_id,
@@ -485,10 +530,11 @@ def generate_report(
 
     utility_metrics = (eval_record or {}).get("utility_metrics", {})
     privacy_metrics = (eval_record or {}).get("privacy_metrics") or {
-        "status": "completed",
-        "risk_level": "LOW",
-        "dcr_score": 92.5,
-        "identity_disclosure_risk": 0.05,
+        "metric": "privacy",
+        "status": "not_applicable",
+        "reason": "Privacy was not evaluated for this run.",
+        "overall_score": None,
+        "risk_level": None,
     }
     overall_score = (eval_record or {}).get("overall_score")
 
@@ -504,7 +550,7 @@ def generate_report(
         "ml_utility": ml_eval.get("overall_score"),
         "relationship_integrity": ref_eval.get("overall_score"),
         "text_evaluation": text_eval.get("overall_score"),
-        "privacy": 92.5,
+        "privacy": privacy_metrics.get("overall_score"),
     }
 
     # Executive summary generation
@@ -513,15 +559,15 @@ def generate_report(
         summary_parts.append(
             f"Statistical similarity is {stat_eval['overall_score']:.1f}% across {stat_eval.get('evaluated_columns', 0)} evaluated column(s)."
         )
-    if corr_eval.get("status") == "completed" and corr_eval.get("overall_score") is not None:
+    if corr_eval.get("status") in _DONE and corr_eval.get("overall_score") is not None:
         summary_parts.append(
             f"Correlation and covariance relationships preserved at {corr_eval['overall_score']:.1f}%."
         )
-    if ml_eval.get("status") == "completed" and ml_eval.get("overall_score") is not None:
+    if ml_eval.get("status") in _DONE and ml_eval.get("overall_score") is not None:
         summary_parts.append(
             f"Predictive ML utility on real test set achieved {ml_eval['overall_score']:.1f}%."
         )
-    if text_eval.get("status") == "completed" and text_eval.get("overall_score") is not None:
+    if text_eval.get("status") in _DONE and text_eval.get("overall_score") is not None:
         summary_parts.append(
             f"Free-form text generation scored {text_eval['overall_score']:.1f}% for uniqueness, originality, and semantic consistency."
         )
@@ -539,7 +585,7 @@ def generate_report(
             "dataset_id": dataset_id,
             "dataset_name": dataset_meta.get("name", f"Dataset {dataset_id}"),
             "run_id": generated_result.get("run_id"),
-            "model_name": generated_result.get("model_name", "gaussian_copula"),
+            "model_name": _clean_model_name(generated_result.get("model_name")) or "unknown",
             "row_count": generated_result.get("row_count"),
             "column_count": generated_result.get("column_count"),
             "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
@@ -568,6 +614,7 @@ def generate_report(
     json_path = REPORTS_DIR / json_filename
     html_path = REPORTS_DIR / html_filename
     csv_path = REPORTS_DIR / csv_filename
+    pdf_path = REPORTS_DIR / f"report_dataset_{dataset_id}_result_{result_id}.pdf"
 
     # Save JSON artifact
     with open(json_path, "w", encoding="utf-8") as f:
@@ -583,6 +630,12 @@ def generate_report(
     with open(csv_path, "w", encoding="utf-8") as f:
         f.write(csv_content)
 
+    # Save PDF artifact (never block report creation if PDF rendering fails)
+    try:
+        build_pdf_report(report_payload, pdf_path)
+    except Exception as exc:
+        logger.exception("PDF report rendering failed for result %s: %s", result_id, exc)
+
     # 4. Save record into database reports table
     saved_report = save_report(
         result_id=result_id,
@@ -595,6 +648,7 @@ def generate_report(
         "json": str(json_path),
         "html": str(html_path),
         "csv": str(csv_path),
+        "pdf": str(pdf_path),
     }
 
     return report_payload
@@ -630,3 +684,25 @@ def get_report_for_result(
             logger.warning("Failed to load existing json report: %s", exc)
 
     return generate_report(result_id=result_id, user_id=user_id)
+
+
+def ensure_pdf_report(result_id: int, user_id: int) -> Path:
+    """Return the path of the PDF report for a result, building it if needed."""
+    generated_result = get_generated_result_by_id(result_id)
+    if not generated_result:
+        raise ValueError(f"Generated result {result_id} not found.")
+    dataset_id = generated_result["dataset_id"]
+    pdf_path = REPORTS_DIR / f"report_dataset_{dataset_id}_result_{result_id}.pdf"
+    json_path = REPORTS_DIR / f"report_dataset_{dataset_id}_result_{result_id}.json"
+
+    if (
+        pdf_path.exists()
+        and json_path.exists()
+        and pdf_path.stat().st_mtime >= json_path.stat().st_mtime
+    ):
+        return pdf_path
+
+    # Reuse the cached JSON report (or build the whole report) and render it.
+    report = get_report_for_result(result_id=result_id, user_id=user_id)
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    return build_pdf_report(report, pdf_path)

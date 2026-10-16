@@ -19,6 +19,8 @@ import NotFound from '../pages/NotFound.jsx'
 import OtpVerify from '../pages/OtpVerify.jsx'
 import MyDatasets from '../pages/MyDatasets.jsx'
 import Settings from '../pages/Settings.jsx'
+import AlgorithmComparison from '../pages/AlgorithmComparison.jsx'
+import GenerationHistory from '../pages/GenerationHistory.jsx'
 
 function Protect({ children }) {
   return <ProtectedRoute>{children}</ProtectedRoute>
@@ -51,9 +53,11 @@ export default function AppRouter() {
         <Route path="/datasets/:datasetId/generate" element={<Generation />} />
         <Route path="/datasets/:datasetId/evaluate" element={<Evaluation />} />
 
+        <Route path="/generations" element={<GenerationHistory />} />
         <Route path="/evaluations" element={<EvaluationDashboard />} />
         <Route path="/reports" element={<Report />} />
         <Route path="/relationships" element={<Relationships />} />
+        <Route path="/algorithms" element={<AlgorithmComparison />} />
         <Route path="/settings" element={<Settings />} />
 
       </Route>

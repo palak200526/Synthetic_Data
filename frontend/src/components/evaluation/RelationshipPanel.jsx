@@ -1,5 +1,6 @@
 // src/components/evaluation/RelationshipPanel.jsx
 import MetricExplainer from '../MetricExplainer.jsx'
+import { RELATIONSHIP_DOC } from './metricDocs.js'
 import { CATEGORY_META, colorForScore } from './helpers.jsx'
 
 export default function RelationshipPanel({ section }) {
@@ -43,51 +44,105 @@ export default function RelationshipPanel({ section }) {
           </p>
         )}
 
+        {raw.status === 'evaluated' && (
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="rounded-lg bg-ink-50 p-3">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-ink-500">Total relationships</span>
+              <p className="mt-1 text-base font-semibold text-ink-900">
+                {raw.total_relationships ?? refs.length}
+              </p>
+            </div>
+            <div className="rounded-lg bg-ink-50 p-3">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-ink-500">Valid relationships</span>
+              <p className="mt-1 text-base font-semibold text-emerald-600">
+                {raw.valid_relationships ?? refs.filter((r) => r.valid).length}
+              </p>
+            </div>
+            <div className="rounded-lg bg-ink-50 p-3">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-ink-500">Integrity score</span>
+              <p className="mt-1 text-base font-semibold" style={{ color: colorForScore(section.score) }}>
+                {section.score != null ? `${section.score.toFixed(2)}%` : '—'}
+              </p>
+            </div>
+          </div>
+        )}
+
         {refs.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-3">
+            <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-500">
+              Relationship details ({refs.length})
+            </h4>
             {refs.map((r, i) => (
               <div
                 key={r.relationship_id ?? i}
-                className="rounded-lg border border-ink-200 bg-ink-50/60 p-3 text-xs"
+                className="rounded-lg border border-ink-200 bg-white p-3.5 text-xs shadow-sm"
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-medium text-ink-800">
-                    #{r.parent_dataset_id} → #{r.child_dataset_id}
-                  </span>
-                  <span className={r.valid ? 'text-emerald-600' : 'text-rose-600'}>
-                    {r.valid ? 'Valid' : 'Invalid'}
-                  </span>
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink-100 pb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-ink-900">
+                      Table #{r.parent_dataset_id} → Table #{r.child_dataset_id}
+                    </span>
+                    {r.relationship_type && (
+                      <span className="rounded bg-ink-100 px-1.5 py-0.5 text-[10px] font-medium text-ink-600">
+                        {r.relationship_type}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {r.referential_integrity_score != null && (
+                      <span className="font-mono font-semibold" style={{ color: colorForScore(r.referential_integrity_score) }}>
+                        {r.referential_integrity_score.toFixed(2)}%
+                      </span>
+                    )}
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                        r.valid
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                          : 'bg-rose-50 text-rose-700 border border-rose-200'
+                      }`}
+                    >
+                      {r.valid ? 'Valid' : 'Invalid'}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-1 text-[11px] text-ink-500">
-                  <span className="font-mono">{r.parent_column}</span>
-                  <span className="mx-1">→</span>
-                  <span className="font-mono">{r.child_column}</span>
-                  {r.referential_integrity_score != null && (
-                    <span className="ml-2">· {r.referential_integrity_score.toFixed(2)}%</span>
+
+                <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 text-ink-600">
+                  <div className="flex items-center gap-1.5 font-mono text-[11px]">
+                    <span className="rounded bg-ink-50 px-1.5 py-0.5 text-ink-800">
+                      {r.parent_column}
+                    </span>
+                    <span className="text-ink-400">→</span>
+                    <span className="rounded bg-ink-50 px-1.5 py-0.5 text-ink-800">
+                      {r.child_column}
+                    </span>
+                  </div>
+
+                  {r.total_synthetic_child_records != null && (
+                    <span className="text-[11px] text-ink-500">
+                      <strong className="text-ink-700">{r.valid_synthetic_child_records ?? (r.total_synthetic_child_records - (r.invalid_synthetic_child_records || 0))}</strong> of{' '}
+                      <strong className="text-ink-700">{r.total_synthetic_child_records}</strong> child records valid
+                    </span>
                   )}
                 </div>
+
+                {r.reason && (
+                  <p className="mt-2 text-[11px] text-rose-600">
+                    {r.reason}
+                  </p>
+                )}
+
+                {Array.isArray(r.invalid_sample) && r.invalid_sample.length > 0 && (
+                  <div className="mt-2 rounded bg-rose-50/70 p-2 text-[11px] text-rose-800">
+                    <span className="font-semibold">Invalid FK sample: </span>
+                    <span className="font-mono">{r.invalid_sample.join(', ')}</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         )}
 
-        <MetricExplainer
-          title="How referential integrity is calculated"
-          intro="For each configured relationship, we count how many synthetic child records reference a primary key that exists in the synthetic parent."
-          formula="score = (valid_child_records / total_child_records) * 100"
-          steps={[
-            'Read the list of configured parent-child relationships for the dataset group.',
-            'Extract the set of primary keys from the synthetic parent table.',
-            'For every synthetic child record, check whether its foreign key is in the parent key set.',
-            'Count the valid records and divide by the total.',
-            'Average across all relationships to get the overall score.',
-          ]}
-          interpretation={[
-            { range: '100%',  label: 'Every child record references an existing parent', tone: 'emerald' },
-            { range: '<100%', label: 'Some child records are orphaned', tone: 'rose' },
-          ]}
-          references={['Relational foreign-key constraint']}
-        />
+        <MetricExplainer {...RELATIONSHIP_DOC} />
       </div>
     </div>
   )

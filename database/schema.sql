@@ -173,3 +173,33 @@ CREATE TABLE validation_rules (
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE generation_jobs (
+    job_id VARCHAR(100) PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    dataset_id INTEGER NOT NULL REFERENCES datasets(dataset_id) ON DELETE CASCADE,
+    file_name VARCHAR(255) NOT NULL,
+    model_name VARCHAR(100) NOT NULL,
+    llm_model VARCHAR(100),
+    status VARCHAR(50) NOT NULL DEFAULT 'pending',
+    total_rows INTEGER NOT NULL,
+    generated_rows INTEGER NOT NULL DEFAULT 0,
+    current_batch INTEGER NOT NULL DEFAULT 0,
+    total_batches INTEGER NOT NULL DEFAULT 0,
+    progress_percent INTEGER NOT NULL DEFAULT 0,
+    stage VARCHAR(100) DEFAULT 'prepare',
+    stage_message TEXT,
+    parameters JSONB,
+    column_configurations JSONB,
+    checkpoint_path TEXT,
+    result_id INTEGER REFERENCES generated_results(result_id) ON DELETE SET NULL,
+    error_message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_checkpoint_at TIMESTAMP,
+    completed_at TIMESTAMP
+);
+
+CREATE INDEX idx_gen_jobs_user ON generation_jobs(user_id);
+CREATE INDEX idx_gen_jobs_status ON generation_jobs(status);
+CREATE INDEX idx_gen_jobs_dataset ON generation_jobs(dataset_id);

@@ -11,10 +11,14 @@ from backend.repositories.dataset_repository import (
     save_dataset_profile,
 )
 
+# create_processing_session() now requires a user_id.
+# User 1 already exists in the database (used by the job tests too).
+TEST_USER_ID = 1
+
 
 def test_create_processing_session():
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id=TEST_USER_ID)
 
     assert session_id is not None
     assert isinstance(session_id, int)
@@ -22,15 +26,15 @@ def test_create_processing_session():
 
 def test_multiple_sessions_have_unique_ids():
 
-    session_id_1 = create_processing_session()
-    session_id_2 = create_processing_session()
+    session_id_1 = create_processing_session(user_id=TEST_USER_ID)
+    session_id_2 = create_processing_session(user_id=TEST_USER_ID)
 
     assert session_id_1 != session_id_2
 
 
 def test_dataset_is_linked_to_session():
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id=TEST_USER_ID)
 
     dataset_id = create_dataset(
         "persistence_test.csv",
@@ -50,7 +54,7 @@ def test_dataset_is_linked_to_session():
 
 def test_dataset_metadata_is_stored():
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id=TEST_USER_ID)
 
     dataset_id = create_dataset(
         "metadata_test.csv",
@@ -66,7 +70,7 @@ def test_dataset_metadata_is_stored():
 
 def test_profile_is_persisted():
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id=TEST_USER_ID)
 
     dataset_id = create_dataset(
         "profile_persistence.csv",
@@ -97,7 +101,7 @@ def test_profile_is_persisted():
 
 def test_profile_is_linked_to_correct_dataset():
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id=TEST_USER_ID)
 
     dataset_id_1 = create_dataset(
         "dataset_one.csv",
@@ -146,7 +150,7 @@ def test_nonexistent_dataset_id_raises_error():
 
 def test_dataset_row_and_column_metadata():
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id=TEST_USER_ID)
 
     dataset_id = create_dataset(
         "large_dataset.csv",
@@ -164,7 +168,7 @@ def test_dataset_row_and_column_metadata():
 
 def test_profile_can_store_complex_data():
 
-    session_id = create_processing_session()
+    session_id = create_processing_session(user_id=TEST_USER_ID)
 
     dataset_id = create_dataset(
         "complex_profile.csv",

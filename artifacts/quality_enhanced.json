@@ -1,0 +1,32 @@
+{
+  "gaussian_copula": {
+    "statistical_similarity": 95.29,
+    "correlation_score": 97.87,
+    "correlation_error": 0.01,
+    "ml_utility_score": 96.44,
+    "business_rule_validity": 100.0,
+    "exact_match_rate": 0.0,
+    "dcr_ratio": 1.0929,
+    "privacy_score": 100.0
+  },
+  "ctgan": {
+    "statistical_similarity": 97.3,
+    "correlation_score": 90.94,
+    "correlation_error": 0.1203,
+    "ml_utility_score": 39.9,
+    "business_rule_validity": 100.0,
+    "exact_match_rate": 0.0,
+    "dcr_ratio": 1.4761,
+    "privacy_score": 100.0
+  },
+  "tvae": {
+    "statistical_similarity": 76.62,
+    "correlation_score": 83.62,
+    "correlation_error": 0.216,
+    "ml_utility_score": 26.52,
+    "business_rule_validity": 100.0,
+    "exact_match_rate": 0.0,
+    "dcr_ratio": 1.3609,
+    "privacy_score": 100.0
+  }
+}

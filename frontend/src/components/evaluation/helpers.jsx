@@ -8,25 +8,25 @@ export const CATEGORY_META = {
     label: 'Statistical Similarity',
     icon: BarChart3,
     accent: 'brand',
-    description: 'Distributional similarity between real and synthetic columns.',
+    description: 'Does each synthetic column look like its real counterpart?',
   },
   data_quality: {
     label: 'Correlation & Covariance',
     icon: ShieldCheck,
     accent: 'emerald',
-    description: 'Whether column-to-column dependencies are preserved in the synthetic data.',
+    description: 'Do columns still move together the way they do in the real data?',
   },
   ml_utility: {
     label: 'ML Utility',
     icon: TrendingUp,
     accent: 'amber',
-    description: 'How useful the synthetic data is for training downstream models.',
+    description: 'Would a model trained on synthetic data work as well as one trained on real data?',
   },
   relationship_integrity: {
     label: 'Relationship Integrity',
     icon: GitBranch,
     accent: 'ink',
-    description: 'Foreign-key consistency across linked tables.',
+    description: 'Do foreign keys in child tables still point to existing parent rows?',
   },
 }
 
@@ -97,6 +97,15 @@ export function CategoryScoreCard({ categoryKey, section, active, onClick }) {
   const meta = CATEGORY_META[categoryKey]
   const Icon = meta?.icon || BarChart3
   const score = section?.score
+  const rawStatus = section?.raw?.status
+
+  const isPendingML =
+    categoryKey === 'ml_utility' &&
+    (rawStatus === 'pending_target' || (score == null && rawStatus !== 'not_applicable'))
+
+  const cardDescription = isPendingML
+    ? 'Choose a target and click Proceed'
+    : meta?.description
 
   return (
     <button
@@ -124,17 +133,23 @@ export function CategoryScoreCard({ categoryKey, section, active, onClick }) {
           </span>
         </div>
         {section ? (
-          <span
-            className="shrink-0 text-sm font-semibold tabular-nums"
-            style={{ color: colorForScore(score) }}
-          >
-            {score != null ? score.toFixed(2) : '—'}
-          </span>
+          isPendingML ? (
+            <span className="shrink-0 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700 border border-amber-200">
+              Pending
+            </span>
+          ) : (
+            <span
+              className="shrink-0 text-sm font-semibold tabular-nums"
+              style={{ color: colorForScore(score) }}
+            >
+              {score != null ? score.toFixed(2) : '—'}
+            </span>
+          )
         ) : (
           <span className="shrink-0 text-[10px] font-medium text-ink-400">n/a</span>
         )}
       </div>
-      <p className="text-[11px] leading-snug text-ink-500">{meta?.description}</p>
+      <p className="text-[11px] leading-snug text-ink-500">{cardDescription}</p>
     </button>
   )
 }

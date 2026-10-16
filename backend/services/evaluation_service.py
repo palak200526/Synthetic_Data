@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from pathlib import Path
 from typing import Any
 
@@ -10,6 +11,7 @@ from backend.repositories.configuration_repository import (
     get_configurations,
 )
 from backend.repositories.dataset_repository import (
+    get_dataset_by_id,
     get_dataset_file_path,
     get_dataset_user_id,
 )
@@ -19,6 +21,10 @@ from backend.repositories.evaluation_repository import (
 )
 from backend.repositories.generation_repository import (
     get_generated_result_by_id,
+    get_group_peer_generated_result,
+)
+from backend.repositories.relationship_repository import (
+    get_dataset_relationships,
 )
 from backend.repositories.profile_repository import (
     get_dataset_profile,
@@ -27,12 +33,15 @@ from backend.services.correlation_evaluation_service import (
     evaluate_correlation_covariance,
 )
 from backend.services.dataset_loader import load_dataset
+from backend.services.ml_target_service import suggest_default_target
 from backend.services.ml_utility_service import (
     evaluate_ml_utility,
+    list_ml_target_candidates,
 )
 from backend.services.referential_integrity_service import (
     evaluate_referential_integrity,
 )
+from backend.services.privacy_evaluation_service import evaluate_privacy
 from backend.services.statistical_evaluation_service import (
     evaluate_statistical_similarity,
 )
@@ -43,10 +52,84 @@ from backend.services.text_evaluation_service import (
 logger = logging.getLogger(__name__)
 
 
+def _build_referential_context(
+    generated_result: dict,
+    dataset_id: int,
+    synthetic_dataframe,
+) -> tuple[list | None, dict]:
+    """
+    Collect what the referential-integrity check needs: the relationships
+    this table takes part in and the SYNTHETIC dataframe of every table on
+    the other side of those relationships (from the same multi-table run).
+
+    Returns (relationships, tables). relationships is None when this result
+    did not come from a multi-table (group) generation.
+    """
+    tables = {dataset_id: synthetic_dataframe}
+
+    model_name = generated_result.get("model_name") or ""
+    match = re.search(r"_group_(\d+)$", model_name)
+    if not match:
+        return None, tables
+
+    group_id = int(match.group(1))
+    try:
+        group_relationships = get_dataset_relationships(group_id)
+    except Exception as exc:
+        logger.warning("Could not load relationships for group %s: %s", group_id, exc)
+        return None, tables
+
+    relationships = [
+        r
+        for r in group_relationships
+        if dataset_id in (r["parent_dataset_id"], r["child_dataset_id"])
+    ]
+
+    peer_ids = set()
+    for r in relationships:
+        for other in (r["parent_dataset_id"], r["child_dataset_id"]):
+            if other != dataset_id:
+                peer_ids.add(other)
+
+    for peer_id in peer_ids:
+        try:
+            peer = get_group_peer_generated_result(
+                dataset_id=peer_id,
+                model_name=model_name,
+                reference_run_id=generated_result["run_id"],
+                reference_result_id=generated_result["result_id"],
+            )
+            if not peer:
+                logger.warning(
+                    "No synthetic result found for related dataset %s (group %s)",
+                    peer_id,
+                    group_id,
+                )
+                continue
+
+            peer_path = Path(peer["file_path"])
+            if not peer_path.is_absolute():
+                peer_path = Path.cwd() / peer_path
+            if not peer_path.exists():
+                logger.warning("Synthetic file missing for dataset %s: %s", peer_id, peer_path)
+                continue
+
+            tables[peer_id] = load_dataset(str(peer_path))
+        except Exception as exc:
+            logger.warning(
+                "Could not load synthetic table for related dataset %s: %s",
+                peer_id,
+                exc,
+            )
+
+    return relationships, tables
+
+
 def evaluate_generation(
     result_id: int,
     user_id: int,
     force_recompute: bool = True,
+    target_column: str | None = None,
 ) -> dict[str, Any]:
     """
     Complete evaluation pipeline across S4 user stories:
@@ -141,19 +224,86 @@ def evaluate_generation(
     # --------------------------------------------------
     # 8. US-025: ML utility evaluation (Synthetic-Train / Real-Test)
     # --------------------------------------------------
+    # Target = user's choice if given (or remembered from a previous run),
+    # otherwise the LLM-suggested default (checked only for the column used).
+    ml_candidates = []
+    try:
+        ml_candidates = list_ml_target_candidates(
+            real_dataframe, synthetic_dataframe, configurations, profile_data
+        )
+    except Exception as exc:
+        logger.warning("Could not list ML target candidates for %s: %s", result_id, exc)
+    candidate_names = {c["column"] for c in ml_candidates}
+
+    # "__auto__" = user switched back to the LLM/auto default
+    reset_to_auto = target_column == "__auto__"
+    if reset_to_auto:
+        target_column = None
+
+    if target_column and target_column not in candidate_names:
+        raise ValueError(
+            f"'{target_column}' cannot be used as an ML target. "
+            f"Choose one of: {', '.join(sorted(candidate_names)) or 'none available'}."
+        )
+
+    remembered = None
+    if not target_column and not reset_to_auto:
+        try:
+            prev = get_evaluation_by_result_id(result_id) or {}
+            prev_ml = (prev.get("utility_metrics") or {}).get("ml_utility") or {}
+            if prev_ml.get("target_source") == "user" and prev_ml.get("target_column") in candidate_names:
+                remembered = prev_ml["target_column"]
+        except Exception:
+            remembered = None
+
+    suggestion = suggest_default_target(
+        dataset_id,
+        (get_dataset_by_id(dataset_id) or {}).get("name"),
+        ml_candidates,
+    )
+    chosen_target = target_column or remembered or suggestion["target"]
+    chosen_source = "user" if (target_column or remembered) else suggestion["source"]
+
     ml_utility_result = evaluate_ml_utility(
         real_dataframe=real_dataframe,
         synthetic_dataframe=synthetic_dataframe,
         column_configurations=configurations,
         dataset_profile=profile_data,
+        target_column=chosen_target,
+        target_source=chosen_source,
     )
+
+    # The LLM suggestion is unverified. If it turns out not to be predictable,
+    # fall back to the automatic selection instead of showing a useless result.
+    # (A target the user picked is never replaced: they get the warning.)
+    if chosen_source == "llm" and ml_utility_result.get("status") != "evaluated":
+        chosen_source = "auto"
+        ml_utility_result = evaluate_ml_utility(
+            real_dataframe=real_dataframe,
+            synthetic_dataframe=synthetic_dataframe,
+            column_configurations=configurations,
+            dataset_profile=profile_data,
+            target_column=None,
+            target_source=chosen_source,
+        )
+    ml_utility_result["target_options"] = ml_candidates
+    ml_utility_result["suggested_target"] = suggestion["target"]
+    ml_utility_result["suggested_source"] = suggestion["source"]
+    ml_utility_result["suggested_reason"] = suggestion["reason"]
+    ml_utility_result.setdefault("target_source", chosen_source)
 
     # --------------------------------------------------
     # 9. US-027: Cross-table referential integrity evaluation
     # --------------------------------------------------
+    # Needs the synthetic parent AND child tables of the same multi-table
+    # run, not just the table being evaluated.
+    ref_relationships, ref_tables = _build_referential_context(
+        generated_result, dataset_id, synthetic_dataframe
+    )
     referential_result = evaluate_referential_integrity(
         dataset_id=dataset_id,
-        tables={dataset_id: synthetic_dataframe},
+        relationships=ref_relationships,
+        tables=ref_tables,
     )
 
     # --------------------------------------------------
@@ -165,6 +315,26 @@ def evaluate_generation(
         column_configurations=configurations,
         dataset_profile=profile_data,
     )
+
+    # --------------------------------------------------
+    # 10b. Privacy (exact-match + distance-to-closest-record)
+    # --------------------------------------------------
+    try:
+        privacy_result = evaluate_privacy(
+            real_dataframe=real_dataframe,
+            synthetic_dataframe=synthetic_dataframe,
+            column_configurations=configurations,
+            dataset_profile=profile_data,
+        )
+    except Exception as exc:
+        logger.warning("Privacy evaluation failed for result %s: %s", result_id, exc)
+        privacy_result = {
+            "metric": "privacy",
+            "status": "error",
+            "reason": str(exc),
+            "overall_score": None,
+            "risk_level": None,
+        }
 
     # --------------------------------------------------
     # 11. Composite Score Calculation
@@ -209,6 +379,7 @@ def evaluate_generation(
         "ml_utility": ml_utility_result,
         "relationship_integrity": referential_result,
         "text_evaluation": text_result,
+        "privacy": privacy_result,
     }
 
     saved_record = None
@@ -216,7 +387,7 @@ def evaluate_generation(
         saved_record = save_evaluation_result(
             result_id=result_id,
             utility_metrics=utility_metrics_payload,
-            privacy_metrics=None,
+            privacy_metrics=privacy_result,
             overall_score=overall_composite_score,
         )
     except Exception as exc:
@@ -244,7 +415,16 @@ def evaluate_generation(
         "ml_utility": ml_utility_result,
         "relationship_integrity": referential_result,
         "text_evaluation": text_result,
+        "privacy": privacy_result,
     }
+
+    # A fresh evaluation makes any cached report for this result stale.
+    try:
+        from backend.services.report_service import invalidate_report_cache
+
+        invalidate_report_cache(result_id=result_id, dataset_id=dataset_id)
+    except Exception as exc:
+        logger.warning("Could not invalidate report cache for %s: %s", result_id, exc)
 
     return {
         "result_id": result_id,

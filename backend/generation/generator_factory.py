@@ -26,6 +26,15 @@ def _init_kwargs(cls, kwargs: dict) -> dict:
     }
 
 
+def _drop_empty(kwargs: dict) -> dict:
+    """Ignore blank values ('' / None) so the generator's own defaults apply."""
+    return {
+        key: value
+        for key, value in kwargs.items()
+        if value is not None and not (isinstance(value, str) and not value.strip())
+    }
+
+
 def get_generator(model_name: str, **kwargs):
     """
     Return the requested synthetic data generator.
@@ -41,6 +50,8 @@ def get_generator(model_name: str, **kwargs):
         raise ValueError(
             "model_name is required."
         )
+
+    kwargs = _drop_empty(kwargs)
 
     name = model_name.lower().strip()
 
@@ -78,6 +89,7 @@ def get_generator(model_name: str, **kwargs):
                 "model",
                 "ollama_url",
                 "batch_size",
+                "max_concurrency",
                 "timeout",
                 "max_retries",
                 "similarity_threshold",

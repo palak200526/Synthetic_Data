@@ -17,7 +17,6 @@ import {
   BarChart3,
   ListChecks,
   FileText,
-  Brain,
 } from 'lucide-react'
 
 import PageHeader from '../components/PageHeader.jsx'
@@ -27,6 +26,8 @@ import EmptyState from '../components/EmptyState.jsx'
 import Toast from '../components/Toast.jsx'
 
 import { datasetApi, normalizeDatasetProfile } from '../api/datasetApi.js'
+import MLTargetSelector from '../components/evaluation/MlTargetSelector.jsx'
+import QualityImprovementPanel from '../components/evaluation/QualityImprovementPanel.jsx'
 import { evaluationApi, extractCategorySections } from '../api/evaluationApi.js'
 import { getErrorMessage } from '../utils/errors.js'
 import { formatNumber } from '../utils/format.js'
@@ -87,7 +88,86 @@ export default function Evaluation() {
   const [toast, setToast] = useState(null)
   const [activeCategory, setActiveCategory] = useState('statistical_similarity')
 
-  const autoRanRef = useRef(false)
+  // Session generations context (e.g. from multi-table or batch generation)
+  const sessionGenerations = useMemo(() => {
+    try {
+      if (sessionId) {
+        const raw = localStorage.getItem(`dx:sessionGenerations:${sessionId}`)
+        if (raw) {
+          const parsed = JSON.parse(raw)
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed
+        }
+      }
+      const lastGenRaw = localStorage.getItem('dx:lastGeneration')
+      if (lastGenRaw) {
+        const parsed = JSON.parse(lastGenRaw)
+        if (parsed?.files && Array.isArray(parsed.files) && parsed.files.length > 0) {
+          if (!sessionId || parsed.sessionId === String(sessionId)) {
+            return parsed.files
+          }
+        }
+      }
+    } catch {
+      /* storage unavailable */
+    }
+    return []
+  }, [sessionId])
+
+  // Fallback: If result_id is missing, fall back to the last result saved for this session
+  useEffect(() => {
+    if (resultId) return
+
+    if (sessionGenerations.length > 0) {
+      const match =
+        sessionGenerations.find(
+          (g) => String(g.datasetId) === String(datasetId),
+        ) || sessionGenerations[0]
+      if (match?.resultId) {
+        const targetDataset = match.datasetId || datasetId
+        const qs = new URLSearchParams()
+        qs.set('result_id', String(match.resultId))
+        if (sessionId) qs.set('session', String(sessionId))
+        navigate(`/datasets/${targetDataset}/evaluate?${qs.toString()}`, {
+          replace: true,
+        })
+        return
+      }
+    }
+
+    try {
+      const lastEvalRaw = localStorage.getItem('dx:lastEvaluation')
+      if (lastEvalRaw) {
+        const parsed = JSON.parse(lastEvalRaw)
+        if (parsed?.resultId) {
+          const targetDataset = parsed.datasetId || datasetId
+          const qs = new URLSearchParams()
+          qs.set('result_id', String(parsed.resultId))
+          if (sessionId) qs.set('session', String(sessionId))
+          navigate(`/datasets/${targetDataset}/evaluate?${qs.toString()}`, {
+            replace: true,
+          })
+        }
+      }
+    } catch {
+      /* storage unavailable */
+    }
+  }, [resultId, datasetId, sessionId, sessionGenerations, navigate])
+
+  // Remember the evaluation being viewed so the dashboard can link back to it
+  useEffect(() => {
+    if (!resultId) return
+    try {
+      localStorage.setItem(
+        'dx:lastEvaluation',
+        JSON.stringify({ resultId: String(resultId), datasetId: String(datasetId) }),
+      )
+    } catch {
+      /* storage unavailable */
+    }
+  }, [resultId, datasetId])
+
+  // remembers which result_id was auto-evaluated (not just "was it run once")
+  const autoRanRef = useRef(null)
 
   const loadProfile = useCallback(async () => {
     setLoadingProfile(true)
@@ -112,7 +192,10 @@ export default function Evaluation() {
     loadProfile()
   }, [loadProfile])
 
-  const runEvaluation = useCallback(async () => {
+  // target: optional ML-utility target column ('__auto__' = back to default).
+  // Button clicks pass an event object, so only strings count as a target.
+  const runEvaluation = useCallback(async (target) => {
+    const targetColumn = typeof target === 'string' && target ? target : undefined
     if (!resultId) {
       setRunError('No result_id in the URL.')
       return
@@ -121,7 +204,7 @@ export default function Evaluation() {
     setEvaluation(null)
     setRunning(true)
     try {
-      const res = await evaluationApi.run(resultId)
+      const res = await evaluationApi.run(resultId, targetColumn)
       setEvaluation(res.data)
       setToast({
         type: 'success',
@@ -136,9 +219,13 @@ export default function Evaluation() {
   }, [resultId])
 
   useEffect(() => {
-    if (autoRanRef.current) return
     if (!resultId) return
-    autoRanRef.current = true
+    if (autoRanRef.current === resultId) return
+    autoRanRef.current = resultId
+    // new file / new result: drop the previous file's numbers immediately
+    setEvaluation(null)
+    setRunError('')
+    setActiveCategory('statistical_similarity')
     runEvaluation()
   }, [resultId, runEvaluation])
 
@@ -170,7 +257,16 @@ export default function Evaluation() {
       return <CorrelationPanel section={activeSection} />
     }
     if (activeCategory === 'ml_utility') {
-      return <MLUtilityPanel section={activeSection} />
+      return (
+        <>
+          <MLTargetSelector
+            raw={activeSection.raw}
+            disabled={running}
+            onChange={(col) => runEvaluation(col)}
+          />
+          <MLUtilityPanel section={activeSection} />
+        </>
+      )
     }
     if (activeCategory === 'relationship_integrity') {
       return <RelationshipPanel section={activeSection} />
@@ -235,11 +331,49 @@ export default function Evaluation() {
               className="dx-btn-outline"
               onClick={() => navigate('/evaluations')}
             >
-              Dashboard <ArrowRight size={12} />
+              All evaluations <ArrowRight size={12} />
             </button>
           </>
         }
       />
+
+      {/* Multi-file selector for sessions with several generated files */}
+      {sessionGenerations.length > 1 && (
+        <div className="mb-4 flex flex-wrap items-center gap-2.5 rounded-xl border border-ink-200 bg-white p-3.5 shadow-sm text-xs">
+          <span className="font-semibold text-ink-700">Evaluate:</span>
+          <div className="flex flex-wrap items-center gap-2">
+            {sessionGenerations.map((file, idx) => {
+              const fileId = file.datasetId || file.resultId || idx
+              const isSelected =
+                (resultId && String(file.resultId) === String(resultId)) ||
+                (!resultId && String(file.datasetId) === String(datasetId))
+              const label =
+                file.fileName || file.sourceFileName || `file ${file.datasetId || file.resultId}`
+
+              return (
+                <button
+                  key={String(file.resultId || fileId)}
+                  type="button"
+                  onClick={() => {
+                    const targetDataset = file.datasetId || datasetId
+                    const qs = new URLSearchParams()
+                    if (file.resultId) qs.set('result_id', String(file.resultId))
+                    if (sessionId) qs.set('session', String(sessionId))
+                    navigate(`/datasets/${targetDataset}/evaluate?${qs.toString()}`)
+                  }}
+                  className={`rounded-lg px-3 py-1.5 font-medium transition-all ${
+                    isSelected
+                      ? 'bg-brand-600 text-white shadow-sm font-semibold'
+                      : 'bg-ink-100 text-ink-700 hover:bg-ink-200'
+                  }`}
+                >
+                  {label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Context strip */}
       {resultId ? (
@@ -386,20 +520,29 @@ export default function Evaluation() {
 
                   <div className="flex items-center gap-2">
                     <button
-                      className="dx-btn-outline"
-                      onClick={() => navigate('/algorithms')}
-                      title="Learn how each algorithm generates data"
-                    >
-                      <Brain size={14} /> Algorithms
-                    </button>
-                    <button
                       className="dx-btn-primary"
-                      onClick={() => navigate(`/evaluations?result_id=${resultId}`)}
+                      onClick={() => navigate('/evaluations')}
                     >
-                      Open dashboard <ArrowRight size={12} />
+                      All evaluations <ArrowRight size={12} />
                     </button>
                   </div>
                 </div>
+              </div>
+
+              {/* Supply Chain Domain Quality Tuning Workflow */}
+              <div className="mt-6">
+                <QualityImprovementPanel
+                  resultId={resultId}
+                  datasetId={datasetId}
+                  targetColumn={categories?.ml_utility?.targetColumn}
+                  onImprovementSuccess={() => {
+                    setToast({
+                      type: 'success',
+                      title: 'Improvement Completed',
+                      message: 'Quality tuning finished with verified side-by-side metrics.',
+                    })
+                  }}
+                />
               </div>
 
               {/* Dimension tabs */}

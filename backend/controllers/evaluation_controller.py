@@ -35,6 +35,7 @@ def evaluate_generated_data(
         result = evaluate_generation(
             result_id=request.result_id,
             user_id=user_id,
+            target_column=request.target_column,
         )
 
         return {

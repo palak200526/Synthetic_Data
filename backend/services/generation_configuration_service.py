@@ -22,8 +22,6 @@ def group_columns_by_action(configurations):
         "keep": [],
         "remove": [],
         "new_id": [],
-        "generalize": [],
-        "derived": [],
         "llm": [],
     }
 

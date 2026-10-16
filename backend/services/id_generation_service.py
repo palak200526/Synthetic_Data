@@ -1,5 +1,6 @@
-import uuid
 import pandas as pd
+
+from backend.services.id_pattern_service import generate_ids_like
 
 
 def generate_new_ids(dataframe: pd.DataFrame, column_name: str):
@@ -8,10 +9,11 @@ def generate_new_ids(dataframe: pd.DataFrame, column_name: str):
             f"Column '{column_name}' does not exist in the dataset."
         )
 
-    generated_ids = [
-        str(uuid.uuid4())
-        for _ in range(len(dataframe))
-    ]
+    # New IDs follow the format of the original ones and never reuse them.
+    generated_ids = generate_ids_like(
+        source=dataframe[column_name],
+        count=len(dataframe),
+    )
 
     # Validate uniqueness
     if len(generated_ids) != len(set(generated_ids)):

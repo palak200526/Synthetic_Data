@@ -9,6 +9,12 @@ from backend.utils.auth_dependency import get_current_user
 
 from backend.services.dataset_loader import load_dataset
 from backend.services.preprocessing_service import preprocess_dataset
+from backend.services.preprocessing_summary_service import (
+    build_preprocessing_summary,
+)
+from backend.repositories.configuration_repository import (
+    get_configurations,
+)
 
 from backend.repositories.dataset_repository import (
     get_dataset_file_path,
@@ -65,12 +71,22 @@ async def preprocess(
         # 4. Return preprocessing result
         # --------------------------------------------------
 
+        try:
+            summary = build_preprocessing_summary(
+                dataframe,
+                result,
+                get_configurations(dataset_id),
+            )
+        except Exception:
+            summary = {}
+
         return {
             "status": "success",
             "message": (
                 "Dataset preprocessing completed successfully."
             ),
             "dataset_id": dataset_id,
+            **summary,
             "row_count": len(
                 result["dataframe"]
             ),
@@ -83,7 +99,7 @@ async def preprocess(
             "categorical_columns": (
                 result["categorical_columns"]
             ),
-            "outliers": result["outliers"],
+            "outliers": summary.get("outlier_summary", []),
             "validation": result["validation"],
         }
 

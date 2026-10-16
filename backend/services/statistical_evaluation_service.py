@@ -224,10 +224,35 @@ def _evaluate_categorical_column(
     else:
         categorical_similarity = max(0.0, 1.0 - js_distance)
 
+    # Category proportions (top 10 + "Other") so the UI can chart real vs synthetic
+    ranked = sorted(
+        zip(categories, real_probabilities, synthetic_probabilities),
+        key=lambda t: -(t[1] + t[2]),
+    )
+    top = ranked[:10]
+    rest = ranked[10:]
+    distribution = [
+        {
+            "category": str(c),
+            "real": round(float(r) * 100, 2),
+            "synthetic": round(float(sy) * 100, 2),
+        }
+        for c, r, sy in top
+    ]
+    if rest:
+        distribution.append(
+            {
+                "category": f"Other ({len(rest)})",
+                "real": round(float(sum(t[1] for t in rest)) * 100, 2),
+                "synthetic": round(float(sum(t[2] for t in rest)) * 100, 2),
+            }
+        )
+
     return {
         "column_type": "categorical",
         "status": "evaluated",
         "category_count": len(categories),
+        "distribution": distribution,
         "metrics": {
             "js_distance": round(js_distance, 4),
             "distribution_similarity": round(categorical_similarity, 4),

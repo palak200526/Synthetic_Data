@@ -38,12 +38,6 @@ async def upload_dataset(
     validate_filename(file.filename)
     validate_file_extension(file.filename)
 
-    file_content = await file.read()
-
-    validate_file_size(
-        len(file_content)
-    )
-
     # Keep only the actual filename
     original_filename = Path(file.filename).name
 
@@ -65,9 +59,7 @@ async def upload_dataset(
     )
 
     # ---------------------------------------------------------
-    # 3. Save temporary file
-    #
-    # Dataset ID does not exist yet, so use a temporary name.
+    # 3. Stream upload directly to temporary file in chunks
     # ---------------------------------------------------------
     temporary_filename = (
         f"uploading_{uuid.uuid4().hex}_{original_filename}"
@@ -77,12 +69,23 @@ async def upload_dataset(
         date_directory / temporary_filename
     )
 
-    with open(
-        temporary_path,
-        "wb"
-    ) as output_file:
+    total_size = 0
+    chunk_size = 4 * 1024 * 1024  # 4 MB chunk streaming
 
-        output_file.write(file_content)
+    try:
+        with open(temporary_path, "wb") as output_file:
+            while True:
+                chunk = await file.read(chunk_size)
+                if not chunk:
+                    break
+                total_size += len(chunk)
+                output_file.write(chunk)
+    except Exception:
+        if temporary_path.exists():
+            temporary_path.unlink()
+        raise
+
+    validate_file_size(total_size)
 
     try:
 

@@ -34,6 +34,7 @@ import {
   PolarRadiusAxis,
   Radar,
 } from 'recharts'
+import ColumnCharts from '../components/evaluation/ColumnCharts.jsx'
 
 import PageHeader from '../components/PageHeader.jsx'
 import StatCard from '../components/StatCard.jsx'
@@ -50,7 +51,7 @@ import {
   normalizeEvaluation,
 } from '../api/evaluationApi.js'
 import { getErrorMessage } from '../utils/errors.js'
-import { formatNumber } from '../utils/format.js'
+import { formatNumber, formatDateTime } from '../utils/format.js'
 
 // ── helpers ─────────────────────────────────────────────────────
 
@@ -200,61 +201,6 @@ function NotReturnedCard({ categoryKey }) {
         This metric category has not been returned by the backend yet. No
         placeholder values are shown.
       </p>
-    </div>
-  )
-}
-
-function ColumnScoreChart({ columns, overallScore }) {
-  const data = columns
-    .filter((c) => c.score != null)
-    .map((c) => ({ name: c.name, score: c.score }))
-
-  if (data.length === 0) return null
-
-  return (
-    <div style={{ width: '100%', height: 280 }}>
-      <ResponsiveContainer>
-        <BarChart
-          data={data}
-          layout="vertical"
-          margin={{ top: 8, right: 24, bottom: 8, left: 8 }}
-        >
-          <CartesianGrid
-            strokeDasharray="3 3"
-            horizontal={false}
-            stroke="#e2e8f0"
-          />
-          <XAxis
-            type="number"
-            domain={[0, 100]}
-            tick={{ fontSize: 11, fill: '#64748b' }}
-            stroke="#cbd5e1"
-          />
-          <YAxis
-            type="category"
-            dataKey="name"
-            tick={{ fontSize: 11, fill: '#334155' }}
-            stroke="#cbd5e1"
-            width={150}
-          />
-          <Tooltip
-            formatter={(v) => [
-              typeof v === 'number' ? v.toFixed(2) : v,
-              'Score',
-            ]}
-            contentStyle={{
-              fontSize: 12,
-              borderRadius: 8,
-              border: '1px solid #e2e8f0',
-            }}
-          />
-          <Bar dataKey="score" radius={[0, 4, 4, 0]}>
-            {data.map((entry, i) => (
-              <Cell key={i} fill={colorForScore(entry.score)} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
     </div>
   )
 }
@@ -417,15 +363,7 @@ function SectionPanel({ categoryKey, section }) {
       {/* Charts + table */}
       {hasColumnMetrics ? (
         <div className="px-5 py-5 space-y-6">
-          <div>
-            <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-ink-500">
-              Per-column scores
-            </h3>
-            <ColumnScoreChart
-              columns={section.columns}
-              overallScore={section.score}
-            />
-          </div>
+          <ColumnCharts columns={section.columns} />
 
           {section.columns.length > 0 && (
             <div>
@@ -560,7 +498,7 @@ function SectionPanel({ categoryKey, section }) {
   )
 }
 
-function HistoryTable({ rows }) {
+function HistoryTable({ rows, currentResultId }) {
   if (!rows || rows.length === 0) return null
 
   return (
@@ -575,8 +513,13 @@ function HistoryTable({ rows }) {
           header: 'Result',
           render: (r) =>
             r?.result_id != null || r?.resultId != null ? (
-              <span className="font-mono text-xs text-ink-700">
+              <span className="inline-flex items-center gap-2 font-mono text-xs text-ink-700">
                 #{r.result_id ?? r.resultId}
+                {String(r.result_id ?? r.resultId) === String(currentResultId) && (
+                  <span className="rounded-full bg-brand-50 px-2 py-0.5 font-sans text-[10px] font-medium text-brand-700 ring-1 ring-inset ring-brand-200">
+                    Current
+                  </span>
+                )}
               </span>
             ) : (
               '—'
@@ -605,12 +548,39 @@ function HistoryTable({ rows }) {
           },
         },
         {
+          key: 'model',
+          header: 'Model',
+          render: (r) =>
+            r?.model_name
+              ? String(r.model_name).replace(/_group_\d+$/, '')
+              : '—',
+        },
+        {
           key: 'created_at',
           header: 'Created',
           render: (r) =>
             r?.created_at
-              ? new Date(r.created_at).toLocaleString()
+              ? formatDateTime(r.created_at)
               : '—',
+        },
+        {
+          key: 'actions',
+          header: '',
+          render: (r) => {
+            const rid = r?.result_id ?? r?.resultId
+            if (rid == null) return null
+            const did = r?.dataset_id ?? r?.datasetId ?? 0
+            return (
+              <div className="flex items-center justify-end gap-3 text-xs font-medium">
+                <Link
+                  to={`/datasets/${did}/evaluate?result_id=${rid}`}
+                  className="text-brand-600 hover:underline"
+                >
+                  Open evaluation
+                </Link>
+              </div>
+            )
+          },
         },
       ]}
     />
@@ -623,6 +593,11 @@ export default function EvaluationDashboard() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const resultIdParam = searchParams.get('result_id')
+  const returnTo = searchParams.get('return_to')
+  const workflow = searchParams.get('workflow') || 'original'
+  const reportUrl = resultIdParam
+    ? `/reports?result_id=${encodeURIComponent(resultIdParam)}${returnTo ? `&return_to=${encodeURIComponent(returnTo)}` : ''}&workflow=${encodeURIComponent(workflow)}`
+    : null
 
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -723,20 +698,53 @@ export default function EvaluationDashboard() {
     }
   }, [data, resultIdParam])
 
+  // The evaluation the user was last looking at (fallback: newest run)
+  const currentEvaluation = useMemo(() => {
+    let stored = null
+    try {
+      stored = JSON.parse(localStorage.getItem('dx:lastEvaluation') || 'null')
+    } catch {
+      stored = null
+    }
+    const history = dashboardNormalized?.history || []
+    if (
+      stored?.resultId &&
+      (history.length === 0 ||
+        history.some((r) => String(r.result_id ?? r.resultId) === String(stored.resultId)))
+    ) {
+      return stored
+    }
+    const first = history[0]
+    if (first && (first.result_id ?? first.resultId) != null) {
+      return {
+        resultId: String(first.result_id ?? first.resultId),
+        datasetId: String(first.dataset_id ?? first.datasetId ?? 0),
+      }
+    }
+    return null
+  }, [dashboardNormalized])
+
   // Overall score display
   const overallScore = useMemo(() => {
     if (dashboardNormalized?.stats?.averageScore != null) {
       return dashboardNormalized.stats.averageScore
     }
+    if (!resultIdParam) return null
     for (const key of CATEGORY_ORDER) {
       if (categories[key]?.score != null) return categories[key].score
     }
     return null
-  }, [categories, dashboardNormalized])
+  }, [categories, dashboardNormalized, resultIdParam])
 
   // Is there anything to show?
   const anyCategory = CATEGORY_ORDER.some((k) => categories[k])
-  const isEmpty = !loading && !error && !anyCategory
+  const hasHistory =
+    Array.isArray(dashboardNormalized?.history) &&
+    dashboardNormalized.history.length > 0
+  // Overview (no result_id) = totals + history only. The per-metric detail
+  // lives on the Evaluation page, so it is not repeated here.
+  const isEmpty =
+    !loading && !error && (resultIdParam ? !anyCategory : !hasHistory)
 
   const activeSection = categories[activeCategory]
 
@@ -765,6 +773,25 @@ export default function EvaluationDashboard() {
         }
         actions={
           <>
+            {returnTo && (
+              <button
+                type="button"
+                className="dx-btn-outline"
+                onClick={() => navigate(returnTo)}
+                title="Return to the quality-improvement comparison"
+              >
+                <ArrowLeft size={14} /> Back to Quality Improvement
+              </button>
+            )}
+            {reportUrl && (
+              <button
+                type="button"
+                className="dx-btn-primary"
+                onClick={() => navigate(reportUrl)}
+              >
+                Open Report <ArrowRight size={14} />
+              </button>
+            )}
             <button
               type="button"
               className="dx-btn-outline"
@@ -777,13 +804,19 @@ export default function EvaluationDashboard() {
               />
               Refresh
             </button>
-            <button
-              type="button"
-              className="dx-btn-primary"
-              onClick={() => navigate('/reports')}
-            >
-              View report <ArrowRight size={12} />
-            </button>
+            {!resultIdParam && currentEvaluation && (
+              <button
+                type="button"
+                className="dx-btn-outline"
+                onClick={() =>
+                  navigate(
+                    `/datasets/${currentEvaluation.datasetId}/evaluate?result_id=${currentEvaluation.resultId}`,
+                  )
+                }
+              >
+                <ArrowLeft size={12} /> Current evaluation
+              </button>
+            )}
           </>
         }
       />
@@ -861,7 +894,8 @@ export default function EvaluationDashboard() {
             />
           </div>
 
-          {/* ── Category strip ──────────────────────────────── */}
+          {/* ── Category strip (detail view only) ───────────── */}
+          {resultIdParam && (
           <div className="mt-6">
             <h2 className="mb-3 text-sm font-semibold text-ink-900">
               Metric categories
@@ -879,13 +913,17 @@ export default function EvaluationDashboard() {
             </div>
           </div>
 
-          {/* ── Active category panel ───────────────────────── */}
-          <div className="mt-6">
-            <SectionPanel
-              categoryKey={activeCategory}
-              section={activeSection}
-            />
-          </div>
+          )}
+
+          {/* ── Active category panel (detail view only) ────── */}
+          {resultIdParam && (
+            <div className="mt-6">
+              <SectionPanel
+                categoryKey={activeCategory}
+                section={activeSection}
+              />
+            </div>
+          )}
 
           {/* ── History table ───────────────────────────────── */}
           {dashboardNormalized?.history &&
@@ -900,7 +938,10 @@ export default function EvaluationDashboard() {
                     {dashboardNormalized.history.length === 1 ? '' : 's'}
                   </span>
                 </div>
-                <HistoryTable rows={dashboardNormalized.history} />
+                <HistoryTable
+                  rows={dashboardNormalized.history}
+                  currentResultId={currentEvaluation?.resultId}
+                />
               </div>
             )}
 
@@ -939,16 +980,8 @@ export default function EvaluationDashboard() {
                   </span>
                 </div>
                 <ul className="mt-3 space-y-2 text-xs text-ink-600">
-                  <li>· Metric categories appear only when the backend returns them.</li>
-                  <li>
-                    · Missing categories are labelled{' '}
-                    <span className="font-mono">n/a</span> — no invented values.
-                  </li>
-                  <li>· Click a category card to view its detailed breakdown.</li>
-                  <li>
-                    · Deep-link a single evaluation with{' '}
-                    <code className="font-mono">?result_id=X</code>.
-                  </li>
+                  <li>· This page summarises all your evaluations.</li>
+                  <li>· Use "Open evaluation" in a row for the full metric breakdown.</li>
                 </ul>
               </div>
             </aside>

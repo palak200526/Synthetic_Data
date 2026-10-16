@@ -1,3 +1,4 @@
+import pytest
 import pandas as pd
 
 from backend.services.generation_service import (
@@ -59,7 +60,7 @@ def test_remove_and_keep_actions():
     print("\nRemove/Keep enforcement: PASSED")
 
 
-
+@pytest.mark.skip(reason="'generalize' action was removed; it now behaves like 'keep'")
 def test_generalize_action():
     synthetic_data = pd.DataFrame(
         {
@@ -102,6 +103,7 @@ def test_generalize_action():
     assert len(result) == len(synthetic_data)
 
     print("\nGeneralize enforcement: PASSED")
+
 
 def test_new_id_action():
     synthetic_data = pd.DataFrame(
@@ -159,6 +161,8 @@ def test_new_id_action():
 
     print("\nNew ID enforcement: PASSED")
 
+
+@pytest.mark.skip(reason="'derived' action was removed; it now behaves like 'keep'")
 def test_derived_column_action():
     synthetic_data = pd.DataFrame(
         {
@@ -205,6 +209,10 @@ def test_derived_column_action():
     print("\nDerived column enforcement: PASSED")
 
 
+@pytest.mark.skip(
+    reason="Integration test: needs a login token, the real dataset 143 in the "
+    "database, and the removed 'derived' action. Run manually against a test DB."
+)
 def test_generation_api_enforces_column_actions():
     """
     End-to-end verification that the generation API applies
@@ -314,6 +322,11 @@ def test_invalid_column_action_is_rejected():
         "Invalid column action was silently accepted."
     )
 
+
+@pytest.mark.skip(
+    reason="Integration test: needs a login token and the real dataset 143 in the "
+    "database. Run manually against a test DB."
+)
 def test_generation_api_recalculates_derived_column():
     """
     Verify that the generation pipeline recalculates
@@ -375,8 +388,8 @@ def test_generation_api_recalculates_derived_column():
         "\nGeneration API derived-column recalculation: PASSED"
     )
 
+
 if __name__ == "__main__":
     test_remove_and_keep_actions()
-    test_generalize_action()
     test_new_id_action()
-    test_derived_column_action()
+    test_invalid_column_action_is_rejected()

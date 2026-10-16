@@ -37,8 +37,6 @@ const ACTION_LABELS = {
   keep: 'Keep',
   remove: 'Remove',
   new_id: 'New ID',
-  generalize: 'Generalize',
-  derived: 'Derived',
   llm: 'LLM Text',
 }
 
@@ -46,8 +44,6 @@ const ACTION_STYLES = {
   keep: 'text-emerald-700 bg-emerald-50 ring-emerald-200',
   remove: 'text-rose-700 bg-rose-50 ring-rose-200',
   new_id: 'text-brand-700 bg-brand-50 ring-brand-200',
-  generalize: 'text-amber-700 bg-amber-50 ring-amber-200',
-  derived: 'text-violet-700 bg-violet-50 ring-violet-200',
   llm: 'text-sky-700 bg-sky-50 ring-sky-200',
 }
 
@@ -64,6 +60,11 @@ function normalizeColumnType(dtype) {
 }
 
 // Backend rule: 'new_id' requires is_identifier = true.
+// generalize / derived were removed (they never created new data) -> treat as keep
+function normAction(a) {
+  return a === 'generalize' || a === 'derived' ? 'keep' : a
+}
+
 function coerceIdentifier(action, isIdentifier) {
   if (action === 'new_id') return true
   return isIdentifier
@@ -116,7 +117,7 @@ function suggestAction(columnName, columnType) {
   ) {
     return {
       action: 'llm',
-      reason: 'Free-form text column. Recommended for LLM generation.',
+      reason: 'Probably free-form text (medium confidence): column name suggests text. LLM generation recommended.',
     }
   }
   if (
@@ -131,18 +132,18 @@ function suggestAction(columnName, columnType) {
   ) {
     return {
       action: 'new_id',
-      reason: 'Looks like an identifier column. Regenerate unique IDs.',
+      reason: 'Probably unique identifier (low confidence): based on column name only, values not checked yet. Please review.',
     }
   }
   if (name.startsWith('unnamed') || name === 'index') {
     return {
       action: 'remove',
-      reason: 'Index or empty column.',
+      reason: 'Probably an index or empty column (medium confidence): based on column name only.',
     }
   }
   return {
     action: 'keep',
-    reason: 'Standard feature column. Model with generative distribution.',
+    reason: 'Standard feature column (medium confidence): no ID, text or empty-column signals found.',
   }
 }
 
@@ -154,10 +155,10 @@ function rowFromProfile(name, dtypeMap) {
     columnName: name,
     columnType,
     isIdentifier: isId,
-    action: suggested.action,
+    action: normAction(suggested.action),
     rule: null,
     reason: suggested.reason,
-    llmAction: suggested.action,
+    llmAction: normAction(suggested.action),
     llmIdentifier: isId,
     savedAction: null,
     savedIdentifier: null,
@@ -193,10 +194,10 @@ function buildRowsFromAnalysis(analysis, profileColumnOrder, dtypeMap) {
       columnName: a.columnName,
       columnType: normalizeColumnType(dtypeMap[a.columnName]),
       isIdentifier: isId,
-      action: a.action,
+      action: normAction(a.action),
       rule: null,
       reason: a.reason,
-      llmAction: a.action,
+      llmAction: normAction(a.action),
       llmIdentifier: a.isIdentifier,
       savedAction: null,
       savedIdentifier: null,
@@ -293,12 +294,12 @@ export default function ColumnAnalysis() {
               columnType:
                 c.columnType || normalizeColumnType(dmap[c.columnName]),
               isIdentifier: isId,
-              action: c.action,
+              action: normAction(c.action),
               rule: c.rule ?? null,
               reason: suggested.reason,
               llmAction: suggested.action,
               llmIdentifier: isId,
-              savedAction: c.action,
+              savedAction: normAction(c.action),
               savedIdentifier: isId,
             }
           }),
@@ -826,8 +827,6 @@ export default function ColumnAnalysis() {
                 Actions: <strong>keep</strong> preserves the column,{' '}
                 <strong>remove</strong> drops it, <strong>new_id</strong>{' '}
                 regenerates identifiers (requires Identifier = Yes),{' '}
-                <strong>generalize</strong> reduces detail,{' '}
-                <strong>derived</strong> creates a computed column,{' '}
                 <strong>llm</strong> generates new free-form text with the
                 local Ollama model (not copied from source).
               </span>

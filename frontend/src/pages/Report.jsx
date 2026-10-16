@@ -10,10 +10,9 @@ import {
   BarChart3,
   Sparkles,
   ArrowRight,
+  ArrowLeft,
   Database,
   Layers,
-  FileSpreadsheet,
-  FileCode,
 } from 'lucide-react'
 
 import PageHeader from '../components/PageHeader.jsx'
@@ -41,6 +40,11 @@ export default function Report() {
 
   const urlResultId = searchParams.get('result_id')
   const urlDatasetId = searchParams.get('dataset_id')
+  const returnTo = searchParams.get('return_to')
+  const workflow = searchParams.get('workflow') || 'original'
+  const evaluationUrl = urlResultId
+    ? `/evaluations?result_id=${encodeURIComponent(urlResultId)}${returnTo ? `&return_to=${encodeURIComponent(returnTo)}` : ''}&workflow=${encodeURIComponent(workflow)}`
+    : null
 
   const [loading, setLoading] = useState(false)
   const [generating, setGenerating] = useState(false)
@@ -319,6 +323,25 @@ export default function Report() {
         subtitle="Comprehensive assessment of statistical similarity, correlations, ML utility, referential integrity, and text quality."
         actions={
           <div className="flex items-center gap-2 flex-wrap">
+            {returnTo && (
+              <button
+                type="button"
+                className="dx-btn-outline"
+                onClick={() => navigate(returnTo)}
+                title="Return to the quality-improvement comparison"
+              >
+                <ArrowLeft size={14} /> Back to Quality Improvement
+              </button>
+            )}
+            {evaluationUrl && (
+              <button
+                type="button"
+                className="dx-btn-outline"
+                onClick={() => navigate(evaluationUrl)}
+              >
+                <Layers size={14} /> Back to Evaluation
+              </button>
+            )}
             <button
               type="button"
               className="dx-btn-outline"
@@ -335,47 +358,17 @@ export default function Report() {
 
             <button
               type="button"
-              className="dx-btn-outline text-ink-800"
-              onClick={() => handleDownload('html')}
-              disabled={downloadingFormat === 'html' || !report}
-              title="Download standalone HTML report"
-            >
-              {downloadingFormat === 'html' ? (
-                <Loader2 size={14} className="animate-spin" />
-              ) : (
-                <FileCode size={14} />
-              )}
-              HTML
-            </button>
-
-            <button
-              type="button"
-              className="dx-btn-outline text-ink-800"
-              onClick={() => handleDownload('csv')}
-              disabled={downloadingFormat === 'csv' || !report}
-              title="Download CSV summary"
-            >
-              {downloadingFormat === 'csv' ? (
-                <Loader2 size={14} className="animate-spin" />
-              ) : (
-                <FileSpreadsheet size={14} />
-              )}
-              CSV
-            </button>
-
-            <button
-              type="button"
               className="dx-btn-primary"
-              onClick={() => handleDownload('json')}
-              disabled={downloadingFormat === 'json' || !report}
-              title="Download full JSON report"
+              onClick={() => handleDownload('pdf')}
+              disabled={downloadingFormat === 'pdf' || !report}
+              title="Download the full evaluation report as a PDF"
             >
-              {downloadingFormat === 'json' ? (
+              {downloadingFormat === 'pdf' ? (
                 <Loader2 size={14} className="animate-spin" />
               ) : (
                 <Download size={14} />
               )}
-              Download JSON
+              {downloadingFormat === 'pdf' ? 'Preparing PDF…' : 'Download PDF'}
             </button>
           </div>
         }
@@ -478,88 +471,106 @@ export default function Report() {
             </div>
           </div>
 
-          {/* 5-Dimension Overview Cards */}
+          {/* 5-Dimension Overview Cards (click a card to open its details) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            <StatCard
-              title="Statistical Similarity"
-              value={
-                dimScores.statistical_similarity != null
-                  ? `${formatNumber(dimScores.statistical_similarity, { decimals: 1 })}%`
-                  : '—'
-              }
-              tone={toneForScore(dimScores.statistical_similarity)}
-              subtitle={`${stats.evaluated_columns ?? 0}/${stats.total_common_columns ?? 0} columns`}
-            />
-            <StatCard
-              title="Free-Form Text Quality"
-              value={
-                dimScores.text_evaluation != null
-                  ? `${formatNumber(dimScores.text_evaluation, { decimals: 1 })}%`
-                  : '—'
-              }
-              tone={toneForScore(dimScores.text_evaluation)}
-              subtitle={
-                textEval.evaluated_text_columns?.length
-                  ? `${textEval.evaluated_text_columns.length} text col(s)`
-                  : 'Conditioned & diverse'
-              }
-            />
-            <StatCard
-              title="Correlation & Covariance"
-              value={
-                dimScores.correlation_covariance != null
-                  ? `${formatNumber(dimScores.correlation_covariance, { decimals: 1 })}%`
-                  : '—'
-              }
-              tone={toneForScore(dimScores.correlation_covariance)}
-              subtitle={corr.status || 'not_applicable'}
-            />
-            <StatCard
-              title="ML Utility"
-              value={
-                dimScores.ml_utility != null
-                  ? `${formatNumber(dimScores.ml_utility, { decimals: 1 })}%`
-                  : '—'
-              }
-              tone={toneForScore(dimScores.ml_utility)}
-              subtitle={ml.task_type || 'not_applicable'}
-            />
-            <StatCard
-              title="Referential Integrity"
-              value={
-                dimScores.relationship_integrity != null
-                  ? `${formatNumber(dimScores.relationship_integrity, { decimals: 1 })}%`
-                  : '—'
-              }
-              tone={toneForScore(dimScores.relationship_integrity)}
-              subtitle={ref.status || 'not_applicable'}
-            />
+            <button
+              type="button"
+              onClick={() => setActiveTab('statistical')}
+              className={`text-left rounded-xl transition focus:outline-none ${
+                activeTab === 'statistical' ? 'ring-2 ring-primary-500' : 'hover:ring-2 hover:ring-ink-200'
+              }`}
+            >
+              <StatCard
+                title="Statistical Similarity"
+                value={
+                  dimScores.statistical_similarity != null
+                    ? `${formatNumber(dimScores.statistical_similarity, { decimals: 1 })}%`
+                    : '—'
+                }
+                tone={toneForScore(dimScores.statistical_similarity)}
+                subtitle={`${stats.evaluated_columns ?? 0}/${stats.total_common_columns ?? 0} columns`}
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('text')}
+              className={`text-left rounded-xl transition focus:outline-none ${
+                activeTab === 'text' ? 'ring-2 ring-primary-500' : 'hover:ring-2 hover:ring-ink-200'
+              }`}
+            >
+              <StatCard
+                title="Free-Form Text Quality"
+                value={
+                  dimScores.text_evaluation != null
+                    ? `${formatNumber(dimScores.text_evaluation, { decimals: 1 })}%`
+                    : '—'
+                }
+                tone={toneForScore(dimScores.text_evaluation)}
+                subtitle={
+                  textEval.evaluated_text_columns?.length
+                    ? `${textEval.evaluated_text_columns.length} text col(s)`
+                    : 'No text columns'
+                }
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('correlation')}
+              className={`text-left rounded-xl transition focus:outline-none ${
+                activeTab === 'correlation' ? 'ring-2 ring-primary-500' : 'hover:ring-2 hover:ring-ink-200'
+              }`}
+            >
+              <StatCard
+                title="Correlation & Covariance"
+                value={
+                  dimScores.correlation_covariance != null
+                    ? `${formatNumber(dimScores.correlation_covariance, { decimals: 1 })}%`
+                    : '—'
+                }
+                tone={toneForScore(dimScores.correlation_covariance)}
+                subtitle={corr.status || 'not_applicable'}
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('ml')}
+              className={`text-left rounded-xl transition focus:outline-none ${
+                activeTab === 'ml' ? 'ring-2 ring-primary-500' : 'hover:ring-2 hover:ring-ink-200'
+              }`}
+            >
+              <StatCard
+                title="ML Utility"
+                value={
+                  dimScores.ml_utility != null
+                    ? `${formatNumber(dimScores.ml_utility, { decimals: 1 })}%`
+                    : '—'
+                }
+                tone={toneForScore(dimScores.ml_utility)}
+                subtitle={ml.task_type || 'not_applicable'}
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('referential')}
+              className={`text-left rounded-xl transition focus:outline-none ${
+                activeTab === 'referential' ? 'ring-2 ring-primary-500' : 'hover:ring-2 hover:ring-ink-200'
+              }`}
+            >
+              <StatCard
+                title="Referential Integrity"
+                value={
+                  dimScores.relationship_integrity != null
+                    ? `${formatNumber(dimScores.relationship_integrity, { decimals: 1 })}%`
+                    : '—'
+                }
+                tone={toneForScore(dimScores.relationship_integrity)}
+                subtitle={ref.status || 'not_applicable'}
+              />
+            </button>
           </div>
-
-          {/* Section Navigation Tabs */}
-          <div className="border-b border-ink-200">
-            <nav className="flex space-x-6">
-              {[
-                { id: 'statistical', label: 'Statistical Similarity (US-023)' },
-                { id: 'text', label: 'Text Quality & Conditioning' },
-                { id: 'correlation', label: 'Correlation & Covariance (US-024)' },
-                { id: 'ml', label: 'ML Utility (US-025)' },
-                { id: 'referential', label: 'Referential Integrity (US-027)' },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`py-3 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === tab.id
-                      ? 'border-primary-600 text-primary-600 font-semibold'
-                      : 'border-transparent text-ink-500 hover:text-ink-700 hover:border-ink-300'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </nav>
-          </div>
+          <p className="text-[11px] text-ink-400 -mt-2">
+            Click a card above to see its detailed breakdown.
+          </p>
 
           {/* TAB 1: Statistical Similarity */}
           {activeTab === 'statistical' && (
@@ -591,7 +602,7 @@ export default function Report() {
                   Free-Form Text Originality & Semantic Conditioning
                 </h3>
                 <p className="text-xs text-ink-500">
-                  Measures whether synthetic free-form text avoids verbatim copying, maintains diversity, and aligns semantically with structured row labels (e.g. Sentiment).
+                  Checks the quality of generated free-text columns (comments, reviews, remarks). Each text column is scored on four things: Originality (no sentence copied word-for-word from real data), Diversity (generated sentences are not near-duplicates of each other), Length & vocabulary similarity (similar sentence length and word usage as real text) and Label consistency (e.g. a Sentiment or Rating column matches the text written for that row).
                 </p>
               </div>
               {textColumns.length > 0 ? (
@@ -613,8 +624,17 @@ export default function Report() {
           {activeTab === 'correlation' && (
             <div className="dx-card p-6 space-y-4">
               <h3 className="text-base font-semibold text-ink-900">
-                Correlation and Covariance Matrix Preservation
+                {corr.association_type === 'cramers_v'
+                  ? "Association Between Categorical Columns (Cramér's V)"
+                  : 'Correlation and Covariance Matrix Preservation'}
               </h3>
+              {corr.association_type === 'cramers_v' && (
+                <p className="text-xs text-indigo-800 bg-indigo-50 p-3 rounded border border-indigo-200">
+                  Method: Cramér&apos;s V, not Pearson correlation. The dataset has fewer than 2
+                  numeric columns, so the link between category columns is compared instead
+                  (0 = no link, 1 = perfect link). Covariance is not calculated.
+                </p>
+              )}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div className="bg-ink-50 p-4 rounded-lg">
                   <span className="text-xs text-ink-500 uppercase font-semibold">Status</span>
@@ -627,7 +647,7 @@ export default function Report() {
                   </div>
                 </div>
                 <div className="bg-ink-50 p-4 rounded-lg">
-                  <span className="text-xs text-ink-500 uppercase font-semibold">Numerical Columns</span>
+                  <span className="text-xs text-ink-500 uppercase font-semibold">{corr.association_type === 'cramers_v' ? 'Categorical Columns' : 'Numerical Columns'}</span>
                   <div className="text-sm font-medium text-ink-800 mt-1">
                     {corr.numerical_columns?.length ? corr.numerical_columns.join(', ') : 'None (<2 numerical cols)'}
                   </div>

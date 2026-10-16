@@ -6,10 +6,8 @@ import AlgorithmSummaryCard, { ALGORITHM_INFO } from '../components/AlgorithmSum
 
 const COMPARISON_ROWS = [
   { label: 'Model family',       key: 'short' },
-  { label: 'Training speed',     key: 'speed' },
   { label: 'Handles non-linear', get: (i) => i.goodFor.includes('nonlinear') ? 'Yes' : 'Limited' },
   { label: 'Mixed types',        get: (i) => i.goodFor.includes('mixed_types') ? 'Yes' : 'Marginal' },
-  { label: 'Mode collapse risk', get: (i) => i.id === 'ctgan' ? 'Higher' : i.id === 'tvae' ? 'Low' : 'N/A' },
   { label: 'Best for',           key: 'bestFor' },
 ]
 

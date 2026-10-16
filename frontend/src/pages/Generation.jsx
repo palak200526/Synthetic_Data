@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Link,
   useNavigate,
@@ -8,9 +8,15 @@ import {
 import {
   ArrowLeft,
   ArrowRight,
+  ExternalLink,
   Loader2,
   Cpu,
   PlayCircle,
+  Play,
+  Pause,
+  RotateCcw,
+  Trash2,
+  History,
   RefreshCw,
   CheckCircle2,
   AlertTriangle,
@@ -21,6 +27,7 @@ import {
   Layers,
   Plus,
   Download,
+  Sparkles,
 } from 'lucide-react'
 
 import PageHeader from '../components/PageHeader.jsx'
@@ -31,6 +38,11 @@ import EmptyState from '../components/EmptyState.jsx'
 import StatusBadge from '../components/StatusBadge.jsx'
 import Toast from '../components/Toast.jsx'
 import CreateGroupDialog from '../components/CreateGroupDialog.jsx'
+import GeneratedPreview from '../components/GeneratedPreview.jsx'
+import AlgorithmPicker, {
+  recommendAlgorithm,
+} from '../components/AlgorithmPicker.jsx'
+import AlgorithmParameterPanel from '../components/AlgorithmParameterPanel.jsx'
 
 import { datasetApi, normalizeDatasetProfile } from '../api/datasetApi.js'
 import {
@@ -48,23 +60,27 @@ import {
 import apiClient from '../api/client.js'
 import { getErrorMessage } from '../utils/errors.js'
 import { formatNumber } from '../utils/format.js'
+import { useGenerationTracker } from '../context/GenerationTrackerContext.jsx'
 import { loadBatch, getLastSessionId } from '../utils/batchStore.js'
 import { loadLocalGroups } from '../api/groupApi.js'
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-async function waitForGenerationJob(jobId, onProgress) {
-  for (;;) {
-    const statusRes = await generationApi.getStatus(jobId)
-    const payload = statusRes.data || {}
-    const status = payload.status
-    if (payload.progress) onProgress(payload.progress)
-    if (status === 'SUCCESS') return payload.result || payload
-    if (status === 'FAILURE') {
-      throw new Error(payload.error || 'Generation failed')
-    }
-    await sleep(2500)
+// Backend sends Postgres TIMESTAMPs without a timezone ("2026-10-13T05:19:57").
+// They are UTC, but `new Date()` would read them as local time — so mark them
+// as UTC before converting to the viewer's local timezone.
+function parseServerDate(value) {
+  if (!value) return null
+  let v = String(value).trim()
+  if (/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(v) && !/(Z|[+-]\d{2}:?\d{2})$/i.test(v)) {
+    v = v.replace(' ', 'T') + 'Z'
   }
+  const d = new Date(v)
+  return Number.isNaN(d.getTime()) ? null : d
+}
+function formatTime(value) {
+  const d = parseServerDate(value)
+  return d ? d.toLocaleTimeString() : '—'
 }
 
 export default function Generation() {
@@ -91,34 +107,207 @@ export default function Generation() {
 
   // ── selection ─────────────────────────────────────────────────
   const [modelId, setModelId] = useState('gaussian_copula')
-  const [multiTable, setMultiTable] = useState(false)
+  const [algoStats, setAlgoStats] = useState(null)
+  const modelTouchedRef = useRef(false)
+  const [multiTable, setMultiTable] = useState(
+    () => searchParams.get('mode') === 'multi',
+  )
   const [groups, setGroups] = useState(() => loadLocalGroups())
-  const [groupId, setGroupId] = useState('')
+  const [groupId, setGroupId] = useState(
+    () => searchParams.get('group_id') || '',
+  )
   const [dialogOpen, setDialogOpen] = useState(false)
 
   // Per-model parameter form: { [key]: value }
   const [paramValues, setParamValues] = useState({})
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [paramsError, setParamsError] = useState('')
+  const [hasLlmColumns, setHasLlmColumns] = useState(false)
+  const [lastAppliedParameters, setLastAppliedParameters] = useState(null)
 
   // ── run state ─────────────────────────────────────────────────
-  const [running, setRunning] = useState(false)
+  // localRunning covers requests the page awaits itself (multi-table,
+  // queueing, ID generation). Background jobs are owned by the tracker.
+  const [localRunning, setRunning] = useState(false)
   const [runError, setRunError] = useState('')
   const [result, setResult] = useState(null)
   const [toast, setToast] = useState(null)
   const [downloading, setDownloading] = useState(false)
-  const [progress, setProgress] = useState(null)
+
+  // ── global generation tracker ─────────────────────────────────
+  const tracker = useGenerationTracker()
+  const trackedJob = tracker.job
+  const trackerRunning =
+    tracker.isActive && String(trackedJob?.datasetId) === String(datasetId)
+  const otherJobRunning = tracker.isActive && !trackerRunning
+  const running = localRunning || trackerRunning
+  const progress = trackerRunning ? trackedJob?.progress || null : null
+  const handledJobRef = useRef(null)
+
+  // Deep link from Job History: /datasets/:id/generate?job_id=...
+  // Make sure the tracker is following that job (covers refresh, other
+  // browsers and cleared localStorage), then scroll to the live panel.
+  const linkedJobId = searchParams.get('job_id')
+  const liveCardRef = useRef(null)
+  useEffect(() => {
+    if (!linkedJobId) return
+    tracker.attach({
+      jobId: linkedJobId,
+      datasetId,
+      sessionId: searchParams.get('session'),
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [linkedJobId, datasetId])
+
+  const scrolledToLiveRef = useRef(null)
+  useEffect(() => {
+    if (!linkedJobId || !trackerRunning) return
+    if (scrolledToLiveRef.current === linkedJobId) return
+    if (!liveCardRef.current) return
+    scrolledToLiveRef.current = linkedJobId
+    liveCardRef.current.scrollIntoView?.({ behavior: 'smooth', block: 'center' })
+  }, [linkedJobId, trackerRunning, loading])
+
+  // ── active / incomplete jobs (persistent resume) ──────────────
+  const [activeJobs, setActiveJobs] = useState([])
+  const [loadingActiveJobs, setLoadingActiveJobs] = useState(false)
+
+  const loadActiveJobs = useCallback(async () => {
+    try {
+      setLoadingActiveJobs(true)
+      const res = await generationApi.listActiveJobs()
+      setActiveJobs(res?.data?.jobs || [])
+    } catch {
+      // ignore
+    } finally {
+      setLoadingActiveJobs(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    loadActiveJobs()
+  }, [loadActiveJobs, datasetId])
+
+  // Refresh the list whenever the followed job starts / finishes / pauses.
+  useEffect(() => {
+    loadActiveJobs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tracker.job?.jobId, tracker.job?.status])
+
+  // Jobs the tracker is already showing live below are not "incomplete".
+  // Jobs that are running (but not followed here) get "View Live Progress"
+  // instead of Resume — the backend rejects resuming a running job.
+  const isRunningStatus = (st) => {
+    const v = String(st || '').toLowerCase()
+    return v === 'running' || v === 'pending'
+  }
+  const visibleActiveJobs = activeJobs.filter(
+    (j) => !(tracker.isActive && trackedJob?.jobId === j.job_id),
+  )
+  const resumableCount = visibleActiveJobs.filter(
+    (j) => !isRunningStatus(j.status),
+  ).length
+
+  const handleViewLiveJob = (job) => {
+    tracker.attach({
+      jobId: job.job_id,
+      datasetId: job.dataset_id,
+      modelLabel: job.model_name,
+    })
+    navigate(`/datasets/${job.dataset_id}/generate?job_id=${job.job_id}`)
+  }
+
+  const handleResumeIncompleteJob = async (job) => {
+    try {
+      await generationApi.resumeJob(job.job_id)
+      tracker.attach({
+        jobId: job.job_id,
+        datasetId: job.dataset_id,
+        modelLabel: job.model_name,
+        sessionId,
+      })
+      setToast({
+        type: 'success',
+        title: 'Job Resumed',
+        message: `Resuming generation for ${job.file_name} from checkpoint.`,
+      })
+      loadActiveJobs()
+    } catch (err) {
+      setToast({
+        type: 'error',
+        title: 'Resume Failed',
+        message: getErrorMessage(err),
+      })
+    }
+  }
+
+  const handleRestartIncompleteJob = async (job) => {
+    if (
+      !window.confirm(
+        `Restart generation for "${job.file_name}" from row 0? Saved batch progress will be reset.`,
+      )
+    ) {
+      return
+    }
+    try {
+      await generationApi.restartJob(job.job_id)
+      tracker.attach({
+        jobId: job.job_id,
+        datasetId: job.dataset_id,
+        modelLabel: job.model_name,
+        sessionId,
+      })
+      setToast({
+        type: 'info',
+        title: 'Job Restarted',
+        message: `Restarted generation from row 0 for ${job.file_name}.`,
+      })
+      loadActiveJobs()
+    } catch (err) {
+      setToast({
+        type: 'error',
+        title: 'Restart Failed',
+        message: getErrorMessage(err),
+      })
+    }
+  }
+
+  const handleDiscardIncompleteJob = async (job) => {
+    if (
+      !window.confirm(
+        `Discard generation job for "${job.file_name}"? This removes checkpoints for this run.`,
+      )
+    ) {
+      return
+    }
+    try {
+      await generationApi.discardJob(job.job_id)
+      setToast({
+        type: 'info',
+        title: 'Job Discarded',
+        message: `Discarded incomplete job for ${job.file_name}.`,
+      })
+      loadActiveJobs()
+    } catch (err) {
+      setToast({
+        type: 'error',
+        title: 'Discard Failed',
+        message: getErrorMessage(err),
+      })
+    }
+  }
 
   // Reset per-dataset state when the file changes.
   useEffect(() => {
+    modelTouchedRef.current = false
     setResult(null)
     setRunError('')
     setToast(null)
     setParamValues({})
     setParamsError('')
     setShowAdvanced(false)
-    setMultiTable(false)
-    setGroupId('')
+    setMultiTable(searchParams.get('mode') === 'multi')
+    setGroupId(searchParams.get('group_id') || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datasetId])
 
@@ -132,6 +321,26 @@ export default function Generation() {
   useEffect(() => {
     setGroups(loadLocalGroups())
   }, [dialogOpen, multiTable])
+
+  // Speed per algorithm (measured from past runs, else estimates)
+  useEffect(() => {
+    let alive = true
+    generationApi
+      .algorithmStats()
+      .then((res) => {
+        if (alive) setAlgoStats(res?.data?.models || null)
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
+
+  // Pre-select the recommended algorithm until the user picks one themselves
+  useEffect(() => {
+    if (!profile || modelTouchedRef.current) return
+    setModelId(recommendAlgorithm(profile).id)
+  }, [profile])
 
   // Reset param values when the model changes
   useEffect(() => {
@@ -162,9 +371,14 @@ export default function Generation() {
       }
 
       if (configRes.status === 'fulfilled') {
-        setConfigCount(extractConfigurations(configRes.value.data).length)
+        const configs = extractConfigurations(configRes.value.data)
+        setConfigCount(configs.length)
+        setHasLlmColumns(
+          configs.some((c) => String(c?.action || '').toLowerCase() === 'llm'),
+        )
       } else {
         setConfigCount(null)
+        setHasLlmColumns(false)
       }
 
       if (
@@ -219,6 +433,8 @@ export default function Generation() {
       return
     }
 
+    setLastAppliedParameters(parameters)
+
     const selectedModel = getModelById(modelId)
     if (!selectedModel) {
       setRunError('Please select a generation model.')
@@ -234,7 +450,6 @@ export default function Generation() {
     }
 
     setRunning(true)
-    setProgress(null)
     try {
       const res = multiTable
         ? await generationApi.generateMultiTable({
@@ -248,28 +463,142 @@ export default function Generation() {
             parameters,
           })
 
-      let payload = res.data
+      const payload = res.data
       const jobId = payload?.job_id
       if (jobId && (payload.status === 'queued' || payload.status === 'PENDING')) {
-        payload = await waitForGenerationJob(jobId, setProgress)
+        // Hand the job to the global tracker; it keeps polling on every
+        // page and the effect below shows the result when it finishes.
+        const accepted = tracker.start({
+          jobId,
+          datasetId,
+          modelLabel: selectedModel.label,
+          sessionId,
+        })
+        if (!accepted) {
+          setRunError('Another generation is already running.')
+        }
+        return
       }
 
-      const normalized = normalizeGenerationResult(payload)
-      setResult(normalized)
-      setToast({
-        type: 'success',
-        title: 'Generation complete',
-        message:
-          normalized?.message ||
-          'Synthetic dataset generated successfully.',
-      })
+      // Synchronous response (multi-table or background=false).
+      processResult(payload)
     } catch (err) {
       setRunError(getErrorMessage(err))
     } finally {
       setRunning(false)
-      setProgress(null)
     }
   }
+
+  // Turn a finished generation payload into the on-page result.
+  const processResult = (payload) => {
+    const normalized = normalizeGenerationResult(payload)
+    setResult(normalized)
+
+    // Persist generation result for session evaluation fallback
+    if (normalized) {
+      try {
+        const files =
+          Array.isArray(normalized.datasets) && normalized.datasets.length > 0
+            ? normalized.datasets
+            : normalized.resultId != null
+              ? [
+                  {
+                    datasetId: normalized.syntheticDatasetId || datasetId,
+                    resultId: normalized.resultId,
+                    fileName: normalized.fileName || normalized.filePath || `dataset_${datasetId}`,
+                  },
+                ]
+              : []
+        if (files.length > 0) {
+          if (sessionId) {
+            localStorage.setItem(
+              `dx:sessionGenerations:${sessionId}`,
+              JSON.stringify(files),
+            )
+          }
+          localStorage.setItem(
+            'dx:lastGeneration',
+            JSON.stringify({
+              sessionId: sessionId ? String(sessionId) : null,
+              datasetId: String(datasetId),
+              resultId: String(files[0]?.resultId),
+              files,
+            }),
+          )
+        }
+      } catch {
+        /* storage unavailable */
+      }
+    }
+
+    setToast({
+      type: 'success',
+      title: 'Generation complete',
+      message:
+        normalized?.message ||
+        'Synthetic dataset generated successfully.',
+    })
+  }
+
+  // When the tracked job for THIS dataset finishes (even if the user was on
+  // another page meanwhile), show its result or error once, then release it.
+  useEffect(() => {
+    const job = tracker.job
+    if (!job || String(job.datasetId) !== String(datasetId)) return
+    if (job.status !== 'SUCCESS' && job.status !== 'FAILURE') return
+    if (handledJobRef.current === job.jobId) return
+    handledJobRef.current = job.jobId
+
+    if (job.status === 'SUCCESS') processResult(job.result)
+    else setRunError(job.error || 'Generation failed')
+
+    tracker.dismiss(job.jobId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tracker.job, datasetId])
+
+
+  // Pause: the worker stops after the current batch and saves a checkpoint.
+  const handlePauseGeneration = async () => {
+    const res = await tracker.pause()
+    if (res?.ok) {
+      setToast({
+        type: 'info',
+        title: 'Pausing…',
+        message:
+          'Generation will stop after the current batch and save its progress.',
+      })
+    } else {
+      setToast({
+        type: 'error',
+        title: 'Pause Failed',
+        message: String(res?.error || 'Could not pause this job.'),
+      })
+    }
+  }
+
+  // When the backend confirms PAUSED, release the tracker and refresh the
+  // "Resume Incomplete Generation" list so the Resume button appears.
+  const pausedHandledRef = useRef(null)
+  useEffect(() => {
+    const job = tracker.job
+    if (!job || String(job.datasetId) !== String(datasetId)) return
+    if (job.status === 'PENDING' || job.status === 'PROGRESS') {
+      pausedHandledRef.current = null
+      return
+    }
+    if (job.status !== 'PAUSED') return
+    if (pausedHandledRef.current === job.jobId) return
+    pausedHandledRef.current = job.jobId
+
+    setToast({
+      type: 'success',
+      title: 'Generation Paused',
+      message: 'Progress is saved. Use Resume below to continue.',
+    })
+    loadActiveJobs()
+    tracker.dismiss(job.jobId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tracker.job, datasetId])
 
   const handleGenerateIds = async () => {
     setRunError('')
@@ -431,6 +760,9 @@ export default function Generation() {
     // Prefer the per-dataset id if the backend returned one, else the
     // source dataset id + run id as disambiguator.
     const attempts = []
+    if (target?.resultId != null) {
+      attempts.push({ result_id: Number(target.resultId), type: 'dataset' })
+    }
     if (target?.datasetId != null) {
       attempts.push({ dataset_id: Number(target.datasetId), type: 'dataset' })
     }
@@ -511,37 +843,52 @@ export default function Generation() {
   }
 
   const handleDownloadAll = async () => {
-    if (!result?.datasets?.length) return
-    setDownloading(true)
-    const failures = []
-    let ok = 0
-
-    for (const d of result.datasets) {
-      try {
-        await downloadOne(d)
-        ok++
-      } catch (err) {
-        failures.push({
-          name: d.fileName || `dataset ${d.datasetId}`,
-          message: getErrorMessage(err),
-        })
-      }
-    }
-
-    setDownloading(false)
-    if (failures.length === 0) {
-      setToast({
-        type: 'success',
-        title: 'Download complete',
-        message: `${ok} file${ok === 1 ? '' : 's'} saved.`,
-      })
-    } else {
+    const list = Array.isArray(result?.datasets) ? result.datasets : []
+    if (list.length === 0) {
       setToast({
         type: 'error',
-        title: `Downloaded ${ok}, failed ${failures.length}`,
-        message: failures.map((f) => f.name).join(', '),
+        title: 'Download failed',
+        message: 'No generated tables available for download.',
       })
+      return
     }
+    setDownloading(true)
+    try {
+      for (const d of list) {
+        await downloadOne(d)
+        // small gap so the browser doesn't block multiple downloads
+        await sleep(400)
+      }
+      setToast({
+        type: 'success',
+        title: 'Download started',
+        message: 'All generated datasets are being downloaded.',
+      })
+    } catch (err) {
+      setToast({
+        type: 'error',
+        title: 'Download failed',
+        message: getErrorMessage(err),
+      })
+    } finally {
+      setDownloading(false)
+    }
+  }
+
+  // Build a URL that brings the user straight back to multi-table mode
+  const multiReturnUrl = () => {
+    const qs = new URLSearchParams()
+    qs.set('mode', 'multi')
+    if (groupId) qs.set('group_id', String(groupId))
+    if (sessionId) qs.set('session', String(sessionId))
+    return `/datasets/${datasetId}/generate?${qs.toString()}`
+  }
+
+  const goToRelationships = () => {
+    const qs = new URLSearchParams()
+    if (groupId) qs.set('group_id', String(groupId))
+    qs.set('return_to', multiReturnUrl())
+    navigate(`/relationships?${qs.toString()}`)
   }
 
   const goto = (path) => {
@@ -551,7 +898,7 @@ export default function Generation() {
 
   const selectedModel = getModelById(modelId)
   const configReady = configCount != null && configCount > 0
-  const busy = running || loading
+  const busy = running || loading || otherJobRunning
 
   const noRelationships =
     multiTable && /no relationship/i.test(runError || '')
@@ -595,15 +942,7 @@ export default function Generation() {
         }
         actions={
           <>
-            <button
-              type="button"
-              className="dx-btn-outline"
-              onClick={handleGenerateIds}
-              disabled={busy}
-              title="Calls POST /generation/ids/{dataset_id}"
-            >
-              <Zap size={14} /> Generate IDs
-            </button>
+            
             <button
               type="button"
               className="dx-btn-primary"
@@ -631,6 +970,152 @@ export default function Generation() {
           </>
         }
       />
+
+      {/* Resume Incomplete Generation Section */}
+      {visibleActiveJobs.length > 0 && (
+        <div className="mb-6 rounded-xl border border-amber-300 bg-amber-50/40 p-5 shadow-sm">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 text-amber-800">
+                <AlertTriangle size={18} />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-ink-900">
+                  {resumableCount > 0
+                    ? 'Resume Incomplete Generation'
+                    : 'Generation In Progress'}{' '}
+                  ({visibleActiveJobs.length}{' '}
+                  {visibleActiveJobs.length === 1 ? 'Job' : 'Jobs'})
+                </h3>
+                <p className="text-xs text-ink-600">
+                  Unfinished runs with saved batch checkpoints. Resume from
+                  the last saved batch without regenerating completed rows,
+                  or restart from the beginning.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/generations"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-700 hover:text-brand-800"
+            >
+              <History size={13} /> View All Runs
+            </Link>
+          </div>
+
+          <div className="mt-4 space-y-3">
+            {visibleActiveJobs.map((job) => {
+              const jobIsRunning = isRunningStatus(job.status)
+              const isCurrent = String(job.dataset_id) === String(datasetId)
+              const pct = Math.min(
+                100,
+                Math.max(0, Number(job.progress_percent || 0)),
+              )
+              return (
+                <div
+                  key={job.job_id}
+                  className={[
+                    'flex flex-col gap-3 rounded-lg border bg-white p-3.5 sm:flex-row sm:items-center sm:justify-between shadow-xs',
+                    isCurrent
+                      ? 'border-amber-400 ring-1 ring-amber-300'
+                      : 'border-ink-200',
+                  ].join(' ')}
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-semibold text-ink-900">
+                        {job.file_name}
+                      </span>
+                      {isCurrent && (
+                        <span className="rounded bg-brand-100 px-1.5 py-0.5 text-[10px] font-semibold text-brand-800">
+                          Current File
+                        </span>
+                      )}
+                      <StatusBadge status={job.status} />
+                      <span className="rounded bg-ink-100 px-1.5 py-0.5 font-mono text-[10px] text-ink-600">
+                        {job.model_name?.toUpperCase()}
+                      </span>
+                      {job.llm_model && (
+                        <span className="rounded bg-indigo-50 px-1.5 py-0.5 text-[10px] text-indigo-700">
+                          {job.llm_model}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="mt-1.5 flex flex-wrap items-center gap-x-3 text-[11px] text-ink-500">
+                      <span>
+                        Generated:{' '}
+                        <strong className="text-ink-700">
+                          {formatNumber(job.generated_rows || 0)}
+                        </strong>{' '}
+                        / {formatNumber(job.total_rows || 0)} rows ({pct}%)
+                      </span>
+                      {job.remaining_rows > 0 && (
+                        <span>
+                          Remaining: {formatNumber(job.remaining_rows)} rows
+                        </span>
+                      )}
+                      {job.total_batches > 0 && (
+                        <span>
+                          Batch: {job.current_batch} / {job.total_batches}
+                        </span>
+                      )}
+                      {job.last_checkpoint_at && (
+                        <span>
+                          Checkpoint:{' '}
+                          {formatTime(job.last_checkpoint_at)}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="mt-2 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-ink-100">
+                      <div
+                        className="h-full bg-amber-500 transition-all duration-300"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {jobIsRunning ? (
+                      <button
+                        className="dx-btn-primary px-2.5 py-1 text-xs"
+                        onClick={() => handleViewLiveJob(job)}
+                        title="This job is already running — watch its live progress"
+                      >
+                        <ExternalLink size={12} /> View Live Progress
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          className="dx-btn-primary px-2.5 py-1 text-xs"
+                          onClick={() => handleResumeIncompleteJob(job)}
+                          title="Resume from last checkpoint"
+                        >
+                          <Play size={12} /> Resume
+                        </button>
+                        <button
+                          className="dx-btn-secondary px-2.5 py-1 text-xs"
+                          onClick={() => handleRestartIncompleteJob(job)}
+                          title="Restart from beginning"
+                        >
+                          <RotateCcw size={12} /> Restart
+                        </button>
+                        <button
+                          className="dx-btn-ghost px-2 py-1 text-xs text-rose-600 hover:bg-rose-50 hover:text-rose-700"
+                          onClick={() => handleDiscardIncompleteJob(job)}
+                          title="Discard job"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {batch.length > 1 && !multiTable && (
         <div className="mb-5 dx-card px-4 py-3">
@@ -846,194 +1331,205 @@ export default function Generation() {
             </div>
           )}
 
-          {/* ── Model picker ──────────────────────────────────── */}
+          {/* ── Algorithm picker (recommendation, time/100 rows, details) ── */}
           {configReady && (
-            <div className="mt-6">
-              <h2 className="mb-3 text-sm font-semibold text-ink-900">
-                Generation model
-              </h2>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {MODELS.map((m) => {
-                  const active = m.id === modelId
-                  return (
-                    <button
-                      key={m.id}
-                      type="button"
-                      onClick={() => setModelId(m.id)}
+            <AlgorithmPicker
+              modelId={modelId}
+              onSelect={(id) => {
+                modelTouchedRef.current = true
+                setModelId(id)
+              }}
+              disabled={busy}
+              profile={profile}
+              algoStats={algoStats}
+            />
+          )}
+
+          {/* ── Algorithm-Specific Parameter Panel with Interactive Guidance ── */}
+          {configReady && (
+            <AlgorithmParameterPanel
+              modelId={modelId}
+              paramValues={paramValues}
+              onChange={(newVals) => {
+                setParamValues(newVals)
+                setParamsError('')
+              }}
+              disabled={busy}
+            />
+          )}
+
+          {/* ── Local LLM Text Parameters (shown only if LLM columns configured) ── */}
+          {configReady && hasLlmColumns && (
+            <div className="mt-4 dx-card p-4.5 border border-ink-200">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles size={14} className="text-brand-600" />
+                <h4 className="text-xs font-semibold text-ink-900">
+                  Local LLM Text Generation Parameters (Ollama)
+                </h4>
+              </div>
+              <p className="text-xs text-ink-500 mb-3">
+                Detected columns configured with "LLM". Configure batching and timeout parameters for Ollama.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {LLM_TEXT_PARAMS.map((f) => (
+                  <label key={f.key} className="block">
+                    <span className="text-[11px] font-medium text-ink-700">{f.label}</span>
+                    <input
+                      type="number"
+                      min={f.min}
+                      value={paramValues[f.key] ?? ''}
+                      onChange={(e) => setParamValues((p) => ({ ...p, [f.key]: e.target.value }))}
                       disabled={busy}
-                      className={[
-                        'flex flex-col items-start gap-2 rounded-xl border p-4 text-left transition',
-                        active
-                          ? 'border-brand-400 bg-brand-50/40 ring-2 ring-brand-500/20'
-                          : 'border-ink-200 bg-white hover:border-brand-300 hover:bg-ink-50/40',
-                      ].join(' ')}
-                    >
-                      <div className="flex w-full items-center justify-between">
-                        <span className="text-sm font-semibold text-ink-900">
-                          {m.label}
-                        </span>
-                        <span
-                          className={[
-                            'rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset',
-                            m.speed === 'Fast'
-                              ? 'bg-emerald-50 text-emerald-700 ring-emerald-200'
-                              : 'bg-amber-50 text-amber-700 ring-amber-200',
-                          ].join(' ')}
-                        >
-                          {m.speed}
-                        </span>
-                      </div>
-                      <p className="text-xs text-ink-500">{m.description}</p>
-                      <p className="text-[11px] text-ink-400">
-                        Best for: {m.bestFor}
-                      </p>
-                    </button>
-                  )
-                })}
+                      placeholder="— default —"
+                      className="dx-input text-xs mt-1"
+                    />
+                    <span className="mt-0.5 block text-[10px] text-ink-500">{f.help}</span>
+                  </label>
+                ))}
               </div>
             </div>
           )}
 
-          {/* ── Advanced parameters (form, per-model) ─────────── */}
-          {configReady && paramsForModel.length > 0 && (
-            <div className="mt-6 dx-card overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setShowAdvanced((v) => !v)}
-                className="flex w-full items-center justify-between px-5 py-3 text-left hover:bg-ink-50/60"
-              >
-                <span className="inline-flex items-center gap-2 text-sm font-medium text-ink-900">
-                  <Braces size={14} className="text-ink-400" />
-                  Advanced parameters ({selectedModel?.label})
-                </span>
-                <ChevronDown
-                  size={14}
-                  className={[
-                    'text-ink-400 transition-transform',
-                    showAdvanced ? 'rotate-180' : '',
-                  ].join(' ')}
-                />
-              </button>
-
-              {showAdvanced && (
-                <div className="border-t border-ink-100 px-5 py-4">
-                  <p className="mb-4 text-xs text-ink-500">
-                    All fields are optional. Leave blank to use the model's
-                    defaults. Only filled fields are sent to the backend.
-                  </p>
-
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {paramsForModel.map((f) => (
-                      <label key={f.key} className="block">
-                        <span className="mb-1.5 block text-xs font-medium text-ink-700">
-                          {f.label}
-                        </span>
-
-                        {f.type === 'select' ? (
-                          <select
-                            value={paramValues[f.key] ?? ''}
-                            onChange={(e) =>
-                              setParamValues((p) => ({
-                                ...p,
-                                [f.key]: e.target.value,
-                              }))
-                            }
-                            disabled={busy}
-                            className="dx-input"
-                          >
-                            <option value="">— default —</option>
-                            {f.options.map((o) => (
-                              <option key={o} value={o}>
-                                {o}
-                              </option>
-                            ))}
-                          </select>
-                        ) : f.type === 'boolean' ? (
-                          <select
-                            value={paramValues[f.key] ?? ''}
-                            onChange={(e) =>
-                              setParamValues((p) => ({
-                                ...p,
-                                [f.key]: e.target.value,
-                              }))
-                            }
-                            disabled={busy}
-                            className="dx-input"
-                          >
-                            <option value="">— default —</option>
-                            <option value="true">true</option>
-                            <option value="false">false</option>
-                          </select>
-                        ) : (
-                          <input
-                            type="number"
-                            min={f.min}
-                            step={f.step}
-                            value={paramValues[f.key] ?? ''}
-                            onChange={(e) =>
-                              setParamValues((p) => ({
-                                ...p,
-                                [f.key]: e.target.value,
-                              }))
-                            }
-                            disabled={busy}
-                            placeholder="—"
-                            className="dx-input"
-                          />
-                        )}
-                      </label>
-                    ))}
-                  </div>
-
-                  {paramsError && (
-                    <p className="mt-3 text-[11px] text-rose-600">
-                      {paramsError}
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
+          {paramsError && (
+            <p className="mt-2 text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg p-2.5">
+              {paramsError}
+            </p>
           )}
 
           {/* ── Run state / results ───────────────────────────── */}
           <div className="mt-6">
+            {otherJobRunning && (
+              <div className="mb-4 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-ink-700">
+                Another generation is running
+                {trackedJob?.modelLabel ? ` (${trackedJob.modelLabel})` : ''}
+                {trackedJob?.progress?.percent != null
+                  ? ` — ${trackedJob.progress.percent}% done`
+                  : ''}
+                .{' '}
+                <Link
+                  to={`/datasets/${trackedJob?.datasetId}/generate`}
+                  className="font-semibold text-brand-700 hover:underline"
+                >
+                  View it
+                </Link>
+              </div>
+            )}
+
             {running && (
-              <div className="dx-card p-6">
+              <div className="dx-card p-6" ref={liveCardRef}>
                 <div className="flex items-center gap-3">
                   <Loader2
                     size={18}
                     className="animate-spin text-brand-600"
                   />
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold text-ink-900">
-                      Generating synthetic data…
+                      {progress?.stage_label
+                        ? `Floor ${progress.stage_index} of ${progress.stage_total} · ${progress.stage_label}`
+                        : 'Generating synthetic data…'}
                     </p>
                     <p className="text-xs text-ink-500">
-                      {progress?.stage === 'llm_text'
-                        ? `Local Ollama is filling text column ${
-                            progress.column || ''
-                          } (${progress.generated ?? 0}/${
-                            progress.requested ?? '?'
-                          }).`
-                        : `${selectedModel?.label} is training on ${
-                            profile?.rows != null
-                              ? formatNumber(profile.rows)
-                              : 'the dataset'
-                          } rows. Text columns use the local Ollama model in batches.`}
+                      {progress?.message
+                        ? progress.message
+                        : trackerRunning
+                          ? 'Queued — waiting for the worker to start…'
+                          : `${selectedModel?.label} is training on ${
+                              profile?.rows != null
+                                ? formatNumber(profile.rows)
+                                : 'the dataset'
+                            } rows. Text columns use the local Ollama model in batches.`}
+                      {progress?.max_attempts > 1 && progress?.attempt > 1
+                        ? ` · Retry ${progress.attempt} of ${progress.max_attempts} (some rows failed your validation rules)`
+                        : ''}
                     </p>
                   </div>
+                  {trackerRunning && progress?.percent != null && (
+                    <span className="text-sm font-semibold tabular-nums text-ink-700">
+                      {progress.percent}%
+                    </span>
+                  )}
+                  {trackerRunning && (
+                    <button
+                      type="button"
+                      className="dx-btn-secondary px-3 py-1.5 text-xs"
+                      onClick={handlePauseGeneration}
+                      disabled={trackedJob?.pausing || trackedJob?.status !== 'PROGRESS'}
+                      title={
+                        trackedJob?.status !== 'PROGRESS'
+                          ? 'Available once the worker has started'
+                          : 'Stop after the current batch and save progress'
+                      }
+                    >
+                      {trackedJob?.pausing ? (
+                        <Loader2 size={12} className="animate-spin" />
+                      ) : (
+                        <Pause size={12} />
+                      )}
+                      {trackedJob?.pausing ? 'Pausing…' : 'Pause'}
+                    </button>
+                  )}
                 </div>
+
                 <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-ink-100">
                   <div
-                    className="h-full rounded-full bg-brand-500 transition-all"
+                    className="h-full rounded-full bg-brand-500 transition-all duration-500"
                     style={{
                       width: `${Math.min(
                         100,
-                        Math.max(8, Number(progress?.percent) || 12),
+                        Math.max(
+                          trackerRunning ? 3 : 8,
+                          Number(progress?.percent) || (trackerRunning ? 0 : 12),
+                        ),
                       )}%`,
                     }}
                   />
                 </div>
+
+                {progress?.stages?.length > 0 && (
+                  <ol className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5">
+                    {progress.stages.map((stage, i) => {
+                      const n = i + 1
+                      const done = n < progress.stage_index
+                      const current = n === progress.stage_index
+                      return (
+                        <li
+                          key={stage.key}
+                          className={`flex items-center gap-1.5 text-xs ${
+                            current
+                              ? 'font-semibold text-brand-700'
+                              : done
+                                ? 'text-ink-600'
+                                : 'text-ink-300'
+                          }`}
+                        >
+                          {done ? (
+                            <CheckCircle2 size={12} className="text-emerald-600" />
+                          ) : (
+                            <span
+                              className={`inline-block h-2 w-2 rounded-full ${
+                                current ? 'animate-pulse bg-brand-500' : 'bg-ink-200'
+                              }`}
+                            />
+                          )}
+                          {stage.label}
+                        </li>
+                      )
+                    })}
+                  </ol>
+                )}
+
+                {trackerRunning && tracker.connectionIssue && (
+                  <p className="mt-3 text-xs text-amber-700">
+                    Can’t reach the server right now — retrying. Your job keeps
+                    running in the background.
+                  </p>
+                )}
+                {trackerRunning && trackedJob?.waitingHint && (
+                  <p className="mt-3 text-xs text-amber-700">
+                    Still waiting for a worker. If this does not start, check
+                    that the backend (and Celery, if you use it) is running.
+                  </p>
+                )}
               </div>
             )}
 
@@ -1070,7 +1566,7 @@ export default function Generation() {
                       <button
                         type="button"
                         className="dx-btn-outline text-xs"
-                        onClick={() => goto('/relationships')}
+                        onClick={goToRelationships}
                       >
                         <Layers size={12} /> Go to Relationships
                       </button>
@@ -1128,7 +1624,7 @@ export default function Generation() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    {hasMultiDatasets ? (
+                    {hasMultiDatasets || (multiTable && result.datasets?.length > 0) ? (
                       <button
                         className="dx-btn-outline"
                         onClick={handleDownloadAll}
@@ -1179,17 +1675,26 @@ export default function Generation() {
                     )}
 
                     <button
-                    className="dx-btn-primary"
-                    onClick={() => {
-                      const qs = new URLSearchParams()
-                      if (result?.resultId != null) qs.set('result_id', String(result.resultId))
-                      if (sessionId) qs.set('session', String(sessionId))
-                      const tail = qs.toString() ? `?${qs}` : ''
-                      navigate(`/datasets/${datasetId}/evaluate${tail}`)
-                    }}
-                  >
-                    Continue to evaluation <ArrowRight size={12} />
-                  </button>
+                      className="dx-btn-primary"
+                      onClick={() => {
+                        const list = Array.isArray(result?.datasets) ? result.datasets : []
+                        const matching = list.find(
+                          (d) => String(d.datasetId) === String(datasetId),
+                        )
+                        const chosen = matching || list[0]
+                        const targetDatasetId = chosen?.datasetId || datasetId
+                        const evalResultId = chosen?.resultId ?? result?.resultId
+
+                        const qs = new URLSearchParams()
+                        if (evalResultId != null) qs.set('result_id', String(evalResultId))
+                        if (sessionId) qs.set('session', String(sessionId))
+                        const tail = qs.toString() ? `?${qs}` : ''
+                        navigate(`/datasets/${targetDatasetId}/evaluate${tail}`)
+                      }}
+                    >
+                      Continue to evaluation <ArrowRight size={12} />
+                    </button>
+
                   </div>
                 </div>
 
@@ -1237,6 +1742,51 @@ export default function Generation() {
                     ]}
                   />
                 </div>
+
+                {/* ── Applied Configuration & Post-Generation Metric Guide ── */}
+                <div className="mt-5 rounded-xl border border-brand-200/80 bg-gradient-to-r from-brand-50/60 via-indigo-50/30 to-brand-50/40 p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <div className="flex items-center gap-2">
+                      <Sparkles size={15} className="text-brand-600" />
+                      <h4 className="text-xs font-semibold text-ink-900">
+                        Configuration Applied: {selectedModel?.label || modelId}
+                      </h4>
+                    </div>
+                    {lastAppliedParameters && Object.keys(lastAppliedParameters).length > 0 ? (
+                      <span className="rounded-md bg-white border border-brand-200 px-2 py-0.5 text-[11px] font-mono text-brand-800 shadow-2xs">
+                        {Object.entries(lastAppliedParameters)
+                          .map(([k, v]) => `${k}=${v}`)
+                          .join(', ')}
+                      </span>
+                    ) : (
+                      <span className="rounded-md bg-white border border-ink-200 px-2 py-0.5 text-[11px] text-ink-600 shadow-2xs">
+                        Recommended Baseline Defaults
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-ink-600 leading-relaxed">
+                    Generation is complete! Proceed to <strong>Evaluation</strong> to review how these settings influenced real metrics:
+                    Statistical Similarity (marginal shapes), Correlations (column dependencies), ML Utility (downstream model power),
+                    Business-Rule Validity (dates & stock constraints), and Privacy Duplicates.
+                  </p>
+                </div>
+
+                {/* Sample rows of the generated data */}
+                <GeneratedPreview
+                  targets={
+                    Array.isArray(result.datasets) && result.datasets.length > 0
+                      ? result.datasets.map((d) => ({
+                          resultId: d.resultId,
+                          label: d.fileName || `Dataset ${d.datasetId}`,
+                        }))
+                      : [
+                          {
+                            resultId: result.resultId,
+                            label: result.fileName || 'Generated dataset',
+                          },
+                        ]
+                  }
+                />
 
                 {/* Per-file list for multi-table results */}
                 {Array.isArray(result.datasets) &&

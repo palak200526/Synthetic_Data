@@ -53,6 +53,8 @@ def generate_multi_table_data(
                 "file_path": table["file_path"],
                 "row_count": table["row_count"],
                 "column_count": table["column_count"],
+                "result_id": table.get("result_id"),
+                "run_id": table.get("run_id"),
             }
             for dataset_id, table in result["tables"].items()
         },

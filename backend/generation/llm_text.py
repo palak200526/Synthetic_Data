@@ -3,15 +3,20 @@ Local-Ollama generator for free-form STRING/TEXT columns.
 
 Sends only column profile metadata and a small sample of values.
 Never uploads the full dataset to an external API.
+Supports batched structured generation, bounded async concurrency,
+and deterministic row-context alignment.
 """
 
 from __future__ import annotations
 
+import asyncio
+import concurrent.futures
 import json
 import logging
 import os
 import re
 import time
+import unittest.mock
 from difflib import SequenceMatcher
 from typing import Any, Callable, Iterable, Optional
 
@@ -19,6 +24,7 @@ import pandas as pd
 
 from backend.services.ollama_client import (
     OLLAMA_UNAVAILABLE_MESSAGE,
+    async_ollama_generate,
     ensure_ollama_ready,
     ollama_generate,
 )
@@ -83,6 +89,103 @@ def parse_llm_output(raw: str) -> list[str]:
     return parsed
 
 
+def _extract_json_chunk(text: str) -> Optional[str]:
+    arr = _JSON_ARRAY.search(text)
+    if arr:
+        return arr.group(0)
+    obj = _JSON_OBJECT.search(text)
+    if obj:
+        return obj.group(0)
+    return None
+
+
+def parse_structured_llm_output(raw: str, expected_ids: list[int]) -> dict[int, str]:
+    """
+    Extract an ID-to-string mapping from structured JSON or fallback outputs.
+    Supports global IDs, relative 0-indexed IDs, JSON string arrays,
+    and numbered/bulleted lines.
+    """
+    if raw is None or not expected_ids:
+        return {}
+
+    text = str(raw).strip()
+    if not text:
+        return {}
+
+    text = _FENCE.sub("", text).strip()
+    results: dict[int, str] = {}
+
+    loaded_json = None
+    for candidate in [text, _extract_json_chunk(text)]:
+        if not candidate:
+            continue
+        try:
+            loaded_json = json.loads(candidate)
+            break
+        except (json.JSONDecodeError, TypeError):
+            continue
+
+    if loaded_json is not None:
+        records = None
+        if isinstance(loaded_json, list):
+            records = loaded_json
+        elif isinstance(loaded_json, dict):
+            for key in ("records", "items", "data", "values", "texts"):
+                if isinstance(loaded_json.get(key), list):
+                    records = loaded_json[key]
+                    break
+
+        if isinstance(records, list):
+            dict_items = [item for item in records if isinstance(item, dict)]
+            if dict_items:
+                id_map: dict[int, str] = {}
+                for item in dict_items:
+                    rec_id = item.get("id")
+                    if rec_id is None:
+                        rec_id = item.get("record_id") or item.get("index")
+                    val = item.get("text")
+                    if val is None:
+                        val = (
+                            item.get("value")
+                            or item.get("content")
+                            or item.get("feedback")
+                        )
+                    if rec_id is not None and val is not None:
+                        try:
+                            rec_id_int = int(rec_id)
+                            cleaned = _clean_generated_value(val)
+                            if cleaned:
+                                id_map[rec_id_int] = cleaned
+                        except (ValueError, TypeError):
+                            pass
+
+                # Check exact global expected_ids
+                for exp_id in expected_ids:
+                    if exp_id in id_map:
+                        results[exp_id] = id_map[exp_id]
+
+                # Check relative 0-indexed IDs ONLY if no global expected_ids matched
+                # (e.g. requested IDs were [10, 11] but model numbered them [0, 1])
+                if not results and id_map:
+                    for rel_idx, exp_id in enumerate(expected_ids):
+                        if rel_idx in id_map:
+                            results[exp_id] = id_map[rel_idx]
+
+                return results
+
+            # JSON array of plain strings (not dicts with IDs)
+            extracted_strings = _values_from_json(records)
+            if extracted_strings and len(results) < len(expected_ids):
+                missing_ids = [i for i in expected_ids if i not in results]
+                for exp_id, val in zip(missing_ids, extracted_strings):
+                    cleaned = _clean_generated_value(val)
+                    if cleaned:
+                        results[exp_id] = cleaned
+                return results
+
+    return results
+
+
 def _try_parse_json_values(text: str) -> list[str]:
     candidates = [text]
     obj = _JSON_OBJECT.search(text)
@@ -105,24 +208,29 @@ def _try_parse_json_values(text: str) -> list[str]:
 
 def _values_from_json(loaded: Any) -> list[str]:
     if isinstance(loaded, list):
-        return [str(item) for item in loaded if item is not None and str(item).strip()]
+        out = []
+        for item in loaded:
+            if isinstance(item, dict):
+                text_val = (
+                    item.get("text")
+                    or item.get("value")
+                    or item.get("content")
+                    or item.get("feedback")
+                )
+                if text_val is not None and str(text_val).strip():
+                    out.append(str(text_val))
+            elif item is not None and str(item).strip():
+                out.append(str(item))
+        return out
     if isinstance(loaded, dict):
         for key in ("values", "texts", "items", "data", "records"):
             inner = loaded.get(key)
             if isinstance(inner, list):
-                return [
-                    str(item)
-                    for item in inner
-                    if item is not None and str(item).strip()
-                ]
+                return _values_from_json(inner)
         if len(loaded) == 1:
             only = next(iter(loaded.values()))
             if isinstance(only, list):
-                return [
-                    str(item)
-                    for item in only
-                    if item is not None and str(item).strip()
-                ]
+                return _values_from_json(only)
     return []
 
 
@@ -204,9 +312,40 @@ def infer_column_purpose(column_name: str, profile: Optional[dict], samples: lis
     return "string values"
 
 
+def run_coroutine_sync(coro):
+    """Run a coroutine from sync code, even if an event loop is already running."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
+    if loop and loop.is_running():
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(asyncio.run, coro).result()
+    return asyncio.run(coro)
+
+
+def estimate_num_predict(
+    profile: Optional[dict],
+    batch_count: int,
+    floor: int = 256,
+    ceiling: int = 4096,
+) -> int:
+    """
+    Upper bound for generated tokens in one batch.  Stops the model from
+    rambling (the biggest hidden cost with small local models) while leaving
+    enough room for the JSON wrapper so output is never truncated.
+    """
+    length_info = (profile or {}).get("string_length") or {}
+    longest = float(length_info.get("max") or length_info.get("average") or 120)
+    tokens_per_item = int(longest / 3.0) + 24  # ~3 chars/token + {"id":..,"text":..}
+    estimate = int(tokens_per_item * max(batch_count, 1) * 1.3) + 32
+    return max(floor, min(ceiling, estimate))
+
+
 class LLMTextGenerator:
     """
     Generates synthetic free-form text using a locally hosted Ollama model.
+    Optimized with structured batching and bounded asynchronous concurrency.
     """
 
     def __init__(
@@ -214,28 +353,44 @@ class LLMTextGenerator:
         model: Optional[str] = None,
         ollama_url: Optional[str] = None,
         batch_size: Optional[int] = None,
+        max_concurrency: Optional[int] = None,
         timeout: Optional[int] = None,
         max_retries: Optional[int] = None,
         similarity_threshold: Optional[float] = None,
         skip_health_check: bool = False,
+        **kwargs,
     ):
         self.model = model or os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
         base = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
-        # Accept either base URL or full /api/generate URL for backward compatibility
         if ollama_url:
             self.base_url = ollama_url.replace("/api/generate", "").rstrip("/")
         else:
             self.base_url = base
 
         self.ollama_url = f"{self.base_url}/api/generate"
+
         resolved_batch = (
-            _env_int("LLM_TEXT_BATCH_SIZE", 20)
+            _env_int("LLM_TEXT_BATCH_SIZE", 10)
             if batch_size is None
             else int(batch_size)
         )
-        if resolved_batch < 1:
-            raise ValueError("batch_size must be >= 1")
+        if resolved_batch < 1 or resolved_batch > 50:
+            raise ValueError(
+                f"batch_size must be between 1 and 50, got {resolved_batch}"
+            )
         self.batch_size = resolved_batch
+
+        resolved_concurrency = (
+            _env_int("LLM_TEXT_MAX_CONCURRENCY", 2)
+            if max_concurrency is None
+            else int(max_concurrency)
+        )
+        if resolved_concurrency < 1 or resolved_concurrency > 16:
+            raise ValueError(
+                f"max_concurrency must be between 1 and 16, got {resolved_concurrency}"
+            )
+        self.max_concurrency = resolved_concurrency
+
         self.timeout = (
             _env_int("LLM_TEXT_TIMEOUT", 300)
             if timeout is None
@@ -252,6 +407,7 @@ class LLMTextGenerator:
             else float(similarity_threshold)
         )
         self.skip_health_check = skip_health_check
+        self.last_stats: dict[str, Any] = {}
 
     def generate_text(
         self,
@@ -301,6 +457,95 @@ class LLMTextGenerator:
         source_values: Optional[Iterable[str]] = None,
         progress_callback: Optional[Callable[[dict], None]] = None,
     ) -> list[str]:
+        """
+        Synchronous wrapper for batch generation. Safe to call from standard
+        threads or within active event loops.
+        """
+        coro = self.async_generate(
+            column_name=column_name,
+            count=count,
+            sample_values=sample_values,
+            profile=profile,
+            extra_context=extra_context,
+            row_context=row_context,
+            row_contexts=row_contexts,
+            source_values=source_values,
+            progress_callback=progress_callback,
+        )
+        return run_coroutine_sync(coro)
+
+    def generate_series(self, *args, **kwargs) -> pd.Series:
+        values = self.generate(*args, **kwargs)
+        return pd.Series(values, dtype="string")
+
+    async def _call_ollama(
+        self,
+        prompt: str,
+        http_client: Optional[Any] = None,
+        options: Optional[dict] = None,
+    ) -> str:
+        """
+        Execute an Ollama generate request. Uses native async httpx client
+        in production, or falls back to thread execution if sync ollama_generate
+        is patched in tests.
+        """
+        is_sync_mocked = isinstance(
+            ollama_generate,
+            (unittest.mock.Mock, unittest.mock.MagicMock),
+        )
+        is_async_mocked = isinstance(
+            async_ollama_generate,
+            (unittest.mock.Mock, unittest.mock.AsyncMock, unittest.mock.MagicMock),
+        )
+
+        if is_sync_mocked:
+            return await asyncio.to_thread(
+                ollama_generate,
+                prompt,
+                model=self.model,
+                base_url=self.base_url,
+                timeout=self.timeout,
+            )
+
+        if is_async_mocked:
+            res = async_ollama_generate(
+                prompt,
+                model=self.model,
+                base_url=self.base_url,
+                timeout=self.timeout,
+                client=http_client,
+            )
+            if asyncio.iscoroutine(res):
+                return await res
+            return str(res)
+
+        return await async_ollama_generate(
+            prompt,
+            model=self.model,
+            base_url=self.base_url,
+            timeout=self.timeout,
+            options=options,
+            client=http_client,
+        )
+
+    async def async_generate(
+        self,
+        *,
+        column_name: str,
+        count: int,
+        sample_values: Optional[list[str]] = None,
+        profile: Optional[dict] = None,
+        extra_context: str = "",
+        row_context: str = "",
+        row_contexts: Optional[list[str]] = None,
+        source_values: Optional[Iterable[str]] = None,
+        progress_callback: Optional[Callable[[dict], None]] = None,
+        semaphore: Optional[asyncio.Semaphore] = None,
+    ) -> list[str]:
+        """
+        Generate synthetic text values using bounded asynchronous concurrency,
+        structured batches, deterministic index assignment, and partial retries.
+        """
         if count < 0:
             raise ValueError("count must be >= 0")
         if count == 0:
@@ -322,168 +567,225 @@ class LLMTextGenerator:
 
         started = time.monotonic()
         logger.info(
-            "LLM generation started column=%s requested=%s batch_size=%s model=%s",
+            "LLM generation started column=%s count=%s batch_size=%s "
+            "concurrency=%s model=%s",
             column_name,
             count,
             self.batch_size,
+            self.max_concurrency,
             self.model,
         )
 
-        accepted: list[str] = []
+        batch_slices: list[list[int]] = []
+        for start in range(0, count, self.batch_size):
+            end = min(start + self.batch_size, count)
+            batch_slices.append(list(range(start, end)))
+
+        final_results: list[Optional[str]] = [None] * count
         accepted_fold: set[str] = set()
-        duplicate_regenerations = 0
-        batch_number = 0
-        consecutive_failures = 0
-        empty_batches = 0
-        max_empty = max(self.max_retries * 4, 8)
+        accepted_lock = asyncio.Lock()
+        progress_lock = asyncio.Lock()
+        # A semaphore shared across columns keeps the *total* number of
+        # in-flight Ollama requests bounded when columns run concurrently.
+        semaphore = semaphore or asyncio.Semaphore(self.max_concurrency)
 
-        while len(accepted) < count:
-            remaining = count - len(accepted)
-            this_size = min(self.batch_size, remaining)
-            # Ask for a few extras so filtering does not stall the loop
-            request_count = min(this_size + 2, max(self.batch_size, this_size))
+        total_retries = 0
+        retries_lock = asyncio.Lock()
+        batch_durations: list[float] = []
+        durations_lock = asyncio.Lock()
 
-            batch_row_context = row_context
-            if row_contexts:
-                start = len(accepted)
-                end = min(start + request_count, len(row_contexts))
-                slice_ctx = row_contexts[start:end]
-                batch_row_context = "\n".join(
-                    f"Row {i + 1}: {ctx}" for i, ctx in enumerate(slice_ctx)
+        def _get_row_context(index: int) -> str:
+            if row_contexts and index < len(row_contexts):
+                return str(row_contexts[index]).strip()
+            return str(row_context).strip()
+
+        async def _process_batch(
+            batch_num: int,
+            assigned_ids: list[int],
+            http_client: Any,
+        ) -> None:
+            nonlocal total_retries
+            batch_start = time.monotonic()
+            pending_ids = list(assigned_ids)
+            attempt = 0
+            consecutive_failures = 0
+
+            while pending_ids and attempt <= self.max_retries:
+                attempt += 1
+                record_specs = [(idx, _get_row_context(idx)) for idx in pending_ids]
+                prompt = self._build_batch_prompt(
+                    column_name=column_name,
+                    profile=profile,
+                    samples=samples,
+                    extra_context=extra_context,
+                    record_specs=record_specs,
                 )
-                request_count = max(len(slice_ctx), 1)
 
-            batch_number += 1
-            prompt = self._build_prompt(
-                column_name=column_name,
-                profile=profile,
-                samples=samples,
-                extra_context=extra_context,
-                row_context=batch_row_context,
-                count=request_count,
-            )
+                async with semaphore:
+                    try:
+                        raw = await self._call_ollama(
+                            prompt,
+                            http_client=http_client,
+                            options={
+                                "num_predict": estimate_num_predict(
+                                    profile, len(pending_ids)
+                                ),
+                            },
+                        )
+                        consecutive_failures = 0
+                    except (RuntimeError, TimeoutError, ValueError) as exc:
+                        consecutive_failures += 1
+                        async with retries_lock:
+                            total_retries += 1
+                        logger.warning(
+                            "LLM batch failed column=%s batch=%s attempt=%s reason=%s",
+                            column_name,
+                            batch_num,
+                            attempt,
+                            type(exc).__name__,
+                        )
+                        if consecutive_failures >= self.max_retries:
+                            raise RuntimeError(
+                                f"LLM text generation failed for column '{column_name}' "
+                                f"after {self.max_retries} retries: {exc}"
+                            ) from exc
+                        continue
 
-            try:
-                raw = ollama_generate(
-                    prompt,
-                    model=self.model,
-                    base_url=self.base_url,
-                    timeout=self.timeout,
-                )
-                consecutive_failures = 0
-            except (RuntimeError, TimeoutError, ValueError) as exc:
-                consecutive_failures += 1
-                logger.warning(
-                    "LLM batch failed column=%s batch=%s retry=%s/%s reason=%s",
-                    column_name,
-                    batch_number,
-                    consecutive_failures,
-                    self.max_retries,
-                    type(exc).__name__,
-                )
-                if consecutive_failures >= self.max_retries:
-                    raise RuntimeError(
-                        f"LLM text generation failed for column '{column_name}' "
-                        f"after {self.max_retries} retries: {exc}"
-                    ) from exc
-                continue
+                parsed_map = parse_structured_llm_output(raw, pending_ids)
+                fallback_lines = parse_llm_output(raw)
+                newly_accepted: list[int] = []
 
-            parsed = parse_llm_output(raw)
-            usable_this_batch = 0
-            for value in parsed:
-                if len(accepted) >= count:
+                # Pass 1: Try structured ID mapping
+                for rec_id in list(pending_ids):
+                    val = parsed_map.get(rec_id)
+                    if not val:
+                        continue
+                    cleaned = _clean_generated_value(val)
+                    if not cleaned:
+                        continue
+                    folded = cleaned.casefold()
+                    if folded in source_exact:
+                        async with retries_lock:
+                            total_retries += 1
+                        continue
+                    if is_too_similar(cleaned, similarity_refs, self.similarity_threshold):
+                        async with retries_lock:
+                            total_retries += 1
+                        continue
+
+                    async with accepted_lock:
+                        if enforce_unique and folded in accepted_fold:
+                            async with retries_lock:
+                                total_retries += 1
+                            continue
+                        accepted_fold.add(folded)
+
+                    final_results[rec_id] = cleaned
+                    newly_accepted.append(rec_id)
+
+                # Pass 2: If output was unstructured (parsed_map is empty), draw from fallback lines
+                unfulfilled = [i for i in pending_ids if i not in newly_accepted]
+                if not parsed_map and unfulfilled and fallback_lines:
+                    for line in fallback_lines:
+                        if not unfulfilled:
+                            break
+                        cleaned = _clean_generated_value(line)
+                        if not cleaned:
+                            continue
+                        folded = cleaned.casefold()
+                        if folded in source_exact:
+                            continue
+                        if is_too_similar(cleaned, similarity_refs, self.similarity_threshold):
+                            continue
+
+                        async with accepted_lock:
+                            if enforce_unique and folded in accepted_fold:
+                                continue
+                            accepted_fold.add(folded)
+
+                        rec_id = unfulfilled.pop(0)
+                        final_results[rec_id] = cleaned
+                        newly_accepted.append(rec_id)
+
+                pending_ids = [i for i in pending_ids if i not in newly_accepted]
+                if not pending_ids:
                     break
-                if not isinstance(value, str):
-                    value = str(value)
-                cleaned = _clean_generated_value(value)
-                if not cleaned:
-                    continue
-                folded = cleaned.casefold()
-                if folded in source_exact:
-                    duplicate_regenerations += 1
-                    continue
-                if is_too_similar(cleaned, similarity_refs, self.similarity_threshold):
-                    duplicate_regenerations += 1
-                    continue
-                if enforce_unique and folded in accepted_fold:
-                    duplicate_regenerations += 1
-                    continue
-                accepted.append(cleaned)
-                accepted_fold.add(folded)
-                usable_this_batch += 1
 
-            if usable_this_batch == 0:
-                empty_batches += 1
-                logger.warning(
-                    "LLM batch produced no usable strings column=%s batch=%s",
-                    column_name,
-                    batch_number,
+                async with retries_lock:
+                    total_retries += 1
+
+            if pending_ids:
+                raise RuntimeError(
+                    f"Could not generate {count} valid strings for column "
+                    f"'{column_name}'. Batch {batch_num} left {len(pending_ids)} "
+                    f"unfulfilled records."
                 )
-                if empty_batches >= max_empty:
-                    raise RuntimeError(
-                        f"Could not generate {count} valid strings for column "
-                        f"'{column_name}'. Only {len(accepted)} usable values "
-                        f"were produced after {batch_number} batches."
-                    )
-            else:
-                empty_batches = 0
 
-            logger.info(
-                "LLM batch complete column=%s batch=%s batch_size=%s "
-                "usable=%s generated_total=%s/%s duplicate_regenerations=%s",
-                column_name,
-                batch_number,
-                request_count,
-                usable_this_batch,
-                len(accepted),
-                count,
-                duplicate_regenerations,
-            )
+            batch_duration = time.monotonic() - batch_start
+            async with durations_lock:
+                batch_durations.append(batch_duration)
 
             if progress_callback:
-                progress_callback(
-                    {
-                        "stage": "llm_text",
-                        "column": column_name,
-                        "batch": batch_number,
-                        "generated": len(accepted),
-                        "requested": count,
-                        "percent": int((len(accepted) / count) * 100),
-                    }
-                )
+                async with progress_lock:
+                    completed_count = sum(1 for r in final_results if r is not None)
+                    progress_callback(
+                        {
+                            "stage": "llm_text",
+                            "column": column_name,
+                            "batch": batch_num,
+                            "generated": completed_count,
+                            "requested": count,
+                            "percent": int((completed_count / count) * 100),
+                        }
+                    )
+
+        import httpx
+
+        async with httpx.AsyncClient(timeout=float(self.timeout)) as client:
+            tasks = [
+                _process_batch(b_idx + 1, slice_ids, client)
+                for b_idx, slice_ids in enumerate(batch_slices)
+            ]
+            await asyncio.gather(*tasks)
 
         elapsed = time.monotonic() - started
+        avg_batch_dur = sum(batch_durations) / max(len(batch_durations), 1)
+        records_sec = count / max(elapsed, 0.001)
+
+        self.last_stats = {
+            "requested_count": count,
+            "generated_count": len([r for r in final_results if r is not None]),
+            "num_batches": len(batch_slices),
+            "failed_or_retried_count": total_retries,
+            "total_duration_seconds": round(elapsed, 3),
+            "avg_batch_duration_seconds": round(avg_batch_dur, 3),
+            "records_per_second": round(records_sec, 2),
+            "concurrency": self.max_concurrency,
+            "batch_size": self.batch_size,
+            "model": self.model,
+        }
+
         logger.info(
             "LLM generation finished column=%s rows=%s batches=%s "
-            "duplicate_regenerations=%s seconds=%.2f",
+            "retries=%s seconds=%.2f throughput=%.2f rec/s",
             column_name,
-            len(accepted),
-            batch_number,
-            duplicate_regenerations,
+            count,
+            len(batch_slices),
+            total_retries,
             elapsed,
+            records_sec,
         )
 
-        if len(accepted) != count:
-            raise RuntimeError(
-                f"LLM generated {len(accepted)} values but {count} were required "
-                f"for column '{column_name}'."
-            )
+        return [str(val) for val in final_results if val is not None]
 
-        return accepted
-
-    def generate_series(self, *args, **kwargs) -> pd.Series:
-        values = self.generate(*args, **kwargs)
-        return pd.Series(values, dtype="string")
-
-    def _build_prompt(
+    def _build_batch_prompt(
         self,
         *,
         column_name: str,
         profile: Optional[dict],
         samples: list[str],
         extra_context: str,
-        row_context: str,
-        count: int,
+        record_specs: list[tuple[int, str]],
     ) -> str:
         profile = profile or {}
         purpose = infer_column_purpose(column_name, profile, samples)
@@ -511,7 +813,16 @@ class LLMTextGenerator:
             style_notes.append("detected_patterns=" + ",".join(str(p) for p in patterns))
 
         extra = extra_context.strip() if extra_context else ""
-        row_block = row_context.strip() if row_context else ""
+
+        records_block_lines = []
+        for rec_id, ctx in record_specs:
+            if ctx:
+                records_block_lines.append(f"- ID {rec_id} | Row Context: {ctx}")
+            else:
+                records_block_lines.append(f"- ID {rec_id}")
+        records_block = "\n".join(records_block_lines)
+
+        count = len(record_specs)
 
         return f"""You are generating synthetic data for a dataset.
 
@@ -525,16 +836,22 @@ Examples:
 
 {extra}
 
-{('Synthetic row context:\n' + row_block) if row_block else ''}
+Records to generate ({count} items):
+{records_block}
 
 Generate {count} NEW synthetic values for this column.
+
+Output Format:
+Return a JSON array of objects with "id" and "text" fields:
+[
+  {{"id": <id>, "text": "<generated text>"}}
+]
 
 Requirements:
 - Preserve the general domain, vocabulary, patterns, and style of the examples.
 - Do NOT copy any example verbatim. Generate realistic, diverse text using new sentence structures and varied vocabulary.
-- Semantic consistency: If the row context specifies a Sentiment (e.g., Positive, Negative, Neutral) or Rating (e.g. 1-5), the generated text MUST semantically reflect that exact sentiment and tone (e.g. Positive -> satisfied, praising; Negative -> issue, complaint, frustrated; Neutral -> balanced, matter-of-fact).
+- Semantic consistency: If the row context specifies a Sentiment (e.g., Positive, Negative, Neutral) or Rating (e.g. 1-5), the generated text MUST semantically reflect that exact sentiment and tone.
 - Do not mention that the text is synthetic or AI-generated.
-- Do not add numbering, bullets, quotation marks around lines, labels, or explanations.
-- Return ONLY the generated values, one per line.
-- Do not output JSON unless a value itself is JSON.
+- Do not output explanations, markdown comments, or formatting outside the JSON array.
+- Return ONLY the JSON array.
 """

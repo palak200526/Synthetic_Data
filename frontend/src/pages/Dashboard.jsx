@@ -28,6 +28,7 @@ import {
   mergeLocalDatasets,
 } from '../api/dashboardApi.js'
 import { getErrorMessage } from '../utils/errors.js'
+import { formatDateTime } from '../utils/format.js'
 
 const QUICK_ACTIONS = [
   {
@@ -253,7 +254,7 @@ export default function Dashboard() {
                 header: 'Created',
                 render: (r) =>
                   r?.created_at
-                    ? new Date(r.created_at).toLocaleString()
+                    ? formatDateTime(r.created_at)
                     : '—',
               },
             ]}
@@ -296,7 +297,7 @@ export default function Dashboard() {
                 header: 'Created',
                 render: (r) =>
                   r?.created_at
-                    ? new Date(r.created_at).toLocaleString()
+                    ? formatDateTime(r.created_at)
                     : '—',
               },
             ]}

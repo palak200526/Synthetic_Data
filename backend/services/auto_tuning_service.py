@@ -75,8 +75,12 @@ def tune_generation_parameters(
     IMPORTANT:
     Only adjusts parameters that are supported by the selected generator:
     - Gaussian Copula: random_state
-    - CTGAN: epochs, batch_size, learning_rate, random_state
-    - TVAE: latent_dim, epochs, batch_size, learning_rate, random_state
+    - CTGAN: epochs, learning_rate, random_state
+    - TVAE: latent_dim, epochs, learning_rate, batch_size, random_state
+
+    TVAE accepts these parameters through TVAEGenerator. Latent dimensions
+    are increased gradually up to 128, epochs are increased conservatively,
+    and learning rates are reduced modestly when statistical similarity is weak.
     - LLM text: llm_text_similarity_threshold, llm_text_batch_size
     """
     params = dict(current_params or {})
@@ -89,13 +93,12 @@ def tune_generation_parameters(
         params["random_state"] = base_seed + (attempt * 13)
 
     elif model_key == "ctgan":
-        # CTGAN supports: epochs, batch_size, learning_rate, random_state
+        # CTGAN supports: epochs, learning_rate, random_state
         epochs = int(params.get("epochs", 100))
         lr = float(params.get("learning_rate", 0.0002))
-        bs = int(params.get("batch_size", 32))
         seed = int(params.get("random_state", 42))
 
-        # If overall statistical or correlation is low, increase epochs
+        # If overall statistical or correlation is low, train longer and a bit steadier
         if weak["low_statistical"] or weak["low_correlation"]:
             params["epochs"] = epochs + 25
             params["learning_rate"] = round(max(0.00005, lr * 0.85), 6)
@@ -105,21 +108,27 @@ def tune_generation_parameters(
         params["random_state"] = seed + attempt
 
     elif model_key == "tvae":
-        # TVAE supports: latent_dim, epochs, batch_size, learning_rate, random_state
-        latent_dim = int(params.get("latent_dim", 16))
-        epochs = int(params.get("epochs", 100))
-        lr = float(params.get("learning_rate", 0.001))
+        # TVAEGenerator supports all of these parameters. Tune conservatively
+        # and respect the generator's practical bounds.
+        epochs = max(1, int(params.get("epochs", 100)))
+        latent_dim = max(8, int(params.get("latent_dim", params.get("embedding_dim", 128))))
+        learning_rate = float(params.get("learning_rate", 0.001))
+        batch_size = max(2, int(params.get("batch_size", 500)))
         seed = int(params.get("random_state", 42))
 
-        # If correlation is low, TVAE benefits from wider latent space
-        if weak["low_correlation"]:
-            params["latent_dim"] = min(64, latent_dim * 2)
-
-        if weak["low_statistical"]:
-            params["epochs"] = epochs + 25
-            params["learning_rate"] = round(max(0.0001, lr * 0.8), 6)
+        if weak["low_statistical"] or weak["low_correlation"]:
+            params["epochs"] = min(1000, epochs + 25)
+            params["learning_rate"] = max(0.00001, round(learning_rate * 0.9, 7))
+            # Increase representational capacity gradually, capped at 128.
+            params["latent_dim"] = min(128, max(32, latent_dim * 2))
+            # Preserve valid batches; only reduce very large batches slightly
+            # when weak metrics suggest a more frequent update may help.
+            params["batch_size"] = max(2, min(batch_size, 500) // 2) if batch_size > 2 else 2
         else:
-            params["epochs"] = epochs + 15
+            params["epochs"] = min(1000, epochs + 15)
+            params["learning_rate"] = max(0.00001, round(learning_rate * 0.95, 7))
+            params["latent_dim"] = min(128, max(32, latent_dim * 2))
+            params["batch_size"] = batch_size
 
         params["random_state"] = seed + attempt
 
@@ -139,6 +148,7 @@ def auto_tune_generation(
     max_attempts: int = 3,
     min_score: float = 80.0,
     improvement_threshold: float = 1.0,
+    allow_algorithm_switching: bool = False,
 ) -> dict[str, Any]:
     """
     US-022: Automatic Tuning and Regeneration Workflow.
@@ -146,17 +156,18 @@ def auto_tune_generation(
     Workflow:
     1. Generate synthetic data.
     2. Evaluate generated data.
-    3. Identify weak metrics.
-    4. Tune supported generation parameters.
+    3. Identify weak dimensions.
+    4. Tune supported generation parameters or switch algorithm.
     5. Regenerate.
     6. Re-evaluate.
-    7. Stop when quality criteria are met or max attempts are reached.
+    7. Stop when criteria are met, improvements < epsilon, or max attempts reached.
     8. Retain the best result.
     """
     if max_attempts < 1:
         raise ValueError("max_attempts must be at least 1.")
 
     current_params = dict(initial_parameters or {})
+    current_model = model_name
     history = []
     best_result = None
     best_score = -1.0
@@ -175,7 +186,7 @@ def auto_tune_generation(
         # 1. Run generation
         gen_res = generate_synthetic_dataset(
             dataset_id=dataset_id,
-            model_name=model_name,
+            model_name=current_model,
             parameters=current_params,
             user_id=user_id,
         )
@@ -200,6 +211,7 @@ def auto_tune_generation(
             "attempt": attempt,
             "result_id": result_id,
             "run_id": gen_res.get("run_id"),
+            "model_name": current_model,
             "parameters": dict(current_params),
             "score": curr_score,
             "weak_metrics": identify_weak_metrics(eval_res.get("evaluation", {})),
@@ -240,11 +252,18 @@ def auto_tune_generation(
 
         # If continuing, tune parameters for next attempt
         current_params = tune_generation_parameters(
-            model_name=model_name,
+            model_name=current_model,
             current_params=current_params,
             evaluation=eval_res.get("evaluation", {}),
             attempt=attempt,
         )
+        if allow_algorithm_switching and attempt >= 1 and curr_score < min_score:
+            model_order = ["gaussian_copula", "tvae", "ctgan"]
+            if current_model in model_order:
+                idx = model_order.index(current_model)
+                current_model = model_order[(idx + 1) % len(model_order)]
+                logger.info("Switching algorithm to %s for attempt %d", current_model, attempt + 1)
+
         prev_score = curr_score
 
     return {

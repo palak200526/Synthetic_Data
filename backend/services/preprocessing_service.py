@@ -32,7 +32,9 @@ from backend.services.preprocessing_validator import (
 
 def preprocess_dataset(
     dataframe: pd.DataFrame,
-    dataset_id: int
+    dataset_id: int | None = None,
+    *,
+    for_generation: bool = False,
 ):
 
     if dataframe.empty:
@@ -46,9 +48,12 @@ def preprocess_dataset(
     # 1. Get saved column configurations
     # --------------------------------------------------
 
-    configurations = get_configurations(
-        dataset_id
-    )
+    if dataset_id is not None:
+        configurations = get_configurations(dataset_id)
+        domain_type = get_dataset_domain_type(dataset_id)
+    else:
+        configurations = []
+        domain_type = "supply_chain"
 
     # --------------------------------------------------
     # 2. Detect outliers
@@ -95,38 +100,21 @@ def preprocess_dataset(
 
         elif action == "new_id":
 
-            dataframe[column_name] = [
-                f"ID_{i + 1}"
-                for i in range(
-                    len(dataframe)
-                )
-            ]
+            # Vectorized ID generation for speed and low memory usage
+            dataframe[column_name] = "ID_" + pd.RangeIndex(
+                1, len(dataframe) + 1
+            ).astype(str)
 
         elif action in ("keep", "llm"):
 
             pass
 
-        elif action == "generalize":
-
-            # Generalization will be
-            # implemented using rule configuration.
-            pass
-
-        elif action == "derived":
-
-            # Derived column logic will be
-            # implemented using rule configuration.
-            pass
 
     # --------------------------------------------------
     # 5. Apply domain-specific processing
     # --------------------------------------------------
 
-    domain_type = get_dataset_domain_type(
-        dataset_id
-    )
-
-    if domain_type == "supply_chain":
+    if domain_type == "supply_chain" and not for_generation:
 
         dataframe = generate_supply_chain_features(
             dataframe
@@ -136,21 +124,44 @@ def preprocess_dataset(
     # 6. Prepare data for generation
     # --------------------------------------------------
 
-    llm_columns = [
+    skip_columns = [
         configuration["column_name"]
         for configuration in configurations
-        if configuration.get("action") == "llm"
+        if configuration.get("action") in ("llm", "new_id", "remove", "id")
         and configuration.get("column_name") in dataframe.columns
     ]
 
-    preparation_result = prepare_data_for_model(
-        dataframe,
-        skip_columns=llm_columns,
-    )
+    # Also exclude any ID-like columns from dummy encoding
+    for col in dataframe.columns:
+        col_lower = str(col).lower()
+        if col_lower == "id" or col_lower.endswith("_id") or col_lower.endswith("id"):
+            if col not in skip_columns:
+                skip_columns.append(col)
 
-    processed_dataframe = (
-        preparation_result["dataframe"]
-    )
+    if for_generation:
+        # Generative models must receive the original column schema. One-hot
+        # encoding here would turn categories into unrelated dummy columns and
+        # prevent the generator from reconstructing the uploaded dataset shape.
+        preparation_result = {
+            "dataframe": dataframe.copy(),
+            "numerical_columns": dataframe.select_dtypes(include="number").columns.tolist(),
+            "categorical_columns": [
+                column for column in dataframe.columns
+                if column not in skip_columns and (
+                    pd.api.types.is_object_dtype(dataframe[column].dtype)
+                    or pd.api.types.is_string_dtype(dataframe[column].dtype)
+                    or pd.api.types.is_bool_dtype(dataframe[column].dtype)
+                    or isinstance(dataframe[column].dtype, pd.CategoricalDtype)
+                )
+            ],
+        }
+    else:
+        preparation_result = prepare_data_for_model(
+            dataframe,
+            skip_columns=skip_columns,
+        )
+
+    processed_dataframe = preparation_result["dataframe"]
 
     # --------------------------------------------------
     # 7. Validate preprocessing output

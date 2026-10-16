@@ -18,6 +18,7 @@ from backend.repositories.generation_repository import (
 )
 from backend.services.report_service import (
     REPORTS_DIR,
+    ensure_pdf_report,
     generate_report,
 )
 from backend.utils.auth_dependency import get_current_user
@@ -33,14 +34,14 @@ router = APIRouter(
 @router.get(
     "/download",
     summary="Download generated dataset or report",
-    description="Streams the requested artifact (dataset CSV, evaluation report HTML/JSON/CSV) as a downloadable file.",
+    description="Streams the requested artifact (dataset CSV, evaluation report PDF/HTML/JSON/CSV) as a downloadable file.",
 )
 def download_artifact(
     dataset_id: Optional[int] = Query(None, description="Source dataset ID"),
     run_id: Optional[int] = Query(None, description="Generation run ID"),
     result_id: Optional[int] = Query(None, description="Generated result ID"),
     type: str = Query("dataset", description="Artifact type: dataset | report | evaluation"),
-    format: str = Query("json", description="Report format: json | html | csv"),
+    format: str = Query("json", description="Report format: pdf | json | html | csv"),
     user_id: int = Depends(get_current_user),
 ):
     # ------------------------------------------------------------------
@@ -131,6 +132,22 @@ def download_artifact(
         res_id = target_result["result_id"]
         fmt = (format or "json").lower().strip()
 
+        # PDF report (built on demand from the report data)
+        if fmt == "pdf":
+            try:
+                pdf_path = ensure_pdf_report(result_id=res_id, user_id=user_id)
+            except Exception as exc:
+                logger.exception("Failed to build PDF report: %s", exc)
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to build PDF report: {str(exc)}",
+                )
+            return FileResponse(
+                path=pdf_path,
+                media_type="application/pdf",
+                filename=pdf_path.name,
+            )
+
         # Filename mappings
         file_map = {
             "json": (f"report_dataset_{dataset_id}_result_{res_id}.json", "application/json"),
@@ -141,7 +158,7 @@ def download_artifact(
         if fmt not in file_map:
             raise HTTPException(
                 status_code=400,
-                detail=f"Unsupported format '{fmt}'. Choose from: json, html, csv.",
+                detail=f"Unsupported format '{fmt}'. Choose from: pdf, json, html, csv.",
             )
 
         filename, media_type = file_map[fmt]

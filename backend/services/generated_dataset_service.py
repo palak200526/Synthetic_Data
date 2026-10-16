@@ -12,6 +12,7 @@ from backend.repositories.configuration_repository import (
 )
 
 from backend.services.dataset_loader import load_dataset
+from backend.services.preprocessing_service import preprocess_dataset
 
 from backend.repositories.dataset_repository import (
     get_dataset_file_path,
@@ -69,12 +70,24 @@ def prepare_dataset_for_generation(
         dataset_id
     )
 
-    # 2. Load original dataset
+    # 2. Load the uploaded dataset, then run the same preprocessing pipeline
+    # used by the /preprocess endpoint. Do not train models on the raw file.
     file_path = get_dataset_file_path(dataset_id)
+    raw_dataframe = load_dataset(str(file_path))
 
-    dataframe = load_dataset(
-        str(file_path)
+    preprocessing_result = preprocess_dataset(
+        raw_dataframe,
+        dataset_id,
+        for_generation=True,
     )
+    dataframe = preprocessing_result["dataframe"]
+
+    if dataframe.isna().any().any():
+        missing = dataframe.columns[dataframe.isna().any()].tolist()
+        raise ValueError(
+            "Preprocessing left missing values in generation input: "
+            + ", ".join(map(str, missing))
+        )
 
     # 3. Get saved column configurations
     configurations = get_configurations(
@@ -90,5 +103,7 @@ def prepare_dataset_for_generation(
     return {
         "filename": filename,
         "dataframe": dataframe,
+        "raw_dataframe": raw_dataframe,
+        "preprocessing": preprocessing_result,
         "configurations": configurations,
     }

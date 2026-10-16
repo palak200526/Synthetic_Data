@@ -20,6 +20,18 @@ class AutoTuneGenerationRequest(BaseModel):
 
 class EvaluationRequest(BaseModel):
     result_id: int
+    # Optional: column the ML-utility test should predict. When omitted the
+    # backend uses the LLM-suggested (data-verified) default.
+    target_column: Optional[str] = None
+
+
+class ImproveQualityRequest(BaseModel):
+    result_id: int
+    parameters: Optional[dict] = None
+    max_attempts: Optional[int] = 3
+    improvement_threshold: Optional[float] = 1.0
+    target_column: Optional[str] = None
+
 
 
 class DashboardResponse(BaseModel):

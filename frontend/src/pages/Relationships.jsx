@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   GitBranch,
   Plus,
@@ -35,8 +35,11 @@ import { formatNumber } from '../utils/format.js'
 
 export default function Relationships() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
   const initialGroupId =
     searchParams.get('group_id') || searchParams.get('groupId')
+  // Where to go back to after a relationship is created (set by Generate page)
+  const [returnTo] = useState(() => searchParams.get('return_to'))
 
   const [groups, setGroups] = useState([])
   const [selectedGroupId, setSelectedGroupId] = useState(
@@ -103,7 +106,14 @@ export default function Relationships() {
 
   useEffect(() => {
     if (selectedGroupId != null) {
-      setSearchParams({ group_id: String(selectedGroupId) }, { replace: true })
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev)
+          next.set('group_id', String(selectedGroupId))
+          return next
+        },
+        { replace: true },
+      )
     }
   }, [selectedGroupId, setSearchParams])
 
@@ -161,6 +171,13 @@ export default function Relationships() {
       'Primary/Foreign key relationship created successfully.',
     )
     if (selectedGroupId) loadGroupData(selectedGroupId)
+    // Straight back to the multi-table Generate screen (group preselected)
+    if (returnTo && returnTo.startsWith('/')) {
+      const url = new URL(returnTo, window.location.origin)
+      url.searchParams.set('mode', 'multi')
+      url.searchParams.set('group_id', String(selectedGroupId))
+      setTimeout(() => navigate(url.pathname + url.search), 600)
+    }
   }
 
   const handleDeleteRelationship = async (relId) => {

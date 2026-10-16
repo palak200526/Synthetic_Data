@@ -1,0 +1,74 @@
+{
+  "purchase_orders.csv": {
+    "dataset": "purchase_orders.csv",
+    "baseline": {
+      "statistical_similarity": 96.01,
+      "correlation_score": 95.09,
+      "correlation_error": 0.034,
+      "ml_utility_score": 56.12,
+      "business_rule_validity": 0.4,
+      "exact_match_rate": 0.0,
+      "dcr_ratio": 1.4345,
+      "privacy_score": 100.0
+    },
+    "improved": {
+      "statistical_similarity": 95.63,
+      "correlation_score": 93.39,
+      "correlation_error": 0.0465,
+      "ml_utility_score": 96.29,
+      "business_rule_validity": 100.0,
+      "exact_match_rate": 0.0,
+      "dcr_ratio": 0.9518,
+      "privacy_score": 97.59
+    },
+    "rules_count": 3
+  },
+  "inventory.csv": {
+    "dataset": "inventory.csv",
+    "baseline": {
+      "statistical_similarity": 95.99,
+      "correlation_score": 98.51,
+      "correlation_error": 0.0221,
+      "ml_utility_score": null,
+      "business_rule_validity": 0.2,
+      "exact_match_rate": 0.0,
+      "dcr_ratio": 1.2667,
+      "privacy_score": 100.0
+    },
+    "improved": {
+      "statistical_similarity": 96.65,
+      "correlation_score": 98.93,
+      "correlation_error": 0.0107,
+      "ml_utility_score": null,
+      "business_rule_validity": 100.0,
+      "exact_match_rate": 0.0,
+      "dcr_ratio": 1.2088,
+      "privacy_score": 100.0
+    },
+    "rules_count": 4
+  },
+  "shipments.csv": {
+    "dataset": "shipments.csv",
+    "baseline": {
+      "statistical_similarity": 96.36,
+      "correlation_score": 94.18,
+      "correlation_error": 0.0582,
+      "ml_utility_score": null,
+      "business_rule_validity": 60.4,
+      "exact_match_rate": 0.832,
+      "dcr_ratio": 0.0,
+      "privacy_score": 8.4
+    },
+    "improved": {
+      "statistical_similarity": 94.56,
+      "correlation_score": 92.08,
+      "correlation_error": 0.0792,
+      "ml_utility_score": null,
+      "business_rule_validity": 100.0,
+      "exact_match_rate": 0.82,
+      "dcr_ratio": 0.0,
+      "privacy_score": 9.0
+    },
+    "rules_count": 1
+  }
+}

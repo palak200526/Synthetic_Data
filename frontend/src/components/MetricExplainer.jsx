@@ -11,7 +11,7 @@ import { Calculator, ChevronDown } from 'lucide-react'
  *   formula     — optional formula / pseudo-code (rendered monospaced)
  *   steps       — ordered list of how the score is computed
  *   interpretation — array of { range, label, tone } for score ranges
- *   references  — array of source names (papers, docs)
+ *   notes       — optional array of short "good to know" points
  */
 export default function MetricExplainer({
   title = 'How is this calculated?',
@@ -19,7 +19,7 @@ export default function MetricExplainer({
   formula,
   steps = [],
   interpretation = [],
-  references = [],
+  notes = [],
 }) {
   const [open, setOpen] = useState(false)
 
@@ -94,11 +94,17 @@ export default function MetricExplainer({
             </div>
           )}
 
-          {references.length > 0 && (
-            <p className="pt-1 text-[11px] text-ink-500">
-              <span className="font-semibold text-ink-600">Sources: </span>
-              {references.join(' · ')}
-            </p>
+          {notes.length > 0 && (
+            <div>
+              <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink-500">
+                Good to know
+              </p>
+              <ul className="space-y-1">
+                {notes.map((n, i) => (
+                  <li key={i} className="leading-relaxed">· {n}</li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
       )}

@@ -30,6 +30,11 @@ def _env_base_url() -> str:
     return os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
 
 
+def _env_keep_alive() -> str:
+    # Keep the model loaded between batches/columns; avoids reload latency.
+    return os.getenv("OLLAMA_KEEP_ALIVE", "30m")
+
+
 def _env_model() -> str:
     return os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
 
@@ -142,6 +147,7 @@ def ollama_generate(
         "model": resolved_model,
         "prompt": prompt,
         "stream": False,
+        "keep_alive": _env_keep_alive(),
     }
     if format:
         payload["format"] = format
@@ -171,3 +177,71 @@ def ollama_generate(
     if text is None:
         raise ValueError("Ollama response did not include a 'response' field.")
     return str(text)
+
+
+async def async_ollama_generate(
+    prompt: str,
+    *,
+    model: Optional[str] = None,
+    base_url: Optional[str] = None,
+    timeout: int = 300,
+    format: Optional[str] = None,
+    options: Optional[dict[str, Any]] = None,
+    client: Optional[Any] = None,
+) -> str:
+    """
+    Call POST /api/generate on the local Ollama server asynchronously using httpx.
+    Returns the raw response text.
+    """
+    import httpx
+
+    resolved_model = model or _env_model()
+    url = f"{(base_url or _env_base_url()).rstrip('/')}/api/generate"
+
+    payload: dict[str, Any] = {
+        "model": resolved_model,
+        "prompt": prompt,
+        "stream": False,
+        "keep_alive": _env_keep_alive(),
+    }
+    if format:
+        payload["format"] = format
+    if options:
+        payload["options"] = options
+
+    created_client = False
+    http_client = client
+    if http_client is None:
+        http_client = httpx.AsyncClient(timeout=float(timeout))
+        created_client = True
+
+    try:
+        response = await http_client.post(url, json=payload, timeout=float(timeout))
+        response.raise_for_status()
+    except httpx.TimeoutException as exc:
+        logger.error("Ollama generate async timed out model=%s", resolved_model)
+        raise TimeoutError(
+            f"Ollama request timed out after {timeout}s for model '{resolved_model}'."
+        ) from exc
+    except httpx.ConnectError as exc:
+        logger.error("Ollama async connection error")
+        raise RuntimeError(OLLAMA_UNAVAILABLE_MESSAGE) from exc
+    except httpx.HTTPStatusError as exc:
+        status = exc.response.status_code if exc.response is not None else "?"
+        logger.error("Ollama async HTTP error status=%s", status)
+        raise RuntimeError(
+            f"Ollama returned HTTP {status}. {OLLAMA_UNAVAILABLE_MESSAGE}"
+        ) from exc
+    except httpx.RequestError as exc:
+        logger.error("Ollama async request error: %s", exc)
+        raise RuntimeError(OLLAMA_UNAVAILABLE_MESSAGE) from exc
+    finally:
+        if created_client:
+            await http_client.aclose()
+
+    body = response.json() if response.content else {}
+    text = body.get("response")
+    if text is None:
+        raise ValueError("Ollama response did not include a 'response' field.")
+    return str(text)
+

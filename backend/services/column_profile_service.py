@@ -29,7 +29,7 @@ def build_column_profile(
         series
         .dropna()
         .astype(str)
-        .head(5)          # 👈 CHANGE: 10 → 5
+        .head(3)          # 👈 CHANGE: 10 → 5
         .tolist()
     )
 
@@ -79,7 +79,7 @@ def build_column_profile(
         profile["top_values"] = (
             series
             .value_counts(dropna=True)
-            .head(5)      # 👈 CHANGE: 10 → 5
+            .head(3)      # 👈 CHANGE: 10 → 5
             .to_dict()
         )
 

@@ -1,0 +1,39 @@
+{
+  "dataset": "purchase_orders.csv",
+  "sample_size": 1000,
+  "random_state": 42,
+  "rules_count": 0,
+  "ml_target": "quantity",
+  "models": {
+    "gaussian_copula": {
+      "statistical_similarity": 97.54,
+      "correlation_score": 98.52,
+      "correlation_error": 0.0226,
+      "ml_utility_score": 53.84,
+      "business_rule_validity": 100.0,
+      "exact_match_rate": 0.0,
+      "dcr_ratio": 1.8406,
+      "privacy_score": 100.0
+    },
+    "ctgan": {
+      "statistical_similarity": 64.3,
+      "correlation_score": 67.0,
+      "correlation_error": 0.4468,
+      "ml_utility_score": 12.24,
+      "business_rule_validity": 100.0,
+      "exact_match_rate": 0.0,
+      "dcr_ratio": 7.4219,
+      "privacy_score": 100.0
+    },
+    "tvae": {
+      "statistical_similarity": 60.27,
+      "correlation_score": 74.11,
+      "correlation_error": 0.277,
+      "ml_utility_score": 15.44,
+      "business_rule_validity": 100.0,
+      "exact_match_rate": 0.0,
+      "dcr_ratio": 2.1056,
+      "privacy_score": 100.0
+    }
+  }
+}

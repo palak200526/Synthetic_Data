@@ -95,6 +95,8 @@ def test_text_evaluation_no_text_columns():
     assert "reason" in res
 
 
+@patch("backend.services.report_service.build_pdf_report")
+@patch("backend.services.report_service.evaluate_generation")
 @patch("backend.services.report_service.get_generated_result_by_id")
 @patch("backend.services.report_service.get_dataset_user_id")
 @patch("backend.services.report_service.get_dataset_by_id")
@@ -106,8 +108,14 @@ def test_report_generation_end_to_end(
     mock_get_ds_by_id,
     mock_get_user_id,
     mock_get_gen_res,
+    mock_evaluate,
+    mock_build_pdf,
     tmp_path,
+    monkeypatch,
 ):
+    # Write report files into a temp folder instead of the real "reports" dir.
+    monkeypatch.setattr("backend.services.report_service.REPORTS_DIR", tmp_path)
+
     result_id = 999
     user_id = 42
     dataset_id = 123
@@ -129,6 +137,14 @@ def test_report_generation_end_to_end(
         "evaluation_id": 88,
         "result_id": result_id,
         "overall_score": 82.5,
+        # Without privacy_metrics, generate_report treats the saved evaluation
+        # as outdated and re-runs the real evaluation pipeline.
+        "privacy_metrics": {
+            "metric": "privacy",
+            "status": "completed",
+            "overall_score": 91.0,
+            "risk_level": "low",
+        },
         "utility_metrics": {
             "statistical_similarity": {
                 "overall_score": 85.0,
@@ -197,10 +213,14 @@ def test_report_generation_end_to_end(
 
     report = generate_report(result_id=result_id, user_id=user_id, format="json")
 
+    # The saved evaluation was complete, so no re-evaluation should happen.
+    mock_evaluate.assert_not_called()
+
     assert report["report_id"] == 77
     assert report["metadata"]["dataset_id"] == dataset_id
     assert report["executive_summary"]["rating"] in ["EXCELLENT", "GOOD"]
     assert report["executive_summary"]["overall_quality_score"] == 82.5
+    assert report["executive_summary"]["dimension_scores"]["privacy"] == 91.0
 
     # Check that all 6 sections exist
     assert "statistical_similarity" in report
@@ -229,7 +249,7 @@ def test_report_generation_end_to_end(
         html_text = f.read()
         assert "Customer Feedback Dataset" in html_text
         assert "Executive Summary" in html_text
-        assert "Statistical Similarity (US-023)" in html_text
+        assert "Statistical Similarity" in html_text
         assert "Free-Form Text Quality &amp; Conditioning" in html_text or "Free-Form Text Quality" in html_text
         assert "Excluded (free_form_text)" in html_text
 
@@ -305,4 +325,3 @@ def test_report_and_download_api_endpoints():
         assert "text/csv" in res_csv.headers.get("content-type", "")
 
     app.dependency_overrides.clear()
-

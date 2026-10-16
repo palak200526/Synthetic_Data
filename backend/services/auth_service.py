@@ -6,7 +6,8 @@ from backend.repositories.user_repository import (
 from backend.utils.security import (
     hash_password,
     verify_password,
-    create_access_token
+    create_access_token,
+    ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 
 from backend.services.otp_service import (
@@ -151,11 +152,11 @@ def create_auth_session(user_id: int):
             VALUES (
                 %s,
                 NOW(),
-                NOW() + INTERVAL '30 minutes'
+                NOW() + make_interval(mins => %s)
             )
             RETURNING session_id, user_id, created_at, expires_at
             """,
-            (user_id,)
+            (user_id, ACCESS_TOKEN_EXPIRE_MINUTES)
         )
 
         session = cursor.fetchone()

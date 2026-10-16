@@ -15,11 +15,35 @@ export function formatPercent(n, digits = 1) {
   return `${(n * 100).toFixed(digits)}%`
 }
 
+/**
+ * Parse a timestamp coming from the backend.
+ * Postgres TIMESTAMP columns are serialised without a timezone
+ * ("2026-10-13T05:19:57"), which `new Date()` would read as *local* time.
+ * The server stores UTC, so treat zone-less strings as UTC.
+ */
+export function parseServerDate(value) {
+  if (!value) return null
+  if (value instanceof Date) return value
+  let v = String(value).trim()
+  if (/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(v) && !/(Z|[+-]\d{2}:?\d{2})$/i.test(v)) {
+    v = v.replace(' ', 'T') + 'Z'
+  }
+  const d = new Date(v)
+  return Number.isNaN(d.getTime()) ? null : d
+}
+
 export function formatDateTime(value) {
   if (!value) return '—'
-  const d = new Date(value)
-  if (Number.isNaN(d.getTime())) return String(value)
+  const d = parseServerDate(value)
+  if (!d) return String(value)
   return d.toLocaleString()
+}
+
+export function formatTime(value) {
+  if (!value) return '—'
+  const d = parseServerDate(value)
+  if (!d) return String(value)
+  return d.toLocaleTimeString()
 }
 
 export function formatBytes(bytes) {

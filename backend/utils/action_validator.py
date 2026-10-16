@@ -1,9 +1,7 @@
 ALLOWED_ACTIONS = {
     "keep",
     "remove",
-    "generalize",
     "new_id",
-    "derived",
     "llm",
 }
 
@@ -22,6 +20,9 @@ ACTION_ALIASES = {
     "synthesize": "keep",
     "generate": "keep",
     "standard": "keep",
+    # Removed actions: they never produced new data, so they behave like keep.
+    "generalize": "keep",
+    "derived": "keep",
 }
 
 
@@ -88,48 +89,10 @@ def validate_column_configuration(
         configuration.is_identifier = False
 
     # ---------------------------------------------------------
-    # Validate derived-column rule
+    # Only 'llm' columns may carry a rule; clear it for the rest
+    # (old saved configs may still hold a leftover derived rule)
     # ---------------------------------------------------------
-    if configuration.action == "derived":
-        if configuration.rule is None:
-            raise ValueError(
-                f"Derived column '{configuration.column_name}' requires a rule."
-            )
-
-        operation = getattr(configuration.rule, "operation", None)
-        operands = getattr(configuration.rule, "operands", None)
-
-        if isinstance(configuration.rule, dict):
-            operation = configuration.rule.get("operation")
-            operands = configuration.rule.get("operands")
-
-        if operation not in ALLOWED_DERIVED_OPERATIONS:
-            raise ValueError(
-                f"Unsupported derived operation: {operation}. "
-                f"Allowed operations are: "
-                f"{', '.join(sorted(ALLOWED_DERIVED_OPERATIONS))}."
-            )
-
-        if not operands or len(operands) < 2:
-            raise ValueError(
-                f"Derived column '{configuration.column_name}' requires at least two operands."
-            )
-
-        for operand in operands:
-            if not str(operand or "").strip():
-                raise ValueError(
-                    f"Invalid operand in derived rule for column '{configuration.column_name}'."
-                )
-
-    # ---------------------------------------------------------
-    # Non-derived / non-llm columns should not have complex rules
-    # ---------------------------------------------------------
-    if configuration.action in ("llm", "derived"):
-        return True
-
-    if configuration.rule is not None and isinstance(configuration.rule, dict) and len(configuration.rule) > 0:
-        raise ValueError(
-            f"Column '{configuration.column_name}' cannot have a derived rule because its action is '{configuration.action}'."
-        )
+    if configuration.action != "llm":
+        configuration.rule = None
 
     return True

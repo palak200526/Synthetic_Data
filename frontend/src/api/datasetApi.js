@@ -253,6 +253,27 @@ export function normalizePreprocessResult(raw) {
     removedColumns: pickArr('removed_columns', 'dropped_columns'),
     addedColumns: pickArr('added_columns', 'new_columns'),
     transformations: pickArr('transformations', 'operations', 'steps'),
+    missingFilled: pickNum('missing_values_filled'),
+    missingByColumn:
+      data.missing_by_column && typeof data.missing_by_column === 'object'
+        ? data.missing_by_column
+        : {},
+    outlierSummary: Array.isArray(data.outliers)
+      ? data.outliers
+      : Array.isArray(data.outlier_summary)
+        ? data.outlier_summary
+        : [],
+    encodedColumnsCount: pickNum('encoded_columns_count'),
+    actionCounts:
+      data.action_counts && typeof data.action_counts === 'object'
+        ? data.action_counts
+        : {},
+    numericalColumns: pickArr('numerical_columns'),
+    categoricalColumns: pickArr('categorical_columns'),
+    validation:
+      data.validation && typeof data.validation === 'object'
+        ? data.validation
+        : null,
     finishedAt: pickStr(
       'finished_at',
       'completed_at',

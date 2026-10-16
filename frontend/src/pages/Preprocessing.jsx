@@ -57,8 +57,45 @@ export default function Preprocessing() {
   // ── preprocess request state ─────────────────────────────────
   const [running, setRunning] = useState(false)
   const [runError, setRunError] = useState('')
-  const [result, setResult] = useState(null)
   const [toast, setToast] = useState(null)
+
+  // Results are cached PER dataset id, so switching files in the batch
+  // never shows another file's preprocessing summary.
+  const resultsKey = `datrixa.preprocess.${sessionId ?? 'nosession'}`
+  const [results, setResults] = useState(() => {
+    try {
+      return JSON.parse(sessionStorage.getItem(resultsKey) || '{}')
+    } catch {
+      return {}
+    }
+  })
+  useEffect(() => {
+    try {
+      setResults(JSON.parse(sessionStorage.getItem(resultsKey) || '{}'))
+    } catch {
+      setResults({})
+    }
+  }, [resultsKey])
+
+  const result = results[String(datasetId)] || null
+
+  const saveResult = (id, value) => {
+    setResults((prev) => {
+      const next = { ...prev, [String(id)]: value }
+      try {
+        sessionStorage.setItem(resultsKey, JSON.stringify(next))
+      } catch {
+        /* non-fatal */
+      }
+      return next
+    })
+  }
+
+  // Clear per-file transient state when the user switches dataset.
+  useEffect(() => {
+    setRunError('')
+    setRunning(false)
+  }, [datasetId])
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -104,13 +141,18 @@ export default function Preprocessing() {
   }, [load])
 
   const handleRun = async () => {
+    const runId = datasetId // remember which file this run belongs to
     setRunError('')
-    setResult(null)
+    setResults((prev) => {
+      const next = { ...prev }
+      delete next[String(runId)]
+      return next
+    })
     setRunning(true)
     try {
-      const res = await datasetApi.preprocess(datasetId)
+      const res = await datasetApi.preprocess(runId)
       const normalized = normalizePreprocessResult(res.data)
-      setResult(normalized)
+      saveResult(runId, normalized)
       setToast({
         type: 'success',
         title: 'Preprocessing complete',
@@ -564,8 +606,8 @@ export default function Preprocessing() {
                   <li>· Applied per dataset using the saved configuration.</li>
                   <li>
                     · <strong>keep</strong> / <strong>remove</strong> /{' '}
-                    <strong>new_id</strong> / <strong>generalize</strong> /{' '}
-                    <strong>derived</strong> are enforced by the backend.
+                    <strong>new_id</strong> / <strong>llm</strong> are enforced by the
+                    backend.
                   </li>
                   <li>· No transformations run in the browser.</li>
                 </ul>

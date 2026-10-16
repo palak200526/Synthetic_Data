@@ -67,10 +67,24 @@ def get_report(
                 "data": report_data,
             }
 
-        # Case 3: neither provided -> list reports for current user and auto-load latest
-        user_reports = list_reports_for_user(current_user)
+        # Case 3: neither provided -> show the report of the MOST RECENT
+        # generation (not just the most recent report row), creating it if
+        # it does not exist yet. Otherwise a new dataset keeps showing the
+        # old report until someone manually generates one.
         latest_report_data = None
-        if user_reports:
+        latest_gen = get_latest_generated_result_for_user(current_user)
+        if latest_gen:
+            try:
+                latest_report_data = get_report_for_result(
+                    result_id=latest_gen["result_id"],
+                    user_id=current_user,
+                )
+            except Exception as exc:
+                logger.warning("Could not build report for latest generation: %s", exc)
+
+        user_reports = list_reports_for_user(current_user)
+
+        if latest_report_data is None and user_reports:
             try:
                 latest_report_data = get_report_for_result(
                     result_id=user_reports[0]["result_id"],
@@ -78,18 +92,6 @@ def get_report(
                 )
             except Exception as exc:
                 logger.warning("Could not fetch latest report: %s", exc)
-        else:
-            latest_gen = get_latest_generated_result_for_user(current_user)
-            if latest_gen:
-                try:
-                    latest_report_data = generate_report(
-                        result_id=latest_gen["result_id"],
-                        user_id=current_user,
-                    )
-                    user_reports = list_reports_for_user(current_user)
-                except Exception as exc:
-                    logger.warning("Could not auto-generate report: %s", exc)
-
         return {
             "status": "success",
             "message": "User reports list retrieved.",

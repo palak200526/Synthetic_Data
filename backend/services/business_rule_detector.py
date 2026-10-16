@@ -80,7 +80,7 @@ def detect_arithmetic_relationships(
                 candidate_pairs.append((col_i, col_j))
 
     print(
-        f"[rule_detect] {len(numerical_columns)} columns → "
+        f"[rule_detect] {len(numerical_columns)} columns -> "
         f"{len(candidate_pairs)} candidate pairs after correlation filter."
     )
 
@@ -165,7 +165,7 @@ def _sample_matches(left, right, target, operation):
                 predicted = left * right
             elif operation == "divide":
                 mask = right != 0
-                if mask.sum() < max(10, len(right) * 0.5):
+                if mask.sum() == 0:
                     return False
                 predicted = left[mask] / right[mask]
                 target = target[mask]

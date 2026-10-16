@@ -9,10 +9,14 @@ import apiClient from './client.js'
 //                              metrics, score } } } } }
 
 export const evaluationApi = {
-  run: (resultId) =>
+  // targetColumn: optional ML-utility target. '__auto__' = back to the default.
+  run: (resultId, targetColumn) =>
     apiClient.post(
       '/evaluation',
-      { result_id: Number(resultId) },
+      {
+        result_id: Number(resultId),
+        ...(targetColumn ? { target_column: targetColumn } : {}),
+      },
       { timeout: 10 * 60 * 1000 },
     ),
 }

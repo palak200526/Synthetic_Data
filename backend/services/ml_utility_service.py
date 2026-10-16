@@ -5,6 +5,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.metrics import (
     accuracy_score,
@@ -23,6 +24,28 @@ from backend.services.statistical_evaluation_service import (
 )
 
 logger = logging.getLogger(__name__)
+
+# The real-data model must beat a trivial model by at least this much,
+# otherwise the target cannot be predicted from the other columns and the
+# "synthetic vs real" ML comparison would be meaningless.
+MIN_CLASSIFICATION_LIFT = 0.05   # accuracy above majority-class model
+MIN_REGRESSION_R2 = 0.05         # R2 of the real-data baseline
+
+
+def _not_predictable(task_type, target_col, feature_cols, reason, baseline=None, detail=None):
+    return {
+        "metric": "ml_utility",
+        "status": "not_applicable",
+        "reason": reason,
+        "reason_detail": detail,
+        "overall_score": None,
+        "utility_score": None,
+        "task_type": task_type,
+        "target_column": target_col,
+        "feature_columns": feature_cols,
+        "synthetic_metrics": {},
+        "baseline_metrics": baseline or {},
+    }
 
 COMMON_TARGET_NAMES = [
     "target",
@@ -91,7 +114,7 @@ def identify_prediction_task(
     return None, None
 
 
-def evaluate_ml_utility(
+def _evaluate_single_target(
     real_dataframe: pd.DataFrame,
     synthetic_dataframe: pd.DataFrame,
     column_configurations: list[dict] | None = None,
@@ -320,11 +343,46 @@ def evaluate_ml_utility(
             base_f1 = baseline_metrics["f1"]
             syn_f1 = synthetic_metrics["f1"]
 
-            if base_f1 > 0:
-                rel_f1 = syn_f1 / base_f1
-                score = round(min(1.0, max(0.0, rel_f1)) * 100.0, 2)
-            else:
-                score = 100.0 if syn_f1 == 0.0 else 50.0
+            # Gate: is the target learnable from the real data at all?
+            dummy = DummyClassifier(strategy="most_frequent")
+            dummy.fit(X_real_train, y_real_train)
+            dummy_pred = dummy.predict(X_real_test)
+            dummy_f1 = float(
+                f1_score(y_real_test, dummy_pred, average="weighted", zero_division=0)
+            )
+            dummy_acc = float(accuracy_score(y_real_test, dummy_pred))
+            base_acc = float(baseline_metrics.get("accuracy", 0.0))
+            baseline_metrics["majority_class_f1"] = round(dummy_f1, 4)
+            baseline_metrics["majority_class_accuracy"] = round(dummy_acc, 4)
+            # Compare ACCURACY with the majority-class accuracy: on balanced
+            # targets (e.g. gender 50/50) a coin flip already scores ~0.5.
+            if base_acc < dummy_acc + MIN_CLASSIFICATION_LIFT:
+                return _not_predictable(
+                    task_type,
+                    target_col,
+                    feature_cols,
+                    (
+                        f"'{target_col}' cannot be predicted from the other columns, so "
+                        "ML Utility cannot be measured for it. Even a model trained on the "
+                        f"REAL data is right only {base_acc:.0%} of the time, which is no "
+                        "better than always guessing the most common value "
+                        f"({dummy_acc:.0%}). If real data cannot teach a model this column, "
+                        "synthetic data cannot be judged on it either. This is a property of "
+                        "the column, not a problem with your synthetic data. Choose a target "
+                        "that depends on the other columns (for example an outcome or a "
+                        "score), or select Auto."
+                    ),
+                    baseline_metrics,
+                    detail=(
+                        f"real-data accuracy {base_acc:.2f} vs majority-class accuracy "
+                        f"{dummy_acc:.2f}; required lift {MIN_CLASSIFICATION_LIFT:.2f}"
+                    ),
+                )
+
+            # Symmetric closeness: 100 only when synthetic == real baseline.
+            # (Old formula was capped, so it returned 100 for almost any data.)
+            hi = max(base_f1, syn_f1)
+            score = round((min(base_f1, syn_f1) / hi) * 100.0, 2) if hi > 0 else 100.0
 
             return {
                 "metric": "ml_utility",
@@ -376,9 +434,34 @@ def evaluate_ml_utility(
                 "r2": round(float(r2_score(y_real_test, y_pred_synth)), 4),
             }
 
-            rmse_diff = abs(synth_rmse - base_rmse)
-            denom = max(base_rmse, 1e-4)
-            score = round(max(0.0, 1.0 - (rmse_diff / denom)) * 100.0, 2)
+            base_r2 = baseline_metrics["r2"]
+            if base_r2 < MIN_REGRESSION_R2:
+                return _not_predictable(
+                    task_type,
+                    target_col,
+                    feature_cols,
+                    (
+                        f"'{target_col}' cannot be predicted from the other columns, so "
+                        "ML Utility cannot be measured for it. A model trained on the REAL "
+                        f"data explains only {max(base_r2, 0.0):.0%} of the variation in this "
+                        "column. If real data cannot teach a model this column, synthetic "
+                        "data cannot be judged on it either. This is a property of the "
+                        "column, not a problem with your synthetic data. Choose a target "
+                        "that depends on the other columns (for example an outcome or a "
+                        "score), or select Auto."
+                    ),
+                    baseline_metrics,
+                    detail=(
+                        f"real-data R2 {base_r2:.2f}; required minimum {MIN_REGRESSION_R2:.2f}"
+                    ),
+                )
+
+            # Smooth, symmetric closeness (same idea as classification):
+            # 100 = identical error, decays gradually instead of hitting a
+            # hard 0 once the synthetic model is 2x worse than the baseline.
+            lo = min(base_rmse, synth_rmse)
+            hi = max(base_rmse, synth_rmse)
+            score = round((lo / hi) * 100.0, 2) if hi > 1e-12 else 100.0
 
             return {
                 "metric": "ml_utility",
@@ -406,3 +489,190 @@ def evaluate_ml_utility(
             "synthetic_metrics": {},
             "baseline_metrics": {},
         }
+
+
+def _candidate_targets(real_dataframe: pd.DataFrame, eligible: list[str], limit: int = 6) -> list[str]:
+    """Rank plausible prediction targets (most sensible first)."""
+    ranked: list[str] = []
+
+    def add(col: str) -> None:
+        if col not in ranked:
+            ranked.append(col)
+
+    for name in COMMON_TARGET_NAMES:
+        for col in eligible:
+            if col.strip().lower() == name:
+                add(col)
+    if eligible:
+        add(eligible[-1])  # datasets usually end with the outcome column
+    for col in eligible:
+        ser = real_dataframe[col].dropna()
+        if not pd.api.types.is_numeric_dtype(ser) and 2 <= ser.nunique() <= 10:
+            add(col)
+    for col in eligible:
+        ser = pd.to_numeric(real_dataframe[col], errors="coerce").dropna()
+        if pd.api.types.is_numeric_dtype(real_dataframe[col]) and ser.nunique() > 10 and ser.std() > 0:
+            add(col)
+    for col in eligible:
+        ser = real_dataframe[col].dropna()
+        if pd.api.types.is_numeric_dtype(ser) and 2 <= ser.nunique() <= 10:
+            add(col)
+    return ranked[:limit]
+
+
+def evaluate_ml_utility(
+    real_dataframe: pd.DataFrame,
+    synthetic_dataframe: pd.DataFrame,
+    column_configurations: list[dict] | None = None,
+    dataset_profile: dict | None = None,
+    target_column: str | None = None,
+    test_size: float = 0.2,
+    random_state: int = 42,
+    target_source: str | None = None,
+) -> dict[str, Any]:
+    """
+    ML utility with automatic target selection.
+
+    If the caller does not name a target, several candidate columns are tried
+    and the first one that is genuinely predictable from the other columns is
+    used (a random target such as gender makes the comparison meaningless).
+    """
+    kwargs = dict(
+        column_configurations=column_configurations,
+        dataset_profile=dataset_profile,
+        test_size=test_size,
+        random_state=random_state,
+    )
+    if target_column:
+        res = _evaluate_single_target(
+            real_dataframe, synthetic_dataframe, target_column=target_column, **kwargs
+        )
+        res["target_source"] = target_source or "user"
+        return res
+
+    common = [c for c in real_dataframe.columns if c in synthetic_dataframe.columns]
+    config_map = {
+        c["column_name"]: c
+        for c in (column_configurations or [])
+        if isinstance(c, dict) and "column_name" in c
+    }
+    profile_map: dict = {}
+    if isinstance(dataset_profile, dict):
+        info = dataset_profile.get("column_information") or dataset_profile.get("columns") or []
+        if isinstance(info, list):
+            profile_map = {
+                p["column_name"]: p for p in info
+                if isinstance(p, dict) and "column_name" in p
+            }
+        elif isinstance(info, dict):
+            profile_map = info
+    eligible = []
+    for col in common:
+        st, _, _ = determine_column_eligibility(
+            column_name=col, real_series=real_dataframe[col],
+            configuration=config_map.get(col), profile_column=profile_map.get(col),
+        )
+        if st == "evaluated":
+            eligible.append(col)
+
+    candidates = _candidate_targets(real_dataframe, eligible)
+    if not candidates:
+        return _evaluate_single_target(real_dataframe, synthetic_dataframe, **kwargs)
+
+    first_failure = None
+    tried: list[str] = []
+    for cand in candidates:
+        res = _evaluate_single_target(
+            real_dataframe, synthetic_dataframe, target_column=cand, **kwargs
+        )
+        tried.append(cand)
+        if res.get("status") == "evaluated":
+            res["targets_tried"] = tried
+            return res
+        if first_failure is None:
+            first_failure = res
+
+    first_failure = first_failure or {}
+    first_failure["targets_tried"] = tried
+    first_failure["reason"] = (
+        "None of the candidate target columns ("
+        + ", ".join(tried)
+        + ") can be predicted from the other columns in this dataset, so an "
+        "ML-utility comparison would not be meaningful."
+    )
+    return first_failure
+
+
+# ---------------------------------------------------------------------------
+# Target candidates (what the user can pick in the dropdown)
+# ---------------------------------------------------------------------------
+
+def _eligible_ml_columns(real_dataframe, synthetic_dataframe, column_configurations, dataset_profile):
+    common = [c for c in real_dataframe.columns if c in synthetic_dataframe.columns]
+    config_map = {
+        c["column_name"]: c
+        for c in (column_configurations or [])
+        if isinstance(c, dict) and "column_name" in c
+    }
+    profile_map: dict = {}
+    if isinstance(dataset_profile, dict):
+        info = dataset_profile.get("column_information") or dataset_profile.get("columns") or []
+        if isinstance(info, list):
+            profile_map = {
+                p["column_name"]: p for p in info
+                if isinstance(p, dict) and "column_name" in p
+            }
+        elif isinstance(info, dict):
+            profile_map = info
+    eligible = []
+    for col in common:
+        st, _, _ = determine_column_eligibility(
+            column_name=col, real_series=real_dataframe[col],
+            configuration=config_map.get(col), profile_column=profile_map.get(col),
+        )
+        if st == "evaluated":
+            eligible.append(col)
+    return eligible
+
+
+def list_ml_target_candidates(
+    real_dataframe: pd.DataFrame,
+    synthetic_dataframe: pd.DataFrame,
+    column_configurations: list[dict] | None = None,
+    dataset_profile: dict | None = None,
+) -> list[dict[str, Any]]:
+    """
+    Columns that can be offered as an ML target in the dropdown.
+
+    This is a cheap listing only: NO model is trained here. Whether the chosen
+    column is actually predictable is checked later, and only for the column
+    that is really used (see _evaluate_single_target).
+
+    - numeric with > 10 distinct values  -> regression
+    - 2..20 distinct values              -> classification
+    """
+    eligible = _eligible_ml_columns(
+        real_dataframe, synthetic_dataframe, column_configurations, dataset_profile
+    )
+    if len(eligible) < 2:
+        return []
+
+    candidates: list[dict[str, Any]] = []
+    for col in eligible:
+        n_unique = int(real_dataframe[col].dropna().nunique())
+        is_num = pd.api.types.is_numeric_dtype(real_dataframe[col])
+        if is_num and n_unique > 10:
+            task = "regression"
+        elif 2 <= n_unique <= 20:
+            task = "classification"
+        else:
+            continue
+
+        candidates.append({
+            "column": col,
+            "task_type": task,
+            "unique_values": n_unique,
+            "dtype": "numeric" if is_num else "categorical",
+        })
+
+    return candidates
