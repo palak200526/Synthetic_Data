@@ -57,6 +57,13 @@ function formatTime(value) {
   return d ? d.toLocaleTimeString() : '—'
 }
 
+function isMultiTableJob(job) {
+  const fileName = String(job?.file_name || '').toLowerCase()
+  const modelName = String(job?.model_name || '').toLowerCase()
+  const stage = String(job?.stage || '').toLowerCase()
+  return fileName.includes('multi-table group') || modelName.includes('_group_') || stage.includes('multi-table')
+}
+
 export default function GenerationHistory() {
   const navigate = useNavigate()
   const tracker = useGenerationTracker()
@@ -285,12 +292,21 @@ export default function GenerationHistory() {
     }
     setBusy(job.job_id, true)
     try {
-      await generationApi.downloadDataset(job.result_id, job.file_name || 'synthetic_dataset.csv')
-      setToast({
-        type: 'success',
-        title: 'Download Complete',
-        message: `Saved ${job.file_name || 'dataset'}.`,
-      })
+      if (isMultiTableJob(job)) {
+        await generationApi.downloadMultiTableDataset(job.result_id)
+        setToast({
+          type: 'success',
+          title: 'Download Complete',
+          message: `Downloaded all generated tables for ${job.file_name || 'this multi-table group'} as a ZIP file.`,
+        })
+      } else {
+        await generationApi.downloadDataset(job.result_id, job.file_name || 'synthetic_dataset.csv')
+        setToast({
+          type: 'success',
+          title: 'Download Complete',
+          message: `Saved ${job.file_name || 'dataset'}.`,
+        })
+      }
     } catch (err) {
       setToast({
         type: 'error',
@@ -593,9 +609,9 @@ export default function GenerationHistory() {
                     className="dx-btn-primary"
                     disabled={busy}
                     onClick={() => handleDownload(job)}
-                    title="Download generated synthetic dataset CSV"
+                    title={isMultiTableJob(job) ? 'Download every generated table in this group as one ZIP file' : 'Download generated synthetic dataset CSV'}
                   >
-                    <Download size={13} /> Download Dataset
+                    <Download size={13} /> {isMultiTableJob(job) ? 'Download All Tables' : 'Download Dataset'}
                   </button>
                 )}
                 <button

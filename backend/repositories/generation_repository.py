@@ -442,3 +442,56 @@ def get_algorithm_timing_stats(user_id: int) -> dict:
             cursor.close()
         if connection:
             connection.close()
+
+def get_generated_results_for_group_id(group_id: int):
+    """Return the newest registered generated result per dataset for a group.
+
+    Multi-table generation stores the group id in generation_runs.model_name as
+    ``<model>_group_<id>``. Querying these runs is more reliable than assuming
+    every dataset currently assigned to the source group was part of the exact
+    generation run.
+    """
+    conn = get_db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute(
+            """
+            SELECT
+                gr.result_id,
+                gr.run_id,
+                gr.file_name,
+                gr.file_path,
+                gr.row_count,
+                gr.column_count,
+                grn.dataset_id,
+                grn.model_name,
+                grn.completed_at
+            FROM generated_results gr
+            JOIN generation_runs grn ON gr.run_id = grn.run_id
+            WHERE LOWER(COALESCE(grn.model_name, '')) ~ %s
+            ORDER BY grn.dataset_id ASC, gr.result_id DESC
+            """,
+            (rf'(^|_)group_{int(group_id)}$',),
+        )
+        rows = cur.fetchall()
+        latest_by_dataset = {}
+        for row in rows:
+            dataset_id = int(row[6])
+            # Rows are ordered newest-first for each dataset.
+            if dataset_id in latest_by_dataset:
+                continue
+            latest_by_dataset[dataset_id] = {
+                "result_id": row[0],
+                "run_id": row[1],
+                "file_name": row[2],
+                "file_path": row[3],
+                "row_count": row[4],
+                "column_count": row[5],
+                "dataset_id": dataset_id,
+                "model_name": row[7],
+                "completed_at": row[8],
+            }
+        return list(latest_by_dataset.values())
+    finally:
+        cur.close()
+        conn.close()

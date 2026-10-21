@@ -12,6 +12,7 @@ import ColumnAnalysis from '../pages/ColumnAnalysis.jsx'
 import Preprocessing from '../pages/Preprocessing.jsx'
 import Generation from '../pages/Generation.jsx'
 import Evaluation from '../pages/Evaluation.jsx'
+import QualityImprovement from '../pages/QualityImprovement.jsx'
 import EvaluationDashboard from '../pages/EvaluationDashboard.jsx'
 import Report from '../pages/Report.jsx'
 import Relationships from '../pages/Relationships.jsx'
@@ -52,6 +53,7 @@ export default function AppRouter() {
         <Route path="/datasets/:datasetId/preprocess" element={<Preprocessing />} />
         <Route path="/datasets/:datasetId/generate" element={<Generation />} />
         <Route path="/datasets/:datasetId/evaluate" element={<Evaluation />} />
+        <Route path="/datasets/:datasetId/quality-improvement" element={<QualityImprovement />} />
 
         <Route path="/generations" element={<GenerationHistory />} />
         <Route path="/evaluations" element={<EvaluationDashboard />} />

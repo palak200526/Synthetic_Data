@@ -17,6 +17,7 @@ import {
   BarChart3,
   ListChecks,
   FileText,
+  Sparkles,
 } from 'lucide-react'
 
 import PageHeader from '../components/PageHeader.jsx'
@@ -27,7 +28,6 @@ import Toast from '../components/Toast.jsx'
 
 import { datasetApi, normalizeDatasetProfile } from '../api/datasetApi.js'
 import MLTargetSelector from '../components/evaluation/MlTargetSelector.jsx'
-import QualityImprovementPanel from '../components/evaluation/QualityImprovementPanel.jsx'
 import { evaluationApi, extractCategorySections } from '../api/evaluationApi.js'
 import { getErrorMessage } from '../utils/errors.js'
 import { formatNumber } from '../utils/format.js'
@@ -529,20 +529,25 @@ export default function Evaluation() {
                 </div>
               </div>
 
-              {/* Supply Chain Domain Quality Tuning Workflow */}
-              <div className="mt-6">
-                <QualityImprovementPanel
-                  resultId={resultId}
-                  datasetId={datasetId}
-                  targetColumn={categories?.ml_utility?.targetColumn}
-                  onImprovementSuccess={() => {
-                    setToast({
-                      type: 'success',
-                      title: 'Improvement Completed',
-                      message: 'Quality tuning finished with verified side-by-side metrics.',
-                    })
+              {/* Improvement runs only after the user explicitly opens its own page. */}
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand-200 bg-brand-50/40 p-4">
+                <div>
+                  <p className="text-sm font-semibold text-ink-900">Improve synthetic data quality</p>
+                  <p className="mt-1 text-xs text-ink-600">Open the dedicated improvement workflow to tune this result and compare before/after metrics.</p>
+                </div>
+                <button
+                  type="button"
+                  className="dx-btn-primary inline-flex items-center gap-2"
+                  disabled={!resultId}
+                  onClick={() => {
+                    const qs = new URLSearchParams()
+                    qs.set('result_id', String(resultId))
+                    if (sessionId) qs.set('session', String(sessionId))
+                    navigate(`/datasets/${datasetId}/quality-improvement?${qs.toString()}`)
                   }}
-                />
+                >
+                  <Sparkles size={14} /> Open Quality Improvement <ArrowRight size={13} />
+                </button>
               </div>
 
               {/* Dimension tabs */}

@@ -1,22 +1,21 @@
 import { Outlet } from 'react-router-dom'
-import { Sparkles } from 'lucide-react'
 
 export default function AuthLayout() {
   return (
     <div className="grid min-h-screen grid-cols-1 lg:grid-cols-2">
-      <div className="hidden lg:flex flex-col justify-between bg-ink-900 p-10 text-white">
-        <div className="flex items-center gap-2.5">
-          <div className="grid h-8 w-8 place-items-center rounded-md bg-brand-500">
-            <Sparkles size={16} />
-          </div>
-          <span className="text-base font-semibold tracking-tight">Datrixa</span>
-        </div>
+      <div className="hidden lg:flex flex-col justify-between bg-gradient-to-br from-ink-900 via-ink-900 to-ink-800 p-10 text-white">
+        <img
+          src="/datrixa-logo-white.png"
+          alt="Datrixa"
+          className="h-10 w-auto self-start select-none"
+          draggable={false}
+        />
 
         <div className="max-w-md">
-          <h2 className="text-2xl font-semibold leading-snug tracking-tight">
+          <h2 className="text-3xl font-semibold leading-tight tracking-tight">
             Intelligent Data Transformation and Assessment Platform
           </h2>
-          <p className="mt-3 text-sm text-ink-300">
+          <p className="mt-4 text-sm leading-relaxed text-ink-300">
             Generate, evaluate, and validate synthetic datasets with statistical,
             utility, and privacy-aware metrics — powered by LLM-assisted column
             analysis.

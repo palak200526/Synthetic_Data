@@ -595,8 +595,9 @@ export default function EvaluationDashboard() {
   const resultIdParam = searchParams.get('result_id')
   const returnTo = searchParams.get('return_to')
   const workflow = searchParams.get('workflow') || 'original'
+  const datasetIdParam = searchParams.get('dataset_id')
   const reportUrl = resultIdParam
-    ? `/reports?result_id=${encodeURIComponent(resultIdParam)}${returnTo ? `&return_to=${encodeURIComponent(returnTo)}` : ''}&workflow=${encodeURIComponent(workflow)}`
+    ? `/reports?result_id=${encodeURIComponent(resultIdParam)}${datasetIdParam ? `&dataset_id=${encodeURIComponent(datasetIdParam)}` : ''}${returnTo ? `&return_to=${encodeURIComponent(returnTo)}` : ''}&workflow=${encodeURIComponent(workflow)}`
     : null
 
   const [data, setData] = useState(null)
@@ -990,4 +991,4 @@ export default function EvaluationDashboard() {
       )}
     </>
   )
-}
+}   

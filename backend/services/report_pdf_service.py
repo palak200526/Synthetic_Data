@@ -16,11 +16,14 @@ from reportlab.platypus import (
     Paragraph,
     SimpleDocTemplate,
     Spacer,
+    Image,
     Table,
     TableStyle,
 )
 
 logger = logging.getLogger(__name__)
+
+LOGO_PATH = Path(__file__).resolve().parent.parent / "assets" / "datrixa-logo.png"
 
 BRAND = colors.HexColor("#4f46e5")
 INK = colors.HexColor("#0f172a")
@@ -105,6 +108,19 @@ def _kv(rows: list[tuple[str, Any]], st: dict, width: float) -> Table:
     return t
 
 
+def _logo(width: float):
+    """Brand logo scaled to `width` (keeps aspect ratio); None if the file is missing."""
+    try:
+        img = Image(str(LOGO_PATH), mask="auto")
+        ratio = img.imageHeight / float(img.imageWidth)
+        img.drawWidth, img.drawHeight = width, width * ratio
+        img.hAlign = "RIGHT"
+        return img
+    except Exception:  # logo is cosmetic - never break report generation
+        logger.warning("Report logo not available at %s", LOGO_PATH)
+        return None
+
+
 def _footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("Helvetica", 7.5)
@@ -142,8 +158,22 @@ def build_pdf_report(report: dict[str, Any], output_path: Path) -> Path:
         return _p(f"{sec_no[0]}. {title}", st["h2"])
 
     # ---- header ----
-    story.append(_p("Synthetic Data Evaluation Report", st["title"]))
-    story.append(_p(report.get("report_name"), st["sub"]))
+    title_block = [
+        _p("Synthetic Data Evaluation Report", st["title"]),
+        _p(report.get("report_name"), st["sub"]),
+    ]
+    logo = _logo(36 * mm)
+    if logo is not None:
+        head = Table([[title_block, logo]], colWidths=[W - 40 * mm, 40 * mm])
+        head.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("ALIGN", (1, 0), (1, 0), "RIGHT"),
+            ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+            ("TOPPADDING", (0, 0), (-1, -1), 0), ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        ]))
+        story.append(head)
+    else:
+        story.extend(title_block)
     story.append(Spacer(1, 4))
     story.append(HRFlowable(width="100%", thickness=1.2, color=BRAND))
     story.append(Spacer(1, 8))

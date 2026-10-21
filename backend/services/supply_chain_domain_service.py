@@ -165,6 +165,50 @@ def _append_quality_metric_comparisons(
         })
     return rows
 
+def _build_privacy_status(
+    real_df: pd.DataFrame,
+    synthetic_df: pd.DataFrame,
+    privacy_guard_info: dict[str, Any],
+    column_configurations: list[dict] | None,
+    dataset_profile: dict | None,
+) -> dict[str, Any]:
+    """Return privacy metrics calculated from the final full-size dataframes."""
+    quality = calculate_quality_metrics(synthetic_df)
+    result: dict[str, Any] = {
+        "passed": privacy_guard_info.get("passed"),
+        "exact_match_rate": privacy_guard_info.get("final_exact_rate"),
+        "duplicates_dropped": privacy_guard_info.get("duplicates_dropped"),
+        "duplicate_row_rate": quality.get("duplicate_row_rate"),
+        "dcr_privacy_ratio": None,
+        "privacy_score": None,
+        "risk_level": None,
+        "privacy_status": "not_evaluated",
+    }
+    try:
+        privacy_metrics = evaluate_privacy(
+            real_df,
+            synthetic_df,
+            column_configurations=column_configurations,
+            dataset_profile=dataset_profile,
+            random_state=42,
+        )
+        if privacy_metrics.get("status") == "evaluated":
+            result["exact_match_rate"] = privacy_metrics.get("exact_match_rate")
+            result["dcr_privacy_ratio"] = privacy_metrics.get("dcr_ratio")
+            result["privacy_score"] = privacy_metrics.get("overall_score")
+            result["risk_level"] = privacy_metrics.get("risk_level")
+            result["privacy_status"] = "evaluated"
+            result["passed"] = privacy_metrics.get("risk_level") == "LOW"
+        else:
+            result["privacy_status"] = privacy_metrics.get("status", "not_applicable")
+            result["privacy_reason"] = privacy_metrics.get("reason")
+    except Exception as exc:
+        logger.warning("Could not calculate final privacy diagnostics: %s", exc)
+        result["privacy_status"] = "error"
+        result["privacy_reason"] = "Privacy diagnostics could not be calculated for this dataset."
+    return result
+
+
 # =====================================================================
 # 1. DYNAMIC SCHEMA AND SEMANTIC DETECTION
 # =====================================================================
@@ -1147,11 +1191,13 @@ def improve_generation_result(
             "baseline_validity_percent": baseline_validity,
             "improved_validity_percent": improved_validity,
         },
-        "privacy_status": {
-            "passed": priv_info.get("passed", True),
-            "exact_match_rate": priv_info.get("final_exact_rate", 0.0),
-            "duplicates_dropped": priv_info.get("duplicates_dropped", 0),
-        },
+        "privacy_status": _build_privacy_status(
+            real_df=df_real,
+            synthetic_df=improved_df,
+            privacy_guard_info=priv_info,
+            column_configurations=candidate_column_configurations,
+            dataset_profile=candidate_dataset_profile,
+        ),
         "tradeoff_explanation": explanation,
         "baseline_evaluation": baseline_eval,
         "improved_evaluation": improved_eval,

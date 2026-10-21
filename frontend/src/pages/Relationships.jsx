@@ -298,7 +298,7 @@ export default function Relationships() {
     <>
       <PageHeader
         title="Multi-table & relationships"
-        subtitle="Configure parent-child foreign key relationships across datasets and generate connected multi-table synthetic data."
+        subtitle="Configure and validate parent-child relationships across datasets, then continue to profiling."
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <button
@@ -663,209 +663,25 @@ export default function Relationships() {
           </div>
         </div>
 
-        {/* Multi-table generation */}
-        <div className="dx-card p-6">
-          <div className="flex flex-col gap-4 border-b border-ink-100 pb-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <div className="flex items-center gap-2">
-                <Sparkles size={18} className="text-brand-600" />
-                <h3 className="text-base font-semibold text-ink-900">
-                  Multi-table synthetic generation
-                </h3>
-              </div>
-              <p className="mt-1 text-xs text-ink-500">
-                Fit generative models across all linked tables in this group
-                and synthesize new data with 100% referential integrity
-                guaranteed.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <select
-                value={generationModel}
-                onChange={(e) => setGenerationModel(e.target.value)}
-                disabled={generating}
-                className="dx-input cursor-pointer py-2 text-xs"
-              >
-                <option value="gaussian_copula">
-                  Gaussian Copula (fast & relational)
-                </option>
-                <option value="ctgan">CTGAN (deep tabular GAN)</option>
-                <option value="tvae">TVAE (variational autoencoder)</option>
-              </select>
-
-              <button
-                type="button"
-                onClick={handleGenerateMultiTable}
-                disabled={
-                  generating ||
-                  !selectedGroupId ||
-                  relationships.length === 0
-                }
-                className="dx-btn-primary"
-              >
-                {generating ? (
-                  <>
-                    <Loader2 size={14} className="animate-spin" />
-                    Synthesizing…
-                  </>
-                ) : (
-                  <>
-                    <PlayCircle size={14} />
-                    Generate multi-table data
-                  </>
-                )}
-              </button>
-            </div>
+        {/* Continue to profiling after relationship setup; generation lives on its own page. */}
+        <div className="mt-6 flex flex-col gap-3 rounded-xl border border-ink-100 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-sm font-semibold text-ink-900">Relationships setup complete?</h3>
+            <p className="mt-1 text-xs text-ink-500">Continue to dataset profiling. Synthetic generation is available later in its dedicated workflow.</p>
           </div>
-
-          {generating && (
-            <div className="mt-6 flex flex-col items-center justify-center rounded-xl border border-dashed border-brand-200 bg-brand-50/40 p-8 text-center">
-              <Loader2
-                size={28}
-                className="mb-3 animate-spin text-brand-600"
-              />
-              <p className="text-sm font-medium text-ink-900">
-                Synthesizing multi-table datasets for group #{selectedGroupId}…
-              </p>
-              <p className="mt-1 text-xs text-ink-500">
-                Generating rows and enforcing primary/foreign key mappings to
-                guarantee 100% referential integrity.
-              </p>
-            </div>
-          )}
-
-          {generationResult && !generating && (
-            <div className="mt-6 space-y-5">
-              <div
-                className={[
-                  'flex items-center justify-between gap-4 rounded-xl border p-4',
-                  generationResult.referential_integrity
-                    ? 'border-emerald-200 bg-emerald-50'
-                    : 'border-rose-200 bg-rose-50',
-                ].join(' ')}
-              >
-                <div className="flex items-center gap-3">
-                  {generationResult.referential_integrity ? (
-                    <CheckCircle2
-                      size={22}
-                      className="shrink-0 text-emerald-600"
-                    />
-                  ) : (
-                    <AlertCircle
-                      size={22}
-                      className="shrink-0 text-rose-600"
-                    />
-                  )}
-                  <div>
-                    <h4 className="text-sm font-semibold text-ink-900">
-                      {generationResult.referential_integrity
-                        ? 'Referential integrity: 100% preserved'
-                        : 'Referential integrity failed'}
-                    </h4>
-                    <p className="text-xs text-ink-600">
-                      {generationResult.referential_integrity
-                        ? 'All synthetic child foreign keys exist in the generated parent tables. Zero orphaned records.'
-                        : 'Some synthetic child records reference non-existent parent primary keys.'}
-                    </p>
-                  </div>
-                </div>
-                <span
-                  className={[
-                    'shrink-0 rounded-full px-3 py-1 text-xs font-semibold',
-                    generationResult.referential_integrity
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'bg-rose-100 text-rose-700',
-                  ].join(' ')}
-                >
-                  {generationResult.referential_integrity ? 'Valid' : 'Invalid'}
-                </span>
-              </div>
-
-              <div>
-                <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-ink-500">
-                  Generated tables
-                </h4>
-                <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3">
-                  {Object.entries(generationResult.tables || {}).map(
-                    ([dId, tbl]) => {
-                      const isDownloading = downloadingId === tbl.dataset_id
-                      return (
-                        <div key={dId} className="dx-card space-y-3 p-4">
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="min-w-0">
-                              <div className="flex items-center gap-1.5">
-                                <FileSpreadsheet
-                                  size={14}
-                                  className="text-brand-600"
-                                />
-                                <span className="truncate text-xs font-semibold text-ink-900">
-                                  {tbl.source_filename ||
-                                    `Dataset #${tbl.dataset_id}`}
-                                </span>
-                              </div>
-                              <p
-                                className="mt-1 max-w-[200px] truncate font-mono text-[11px] text-ink-500"
-                                title={tbl.file_name}
-                              >
-                                {tbl.file_name}
-                              </p>
-                            </div>
-                            <span className="rounded-md border border-brand-200 bg-brand-50 px-2 py-0.5 text-[10px] font-semibold text-brand-700">
-                              #{tbl.dataset_id}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center justify-between border-t border-ink-100 pt-2 text-xs text-ink-500">
-                            <span>
-                              {tbl.row_count != null
-                                ? `${formatNumber(tbl.row_count)} rows`
-                                : 'N/A'}
-                            </span>
-                            <span>
-                              {tbl.column_count != null
-                                ? `${tbl.column_count} columns`
-                                : 'N/A'}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-2 pt-1">
-                            <button
-                              type="button"
-                              onClick={() => handleDownloadDataset(tbl)}
-                              disabled={isDownloading}
-                              className="dx-btn-outline w-full justify-center text-xs"
-                            >
-                              {isDownloading ? (
-                                <Loader2
-                                  size={14}
-                                  className="animate-spin"
-                                />
-                              ) : (
-                                <Download size={14} />
-                              )}
-                              Download CSV
-                            </button>
-                            <Link
-                              to={`/datasets/${tbl.dataset_id}/evaluate${
-                                tbl.result_id
-                                  ? `?result_id=${tbl.result_id}`
-                                  : ''
-                              }`}
-                              className="dx-btn-outline shrink-0 text-xs"
-                              title="Evaluate this synthetic table"
-                            >
-                              Evaluate
-                            </Link>
-                          </div>
-                        </div>
-                      )
-                    },
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
+          <button
+            type="button"
+            onClick={() => {
+              const firstTable = groupTables[0]
+              const datasetId = firstTable?.dataset_id ?? firstTable?.id
+              if (datasetId) navigate(`/datasets/${datasetId}/profile`)
+              else showToast('error', 'No datasets in group', 'Add at least one dataset to this group before profiling.')
+            }}
+            disabled={groupTables.length === 0}
+            className="dx-btn-primary shrink-0 justify-center disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Continue to profiling →
+          </button>
         </div>
       </div>
 

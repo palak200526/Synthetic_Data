@@ -103,7 +103,20 @@ export default function Upload() {
       if (sessionId != null) saveBatch(sessionId, batch)
 
       const qs = sessionId != null ? `?session=${sessionId}` : ''
-      navigate(`/datasets/${firstId}/profile${qs}`, { replace: true })
+      const profilePath = `/datasets/${firstId}/profile${qs}`
+
+      // For a grouped multi-file upload, configure table relationships
+      // immediately after upload rather than waiting until generation.
+      if (list.length > 1 && groupId) {
+        const setupParams = new URLSearchParams({
+          group_id: String(groupId),
+          setup: '1',
+          return_to: profilePath,
+        })
+        navigate(`/relationships?${setupParams.toString()}`, { replace: true })
+      } else {
+        navigate(profilePath, { replace: true })
+      }
     } catch (err) {
       setError(getErrorMessage(err))
     } finally {
@@ -206,8 +219,9 @@ export default function Upload() {
                 </span>
               </div>
               <p className="mt-1 text-[11px] text-ink-500">
-                Assign all files in this upload to a group. Required later for
-                multi-table generation.
+                Assign all files in this upload to a group. After upload, Datrixa
+                will ask you to configure the relationships between these tables
+                before continuing to profiling.
               </p>
 
               <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">

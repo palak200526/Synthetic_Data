@@ -1425,7 +1425,14 @@ export default function Generation() {
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold text-ink-900">
                       {progress?.stage_label
-                        ? `Floor ${progress.stage_index} of ${progress.stage_total} · ${progress.stage_label}`
+                        ? progress.stage_index !== null &&
+                          progress.stage_index !== undefined &&
+                          progress.stage_index !== '' &&
+                          progress.stage_total !== null &&
+                          progress.stage_total !== undefined &&
+                          progress.stage_total !== ''
+                          ? `Stage ${progress.stage_index} of ${progress.stage_total} · ${progress.stage_label}`
+                          : progress.stage_label
                         : 'Generating synthetic data…'}
                     </p>
                     <p className="text-xs text-ink-500">

@@ -1,34 +1,188 @@
 from __future__ import annotations
 
+import io
 import logging
+import re
+import zipfile
 from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 
-from backend.repositories.dataset_repository import (
-    get_dataset_user_id,
-)
+from backend.repositories.dataset_repository import get_dataset_user_id
 from backend.repositories.generation_repository import (
     get_generated_result_by_id,
+    get_generated_results_for_group_id,
     get_generated_result_by_run,
     get_latest_generated_result_by_dataset_id,
     get_latest_generated_result_for_user,
 )
-from backend.services.report_service import (
-    REPORTS_DIR,
-    ensure_pdf_report,
-    generate_report,
-)
+from backend.services.report_service import REPORTS_DIR, ensure_pdf_report, generate_report
 from backend.utils.auth_dependency import get_current_user
 
 logger = logging.getLogger(__name__)
+router = APIRouter(prefix="", tags=["Downloads"])
 
-router = APIRouter(
-    prefix="",
-    tags=["Downloads"],
+
+def _candidate_file_paths(raw_path: str | None):
+    """Resolve stored paths against common app roots without assuming cwd."""
+    if not raw_path:
+        return []
+    stored = Path(str(raw_path)).expanduser()
+    if stored.is_absolute():
+        return [stored]
+    here = Path(__file__).resolve()
+    roots = [
+        Path.cwd(),
+        here.parents[2],  # repository root: <repo>/backend/controllers/file.py
+        here.parents[1],  # backend root
+        Path.cwd() / "backend",
+    ]
+    candidates = []
+    seen = set()
+    for root in roots:
+        candidate = (root / stored).resolve()
+        if str(candidate) not in seen:
+            seen.add(str(candidate))
+            candidates.append(candidate)
+    return candidates
+
+
+def _generated_roots():
+    here = Path(__file__).resolve()
+    roots = [
+        Path.cwd() / "data" / "generated",
+        Path.cwd() / "backend" / "data" / "generated",
+        here.parents[2] / "data" / "generated",
+        here.parents[1] / "data" / "generated",
+    ]
+    unique = []
+    seen = set()
+    for root in roots:
+        root = root.resolve()
+        if str(root) not in seen:
+            seen.add(str(root))
+            unique.append(root)
+    return unique
+
+
+@router.get(
+    "/download/multi-table",
+    summary="Download all generated tables from a multi-table group",
+    description="Packages the generated CSV for every table in this group into one ZIP archive.",
 )
+def download_multi_table_group(
+    result_id: int = Query(..., description="Any generated result ID from the multi-table group"),
+    user_id: int = Depends(get_current_user),
+):
+    reference = get_generated_result_by_id(result_id)
+    if not reference:
+        raise HTTPException(status_code=404, detail=f"Generated result {result_id} not found.")
+
+    model_name = str(reference.get("model_name") or "")
+    match = re.search(r"(?:^|_)group_(\d+)$", model_name, flags=re.IGNORECASE)
+    if not match:
+        raise HTTPException(status_code=400, detail="This result is not associated with a multi-table generation group.")
+    group_id = int(match.group(1))
+
+    if get_dataset_user_id(int(reference["dataset_id"])) != user_id:
+        raise HTTPException(status_code=403, detail="Access denied.")
+
+    # Use actual generated results, not every dataset currently assigned to the
+    # group: groups can contain source tables that weren't part of this run.
+    result_rows = get_generated_results_for_group_id(group_id)
+    if not result_rows:
+        raise HTTPException(status_code=404, detail=f"No generated results are registered for group {group_id}.")
+
+    archive = io.BytesIO()
+    included_ids = set()
+    missing = []
+    used_names = set()
+
+    # First try registered paths, resolving them against likely app roots.
+    resolved_by_dataset = {}
+    for row in result_rows:
+        dataset_id = int(row["dataset_id"])
+        if get_dataset_user_id(dataset_id) != user_id:
+            raise HTTPException(status_code=403, detail="Access denied for one or more generated tables.")
+        found = None
+        for candidate_path in _candidate_file_paths(row.get("file_path")):
+            if candidate_path.is_file():
+                found = candidate_path
+                break
+        if found:
+            resolved_by_dataset[dataset_id] = (row, found)
+
+    # Recover CSVs saved successfully even if their result-row insert failed.
+    # Search all known generated roots and use the newest matching file per table.
+    group_pattern = re.compile(rf"^synthetic_dataset_(\d+)_.*_group_{group_id}\.csv$", re.IGNORECASE)
+    filesystem_candidates = {}
+    for root in _generated_roots():
+        if not root.is_dir():
+            continue
+        for file_path in root.rglob("*.csv"):
+            match_file = group_pattern.match(file_path.name)
+            if not match_file or not file_path.is_file():
+                continue
+            dataset_id = int(match_file.group(1))
+            if dataset_id in resolved_by_dataset:
+                continue
+            current = filesystem_candidates.get(dataset_id)
+            if current is None or file_path.stat().st_mtime > current.stat().st_mtime:
+                filesystem_candidates[dataset_id] = file_path
+
+    # Package every known generated result, plus any recovered on-disk table.
+    files_to_package = list(resolved_by_dataset.items())
+    for dataset_id, path in filesystem_candidates.items():
+        if get_dataset_user_id(dataset_id) != user_id:
+            continue
+        files_to_package.append((dataset_id, ({"file_name": path.name}, path)))
+
+    if not files_to_package:
+        raise HTTPException(
+            status_code=404,
+            detail=(f"No generated CSV files were found for group {group_id}. "
+                    "Check that the generation output files still exist under data/generated."),
+        )
+
+    try:
+        with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as bundle:
+            for dataset_id, item in files_to_package:
+                row, path = item
+                name = Path(str(row.get("file_name") or path.name)).name
+                if not name.lower().endswith(".csv"):
+                    name += ".csv"
+                if name in used_names:
+                    name = f"dataset_{dataset_id}_{name}"
+                used_names.add(name)
+                bundle.write(path, arcname=name)
+                included_ids.add(dataset_id)
+
+            # A missing registered path is not fatal when other generated files
+            # are available; report only if a result row cannot be recovered.
+            for row in result_rows:
+                dataset_id = int(row["dataset_id"])
+                if dataset_id not in included_ids:
+                    missing.append(str(row.get("file_name") or f"dataset_{dataset_id}"))
+            if missing:
+                raise HTTPException(
+                    status_code=409,
+                    detail=("Some generated tables have no accessible CSV file: " + ", ".join(missing)
+                            + ". The download searched stored paths and data/generated folders."),
+                )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.exception("Failed to package multi-table download for result %s", result_id)
+        raise HTTPException(status_code=500, detail="Failed to package multi-table dataset download.") from exc
+
+    archive.seek(0)
+    return StreamingResponse(
+        archive,
+        media_type="application/zip",
+        headers={"Content-Disposition": f'attachment; filename="datrixa_multitable_group_{group_id}.zip"'},
+    )
 
 
 @router.get(

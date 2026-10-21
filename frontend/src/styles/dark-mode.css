@@ -1,0 +1,80 @@
+/* Datrixa dark theme. Toggle via `dark` class on <html>. */
+html.dark { color-scheme: dark; background: #0b1120; }
+html.dark body { background-color: #0b1120; color: #e5e7eb; }
+
+html.dark .bg-white { background-color: #111827 !important; }
+html.dark .bg-ink-50 { background-color: #0b1120 !important; }
+html.dark .bg-ink-100 { background-color: #1f2937 !important; }
+html.dark .bg-ink-200 { background-color: #374151 !important; }
+html.dark .bg-ink-900 { background-color: #030712 !important; }
+
+html.dark .text-ink-900 { color: #f3f4f6 !important; }
+html.dark .text-ink-800, html.dark .text-ink-700 { color: #e5e7eb !important; }
+html.dark .text-ink-600 { color: #d1d5db !important; }
+html.dark .text-ink-500, html.dark .text-ink-400 { color: #9ca3af !important; }
+
+html.dark .border-ink-100 { border-color: #273449 !important; }
+html.dark .border-ink-200 { border-color: #374151 !important; }
+html.dark .ring-ink-100 { --tw-ring-color: #374151 !important; }
+html.dark .ring-ink-200 { --tw-ring-color: #4b5563 !important; }
+
+html.dark .dx-card,
+html.dark [class*="bg-white"][class*="rounded"],
+html.dark [class*="bg-ink-50"][class*="rounded"] {
+  background-color: #111827 !important;
+  border-color: #273449;
+}
+html.dark input, html.dark textarea, html.dark select {
+  color: #e5e7eb; background-color: #111827; border-color: #374151;
+}
+html.dark input::placeholder, html.dark textarea::placeholder { color: #9ca3af; }
+html.dark table, html.dark th, html.dark td { border-color: #374151; }
+html.dark tr:hover { background-color: #172033; }
+html.dark hr { border-color: #374151; }
+
+html.dark .hover\:bg-ink-100:hover { background-color: #273449 !important; }
+html.dark .hover\:bg-brand-50:hover { background-color: #272554 !important; }
+html.dark .bg-brand-50 { background-color: #272554 !important; }
+html.dark .text-brand-700 { color: #a5b4fc !important; }
+html.dark .border-brand-200 { border-color: #4f46e5 !important; }
+
+html.dark .bg-slate-50, html.dark .bg-gray-50 { background-color: #111827 !important; }
+html.dark .bg-slate-100, html.dark .bg-gray-100 { background-color: #1f2937 !important; }
+html.dark .text-slate-900, html.dark .text-gray-900 { color: #f3f4f6 !important; }
+html.dark .text-slate-700, html.dark .text-gray-700 { color: #d1d5db !important; }
+html.dark .text-slate-500, html.dark .text-gray-500 { color: #9ca3af !important; }
+html.dark .border-slate-200, html.dark .border-gray-200 { border-color: #374151 !important; }
+html.dark * { scrollbar-color: #4b5563 #111827; }
+
+/* Improve contrast for dashboard tables in dark mode. */
+html.dark table thead,
+html.dark table thead tr,
+html.dark table thead th {
+  background-color: #1f2937 !important;
+  color: #dbeafe !important;
+}
+html.dark table thead th {
+  border-color: #374151 !important;
+}
+html.dark .text-ink-400 {
+  color: #9ca3af !important;
+}
+html.dark .dx-btn-outline,
+html.dark .dx-btn-ghost {
+  color: #d1d5db;
+}
+html.dark .bg-emerald-50,
+html.dark .bg-green-50 {
+  background-color: #064e3b !important;
+}
+html.dark .text-emerald-700,
+html.dark .text-green-700 {
+  color: #a7f3d0 !important;
+}
+
+
+/* Use the original shield-and-wordmark asset; only switch its existing color variant. */
+html.dark .datrixa-logo-light { display: none !important; }
+html.dark .datrixa-logo-dark { display: block !important; }
+html:not(.dark) .datrixa-logo-light { display: block; }
+html:not(.dark) .datrixa-logo-dark { display: none; }

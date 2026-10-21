@@ -18,7 +18,7 @@ SENDER_NAME = "DATRIXA"
 LOGO_PATH = os.path.join(
     os.path.dirname(os.path.dirname(__file__)),
     "assets",
-    "datrixa_logo.png"
+    "datrixa-logo.png"
 )
 
 
@@ -114,7 +114,7 @@ DATRIXA Team
 <td
     align="center"
     style="
-        padding:32px 20px 20px;
+        padding:36px 20px 8px;
         background:#ffffff;
     "
 >
@@ -122,10 +122,10 @@ DATRIXA Team
 <img
     src="cid:datrixa_logo"
     alt="DATRIXA"
-    width="150"
+    width="170"
     style="
         display:block;
-        max-width:150px;
+        max-width:170px;
         height:auto;
     "
 >
@@ -389,24 +389,31 @@ DATRIXA Team
     # Attach Logo
     # ==========================================
 
-    with open(LOGO_PATH, "rb") as logo_file:
+    try:
 
-        logo = MIMEImage(
-            logo_file.read()
+        with open(LOGO_PATH, "rb") as logo_file:
+
+            logo = MIMEImage(
+                logo_file.read(),
+                _subtype="png"
+            )
+
+        logo.add_header(
+            "Content-ID",
+            "<datrixa_logo>"
         )
 
-    logo.add_header(
-        "Content-ID",
-        "<datrixa_logo>"
-    )
+        logo.add_header(
+            "Content-Disposition",
+            "inline",
+            filename="datrixa-logo.png"
+        )
 
-    logo.add_header(
-        "Content-Disposition",
-        "inline",
-        filename="datrixa_logo.png"
-    )
+        message.attach(logo)
 
-    message.attach(logo)
+    except OSError:
+        # Logo is cosmetic - never block the OTP email because of it.
+        pass
 
     # ==========================================
     # Send Email

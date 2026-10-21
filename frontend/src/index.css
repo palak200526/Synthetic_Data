@@ -9,6 +9,12 @@
     height: 100%;
   }
 
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
     @apply bg-ink-50 text-ink-900 font-sans antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
@@ -17,33 +23,105 @@
   * {
     @apply border-ink-200;
   }
+
+  ::selection {
+    @apply bg-brand-200/70 text-ink-900;
+  }
+
+  /* Consistent, subtle focus ring for any keyboard-focused interactive element */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500/40 ring-offset-2 ring-offset-white;
+  }
 }
 
 @layer components {
+  /* ── Cards ─────────────────────────────────────────────── */
   .dx-card {
-    @apply bg-white border border-ink-200 rounded-xl shadow-sm;
+    @apply bg-white border border-ink-200/90 rounded-xl shadow-[0_1px_2px_rgba(15,23,42,0.04)];
   }
 
+  .dx-card-hover {
+    @apply transition-all duration-200 hover:border-brand-300 hover:shadow-[0_6px_20px_-8px_rgba(79,70,229,0.18)];
+  }
+
+  /* ── Buttons ───────────────────────────────────────────── */
   .dx-btn {
     @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium
-           transition-colors px-3.5 py-2 disabled:opacity-50 disabled:cursor-not-allowed;
+           transition-all duration-150 px-3.5 py-2 whitespace-nowrap
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none;
   }
 
   .dx-btn-primary {
-    @apply dx-btn bg-brand-600 text-white hover:bg-brand-700;
+    @apply dx-btn bg-brand-600 text-white shadow-sm
+           hover:bg-brand-700 active:bg-brand-800;
   }
 
   .dx-btn-ghost {
-    @apply dx-btn text-ink-700 hover:bg-ink-100;
+    @apply dx-btn text-ink-700 hover:bg-ink-100 active:bg-ink-200/70;
   }
 
   .dx-btn-outline {
-    @apply dx-btn border border-ink-200 bg-white text-ink-700 hover:bg-ink-50;
+    @apply dx-btn border border-ink-200 bg-white text-ink-700 shadow-[0_1px_1px_rgba(15,23,42,0.03)]
+           hover:bg-ink-50 hover:border-ink-300 active:bg-ink-100;
   }
 
+  /* The codebase already uses dx-btn-secondary in several pages. Provide it
+     so those buttons match dx-btn-outline instead of falling back to browser
+     defaults. (Purely additive styling.) */
+  .dx-btn-secondary {
+    @apply dx-btn-outline;
+  }
+
+  /* ── Inputs ────────────────────────────────────────────── */
   .dx-input {
     @apply w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-sm
-           placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-brand-500/30
-           focus:border-brand-500;
+           text-ink-900 shadow-[0_1px_1px_rgba(15,23,42,0.03)]
+           placeholder:text-ink-400
+           transition-colors
+           hover:border-ink-300
+           focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500
+           disabled:bg-ink-50 disabled:text-ink-500 disabled:cursor-not-allowed;
   }
+
+  select.dx-input {
+    @apply pr-9;
+  }
+
+  textarea.dx-input {
+    @apply min-h-[96px] leading-relaxed;
+  }
+
+  /* ── Section labels ────────────────────────────────────── */
+  .dx-eyebrow {
+    @apply text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-400;
+  }
+
+  /* ── Tables ────────────────────────────────────────────── */
+  .dx-table thead th {
+    @apply px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.06em]
+           text-ink-500 bg-ink-50/60 border-b border-ink-200;
+  }
+
+  .dx-table tbody td {
+    @apply px-4 py-3 align-middle text-ink-700 border-b border-ink-100;
+  }
+
+  .dx-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .dx-table tbody tr:hover td {
+    @apply bg-ink-50/60;
+  }
+
+  /* ── Badges (fallback used only if StatusBadge is not imported) ── */
+  .dx-badge {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium
+           ring-1 ring-inset ring-ink-200 bg-ink-100 text-ink-600;
+  }
+  .dx-badge-success { @apply bg-emerald-50 text-emerald-700 ring-emerald-200; }
+  .dx-badge-warning { @apply bg-amber-50  text-amber-700  ring-amber-200; }
+  .dx-badge-error   { @apply bg-rose-50   text-rose-700   ring-rose-200; }
+  .dx-badge-info    { @apply bg-blue-50   text-blue-700   ring-blue-200; }
 }

@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import logging
+import pickle
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Optional
 
 import numpy as np
 import pandas as pd
@@ -77,11 +78,11 @@ def generate_linked_tables(
     group_id: int,
     model_name: str = "gaussian_copula",
     parameters: dict | None = None,
+    job_id: str | None = None,
+    resume: bool = False,
+    progress_callback: Optional[Callable[[dict], None]] = None,
 ):
-    """
-    Generate synthetic datasets for a dataset group while
-    preserving configured parent-child relationships.
-    """
+    """Generate related tables with durable per-table checkpoints for resume."""
 
     group_data = load_group_datasets(group_id)
 
@@ -97,12 +98,45 @@ def generate_linked_tables(
     tabular_params = {
         k: v
         for k, v in (parameters or {}).items()
-        if not k.startswith("llm_") and k not in {"ollama_url", "prompt_template"}
+        if not k.startswith("llm_") and not k.startswith("_multi_table_") and k not in {"ollama_url", "prompt_template"}
     }
 
     generated_tables = {}
 
     rng = np.random.default_rng((parameters or {}).get("random_state"))
+    checkpoint_path = Path("data/checkpoints") / str(job_id) / "multi_table.pkl" if job_id else None
+    if resume and checkpoint_path and checkpoint_path.exists():
+        try:
+            with checkpoint_path.open("rb") as handle:
+                generated_tables = pickle.load(handle)
+        except Exception as exc:
+            logger.warning("Could not load multi-table checkpoint for %s: %s", job_id, exc)
+            generated_tables = {}
+
+    def save_multi_checkpoint():
+        if not checkpoint_path:
+            return None
+        checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = checkpoint_path.with_suffix(".tmp")
+        with temporary.open("wb") as handle:
+            pickle.dump(generated_tables, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        temporary.replace(checkpoint_path)
+        return str(checkpoint_path)
+
+    def update_progress(done, message):
+        if not progress_callback:
+            return
+        progress_callback({
+            "stage": "multi_table_generation",
+            "stage_label": "Multi-table generation",
+            "message": message,
+            "generated_rows": sum(len(v.get("dataframe", [])) for v in generated_tables.values()),
+            "total_rows": sum(len(v["dataframe"]) for v in datasets.values()),
+            "current_batch": done,
+            "total_batches": len(datasets),
+            "percent": int(done * 100 / max(len(datasets), 1)),
+            "checkpoint_path": str(checkpoint_path) if checkpoint_path else None,
+        })
 
     # Which columns take part in a relationship (per dataset)
     parent_key_columns: dict = {}
@@ -125,7 +159,6 @@ def generate_linked_tables(
 
     for dataset_id, dataset_info in datasets.items():
         dataframe = dataset_info["dataframe"]
-
         profile = analyze_table(
             dataframe,
             parent_key_columns=parent_key_columns.get(dataset_id),
@@ -133,6 +166,12 @@ def generate_linked_tables(
         )
         profiles[dataset_id] = profile
 
+    for table_index, (dataset_id, dataset_info) in enumerate(datasets.items(), start=1):
+        if dataset_id in generated_tables:
+            update_progress(table_index, f"Restored checkpoint for {dataset_info['filename']}")
+            continue
+        dataframe = dataset_info["dataframe"]
+        profile = profiles[dataset_id]
         training_dataframe = prepare_training_frame(dataframe, profile)
 
         generator = get_generator(
@@ -158,6 +197,27 @@ def generate_linked_tables(
             "source_filename": dataset_info["filename"],
             "dataframe": synthetic_dataframe.copy(),
         }
+        saved_checkpoint = save_multi_checkpoint()
+        update_progress(table_index, f"Generated {dataset_info['filename']} ({table_index}/{len(datasets)} tables)")
+
+        if job_id:
+            from backend.services.generation_checkpoint_service import check_job_control
+            from backend.repositories.generation_job_repository import update_generation_job_progress
+            control = check_job_control(job_id, idle_pause=True)
+            update_generation_job_progress(
+                job_id=job_id,
+                generated_rows=sum(len(v.get("dataframe", [])) for v in generated_tables.values()),
+                current_batch=table_index,
+                total_batches=len(datasets),
+                progress_percent=int(table_index * 100 / max(len(datasets), 1)),
+                stage="multi_table_generation",
+                stage_message=f"Checkpoint saved after {table_index}/{len(datasets)} tables",
+                checkpoint_path=saved_checkpoint,
+            )
+            if control == "pause":
+                return {"status": "paused", "group_id": group_id, "completed_tables": table_index, "total_tables": len(datasets)}
+            if control == "cancel":
+                return {"status": "cancelled", "group_id": group_id, "completed_tables": table_index, "total_tables": len(datasets)}
 
     # --------------------------------------------------
     # 2. Preserve parent-child relationships

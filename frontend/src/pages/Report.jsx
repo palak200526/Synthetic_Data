@@ -43,7 +43,7 @@ export default function Report() {
   const returnTo = searchParams.get('return_to')
   const workflow = searchParams.get('workflow') || 'original'
   const evaluationUrl = urlResultId
-    ? `/evaluations?result_id=${encodeURIComponent(urlResultId)}${returnTo ? `&return_to=${encodeURIComponent(returnTo)}` : ''}&workflow=${encodeURIComponent(workflow)}`
+    ? `${urlDatasetId ? `/datasets/${encodeURIComponent(urlDatasetId)}/evaluate` : '/evaluations'}?result_id=${encodeURIComponent(urlResultId)}${urlDatasetId ? `&dataset_id=${encodeURIComponent(urlDatasetId)}` : ''}${returnTo ? `&return_to=${encodeURIComponent(returnTo)}` : ''}&workflow=${encodeURIComponent(workflow)}`
     : null
 
   const [loading, setLoading] = useState(false)

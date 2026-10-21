@@ -156,3 +156,107 @@ __all__ = [
     "run_generation",
     "start_local_generation",
 ]
+
+
+def run_multi_table_generation(
+    group_id: int,
+    model_name: str,
+    user_id: int,
+    parameters: Optional[dict] = None,
+    progress_update: Optional[Callable[[str, dict], None]] = None,
+    job_id: Optional[str] = None,
+    resume: bool = False,
+) -> dict:
+    """Run multi-table generation using the same pause/resume job lifecycle."""
+    from backend.services.multi_table_generation_service import generate_linked_tables
+
+    def progress_callback(meta: dict) -> None:
+        if progress_update:
+            progress_update("PROGRESS", meta)
+
+    result = generate_linked_tables(
+        group_id=group_id,
+        model_name=model_name,
+        parameters=parameters,
+        job_id=job_id,
+        resume=resume,
+        progress_callback=progress_callback,
+    )
+    if result.get("status") in {"paused", "cancelled"}:
+        return result
+
+    # Celery's JSON serializer cannot serialize DataFrames. Return the same
+    # public shape as the synchronous multi-table endpoint.
+    return {
+        "status": "success",
+        "message": "Multi-table synthetic data generated successfully.",
+        "group_id": result["group_id"],
+        "model_name": result["model_name"],
+        "tables": {
+            str(dataset_id): {
+                "dataset_id": table["dataset_id"],
+                "source_filename": table.get("source_filename"),
+                "file_name": table.get("file_name"),
+                "file_path": table.get("file_path"),
+                "row_count": table.get("row_count"),
+                "column_count": table.get("column_count"),
+                "result_id": table.get("result_id"),
+                "run_id": table.get("run_id"),
+            }
+            for dataset_id, table in result["tables"].items()
+        },
+        "relationships": result.get("relationships", []),
+        "referential_integrity": bool(result.get("integrity_report", {}).get("passed", False)),
+        "integrity_report": result.get("integrity_report"),
+    }
+
+
+def start_local_multi_table_generation(
+    group_id: int,
+    model_name: str,
+    user_id: int,
+    parameters: Optional[dict] = None,
+    job_id: Optional[str] = None,
+    resume: bool = False,
+) -> str:
+    jid = job_id or str(uuid.uuid4())
+    _set_job(jid, state="PENDING", info=None, result=None)
+
+    def _run() -> None:
+        def progress_update(state: str, meta: dict) -> None:
+            _set_job(jid, state=state, info=meta)
+
+        try:
+            update_generation_job_status(job_id=jid, status="running", stage_message="Multi-table generation in progress")
+            result = run_multi_table_generation(
+                group_id=group_id,
+                model_name=model_name,
+                user_id=user_id,
+                parameters=parameters,
+                progress_update=progress_update,
+                job_id=jid,
+                resume=resume,
+            )
+            if result.get("status") == "paused":
+                _set_job(jid, state="PAUSED", info=result, result=None)
+                update_generation_job_status(job_id=jid, status="paused", stage_message="Paused after saving multi-table checkpoint")
+            elif result.get("status") == "cancelled":
+                _set_job(jid, state="CANCELLED", info=result, result=None)
+                update_generation_job_status(job_id=jid, status="cancelled", stage_message="Multi-table generation cancelled")
+            else:
+                _set_job(jid, state="SUCCESS", result=result, info=None)
+                first_result = next((t.get("result_id") for t in result.get("tables", {}).values() if t.get("result_id")), None)
+                update_generation_job_status(job_id=jid, status="completed", result_id=first_result, stage_message="Multi-table generation completed")
+            if result.get("status") not in {"paused", "cancelled"}:
+                from backend.services.generation_checkpoint_service import delete_checkpoint
+                delete_checkpoint(jid)
+        except Exception as exc:
+            logger.exception("Multi-table generation failed for job %s", jid)
+            _set_job(jid, state="FAILURE", info=str(exc), result=None)
+            try:
+                update_generation_job_status(job_id=jid, status="failed", error_message=str(exc), stage_message="Multi-table generation failed")
+            except Exception:
+                pass
+
+    threading.Thread(target=_run, daemon=True, name=f"multi-generation-{jid[:8]}").start()
+    return jid

@@ -38,4 +38,7 @@ export const authApi = {
   verifyOtp: (payload) =>
     apiClient.post('/auth/login/verify-otp', buildOtpPayload(payload)),
   me: () => apiClient.get('/auth/me'),
+  updateProfile: (payload) => apiClient.patch('/account/profile', payload),
+  changePassword: (payload) => apiClient.post('/account/change-password', payload),
+  recentActivity: (limit = 12) => apiClient.get('/account/activity', { params: { limit } }),
 }

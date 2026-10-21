@@ -65,7 +65,7 @@ from backend.worker.generation_job import (
     get_local_generation_job,
     start_local_generation,
 )
-from backend.worker.tasks import generate_dataset_task
+from backend.worker.tasks import generate_dataset_task, generate_multi_table_task
 
 
 logger = logging.getLogger(__name__)
@@ -119,6 +119,28 @@ def _enqueue_generation(
         parameters=parameters,
         job_id=jid,
         resume=resume,
+    )
+
+
+
+def _enqueue_multi_table_generation(
+    *, group_id: int, model_name: str, user_id: int,
+    parameters: dict | None, job_id: str, resume: bool = False,
+) -> str:
+    broker_url = celery_app.conf.broker_url or "redis://localhost:6379/0"
+    if redis_is_available(broker_url):
+        try:
+            generate_multi_table_task.apply_async(
+                args=[group_id, model_name, user_id, parameters, job_id, resume],
+                task_id=job_id,
+            )
+            return job_id
+        except Exception:
+            logger.exception("Celery enqueue failed; falling back to in-process multi-table generation")
+    from backend.worker.generation_job import start_local_multi_table_generation
+    return start_local_multi_table_generation(
+        group_id=group_id, model_name=model_name, user_id=user_id,
+        parameters=parameters, job_id=job_id, resume=resume,
     )
 
 
@@ -455,14 +477,22 @@ def resume_generation_job(
     clear_job_control(job_id)  # drop any stale in-process flag before the worker starts
 
     try:
-        _enqueue_generation(
-            dataset_id=job["dataset_id"],
-            model_name=job["model_name"],
-            user_id=user_id,
-            parameters=job.get("parameters"),
-            job_id=job_id,
-            resume=True,
-        )
+        job_parameters = job.get("parameters") or {}
+        multi_group_id = job_parameters.get("_multi_table_group_id")
+        if multi_group_id:
+            _enqueue_multi_table_generation(
+                group_id=int(multi_group_id), model_name=job["model_name"],
+                user_id=user_id, parameters=job_parameters, job_id=job_id, resume=True,
+            )
+        else:
+            _enqueue_generation(
+                dataset_id=job["dataset_id"],
+                model_name=job["model_name"],
+                user_id=user_id,
+                parameters=job_parameters,
+                job_id=job_id,
+                resume=True,
+            )
     except Exception as exc:
         logger.exception("Could not enqueue resume for job %s", job_id)
         update_generation_job_status(
@@ -504,14 +534,22 @@ def restart_generation_job(
         )
     clear_job_control(job_id)
     delete_checkpoint(job_id)
-    _enqueue_generation(
-        dataset_id=job["dataset_id"],
-        model_name=job["model_name"],
-        user_id=user_id,
-        parameters=job.get("parameters"),
-        job_id=job_id,
-        resume=False,
-    )
+    job_parameters = job.get("parameters") or {}
+    multi_group_id = job_parameters.get("_multi_table_group_id")
+    if multi_group_id:
+        _enqueue_multi_table_generation(
+            group_id=int(multi_group_id), model_name=job["model_name"],
+            user_id=user_id, parameters=job_parameters, job_id=job_id, resume=False,
+        )
+    else:
+        _enqueue_generation(
+            dataset_id=job["dataset_id"],
+            model_name=job["model_name"],
+            user_id=user_id,
+            parameters=job_parameters,
+            job_id=job_id,
+            resume=False,
+        )
     return {
         "status": "success",
         "message": "Job restarted from beginning.",

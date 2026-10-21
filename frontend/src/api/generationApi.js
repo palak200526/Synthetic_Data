@@ -601,4 +601,21 @@ export const generationApi = {
     a.remove()
     URL.revokeObjectURL(url)
   },
+
+  downloadMultiTableDataset: async (resultId) => {
+    const res = await apiClient.get('/download/multi-table', {
+      params: { result_id: Number(resultId) },
+      responseType: 'blob',
+      timeout: 5 * 60 * 1000,
+    })
+    const blob = new Blob([res.data], { type: 'application/zip' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `datrixa_multitable_result_${Number(resultId)}.zip`
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000)
+  },
 }
