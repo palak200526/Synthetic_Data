@@ -364,3 +364,16 @@ Only tests that are discovered and executed are covered by that run. Keep tests 
 - Treat quality and privacy metrics as indicators for review, not as a guarantee of anonymity, regulatory compliance, or fitness for every use case.
 
 **Datrixa — Generate thoughtfully. Evaluate carefully.**
+
+## License
+
+Datrixa's original code is proposed to be licensed under the
+Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+
+Third-party libraries, models, datasets, and other assets may be
+subject to separate licenses and terms. See
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the
+third-party license inventory. This inventory is being reviewed
+and should not be treated as a completed compliance statement.
+
+**Datrixa — Generate thoughtfully. Evaluate carefully.**
