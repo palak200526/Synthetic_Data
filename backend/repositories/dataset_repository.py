@@ -1,6 +1,47 @@
 from pathlib import Path
 from backend.config.database import get_db_connection
 import json
+import math
+from datetime import date, datetime
+
+
+def _json_safe_profile_value(value):
+    """Convert profile values into strict JSON-compatible values.
+
+    Handles nested containers, pandas missing sentinels, NumPy scalar values,
+    dates/datetimes, and non-finite floating-point numbers.
+    """
+    if isinstance(value, dict):
+        return {
+            str(key): _json_safe_profile_value(item)
+            for key, item in value.items()
+        }
+
+    if isinstance(value, (list, tuple, set)):
+        return [_json_safe_profile_value(item) for item in value]
+
+    if value is None:
+        return None
+
+    if type(value).__name__ in {"NAType", "NaTType"}:
+        return None
+
+    if isinstance(value, (datetime, date)):
+        return value.isoformat()
+
+    # NumPy scalar types (for example np.int64 / np.float64) expose item().
+    if hasattr(value, "item") and callable(value.item):
+        try:
+            scalar = value.item()
+            if scalar is not value:
+                return _json_safe_profile_value(scalar)
+        except (ValueError, TypeError):
+            pass
+
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+
+    return value
 
 
 # --------------------------------------------------
@@ -177,7 +218,7 @@ def save_dataset_profile(
             """,
             (
                 dataset_id,
-                json.dumps(profile_data),
+                json.dumps(_json_safe_profile_value(profile_data), allow_nan=False),
             ),
         )
 
@@ -653,4 +694,4 @@ def assign_dataset_to_group(dataset_id: int, group_id: int):
             cursor.close()
         if connection:
             connection.close()
-
+

@@ -128,6 +128,19 @@ export default function QualityImprovementPanel({
         </div>
 
         <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={handleImproveQuality}
+            disabled={!sourceResultId || improving}
+            className="dx-btn-primary inline-flex items-center gap-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {improving ? (
+              <Loader2 size={13} className="animate-spin" />
+            ) : (
+              <Sparkles size={13} />
+            )}
+            {improving ? "Improving..." : "Improve Quality"}
+          </button>
           {comparisonData && (
             <button
               type="button"
