@@ -2,6 +2,7 @@ import asyncio
 import inspect
 import logging
 import os
+import re
 
 import pandas as pd
 
@@ -67,6 +68,7 @@ from backend.services.generation_checkpoint_service import (
     save_checkpoint_rows,
 )
 from backend.utils.action_validator import validate_action
+from backend.services.smart_column_filter import is_freeform_text_profile
 
 
 def _compute_checkpoint_batch_size(target_row_count: int, param_batch: int | None = None) -> int:
@@ -562,6 +564,16 @@ def _validate_llm_value(
     if not value or not str(value).strip():
         return False
 
+    # Defensive downstream validation: malformed LLM wrappers and generic
+    # placeholders must never be persisted as synthetic text values.
+    text_value = str(value).strip()
+    if (
+        re.search(r"(?is)^\s*[\[{]\s*[\"']?(?:id|record_id|index)[\"']?\s*[:=]", text_value)
+        or re.search(r"(?is)[\"']?(?:id|record_id)[\"']?\s*[:=]\s*\d+\s*,\s*[\"']?text[\"']?\s*:", text_value)
+        or re.search(r"(?i)(synthetic (?:entry|value|sample)|plausible alternative|generated text for (?:this|the) column|entry\s*#?\d+)", text_value)
+    ):
+        return False
+
     # 1. Rating consistency
     rating = _get_rating_from_row(row)
     if rating is not None and isinstance(rule, dict) and rule.get("rating_consistency"):
@@ -631,13 +643,22 @@ def _compact_row_context(row: dict, llm_column_names: set[str]) -> str:
 
 
 def _needs_row_context(rule: dict, available_columns: list[str] | None = None) -> bool:
+    """Use row context by default for multi-column datasets to improve semantic consistency."""
     if isinstance(rule, dict) and (rule.get("rating_consistency") or rule.get("use_row_context")):
         return True
-    if available_columns:
-        norm_cols = {c.strip().lower() for c in available_columns}
-        if norm_cols & {"sentiment", "rating", "category", "status", "stars", "feedback_type"}:
-            return True
-    return False
+    return bool(available_columns and len(available_columns) > 1)
+
+
+def _llm_dependency_priority(column_name: str) -> tuple[int, str]:
+    """Generate entity/name fields before their definitions and explanatory methods."""
+    name = str(column_name or "").lower().replace("_", " ")
+    if any(token in name for token in ("kpi", "title", "name", "subject", "product", "service")):
+        return (0, name)
+    if any(token in name for token in ("definition", "formula", "description", "meaning", "summary")):
+        return (1, name)
+    if any(token in name for token in ("method", "impact", "approach", "procedure", "reason", "explanation")):
+        return (2, name)
+    return (3, name)
 
 
 def _generate_llm_columns(
@@ -708,12 +729,10 @@ def _generate_llm_columns(
             )
 
         use_row_context = _needs_row_context(llm_rule, list(result.columns))
-        row_records = (
-            result.to_dict(orient="records") if use_row_context else []
-        )
-        row_contexts = [
-            _compact_row_context(row, llm_names) for row in row_records
-        ] if use_row_context else None
+        row_records = result.to_dict(orient="records") if use_row_context else []
+        # Contexts are built at generation time, after earlier dependent LLM
+        # columns have been generated, rather than frozen before the first call.
+        row_contexts = None
 
         logger.info(
             "LLM column generation column=%s rows=%s samples=%s",
@@ -739,8 +758,13 @@ def _generate_llm_columns(
     if not jobs:
         return result
 
+    # Generate names/entities first, then definitions, then methods/explanations.
+    # This allows later LLM columns to use earlier synthetic text as row context.
+    jobs.sort(key=lambda job: _llm_dependency_priority(job["column_name"]))
+
     # ------------------------------------------------------------------
-    # Phase 2: generate all columns concurrently on ONE event loop.
+    # Phase 2: generate columns on ONE event loop. Sequential column order is
+    # intentional: it preserves cross-column semantic context for dependent text.
     # A single semaphore bounds the total number of in-flight Ollama
     # requests, so more columns never means more load than
     # max_concurrency allows.
@@ -772,17 +796,29 @@ def _generate_llm_columns(
 
         return _column_progress
 
-    parallel_columns = (
-        os.getenv("LLM_TEXT_PARALLEL_COLUMNS", "1").strip().lower()
-        not in {"0", "false", "no"}
-    )
-
     async def _run_all() -> list[list[str]]:
         shared_semaphore = asyncio.Semaphore(llm_generator.max_concurrency)
+        outputs: list[list[str]] = []
+        generated_llm_names: set[str] = set()
 
-        async def _one(job: dict) -> list[str]:
-            return await llm_generator.async_generate(
-                column_name=job["column_name"],
+        for job in jobs:
+            column_name = job["column_name"]
+            if _needs_row_context(job["llm_rule"], list(result.columns)):
+                current_records = result.to_dict(orient="records")
+                # Exclude the current and not-yet-generated LLM columns, but
+                # retain already-generated LLM columns for cross-column consistency.
+                excluded_names = llm_names - generated_llm_names
+                job["row_records"] = current_records
+                job["row_contexts"] = [
+                    _compact_row_context(row, excluded_names)
+                    for row in current_records
+                ]
+            else:
+                job["row_records"] = []
+                job["row_contexts"] = None
+
+            generated_values = await llm_generator.async_generate(
+                column_name=column_name,
                 count=row_count,
                 sample_values=job["sample_values"],
                 profile=job["profile"],
@@ -792,13 +828,12 @@ def _generate_llm_columns(
                 progress_callback=_make_progress(job),
                 semaphore=shared_semaphore,
             )
+            outputs.append(generated_values)
+            # Update the working frame immediately so subsequent columns can
+            # condition their generated values on the synthetic row context.
+            result[column_name] = generated_values
+            generated_llm_names.add(column_name)
 
-        if parallel_columns:
-            return list(await asyncio.gather(*[_one(job) for job in jobs]))
-
-        outputs = []
-        for job in jobs:
-            outputs.append(await _one(job))
         return outputs
 
     all_values = run_coroutine_sync(_run_all())
@@ -919,6 +954,56 @@ def _retry_invalid_llm_rows(
     return final_values
 
 
+def _normalize_llm_column_actions(
+    original_dataframe: pd.DataFrame,
+    configurations: list,
+) -> list:
+    """Prevent non-free-text columns from reaching the LLM text generator.
+
+    Saved/manual configurations are validated here as well as during column
+    analysis, because users can override recommendations or reuse old configs.
+    Unsuitable LLM actions fall back to the tabular ``keep`` action; this keeps
+    the column in the normal synthetic-data pipeline instead of failing a job.
+    """
+    normalized = []
+    for original_config in configurations:
+        config = dict(original_config)
+        try:
+            action = validate_action(config.get("action", "keep"))
+        except Exception:
+            normalized.append(config)
+            continue
+
+        column_name = config.get("column_name")
+        if action == "llm" and column_name in original_dataframe.columns:
+            try:
+                profile = build_column_profile(original_dataframe, column_name)
+                if not is_freeform_text_profile(profile):
+                    logger.warning(
+                        "LLM text generation disabled for unsuitable column=%s; "
+                        "falling back to tabular generation",
+                        column_name,
+                    )
+                    config["action"] = "keep"
+                    config["reason"] = (
+                        "LLM Text was skipped because this column looks like a "
+                        "categorical, constant, missing-heavy, or non-free-text field. "
+                        "The tabular generator will preserve its value pattern."
+                    )
+            except Exception as exc:
+                # Fail closed: if we cannot validate a column profile, do not send
+                # that column to Ollama blindly.
+                logger.warning(
+                    "Could not validate LLM suitability for column=%s (%s); "
+                    "falling back to tabular generation",
+                    column_name,
+                    exc,
+                )
+                config["action"] = "keep"
+        normalized.append(config)
+    return normalized
+
+
 def generate_rows(
     original_dataframe: pd.DataFrame,
     configurations: list,
@@ -936,6 +1021,10 @@ def generate_rows(
     then apply column actions and quality enhancements.
     """
     params = dict(parameters or {})
+    configurations = _normalize_llm_column_actions(
+        original_dataframe=original_dataframe,
+        configurations=configurations,
+    )
 
     # Best-of-N candidate selection (Step 3d)
     best_of_n = int(params.get("best_of_n", 1))

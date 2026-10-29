@@ -16,6 +16,7 @@ import {
   Info,
   ChevronDown,
   Check,
+  CheckCircle2,
 } from 'lucide-react'
 
 import PageHeader from '../components/PageHeader.jsx'
@@ -117,7 +118,7 @@ function suggestAction(columnName, columnType) {
   ) {
     return {
       action: 'llm',
-      reason: 'Probably free-form text (medium confidence): column name suggests text. LLM generation recommended.',
+      reason: 'Probably free-form text: column name suggests text. LLM generation recommended.',
     }
   }
   if (
@@ -138,12 +139,12 @@ function suggestAction(columnName, columnType) {
   if (name.startsWith('unnamed') || name === 'index') {
     return {
       action: 'remove',
-      reason: 'Probably an index or empty column (medium confidence): based on column name only.',
+      reason: 'Probably an index or empty column: based on column name only.',
     }
   }
   return {
     action: 'keep',
-    reason: 'Standard feature column (medium confidence): no ID, text or empty-column signals found.',
+    reason: 'Standard feature column: no ID, text or empty-column signals found.',
   }
 }
 
@@ -417,7 +418,7 @@ export default function ColumnAnalysis() {
   }
 
   const handleSave = async () => {
-    if (rows.length === 0) return
+    if (rows.length === 0) return false
     setError('')
     setSaving(true)
     try {
@@ -438,13 +439,26 @@ export default function ColumnAnalysis() {
         title: 'Configuration saved',
         message: `${count} column configuration${
           count === 1 ? '' : 's'
-        } persisted.`,
+        } saved successfully. You can now continue to preprocessing.`,
       })
+      return true
     } catch (err) {
       setError(getErrorMessage(err))
+      return false
     } finally {
       setSaving(false)
     }
+  }
+
+  const handleSaveAndContinue = async () => {
+    if (dirty) {
+      const saved = await handleSave()
+      if (!saved) return
+    } else if (!anySaved) {
+      setError('Please save the column configuration before preprocessing.')
+      return
+    }
+    goto(`/datasets/${datasetId}/preprocess`)
   }
 
   // Changing action auto-flips identifier for new_id.
@@ -635,16 +649,6 @@ export default function ColumnAnalysis() {
         </div>
       )}
 
-      {batch.length <= 1 && (
-        <div className="mb-5 rounded-lg border border-ink-200 bg-ink-50/60 px-4 py-3 text-xs text-ink-500">
-          Working on{' '}
-          <span className="font-medium text-ink-700">
-            {batchEntry?.fileName || `dataset ${datasetId}`}
-          </span>
-          .
-        </div>
-      )}
-
       {analyzing && progress && (
         <div className="mb-5 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3">
           <div className="flex items-center justify-between text-xs text-brand-800">
@@ -715,6 +719,33 @@ export default function ColumnAnalysis() {
               </span>
             )}
           </div>
+
+          <section className="mb-4 grid gap-3 md:grid-cols-2" aria-label="Keep and LLM Text guidance">
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4">
+              <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-emerald-900">
+                <Check size={15} /> Keep — preserve existing text
+              </div>
+              <p className="text-xs leading-5 text-emerald-900/80">
+                Choose <strong>Keep</strong> for a free-text column when you want its
+                original values to stay exactly as they are. Datrixa will preserve
+                the source text instead of asking the LLM to rewrite or create new
+                wording. For example, “Replacement shipped” remains unchanged.
+                Choose <strong>LLM Text</strong> only when you want new contextual
+                text generated for that column.
+              </p>
+            </div>
+            <div className="rounded-xl border border-sky-200 bg-sky-50/70 p-4">
+              <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-sky-900">
+                <Sparkles size={15} /> LLM Text — generate new contextual text
+              </div>
+              <p className="text-xs leading-5 text-sky-900/80">
+                Use for free-text fields such as descriptions, comments, remarks,
+                and resolutions. The local Ollama model generates new text using
+                column examples and relevant row context; it should not simply
+                copy the source sentence. Results can vary and should be validated.
+              </p>
+            </div>
+          </section>
 
           <DataTable
             data={rows}
@@ -824,11 +855,13 @@ export default function ColumnAnalysis() {
             <div className="flex items-start gap-2 text-[11px] text-ink-500">
               <Info size={14} className="mt-0.5 shrink-0" />
               <span>
-                Actions: <strong>keep</strong> preserves the column,{' '}
-                <strong>remove</strong> drops it, <strong>new_id</strong>{' '}
-                regenerates identifiers (requires Identifier = Yes),{' '}
-                <strong>llm</strong> generates new free-form text with the
-                local Ollama model (not copied from source).
+                Actions: <strong>Keep</strong> sends the column through the selected
+                tabular generator; it does not ask the text LLM to rewrite it.{' '}
+                <strong>Remove</strong> drops it. <strong>New ID</strong> regenerates
+                identifiers. <strong>LLM Text</strong> generates new free-form text
+                with the local Ollama model, using source examples and available row
+                context; review generated output because an LLM can still produce
+                inaccurate or repetitive text.
               </span>
             </div>
 

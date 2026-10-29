@@ -1,5 +1,14 @@
+import math
 import pandas as pd
 import re
+
+
+def _json_safe_number(value):
+    """Return finite Python numbers, or None for NaN/Infinity."""
+    if pd.isna(value):
+        return None
+    number = float(value)
+    return number if math.isfinite(number) else None
 
 
 def get_basic_profile(dataframe: pd.DataFrame) -> dict:
@@ -220,27 +229,15 @@ def get_column_information(dataframe: pd.DataFrame) -> list:
 
         if pd.api.types.is_numeric_dtype(series):
 
+            # Entirely blank numeric columns produce NaN statistics.
+            # Convert non-finite values to None so FastAPI can serialize
+            # the profile as strict JSON instead of raising a 500 error.
             column_profile["statistics"] = {
-
-                "min": float(
-                    series.min()
-                ),
-
-                "max": float(
-                    series.max()
-                ),
-
-                "mean": float(
-                    series.mean()
-                ),
-
-                "median": float(
-                    series.median()
-                ),
-
-                "std": float(
-                    series.std()
-                ),
+                "min": _json_safe_number(series.min()),
+                "max": _json_safe_number(series.max()),
+                "mean": _json_safe_number(series.mean()),
+                "median": _json_safe_number(series.median()),
+                "std": _json_safe_number(series.std()),
             }
 
         # ---------------------------------------------------------
@@ -338,12 +335,13 @@ def get_numerical_statistics(
     if numerical_data.empty:
         return {}
 
-    statistics = (
-        numerical_data
-        .describe()
-        .round(2)
-    )
+    statistics = numerical_data.describe().round(2)
 
+    # describe() returns NaN for statistics of fully blank numeric
+    # columns. Replace missing/non-finite cells before returning the API data.
+    statistics = statistics.astype(object).where(
+        pd.notna(statistics), None
+    )
     return statistics.to_dict()
 
 

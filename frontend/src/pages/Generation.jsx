@@ -83,6 +83,15 @@ function formatTime(value) {
   return d ? d.toLocaleTimeString() : '—'
 }
 
+function formatElapsedDuration(milliseconds = 0) {
+  const totalSeconds = Math.max(0, Math.floor(Number(milliseconds || 0) / 1000))
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
+  if (hours > 0) return `${hours}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`
+  return `${minutes}m ${String(seconds).padStart(2, '0')}s`
+}
+
 export default function Generation() {
   const { datasetId } = useParams()
   const navigate = useNavigate()
@@ -137,11 +146,21 @@ export default function Generation() {
   // ── global generation tracker ─────────────────────────────────
   const tracker = useGenerationTracker()
   const trackedJob = tracker.job
-  const trackerRunning =
-    tracker.isActive && String(trackedJob?.datasetId) === String(datasetId)
+  const trackedJobForDataset = String(trackedJob?.datasetId) === String(datasetId)
+  const trackerRunning = tracker.isActive && trackedJobForDataset
+  const trackerPaused = trackedJobForDataset && trackedJob?.status === 'PAUSED'
   const otherJobRunning = tracker.isActive && !trackerRunning
-  const running = localRunning || trackerRunning
-  const progress = trackerRunning ? trackedJob?.progress || null : null
+  const running = localRunning || trackerRunning || trackerPaused
+  const progress = trackedJobForDataset ? trackedJob?.progress || null : null
+  const [clockNow, setClockNow] = useState(Date.now())
+  useEffect(() => {
+    if (!trackedJobForDataset || !trackedJob?.resumedAt || !['PENDING', 'PROGRESS'].includes(trackedJob?.status)) return undefined
+    const interval = window.setInterval(() => setClockNow(Date.now()), 1000)
+    return () => window.clearInterval(interval)
+  }, [trackedJobForDataset, trackedJob?.jobId, trackedJob?.resumedAt, trackedJob?.status])
+  const elapsedMs = Number(trackedJob?.elapsedMs || 0) + (trackedJobForDataset && trackedJob?.resumedAt ? Math.max(0, clockNow - trackedJob.resumedAt) : 0)
+  const stageElapsedMs = Number(trackedJob?.stageElapsedMs || 0) + (trackedJobForDataset && trackedJob?.stageResumedAt && !trackerPaused ? Math.max(0, clockNow - trackedJob.stageResumedAt) : 0)
+  const currentStageLabel = progress?.stage_label || 'Current stage'
   const handledJobRef = useRef(null)
 
   // Deep link from Job History: /datasets/:id/generate?job_id=...
@@ -596,7 +615,9 @@ export default function Generation() {
       message: 'Progress is saved. Use Resume below to continue.',
     })
     loadActiveJobs()
-    tracker.dismiss(job.jobId)
+    // Keep the paused job attached so its timer remains visible and frozen.
+    // Resuming from the incomplete-jobs list reattaches the same job and
+    // continues the active-time counter from its saved elapsedMs.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tracker.job, datasetId])
 
@@ -1360,34 +1381,67 @@ export default function Generation() {
 
           {/* ── Local LLM Text Parameters (shown only if LLM columns configured) ── */}
           {configReady && hasLlmColumns && (
-            <div className="mt-4 dx-card p-4.5 border border-ink-200">
-              <div className="flex items-center gap-2 mb-2">
-                <Sparkles size={14} className="text-brand-600" />
-                <h4 className="text-xs font-semibold text-ink-900">
-                  Local LLM Text Generation Parameters (Ollama)
-                </h4>
+            <section className="mt-5 overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-sm">
+              <div className="flex flex-col gap-3 border-b border-ink-100 bg-gradient-to-r from-brand-50/80 via-white to-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                <div className="flex min-w-0 items-start gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-100 bg-white text-brand-600 shadow-sm">
+                    <Sparkles size={18} />
+                  </span>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h4 className="text-sm font-semibold text-ink-900">
+                        Local LLM text settings
+                      </h4>
+                      <span className="rounded-full border border-brand-100 bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-700">
+                        Advanced · Optional
+                      </span>
+                    </div>
+                    <p className="mt-1 max-w-2xl text-xs leading-5 text-ink-500">
+                      Fine-tune how Datrixa requests text from your local Ollama model. Leave fields blank to use the recommended server defaults.
+                    </p>
+                  </div>
+                </div>
+                <span className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700 ring-1 ring-inset ring-emerald-100">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  LLM columns detected
+                </span>
               </div>
-              <p className="text-xs text-ink-500 mb-3">
-                Detected columns configured with "LLM". Configure batching and timeout parameters for Ollama.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {LLM_TEXT_PARAMS.map((f) => (
-                  <label key={f.key} className="block">
-                    <span className="text-[11px] font-medium text-ink-700">{f.label}</span>
-                    <input
-                      type="number"
-                      min={f.min}
-                      value={paramValues[f.key] ?? ''}
-                      onChange={(e) => setParamValues((p) => ({ ...p, [f.key]: e.target.value }))}
-                      disabled={busy}
-                      placeholder="— default —"
-                      className="dx-input text-xs mt-1"
-                    />
-                    <span className="mt-0.5 block text-[10px] text-ink-500">{f.help}</span>
-                  </label>
-                ))}
+
+              <div className="px-4 py-4 sm:px-5">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                  {LLM_TEXT_PARAMS.map((f, index) => (
+                    <label
+                      key={f.key}
+                      className="group flex min-w-0 flex-col rounded-xl border border-ink-100 bg-ink-50/40 p-3 transition-colors focus-within:border-brand-300 focus-within:bg-brand-50/30"
+                    >
+                      <span className="min-h-8 text-xs font-semibold leading-4 text-ink-800">
+                        {f.label}
+                      </span>
+                      <input
+                        type="number"
+                        min={f.min}
+                        value={paramValues[f.key] ?? ''}
+                        onChange={(e) => setParamValues((p) => ({ ...p, [f.key]: e.target.value }))}
+                        disabled={busy}
+                        placeholder="Use default"
+                        aria-label={f.label}
+                        className="dx-input mt-2 w-full bg-white text-sm"
+                      />
+                      <span className="mt-2 flex-1 text-[11px] leading-4 text-ink-500">
+                        {f.help}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+
+                <div className="mt-4 flex flex-col gap-2 rounded-xl border border-sky-100 bg-sky-50/70 px-3.5 py-3 sm:flex-row sm:items-start">
+                  <span className="mt-0.5 shrink-0 text-sky-700"><Sparkles size={14} /></span>
+                  <p className="text-xs leading-5 text-sky-900">
+                    <span className="font-semibold">Quick tip:</span> Start with the defaults. Increase batch size to request more text values per call; adjust parallel requests only if your Ollama server can handle concurrent work. A longer timeout may help slower models, but can increase wait time.
+                  </p>
+                </div>
               </div>
-            </div>
+            </section>
           )}
 
           {paramsError && (
@@ -1436,15 +1490,19 @@ export default function Generation() {
                         : 'Generating synthetic data…'}
                     </p>
                     <p className="text-xs text-ink-500">
-                      {progress?.message
-                        ? progress.message
-                        : trackerRunning
-                          ? 'Queued — waiting for the worker to start…'
-                          : `${selectedModel?.label} is training on ${
-                              profile?.rows != null
-                                ? formatNumber(profile.rows)
-                                : 'the dataset'
-                            } rows. Text columns use the local Ollama model in batches.`}
+                      {trackerPaused
+                        ? 'Paused — your progress is saved. Resume this job below to continue.'
+                        : progress?.message
+                          ? progress.message
+                          : trackerRunning
+                            ? trackedJob?.status === 'PENDING'
+                              ? 'Your generation is queued and will start automatically shortly…'
+                              : 'Generation is in progress.'
+                            : `${selectedModel?.label} is training on ${
+                                profile?.rows != null
+                                  ? formatNumber(profile.rows)
+                                  : 'the dataset'
+                              } rows. Text columns use the local Ollama model in batches.`}
                       {progress?.max_attempts > 1 && progress?.attempt > 1
                         ? ` · Retry ${progress.attempt} of ${progress.max_attempts} (some rows failed your validation rules)`
                         : ''}
@@ -1475,6 +1533,16 @@ export default function Generation() {
                       {trackedJob?.pausing ? 'Pausing…' : 'Pause'}
                     </button>
                   )}
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-ink-100 bg-ink-50 px-3 py-2">
+                  <div className="flex items-center gap-2 text-xs text-ink-600">
+                    <span className={`inline-block h-2 w-2 rounded-full ${trackerPaused ? 'bg-amber-500' : trackerRunning && trackedJob?.resumedAt ? 'bg-emerald-500' : 'bg-ink-300'}`} />
+                    <span>{trackerPaused ? 'Total generation time · paused' : trackedJob?.resumedAt ? 'Total generation time' : 'Timer starts when generation begins'}</span>
+                  </div>
+                  <span className="font-mono text-sm font-semibold tabular-nums text-ink-900" aria-live="off">
+                    {formatElapsedDuration(elapsedMs)}
+                  </span>
                 </div>
 
                 <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-ink-100">

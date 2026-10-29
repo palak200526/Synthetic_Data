@@ -11,6 +11,8 @@ from backend.repositories.dataset_repository import (
     get_user_datasets,
     get_dataset_file_path,
     get_dataset_by_id,
+    rename_dataset,
+    get_dataset_filename,
 )
 
 router = APIRouter(
@@ -75,6 +77,32 @@ async def upload_dataset_controller(
         "session_id": session_id,
         "datasets": results,
     }
+
+
+@router.patch("/datasets/{dataset_id}/rename", summary="Rename an uploaded dataset")
+def rename_dataset_controller(dataset_id: int, payload: dict, user_id: int = Depends(get_current_user)):
+    current = get_dataset_by_id(dataset_id)
+    if not current or current.get("user_id") != user_id:
+        raise HTTPException(status_code=404, detail="Dataset not found.")
+
+    new_name = str(payload.get("file_name", payload.get("name", ""))).strip()
+    if not new_name or new_name in {".", ".."} or "/" in new_name or "\\" in new_name:
+        raise HTTPException(status_code=400, detail="Enter a valid file name.")
+    if len(new_name) > 180:
+        raise HTTPException(status_code=400, detail="File name must be 180 characters or fewer.")
+
+    original = get_dataset_filename(dataset_id)
+    original_ext = original.rsplit(".", 1)[-1].lower() if "." in original else ""
+    if "." not in new_name:
+        new_name = f"{new_name}.{original_ext}" if original_ext else new_name
+    new_ext = new_name.rsplit(".", 1)[-1].lower() if "." in new_name else ""
+    if new_ext != original_ext:
+        raise HTTPException(status_code=400, detail=f"Keep the original .{original_ext} file extension.")
+
+    updated = rename_dataset(dataset_id, user_id, new_name)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Dataset not found.")
+    return {"status": "success", **updated, "file_name": new_name}
 
 
 @router.get(

@@ -1,3 +1,4 @@
+
 import pandas as pd
 
 from backend.services.missing_value_service import handle_missing_values
@@ -28,16 +29,26 @@ def test_all_null_columns_get_deterministic_fallbacks():
     result = handle_missing_values(frame)
 
     assert not result.isna().any().any()
-    assert result["amount"].tolist() == [0, 0]
-    assert result["description"].tolist() == ["Unknown", "Unknown"]
-    assert result["delivery_date"].tolist() == ["2000-01-01", "2000-01-01"]
+    assert result["amount"].tolist() == ["unknown", "unknown"]
+    assert result["description"].tolist() == ["unknown", "unknown"]
+    assert result["delivery_date"].tolist() == ["unknown", "unknown"]
+    assert len(result) == len(frame)
 
 
 def test_generated_data_uses_reference_fill_values():
-    reference = pd.DataFrame({"status": ["Delivered", "Delivered", "Pending"]})
-    generated = pd.DataFrame({"status": ["", None, "Pending"]})
+    reference = pd.DataFrame({
+        "status": ["Delivered", "Delivered", "Pending"]
+    })
+    generated = pd.DataFrame({
+        "status": ["", None, "Pending"]
+    })
 
-    result = handle_missing_values(generated, reference_dataframe=reference)
+    result = handle_missing_values(
+        generated,
+        reference_dataframe=reference,
+    )
 
-    assert result["status"].tolist() == ["Delivered", "Delivered", "Pending"]
+    assert result["status"].tolist() == [
+        "Delivered", "Delivered", "Pending"
+    ]
     assert not result.isna().any().any()

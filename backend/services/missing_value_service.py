@@ -79,6 +79,16 @@ def handle_missing_values(dataframe: pd.DataFrame, reference_dataframe: pd.DataF
 
     for column in result.columns:
         result[column] = _normalise_missing(result[column])
+
+        # A completely blank column has no information from which to infer a
+        # numeric, date, or categorical value. Keep the column and row count,
+        # and use the explicit requested sentinel in both preprocessing and
+        # generation input. Do this before dtype-based imputation so an
+        # all-null numeric/date column does not become 0 or an invented date.
+        if result[column].isna().all():
+            result[column] = "unknown"
+            continue
+
         if not result[column].isna().any():
             continue
         reference = reference_dataframe[column] if column in reference_dataframe.columns else None

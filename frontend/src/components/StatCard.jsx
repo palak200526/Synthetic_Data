@@ -9,6 +9,7 @@ export default function StatCard({
   accent,
   tone,
   loading = false,
+  valueClassName = '',
 }) {
   const textLabel = label ?? title ?? ''
   const textHint = hint ?? description ?? subtitle
@@ -37,7 +38,10 @@ export default function StatCard({
             {loading ? (
               <div className="h-7 w-16 animate-pulse rounded bg-ink-100" />
             ) : (
-              <p className="text-2xl font-semibold tracking-tight text-ink-900">
+              <p
+                title={typeof value === 'string' ? value : undefined}
+                className={`text-2xl font-semibold tracking-tight text-ink-900 ${valueClassName}`}
+              >
                 {value ?? '—'}
               </p>
             )}

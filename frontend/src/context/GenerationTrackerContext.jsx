@@ -92,14 +92,21 @@ export function GenerationTrackerProvider({ children }) {
       const state = payload.status
 
       if (state === 'SUCCESS') {
+        const now = Date.now()
+        const elapsedMs = Number(prev.elapsedMs || 0) + (prev.resumedAt ? Math.max(0, now - prev.resumedAt) : 0)
+        const stageElapsedMs = Number(prev.stageElapsedMs || 0) + (prev.stageResumedAt ? Math.max(0, now - prev.stageResumedAt) : 0)
         const total = prev.progress?.stage_total
         return {
           ...prev,
           status: 'SUCCESS',
           result: payload.result || payload,
           error: null,
+          elapsedMs,
+          resumedAt: null,
+          stageElapsedMs,
+          stageResumedAt: null,
           waitingHint: false,
-          finishedAt: Date.now(),
+          finishedAt: now,
           progress: {
             ...(prev.progress || {}),
             percent: 100,
@@ -110,19 +117,34 @@ export function GenerationTrackerProvider({ children }) {
       }
 
       if (state === 'FAILURE') {
+        const now = Date.now()
+        const elapsedMs = Number(prev.elapsedMs || 0) + (prev.resumedAt ? Math.max(0, now - prev.resumedAt) : 0)
+        const stageElapsedMs = Number(prev.stageElapsedMs || 0) + (prev.stageResumedAt ? Math.max(0, now - prev.stageResumedAt) : 0)
         return {
           ...prev,
           status: 'FAILURE',
           error: payload.error || 'Generation failed',
+          elapsedMs,
+          resumedAt: null,
+          stageElapsedMs,
+          stageResumedAt: null,
           waitingHint: false,
-          finishedAt: Date.now(),
+          finishedAt: now,
         }
       }
 
       if (state === 'PAUSED') {
+        const now = Date.now()
+        const elapsedMs = Number(prev.elapsedMs || 0) + (prev.resumedAt ? Math.max(0, now - prev.resumedAt) : 0)
+        const stageElapsedMs = Number(prev.stageElapsedMs || 0) + (prev.stageResumedAt ? Math.max(0, now - prev.stageResumedAt) : 0)
         return {
           ...prev,
           status: 'PAUSED',
+          elapsedMs,
+          resumedAt: null,
+          stageElapsedMs,
+          stageResumedAt: null,
+          pausedAt: now,
           pausing: false,
           progress: payload.progress || prev.progress,
           waitingHint: false,
@@ -147,10 +169,26 @@ export function GenerationTrackerProvider({ children }) {
       }
 
       if (state === 'PROGRESS' && payload.progress) {
+        const now = Date.now()
+        const nextProgress = payload.progress
+        const nextStageKey = String(
+          nextProgress.stage ?? nextProgress.stage_label ?? nextProgress.stage_index ?? 'starting',
+        )
+        const previousStageKey = prev.stageKey ?? String(
+          prev.progress?.stage ?? prev.progress?.stage_label ?? prev.progress?.stage_index ?? 'starting',
+        )
+        const stageChanged = nextStageKey !== previousStageKey
+        const stageElapsedMs = stageChanged ? 0 : Number(prev.stageElapsedMs || 0)
         return {
           ...prev,
           status: 'PROGRESS',
-          progress: payload.progress,
+          // Overall active-time counter excludes pauses.
+          resumedAt: prev.resumedAt || (prev.status === 'PAUSED' || !prev.resumedAt ? now : null),
+          // Stage timer resets whenever the backend reports a new stage and excludes pauses.
+          stageKey: nextStageKey,
+          stageElapsedMs,
+          stageResumedAt: prev.status === 'PAUSED' || stageChanged || !prev.stageResumedAt ? now : prev.stageResumedAt,
+          progress: nextProgress,
           waitingHint: false,
         }
       }
@@ -234,6 +272,12 @@ export function GenerationTrackerProvider({ children }) {
         modelLabel: modelLabel || null,
         sessionId: sessionId != null ? String(sessionId) : null,
         startedAt: Date.now(),
+        elapsedMs: 0,
+        resumedAt: null,
+        stageKey: null,
+        stageElapsedMs: 0,
+        stageResumedAt: null,
+        pausedAt: null,
         status: 'PENDING',
         progress: null,
         result: null,
@@ -261,14 +305,23 @@ export function GenerationTrackerProvider({ children }) {
         return true
       }
 
+      const now = Date.now()
+      const sameJob = current?.jobId === id
       setJob({
+        ...(sameJob ? current : {}),
         jobId: id,
         datasetId: datasetId != null ? String(datasetId) : null,
-        modelLabel: modelLabel || null,
+        modelLabel: modelLabel || current?.modelLabel || null,
         sessionId: sessionId != null ? String(sessionId) : null,
-        startedAt: startedAt || Date.now(),
+        startedAt: sameJob ? current.startedAt : (startedAt || now),
+        elapsedMs: sameJob ? Number(current.elapsedMs || 0) : 0,
+        resumedAt: now,
+        stageKey: sameJob ? current.stageKey ?? null : null,
+        stageElapsedMs: sameJob ? Number(current.stageElapsedMs || 0) : 0,
+        stageResumedAt: now,
+        pausedAt: null,
         status: 'PENDING', // first poll corrects this to PROGRESS/SUCCESS/…
-        progress: null,
+        progress: sameJob ? current.progress : null,
         result: null,
         error: null,
         waitingHint: false,

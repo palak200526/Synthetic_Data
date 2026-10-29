@@ -69,6 +69,46 @@ _TEXT_NAME_HINTS = (
 )
 
 
+# Generic column names that usually represent controlled labels rather than prose.
+_CONTROLLED_NAME_HINTS = (
+    "status", "direction", "category", "subtype", "priority", "type", "class",
+    "stage", "state", "flag", "boolean", "is_active", "enabled", "currency",
+    "country_code", "region_code", "rating", "score_band", "target_direction",
+)
+
+_FORMULA_PATTERN = re.compile(
+    r"(?i)(?:\b(?:sum|avg|count|round|min|max)\s*\(|"
+    r"\b[A-Z_][A-Z0-9_]*\s*/\s*[A-Z0-9_$]+|"
+    r"[$]?\d+(?:\.\d+)?\s*[%*/+=-]\s*[$]?\d|"
+    r"\b(?:divided by|multiplied by)\b)"
+)
+
+
+def _looks_like_controlled_category(profile: dict) -> bool:
+    name = (profile.get("column_name") or "").strip().lower().replace(" ", "_")
+    if any(hint in name for hint in _CONTROLLED_NAME_HINTS):
+        return True
+
+    dtype = (profile.get("dtype") or "").lower()
+    if "category" in dtype or "bool" in dtype:
+        return True
+
+    length_info = profile.get("string_length") or {}
+    avg_len = float(length_info.get("average") or 0.0)
+    unique_count = int(profile.get("unique_count") or 0)
+    samples = [str(v).strip() for v in (profile.get("sample_values") or []) if str(v).strip()]
+    # Low-cardinality, short string values are labels even if their column name is vague.
+    return bool(samples and unique_count > 0 and unique_count <= 20 and avg_len <= 24)
+
+
+def _looks_like_formula_values(profile: dict) -> bool:
+    samples = [str(v).strip() for v in (profile.get("sample_values") or []) if str(v).strip()]
+    if not samples:
+        return False
+    hits = sum(bool(_FORMULA_PATTERN.search(value)) for value in samples)
+    return hits / len(samples) >= 0.5
+
+
 def _pct(ratio: float) -> str:
     """Format a 0-1 ratio as a whole-number percentage string."""
     return f"{round(max(0.0, min(1.0, ratio)) * 100)}%"
@@ -106,11 +146,31 @@ def is_freeform_text_profile(profile: dict) -> bool:
     name_lower = (profile.get("column_name") or "").strip().lower()
     dtype = (profile.get("dtype") or "").lower()
     unique_ratio = float(profile.get("unique_ratio") or 0.0)
+    unique_count = int(profile.get("unique_count") or 0)
+    null_ratio = float(profile.get("null_ratio") or 0.0)
     patterns = profile.get("patterns") or []
     length_info = profile.get("string_length") or {}
     avg_len = float(length_info.get("average") or 0.0)
+    samples = [
+        str(value).strip()
+        for value in (profile.get("sample_values") or [])
+        if value is not None and str(value).strip().lower() not in {"nan", "none", "null", "<na>"}
+    ]
+    distinct_samples = {value.casefold() for value in samples}
 
     if any(p in {"email", "phone", "uuid"} for p in patterns):
+        return False
+
+    # Missing-heavy, constant, or near-constant columns are not prose-generation
+    # targets even when their names contain hints such as "reason" or "description".
+    # This prevents values like ["identifier", NaN, NaN, ...] from being sent to Ollama.
+    if null_ratio >= 0.50 and (unique_count <= 3 or len(distinct_samples) <= 3):
+        return False
+    if unique_count <= 2 and avg_len < 40:
+        return False
+
+    # Controlled labels should use the tabular/categorical generator, not prose generation.
+    if _looks_like_controlled_category(profile):
         return False
 
     is_stringish = any(

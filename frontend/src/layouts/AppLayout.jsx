@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/Sidebar.jsx'
 import Header from '../components/Header.jsx'
+import WorkflowStepper from '../components/WorkflowStepper.jsx'
 
 export default function AppLayout() {
   return (
@@ -10,6 +11,7 @@ export default function AppLayout() {
         <Header />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full max-w-7xl px-5 py-6 sm:px-6 lg:px-8 lg:py-8">
+            <WorkflowStepper />
             <Outlet />
           </div>
         </main>

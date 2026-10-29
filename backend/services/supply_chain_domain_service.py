@@ -51,6 +51,88 @@ from backend.services.quality_enhancement_service import (
 logger = logging.getLogger(__name__)
 
 
+def _read_csv_with_encoding_fallback(file_path: str | Path) -> pd.DataFrame:
+    """Read a CSV robustly across common encodings and delimiters.
+
+    Prefer strict parsing so malformed rows are not silently lost. If strict
+    parsing fails, retry with Python's parser and detected delimiters. As a last
+    resort, skip malformed lines with an explicit warning and log the recovery.
+    """
+    import csv
+    import io
+
+    path = Path(file_path)
+    raw = path.read_bytes()
+    decoded_text: str | None = None
+    decode_errors: list[str] = []
+    for encoding in ("utf-8-sig", "utf-8", "cp1252", "latin-1", "utf-16"):
+        try:
+            decoded_text = raw.decode(encoding)
+            break
+        except (UnicodeDecodeError, UnicodeError) as exc:
+            decode_errors.append(f"{encoding}: {exc}")
+
+    if decoded_text is None:
+        raise ValueError(
+            f"Could not decode '{path.name}'. Please export the file as a UTF-8 CSV and retry."
+        )
+
+    sample = decoded_text[:65536]
+    delimiters: list[str] = []
+    try:
+        sniffed = csv.Sniffer().sniff(sample, delimiters=",;\t|")
+        delimiters.append(sniffed.delimiter)
+    except csv.Error:
+        pass
+    for delimiter in (",", ";", "\t", "|"):
+        if delimiter not in delimiters:
+            delimiters.append(delimiter)
+
+    parse_errors: list[str] = []
+    candidates: list[tuple[int, pd.DataFrame, str]] = []
+    for delimiter in delimiters:
+        for engine in ("c", "python"):
+            try:
+                frame = pd.read_csv(io.StringIO(decoded_text), sep=delimiter, engine=engine)
+                if frame.shape[1] > 0:
+                    # Prefer a multi-column interpretation over a one-column
+                    # parse when the file contains a delimited table.
+                    score = frame.shape[1] * 100000 + len(frame) - int(frame.empty)
+                    candidates.append((score, frame, delimiter))
+            except (pd.errors.ParserError, ValueError, csv.Error) as exc:
+                parse_errors.append(f"delimiter={delimiter!r}, engine={engine}: {exc}")
+
+    if candidates:
+        candidates.sort(key=lambda item: item[0], reverse=True)
+        best_score, best_frame, best_delimiter = candidates[0]
+        if best_frame.shape[1] > 1 or not parse_errors:
+            if best_delimiter != ",":
+                logger.info("Read CSV %s using detected delimiter %r", path.name, best_delimiter)
+            return best_frame
+
+    # Last-resort recovery: keep the dataset usable when only a small number of
+    # malformed rows prevent parsing. Pandas logs each skipped row; do not hide it.
+    for delimiter in delimiters:
+        try:
+            frame = pd.read_csv(
+                io.StringIO(decoded_text), sep=delimiter, engine="python", on_bad_lines="warn"
+            )
+            if frame.shape[1] > 1 or not frame.empty:
+                logger.warning(
+                    "CSV %s required tolerant parsing with delimiter %r; inspect warnings and validate row counts.",
+                    path.name,
+                    delimiter,
+                )
+                return frame
+        except (pd.errors.ParserError, ValueError, csv.Error) as exc:
+            parse_errors.append(f"tolerant delimiter={delimiter!r}: {exc}")
+
+    detail = parse_errors[-1] if parse_errors else "No usable table structure was detected."
+    raise ValueError(
+        f"Could not parse CSV '{path.name}'. Check the header, delimiter, quotes, and rows with extra separators. Details: {detail}"
+    )
+
+
 
 def _missing_cell_mask(df: pd.DataFrame) -> pd.DataFrame:
     """Treat NaN/None and whitespace-only strings as missing cells."""
@@ -357,11 +439,14 @@ def infer_and_validate_domain_rules(
 
     n_num = len(num_cols)
     if n_num >= 3:
-        sample_df = (
-            df[num_cols].dropna().sample(min(800, len(df)), random_state=42)
-            if len(df) > 800
-            else df[num_cols].dropna()
-        )
+        # Drop incomplete rows first, then sample only from the rows that remain.
+        # Sampling 800 rows based on the original dataframe size can fail when
+        # every row has at least one missing numeric value.
+        complete_numeric_rows = df[num_cols].dropna()
+        if len(complete_numeric_rows) > 800:
+            sample_df = complete_numeric_rows.sample(n=800, random_state=42)
+        else:
+            sample_df = complete_numeric_rows
 
         for i in range(n_num):
             col_a = num_cols[i]
@@ -1015,8 +1100,12 @@ def improve_generation_result(
         raise FileNotFoundError(f"Baseline synthetic file for result {result_id} not found.")
 
     # 2. Load DataFrames
-    df_real = pd.read_csv(source_path_str)
-    df_baseline_synth = pd.read_csv(baseline_path_str)
+    df_real = _read_csv_with_encoding_fallback(source_path_str)
+    df_baseline_synth = _read_csv_with_encoding_fallback(baseline_path_str)
+    if df_real.empty or len(df_real.columns) == 0:
+        raise ValueError("The original dataset has no usable rows or columns. Check the uploaded CSV and try again.")
+    if df_baseline_synth.empty or len(df_baseline_synth.columns) == 0:
+        raise ValueError("The baseline synthetic dataset has no usable rows or columns. Generate the dataset again before improving quality.")
 
     # 3. Detect Semantics & Empirically Verify Domain Rules
     semantics = detect_supply_chain_semantics(df_real)
@@ -1091,6 +1180,7 @@ def improve_generation_result(
         improved_df = reconstruct_supply_chain_features(improved_df, derived_arithmetic)
 
     # I. Privacy Guard (Reject & resample exact matches vs real training data)
+    pre_privacy_df = improved_df.copy()
     improved_df, priv_info = privacy_guard_filter(
         real_df=df_real,
         synthetic_df=improved_df,
@@ -1098,12 +1188,27 @@ def improve_generation_result(
     )
     strategies_applied.append("privacy_guard_exact_match_filter")
 
+    # A strict privacy filter can reject every row. Never call DataFrame.sample()
+    # on an empty frame; retain a usable candidate and let candidate scoring
+    # compare it against the baseline instead of crashing the whole operation.
+    if improved_df.empty:
+        logger.warning(
+            "Privacy filtering removed every candidate row for result %s; falling back to the unfiltered candidate for scoring.",
+            result_id,
+        )
+        improved_df = pre_privacy_df if not pre_privacy_df.empty else df_baseline_synth.copy()
+        strategies_applied.append("privacy_filter_empty_candidate_fallback_for_scoring")
+
     # Ensure exact requested row count
     target_count = len(df_baseline_synth)
     if len(improved_df) < target_count:
         needed = target_count - len(improved_df)
-        fill = improved_df.sample(n=needed, replace=True, random_state=42)
-        improved_df = pd.concat([improved_df, fill], ignore_index=True)
+        if improved_df.empty:
+            # Defensive guard; baseline was validated as non-empty above.
+            improved_df = df_baseline_synth.copy()
+        if len(improved_df) < target_count:
+            fill = improved_df.sample(n=needed, replace=True, random_state=42)
+            improved_df = pd.concat([improved_df, fill], ignore_index=True)
     elif len(improved_df) > target_count:
         improved_df = improved_df.head(target_count).reset_index(drop=True)
 

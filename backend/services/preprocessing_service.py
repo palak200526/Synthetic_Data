@@ -154,6 +154,7 @@ def preprocess_dataset(
                     or isinstance(dataframe[column].dtype, pd.CategoricalDtype)
                 )
             ],
+            "encoding_metadata": {},
         }
     else:
         preparation_result = prepare_data_for_model(
@@ -195,6 +196,8 @@ def preprocess_dataset(
             preparation_result[
                 "categorical_columns"
             ],
+
+        "encoding_metadata": preparation_result.get("encoding_metadata", {}),
 
         "outliers": {
             "iqr": iqr_outliers,

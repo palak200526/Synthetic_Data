@@ -16,6 +16,9 @@ import {
   Calendar,
   Sparkles,
   RefreshCw,
+  Pencil,
+  Check,
+  X,
 } from 'lucide-react'
 
 import PageHeader from '../components/PageHeader.jsx'
@@ -28,7 +31,7 @@ import LoadingState from '../components/LoadingState.jsx'
 import { datasetApi, normalizeDatasetProfile } from '../api/datasetApi.js'
 import { getErrorMessage } from '../utils/errors.js'
 import { formatNumber, formatPercent } from '../utils/format.js'
-import { loadBatch, getLastSessionId } from '../utils/batchStore.js'
+import { loadBatch, getLastSessionId, updateBatchDatasetName } from '../utils/batchStore.js'
 
 function dtypeLabel(dtype) {
   if (!dtype) return '—'
@@ -50,6 +53,7 @@ export default function Profile() {
   // session id can come from the URL (?session=92) or from the last
   // upload performed in this browser. URL wins so direct links work.
   const sessionId = searchParams.get('session') || getLastSessionId()
+  const [batchVersion, setBatchVersion] = useState(0)
 
   const batch = useMemo(() => {
     const list = loadBatch(sessionId)
@@ -59,7 +63,7 @@ export default function Profile() {
       return stateBatch
     }
     return list
-  }, [sessionId, location.state])
+  }, [sessionId, location.state, batchVersion])
 
   const batchEntry = useMemo(
     () => batch.find((b) => String(b.id) === String(datasetId)) || null,
@@ -69,6 +73,11 @@ export default function Profile() {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [isRenaming, setIsRenaming] = useState(false)
+  const [renameValue, setRenameValue] = useState('')
+  const [renameError, setRenameError] = useState('')
+  const [renameSaving, setRenameSaving] = useState(false)
+  const [renamedName, setRenamedName] = useState('')
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -80,7 +89,7 @@ export default function Profile() {
       // Merge metadata from the upload batch when the profile endpoint
       // doesn't return it (row count, filename, upload date).
       if (batchEntry) {
-        if (!normalized.name) normalized.name = batchEntry.fileName
+        if (!normalized.name) normalized.name = batchEntry.displayName || batchEntry.fileName
         if (normalized.rows == null) normalized.rows = batchEntry.rows
         if (normalized.columnsCount == null)
           normalized.columnsCount = batchEntry.columns
@@ -100,6 +109,12 @@ export default function Profile() {
       setLoading(false)
     }
   }, [datasetId, batchEntry])
+
+  useEffect(() => {
+    setRenamedName('')
+    setIsRenaming(false)
+    setRenameError('')
+  }, [datasetId])
 
   useEffect(() => {
     load()
@@ -122,14 +137,58 @@ export default function Profile() {
   }))
 
   const displayName =
-    profile?.name ||
-    batchEntry?.fileName ||
+    renamedName || batchEntry?.displayName || profile?.name || batchEntry?.fileName ||
     (batch.length > 1 ? 'Dataset profile' : 'Dataset profile')
+
+  const startRename = () => {
+    setRenameValue(displayName)
+    setRenameError('')
+    setIsRenaming(true)
+  }
+
+  const saveRename = async () => {
+    const nextName = renameValue.trim()
+    if (!nextName) { setRenameError('File name cannot be empty.'); return }
+    setRenameSaving(true)
+    setRenameError('')
+    try {
+      const response = await datasetApi.rename(datasetId, nextName)
+      const savedName = response.data?.file_name || response.data?.dataset_name || nextName
+      setRenamedName(savedName)
+      setProfile((prev) => prev ? { ...prev, name: savedName } : prev)
+      updateBatchDatasetName(datasetId, savedName)
+      setBatchVersion((version) => version + 1)
+      setIsRenaming(false)
+    } catch (err) {
+      setRenameError(getErrorMessage(err))
+    } finally {
+      setRenameSaving(false)
+    }
+  }
 
   return (
     <>
       <PageHeader
-        title={displayName}
+        title={
+          isRenaming ? (
+            <div className="flex max-w-full flex-col gap-1.5">
+              <div className="flex items-center gap-2">
+                <input autoFocus aria-label="New file name" value={renameValue}
+                  onChange={(e) => setRenameValue(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') saveRename(); if (e.key === 'Escape') setIsRenaming(false) }}
+                  className="dx-input min-w-0 max-w-xl text-base font-semibold" maxLength={180} disabled={renameSaving} />
+                <button type="button" onClick={saveRename} disabled={renameSaving} className="dx-btn-primary" title="Save file name"><Check size={14} /> Save</button>
+                <button type="button" onClick={() => { setIsRenaming(false); setRenameError('') }} disabled={renameSaving} className="dx-btn-outline" title="Cancel rename"><X size={14} /></button>
+              </div>
+              {renameError && <span className="text-xs font-normal text-red-600">{renameError}</span>}
+            </div>
+          ) : (
+            <button type="button" onClick={startRename} className="group inline-flex max-w-full items-center gap-2 text-left hover:text-brand-600" title="Click to rename this file">
+              <span className="truncate">{displayName}</span>
+              <Pencil size={14} className="shrink-0 text-ink-400 opacity-70 group-hover:text-brand-600" />
+            </button>
+          )
+        }
         subtitle={
           profile?.datasetId
             ? `Dataset ID · ${profile.datasetId}`

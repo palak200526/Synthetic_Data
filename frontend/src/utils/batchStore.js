@@ -137,3 +137,25 @@ export function listLocalDatasets() {
   }
   return flat
 }
+
+/** Update the cached display name for a dataset across local upload batches. */
+export function updateBatchDatasetName(datasetId, fileName) {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (!key || !key.startsWith(KEY_PREFIX)) continue
+      const raw = localStorage.getItem(key)
+      if (!raw) continue
+      let batch
+      try { batch = JSON.parse(raw) } catch { continue }
+      if (!Array.isArray(batch)) continue
+      let changed = false
+      const updated = batch.map((item) => {
+        if (String(item?.id) !== String(datasetId)) return item
+        changed = true
+        return { ...item, fileName, displayName: fileName }
+      })
+      if (changed) localStorage.setItem(key, JSON.stringify(updated))
+    }
+  } catch { /* cache is best-effort; the server remains authoritative */ }
+}

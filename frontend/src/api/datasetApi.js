@@ -313,6 +313,9 @@ export const datasetApi = {
       timeout: 5 * 60 * 1000,
     }),
 
+  rename: (datasetId, fileName) =>
+    apiClient.patch(`/datasets/${datasetId}/rename`, { file_name: fileName }),
+
   preprocess: (datasetId, extra) =>
     apiClient.post(
       `/preprocess/${datasetId}`,

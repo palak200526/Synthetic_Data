@@ -98,11 +98,55 @@ def build_preprocessing_summary(
             "Added domain features: " + ", ".join(added_columns[:8])
             + ("…" if len(added_columns) > 8 else "") + "."
         )
-    if cat_set:
-        steps.append(
-            f"One-hot encoded {len(cat_set)} categorical column(s) into "
-            f"{len(encoded_new)} indicator column(s) for the model."
+    encoding_metadata = result.get("encoding_metadata") or {}
+    methods: dict[str, list[str]] = {}
+    skipped: dict[str, list[str]] = {}
+    for source_column, info in encoding_metadata.items():
+        method = str((info or {}).get("selected_method") or "unknown")
+        if method.startswith("skip_"):
+            skipped.setdefault(method, []).append(str(source_column))
+        else:
+            methods.setdefault(method, []).append(str(source_column))
+
+    display_names = {
+        "onehot": "One-Hot Encoding",
+        "binary": "Binary Encoding",
+        "frequency": "Frequency Encoding",
+        "count": "Count Encoding",
+        "hashing": "Feature Hashing",
+    }
+    for method, columns in sorted(methods.items()):
+        display = display_names.get(method, method.replace("_", " ").title())
+        output_count = sum(
+            len((encoding_metadata.get(column) or {}).get("output_columns") or [])
+            for column in columns
         )
+        if method in {"frequency", "count"}:
+            steps.append(
+                f"Applied {display} to {len(columns)} categorical column(s): "
+                + ", ".join(columns[:6])
+                + ("…" if len(columns) > 6 else "") + "."
+            )
+        else:
+            steps.append(
+                f"Applied {display} to {len(columns)} categorical column(s), "
+                f"creating {output_count} output column(s): "
+                + ", ".join(columns[:6])
+                + ("…" if len(columns) > 6 else "") + "."
+            )
+    for reason, columns in sorted(skipped.items()):
+        readable = {
+            "skip_identifier": "identifier-like",
+            "skip_constant": "constant",
+            "skip_free_text": "high-cardinality free-text",
+        }.get(reason, reason.replace("skip_", "").replace("_", " "))
+        steps.append(
+            f"Skipped encoding for {len(columns)} {readable} column(s): "
+            + ", ".join(columns[:6])
+            + ("…" if len(columns) > 6 else "") + "."
+        )
+    if not methods and not skipped:
+        steps.append("No categorical columns required encoding.")
     steps.append(
         "Validated the output: row count unchanged, no missing or infinite values."
     )
@@ -117,7 +161,10 @@ def build_preprocessing_summary(
         "outlier_summary": outlier_rows,
         "removed_columns": removed_columns,
         "added_columns": added_columns,
-        "encoded_columns_count": len(encoded_new),
+        "encoded_columns_count": sum(
+            len((info or {}).get("output_columns") or [])
+            for info in (result.get("encoding_metadata") or {}).values()
+        ),
         "action_counts": action_counts,
         "transformations": steps,
     }

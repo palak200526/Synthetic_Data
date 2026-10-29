@@ -289,6 +289,7 @@ export default function Preprocessing() {
                 `#${datasetId}`
               }
               accent="brand"
+              valueClassName="text-lg sm:text-xl break-words [overflow-wrap:anywhere]"
             />
             <StatCard
               icon={Wrench}

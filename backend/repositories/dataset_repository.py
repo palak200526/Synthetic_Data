@@ -695,3 +695,28 @@ def assign_dataset_to_group(dataset_id: int, group_id: int):
         if connection:
             connection.close()
 
+
+
+# Rename the display name while preserving the original physical upload filename.
+def rename_dataset(dataset_id: int, user_id: int, new_name: str):
+    connection = None
+    cursor = None
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute(
+            "UPDATE datasets SET dataset_name = %s WHERE dataset_id = %s AND user_id = %s RETURNING dataset_id, dataset_name, file_type",
+            (new_name, dataset_id, user_id),
+        )
+        row = cursor.fetchone()
+        if row is None:
+            connection.rollback()
+            return None
+        connection.commit()
+        return {"dataset_id": row[0], "dataset_name": row[1], "file_type": row[2]}
+    except Exception:
+        if connection: connection.rollback()
+        raise
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
