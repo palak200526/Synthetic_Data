@@ -1,11 +1,11 @@
 # Datrixa
 
-::: {align="center"}
+
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white)
 ![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=black)
 ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-4169E1?logo=postgresql&logoColor=white)
-:::
+
 ## Intelligent Data Transformation and Assessment Platform
 
 Generate realistic synthetic tabular data, evaluate data utility and
