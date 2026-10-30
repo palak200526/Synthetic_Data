@@ -561,6 +561,15 @@ export const generationApi = {
       },
     ),
 
+  submitQualityFeedback: ({ resultId, improvedResultId, feedback, focusArea, comment }) =>
+    apiClient.post('/generation/quality-feedback', {
+      result_id: Number(resultId),
+      improved_result_id: improvedResultId ? Number(improvedResultId) : null,
+      feedback,
+      focus_area: focusArea || null,
+      comment: comment || null,
+    }),
+
   listJobs: (params) =>
     apiClient.get('/generation/jobs', { params, timeout: 30 * 1000 }),
 

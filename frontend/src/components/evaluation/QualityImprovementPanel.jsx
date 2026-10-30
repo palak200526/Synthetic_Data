@@ -38,6 +38,12 @@ export default function QualityImprovementPanel({
   const [downloading, setDownloading] = useState(false)
   const [activeMetric, setActiveMetric] = useState(null)
   const [showAdvanced, setShowAdvanced] = useState(false)
+  const [qualityFeedback, setQualityFeedback] = useState('')
+  const [feedbackFocus, setFeedbackFocus] = useState('other')
+  const [feedbackComment, setFeedbackComment] = useState('')
+  const [feedbackSaving, setFeedbackSaving] = useState(false)
+  const [feedbackSaved, setFeedbackSaved] = useState(false)
+  const [feedbackError, setFeedbackError] = useState('')
   // Keep the original/baseline result available for re-runs after the first improvement.
   const sourceResultId = resultId ?? comparisonData?.baseline_result_id ?? comparisonData?.original_result_id
 
@@ -63,6 +69,27 @@ export default function QualityImprovementPanel({
       setError(getErrorMessage(err))
     } finally {
       setImproving(false)
+    }
+  }
+
+
+  const handleSubmitQualityFeedback = async () => {
+    if (!qualityFeedback || !sourceResultId || feedbackSaving) return
+    setFeedbackSaving(true)
+    setFeedbackError('')
+    try {
+      await generationApi.submitQualityFeedback({
+        resultId: sourceResultId,
+        improvedResultId: comparisonData?.improved_result_id,
+        feedback: qualityFeedback,
+        focusArea: feedbackFocus,
+        comment: feedbackComment,
+      })
+      setFeedbackSaved(true)
+    } catch (err) {
+      setFeedbackError(getErrorMessage(err))
+    } finally {
+      setFeedbackSaving(false)
     }
   }
 
@@ -678,6 +705,157 @@ export default function QualityImprovementPanel({
               </div>
             </div>
           )}
+          {/* Feedback is intentionally placed last and collapsed by default. */}
+          <details className="group rounded-xl border border-brand-200 bg-white shadow-sm">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl p-4 hover:bg-brand-50/40 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-300 [&::-webkit-details-marker]:hidden">
+              <span>
+                <span className="block text-sm font-semibold text-ink-900">Share feedback &amp; review next steps</span>
+                <span className="mt-1 block text-xs text-ink-500">Expand to review quality findings, recommendations and submit your feedback.</span>
+              </span>
+              <ChevronRight size={18} className="shrink-0 text-ink-500 transition-transform group-open:rotate-90" />
+            </summary>
+            <div className="border-t border-brand-100 p-4">
+          {/* Diagnostic feedback generated from the actual before/after comparison. */}
+          <section className="rounded-xl border border-brand-200 bg-brand-50/30 p-4">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h4 className="text-sm font-semibold text-ink-900">Quality Feedback &amp; Next Steps</h4>
+                <p className="mt-1 text-xs leading-relaxed text-ink-600">
+                  {comparisonData.feedback_insights?.summary ||
+                    'Review the metric comparison below to decide whether another improvement run is needed.'}
+                </p>
+              </div>
+              <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold text-ink-600 ring-1 ring-ink-200">
+                {comparisonData.feedback_insights?.finding_count ?? 0} findings
+              </span>
+            </div>
+
+            {Array.isArray(comparisonData.feedback_insights?.findings) &&
+              comparisonData.feedback_insights.findings.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  {comparisonData.feedback_insights.findings.slice(0, 5).map((finding, index) => (
+                    <div key={`${finding.metric}-${index}`} className="rounded-lg border border-ink-200 bg-white p-3">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="text-xs font-semibold text-ink-800">{finding.label}</span>
+                        <span className={`rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase ${
+                          finding.severity === 'high'
+                            ? 'bg-rose-50 text-rose-700'
+                            : finding.severity === 'medium'
+                              ? 'bg-amber-50 text-amber-700'
+                              : 'bg-ink-100 text-ink-600'
+                        }`}>{finding.status.replaceAll('_', ' ')}</span>
+                      </div>
+                      <p className="mt-1 text-xs leading-relaxed text-ink-600">{finding.message}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+            {Array.isArray(comparisonData.feedback_insights?.recommendations) &&
+              comparisonData.feedback_insights.recommendations.length > 0 && (
+                <div className="mt-3">
+                  <p className="text-xs font-semibold text-ink-800">Suggested next checks</p>
+                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-xs leading-relaxed text-ink-600">
+                    {comparisonData.feedback_insights.recommendations.slice(0, 4).map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+            {Array.isArray(comparisonData.feedback_insights?.previous_user_feedback) &&
+              comparisonData.feedback_insights.previous_user_feedback.length > 0 && (
+                <div className="mt-3 rounded-lg border border-blue-100 bg-blue-50/50 p-3">
+                  <p className="text-xs font-semibold text-blue-900">Previous feedback for this dataset</p>
+                  <p className="mt-1 text-xs leading-relaxed text-blue-800">
+                    Latest response: {comparisonData.feedback_insights.previous_user_feedback[0].feedback.replaceAll('_', ' ')}
+                    {comparisonData.feedback_insights.previous_user_feedback[0].focus_area
+                      ? ` · Focus: ${comparisonData.feedback_insights.previous_user_feedback[0].focus_area.replaceAll('_', ' ')}`
+                      : ''}
+                  </p>
+                  {comparisonData.feedback_insights.previous_focus_to_review && (
+                    <p className="mt-1 text-xs text-blue-800">
+                      Revisit this area during the next quality review.
+                    </p>
+                  )}
+                </div>
+              )}
+
+            <div className="mt-4 border-t border-brand-100 pt-3">
+              <p className="text-xs font-semibold text-ink-800">Was this improvement useful?</p>
+              {feedbackSaved ? (
+                <p className="mt-2 inline-flex items-center gap-2 text-xs font-medium text-emerald-700">
+                  <CheckCircle2 size={14} /> Thanks. Your feedback has been saved.
+                </p>
+              ) : (
+                <>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {[
+                      ['helpful', 'Helpful'],
+                      ['partially_helpful', 'Partially helpful'],
+                      ['not_helpful', 'Not helpful'],
+                    ].map(([value, label]) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setQualityFeedback(value)}
+                        className={`rounded-lg border px-3 py-2 text-xs font-medium transition ${
+                          qualityFeedback === value
+                            ? 'border-brand-500 bg-brand-50 text-brand-700'
+                            : 'border-ink-200 bg-white text-ink-600 hover:border-brand-300'
+                        }`}
+                      >{label}</button>
+                    ))}
+                  </div>
+                  <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <label className="text-xs font-medium text-ink-700">
+                      What needs attention?
+                      <select
+                        value={feedbackFocus}
+                        onChange={(event) => setFeedbackFocus(event.target.value)}
+                        className="mt-1 w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-xs text-ink-700"
+                      >
+                        <option value="other">General feedback</option>
+                        <option value="statistical_similarity">Statistical similarity</option>
+                        <option value="correlation">Correlation preservation</option>
+                        <option value="ml_utility">ML utility</option>
+                        <option value="privacy">Privacy protection</option>
+                        <option value="business_rules">Business-rule validity</option>
+                      </select>
+                    </label>
+                    <label className="text-xs font-medium text-ink-700">
+                      Additional comments
+                      <input
+                        value={feedbackComment}
+                        onChange={(event) => setFeedbackComment(event.target.value)}
+                        maxLength={2000}
+                        placeholder="Tell us what should improve..."
+                        className="mt-1 w-full rounded-lg border border-ink-200 bg-white px-3 py-2 text-xs text-ink-700"
+                      />
+                    </label>
+                  </div>
+                  {feedbackError && <p className="mt-2 text-xs text-rose-700">{feedbackError}</p>}
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-[11px] text-ink-500">
+                      {!qualityFeedback ? 'Select Helpful, Partially helpful, or Not helpful to enable submission.' : 'Your feedback is ready to submit.'}
+                    </p>
+                    <button
+                      type="button"
+                      disabled={!qualityFeedback || feedbackSaving}
+                      onClick={handleSubmitQualityFeedback}
+                      className="dx-btn-primary inline-flex items-center gap-2 text-xs disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {feedbackSaving && <Loader2 size={13} className="animate-spin" />}
+                      Submit feedback
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </section>
+            </div>
+          </details>
+
         </div>
       )}
     </div>

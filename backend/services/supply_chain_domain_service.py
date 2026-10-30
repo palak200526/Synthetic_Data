@@ -48,6 +48,10 @@ from backend.services.quality_enhancement_service import (
     privacy_guard_filter,
 )
 
+from backend.repositories.feedback_repository import get_recent_quality_feedback
+from backend.services.feedback_loop_service import build_feedback_insights
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -764,11 +768,11 @@ def build_comparison_summary(
     b_priv = baseline_eval.get("privacy") or {}
     i_priv = improved_eval.get("privacy") or {}
 
-    b_exact = b_priv.get("exact_match_rate", 0.0)
-    i_exact = i_priv.get("exact_match_rate", 0.0)
+    b_exact = b_priv.get("exact_match_rate")
+    i_exact = i_priv.get("exact_match_rate")
 
-    b_dcr = b_priv.get("dcr_ratio", 1.0)
-    i_dcr = i_priv.get("dcr_ratio", 1.0)
+    b_dcr = b_priv.get("dcr_ratio")
+    i_dcr = i_priv.get("dcr_ratio")
 
     b_priv_score = b_priv.get("overall_score")
     i_priv_score = i_priv.get("overall_score")
@@ -791,11 +795,13 @@ def build_comparison_summary(
     for key, label, b_val, i_val in metrics_def:
         direction = METRIC_DIRECTIONS.get(key, "higher_is_better")
 
-        if b_val is None and i_val is None:
+        # Missing metrics are not zero. Compare only when both evaluations
+        # produced a real value; otherwise report the metric as unavailable.
+        if b_val is None or i_val is None:
             continue
 
-        b_num = float(b_val) if b_val is not None else 0.0
-        i_num = float(i_val) if i_val is not None else 0.0
+        b_num = float(b_val)
+        i_num = float(i_val)
         delta = round(i_num - b_num, 4)
 
         if abs(delta) < 1e-4:
@@ -1279,6 +1285,37 @@ def improve_generation_result(
     baseline_preview = df_baseline_synth.head(8).to_dict(orient="records")
     improved_preview = improved_df.head(8).to_dict(orient="records")
 
+    feedback_insights = build_feedback_insights(
+        metrics_comparison=comparison_rows,
+        strategies_applied=strategies_applied,
+        domain_rules_summary={
+            "baseline_validity_percent": baseline_validity,
+            "improved_validity_percent": improved_validity,
+        },
+        privacy_status=_build_privacy_status(
+            real_df=df_real,
+            synthetic_df=improved_df,
+            privacy_guard_info=priv_info,
+            column_configurations=candidate_column_configurations,
+            dataset_profile=candidate_dataset_profile,
+        ),
+        improved_evaluation=improved_eval,
+    )
+    try:
+        previous_feedback = get_recent_quality_feedback(
+            user_id=user_id,
+            dataset_id=dataset_id,
+            limit=5,
+        )
+    except Exception as exc:
+        logger.warning("Could not load previous quality feedback for dataset %s: %s", dataset_id, exc)
+        previous_feedback = []
+    feedback_insights["previous_user_feedback"] = previous_feedback
+    if previous_feedback:
+        latest_feedback = previous_feedback[0]
+        if latest_feedback.get("feedback") == "not_helpful" and latest_feedback.get("focus_area"):
+            feedback_insights["previous_focus_to_review"] = latest_feedback["focus_area"]
+
     return {
         "status": "success",
         "message": "Supply Chain quality tuning completed successfully.",
@@ -1304,6 +1341,7 @@ def improve_generation_result(
             dataset_profile=candidate_dataset_profile,
         ),
         "tradeoff_explanation": explanation,
+        "feedback_insights": feedback_insights,
         "baseline_evaluation": baseline_eval,
         "improved_evaluation": improved_eval,
         "previews": {

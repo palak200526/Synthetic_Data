@@ -104,3 +104,10 @@ class ValidationRuleDeleteResponse(BaseModel):
     status: str
     message: str
     rule_id: int
+
+class QualityFeedbackRequest(BaseModel):
+    result_id: int
+    improved_result_id: Optional[int] = None
+    feedback: str
+    focus_area: Optional[str] = None
+    comment: Optional[str] = None

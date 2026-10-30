@@ -16,6 +16,7 @@ from backend.schemas.api_schema import (
     AutoTuneGenerationRequest,
     GenerationRequest,
     ImproveQualityRequest,
+    QualityFeedbackRequest,
 )
 from backend.services.auto_tuning_service import (
     auto_tune_generation,
@@ -26,6 +27,7 @@ from backend.services.generation_service import (
 from backend.services.supply_chain_domain_service import (
     improve_generation_result,
 )
+from backend.repositories.feedback_repository import save_quality_feedback
 from backend.repositories.dataset_repository import (
     get_dataset_user_id,
 )
@@ -757,3 +759,53 @@ def improve_quality_endpoint(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Improve quality failed: {exc}",
         )
+
+
+
+@router.post(
+    "/generation/quality-feedback",
+    summary="Save user feedback on an Improve Quality result",
+)
+def save_quality_feedback_endpoint(
+    request: QualityFeedbackRequest,
+    user_id: int = Depends(get_current_user),
+):
+    """Persist feedback only after verifying ownership of the referenced result."""
+    allowed_feedback = {"helpful", "not_helpful", "partially_helpful"}
+    allowed_focus = {
+        None, "statistical_similarity", "correlation", "ml_utility",
+        "privacy", "business_rules", "other",
+    }
+    if request.feedback not in allowed_feedback:
+        raise HTTPException(status_code=400, detail="Invalid feedback value.")
+    if request.focus_area not in allowed_focus:
+        raise HTTPException(status_code=400, detail="Invalid feedback focus area.")
+
+    try:
+        baseline = get_generated_result_by_id(request.result_id)
+        if not baseline:
+            raise HTTPException(status_code=404, detail="Generation result not found.")
+        dataset_id = baseline["dataset_id"]
+        if get_dataset_user_id(dataset_id) != user_id:
+            raise HTTPException(status_code=403, detail="Access denied.")
+
+        if request.improved_result_id is not None:
+            improved = get_generated_result_by_id(request.improved_result_id)
+            if not improved or improved.get("dataset_id") != dataset_id:
+                raise HTTPException(status_code=400, detail="Improved result does not belong to the same dataset.")
+
+        saved = save_quality_feedback(
+            user_id=user_id,
+            dataset_id=dataset_id,
+            result_id=request.result_id,
+            improved_result_id=request.improved_result_id,
+            feedback=request.feedback,
+            focus_area=request.focus_area,
+            comment=(request.comment or "").strip()[:2000] or None,
+        )
+        return {"status": "success", "message": "Feedback saved.", **saved}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.exception("Could not save quality feedback")
+        raise HTTPException(status_code=500, detail="Could not save feedback right now.") from exc

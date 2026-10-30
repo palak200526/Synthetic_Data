@@ -202,4 +202,38 @@ CREATE TABLE generation_jobs (
 
 CREATE INDEX idx_gen_jobs_user ON generation_jobs(user_id);
 CREATE INDEX idx_gen_jobs_status ON generation_jobs(status);
-CREATE INDEX idx_gen_jobs_dataset ON generation_jobs(dataset_id);
+CREATE INDEX idx_gen_jobs_dataset ON generation_jobs(dataset_id);
+
+
+
+-- Human feedback on Improve Quality outcomes
+CREATE TABLE IF NOT EXISTS quality_improvement_feedback (
+    feedback_id BIGSERIAL PRIMARY KEY,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(user_id) ON DELETE CASCADE,
+
+    dataset_id INTEGER NOT NULL
+        REFERENCES datasets(dataset_id) ON DELETE CASCADE,
+
+    result_id INTEGER NOT NULL
+        REFERENCES generated_results(result_id) ON DELETE CASCADE,
+
+    improved_result_id INTEGER
+        REFERENCES generated_results(result_id) ON DELETE SET NULL,
+
+    feedback VARCHAR(32) NOT NULL
+        CHECK (feedback IN (
+            'helpful',
+            'partially_helpful',
+            'not_helpful'
+        )),
+
+    focus_area VARCHAR(100),
+    comment TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_quality_feedback_user_dataset
+ON quality_improvement_feedback (user_id, dataset_id, created_at DESC);
